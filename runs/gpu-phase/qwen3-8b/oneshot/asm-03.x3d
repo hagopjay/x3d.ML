@@ -1,0 +1,273 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:116414,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;9228d74ace7c3d10baba0e87f8455539acced4c8ec99fda81fb54a4affdc00e1&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;asm-03&quot;,&quot;prompt_sha256&quot;:&quot;5ffe8681f3bbfcccc47b17247ac1b6c34385691fdece5fcb309a1390244221ce&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2409,&quot;run_id&quot;:&quot;fccfb128-c15d-4183-b6cd-2b501643e41f&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:366,&quot;tokens_out&quot;:1666}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;9228d74ace7c3d10baba0e87f8455539acced4c8ec99fda81fb54a4affdc00e1&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;7edd9d925dd89ab577edce70175a4f45a6e874df64487ff59b3872a7cd63da71&quot;,&quot;prev&quot;:&quot;3f547990a742f23f52c738e8d22119c71ca5811d9a8fe9ef2d32cd3e023674ce&quot;,&quot;semantic_valid&quot;:false,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;7edd9d925dd89ab577edce70175a4f45a6e874df64487ff59b3872a7cd63da71&quot;,&quot;ms&quot;:4,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;7edd9d925dd89ab577edce70175a4f45a6e874df64487ff59b3872a7cd63da71&quot;,&quot;prev&quot;:&quot;08c5c0d368d3ab11f9ef83f5a46282d66f466a553afe9dbba7d156e36dd709af&quot;,&quot;semantic_error_codes&quot;:[&quot;duplicate-def&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Chess Board' position='0 3 5'/>
+<Shape DEF='Tile'>
+<Appearance>
+<Material diffuseColor='1 1 1'/>
+</Appearance>
+<Box size='1 1 0.1'/>
+</Shape>
+<Shape DEF='TileDark'>
+<Appearance>
+<Material diffuseColor='0.5 0.25 0'/>
+</Appearance>
+<USE DEF='Tile'/>
+</Shape>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='0 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='1 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='2 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='3 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='4 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='5 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='6 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='7 0 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 1 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 2 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 3 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 4 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 5 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 6 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='0 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='1 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='2 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='3 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='4 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='5 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='TileDark'/>
+<Transform translation='6 7 0'/>
+</Group>
+<Group DEF='Row'>
+<Shape USE='Tile'/>
+<Transform translation='7 7 0'/>
+</Group>
+</Scene>
+</X3D>

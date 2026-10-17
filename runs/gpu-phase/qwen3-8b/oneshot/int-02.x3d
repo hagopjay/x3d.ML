@@ -1,0 +1,27 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:29342,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;bcff85059cb7dfad8e17266a4822894f3b8bbc2e760bc7967658b46f95b3ba37&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;int-02&quot;,&quot;prompt_sha256&quot;:&quot;832eeb78c24824af24c0fb07480010c5d28c25ac9aa55b568d9c067c1f81354a&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2409,&quot;run_id&quot;:&quot;fccfb128-c15d-4183-b6cd-2b501643e41f&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:372,&quot;tokens_out&quot;:416}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;bcff85059cb7dfad8e17266a4822894f3b8bbc2e760bc7967658b46f95b3ba37&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;1d3dcf1694101f4bc99c8fa9e17bad2be007ed3ecdf95b4b1e7d047bfbe92ad7&quot;,&quot;prev&quot;:&quot;f0fd9c0fe98643df8c1480c99fe3e7d8875d08a8c007a1ddaa55bb48d50460bc&quot;,&quot;semantic_valid&quot;:false,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;1d3dcf1694101f4bc99c8fa9e17bad2be007ed3ecdf95b4b1e7d047bfbe92ad7&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;1d3dcf1694101f4bc99c8fa9e17bad2be007ed3ecdf95b4b1e7d047bfbe92ad7&quot;,&quot;prev&quot;:&quot;bab4ea94dba98c936be07258fb16cd97dfa50a589a409cd9506a430a9340aae9&quot;,&quot;semantic_error_codes&quot;:[&quot;route-invalid-from-field&quot;,&quot;route-invalid-to-field&quot;,&quot;route-missing-to-node&quot;,&quot;route-wrong-access-type&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Default View' position='0 5 10'/>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+<Sphere radius='1'/>
+</Shape>
+<Script DEF='ColorToggleScript'>
+<field name='color' type='SFColor' accessType='inputOutput' value='1 0 0'/>
+<field name='isRed' type='SFBool' accessType='inputOutput' value='TRUE'/>
+<field name='isGreen' type='SFBool' accessType='inputOutput' value='FALSE'/>
+<field name='toggle' type='SFBool' accessType='inputOnly'/>
+</Script>
+<BooleanToggle DEF='ColorToggle'>
+<field name='value' type='SFBool' accessType='outputOnly'/>
+</BooleanToggle>
+<TouchSensor DEF='ClickSensor' description='Click to toggle color'/>
+<ROUTE fromNode='ClickSensor' fromField='touchTime' toNode='ColorToggle' toField='set_value'/>
+<ROUTE fromNode='ColorToggle' fromField='value' toNode='ColorToggleScript' toField='toggle'/>
+<ROUTE fromNode='ColorToggleScript' fromField='toggle' toNode='ColorToggleScript' toField='isRed'/>
+<ROUTE fromNode='ColorToggleScript' fromField='toggle' toNode='ColorToggleScript' toField='isGreen'/>
+<ROUTE fromNode='ColorToggleScript' fromField='isRed' toNode='Material' toField='diffuseColor'/>
+<ROUTE fromNode='ColorToggleScript' fromField='isGreen' toNode='Material' toField='diffuseColor'/>
+</Scene>
+</X3D>

@@ -1,0 +1,33 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:2,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:2,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:52227,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;9b066180a33bce6e15a335c27947437ab470def3385e53f43278e3b4f5813bf7&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;anim-03&quot;,&quot;prompt_sha256&quot;:&quot;8d8c502ec676048da4e5e25abc8d694fbd4bd75bdce4f7c6cf64a172c92b3188&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2396,&quot;run_id&quot;:&quot;10d86576-8b72-4d2e-afd2-f90bdadea928&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:1167,&quot;tokens_out&quot;:728}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;9b066180a33bce6e15a335c27947437ab470def3385e53f43278e3b4f5813bf7&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;0de92d32c0865623ba3b1be29abcf3c59f878a6741df804aa562eb0e8d50f236&quot;,&quot;prev&quot;:&quot;47f15e2cbc7c600f89fe04a07f2d657b437f7dba6911f85dc606b6c87188a551&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;0de92d32c0865623ba3b1be29abcf3c59f878a6741df804aa562eb0e8d50f236&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;0de92d32c0865623ba3b1be29abcf3c59f878a6741df804aa562eb0e8d50f236&quot;,&quot;prev&quot;:&quot;e19b92bf7268d0f87e0e7f615fb54f655cca23c5bfdb21c8e9dc1530f36aee84&quot;,&quot;semantic_error_codes&quot;:[&quot;route-invalid-from-field&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+<Scene>
+<Viewpoint description='Door View' position='0 5 10' orientation='0 1 0 0'/>
+<Group DEF='Door'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.5 0.3 0.1'/>
+</Appearance>
+<Box size='2 2 0.1'/>
+</Shape>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.5 0.3 0.1'/>
+</Appearance>
+<Box size='2 0.1 0.1'/>
+</Shape>
+<Transform DEF='DoorHinge' translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.5 0.3 0.1'/>
+</Appearance>
+<Box size='0.1 2 0.1'/>
+</Shape>
+</Transform>
+</Transform>
+</Group>
+<OrientationInterpolator DEF='DoorRotation' key='0 1' keyValue='0 1 0 0 0 1 0 1.5708'/>
+<TimeSensor DEF='DoorTimer' cycleInterval='2' loop='false'/>
+<ROUTE fromNode='DoorTimer' fromField='fractionComplete' toNode='DoorRotation' toField='set_fraction'/>
+<ROUTE fromNode='DoorRotation' fromField='value' toNode='DoorHinge' toField='rotation'/>
+</Scene>
+</X3D>

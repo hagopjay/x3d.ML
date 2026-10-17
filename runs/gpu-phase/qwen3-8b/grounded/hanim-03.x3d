@@ -1,0 +1,22 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:71957,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;26e821641ed31341884ec5ade514456beb5a811e7f30333dd0b752b6176aa621&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;hanim-03&quot;,&quot;prompt_sha256&quot;:&quot;04368d3a1c924df73e0bfac439fd493f366589bbc48b715a868083afa3196c53&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2396,&quot;run_id&quot;:&quot;10d86576-8b72-4d2e-afd2-f90bdadea928&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:2298,&quot;tokens_out&quot;:930}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;26e821641ed31341884ec5ade514456beb5a811e7f30333dd0b752b6176aa621&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;4f19ca533b41af823a157a32a8d56c3acdb151ab339387cff8f77caf151594f8&quot;,&quot;prev&quot;:&quot;f97eb3e5998c4c5582c646ad091cf801ab84c3c49867cdca23515644a13c6bf0&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;4f19ca533b41af823a157a32a8d56c3acdb151ab339387cff8f77caf151594f8&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;4f19ca533b41af823a157a32a8d56c3acdb151ab339387cff8f77caf151594f8&quot;,&quot;prev&quot;:&quot;7d9db7950126ae45205d3d4049818f46bb47376d03ec41a27feeff17e1a85f25&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-unknown&quot;,&quot;profile-component&quot;,&quot;route-invalid-from-field&quot;,&quot;route-invalid-to-field&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Eye Level' position='0 1.5 5' orientation='0 1 0 0'/>
+<NavigationInfo type='EXAMINE'/>
+<Shape DEF='HandObject'>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+<Sphere radius='0.2'/>
+</Shape>
+<HAnimHumanoid DEF='Humanoid' version='2.0' url='humanoid.x3d'/>
+<HAnimSite DEF='RightHandSite' name='RightHand' containerField='sites'>
+<HAnimSegment DEF='RightHandSegment'/>
+<HAnimJoint DEF='RightHandJoint' name='RightHandJoint' containerField='joints'>
+<HAnimJoint DEF='RightHandJointParent' name='RightHandJointParent' containerField='parent' url='#RightHandJoint'/>
+</HAnimJoint>
+<Shape USE='HandObject'/>
+</HAnimSite>
+<ROUTE fromNode='RightHandJoint' fromField='rotation' toNode='RightHandSegment' toField='rotation'/>
+<ROUTE fromNode='RightHandSegment' fromField='translation' toNode='RightHandSite' toField='translation'/>
+</Scene>
+</X3D>

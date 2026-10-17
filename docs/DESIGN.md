@@ -87,3 +87,18 @@ Conclusion (L): do not compete; **x3dprov is the in-file source of truth and the
 3. Add a bridge regression test (head meta and per-node MetadataSet survive round trip, WorldInfo documented as lost) to x3d-blender-io (draft PR).
 4. 0.2: Ed25519 signature over the head hash, `public` redaction profile, C2PA claim projection.
 5. Wait for Dr. Polys's view on whether the Consortium wants a registered `x3dprov.*` meta namespace (his call, nothing sent).
+
+## 7. Second pass: real cached model scenes (added 17 Oct 17:3x)
+
+`stamp_gpu_phase.py` stamped **174 cached scenes** from the 11 Oct GPU phase (3 open models, one-shot and grounded repair, 1x L4) using only recorded facts (run id, hardware, tokens, latency, prompt hash, attempts, recorded verdict). **174 of 174 verify.** Only the final attempt's body is cached locally, so earlier attempts are summarised, not hashed.
+
+| Model | mode | n | valid on 11 Oct | valid now (fork eb4b4b4) |
+|---|---|---|---|---|
+| qwen3-8b | oneshot | 30 | 3 | 2 |
+| qwen3-8b | grounded | 25 | 12 | 3 |
+| qwen2.5-coder-14b-awq | oneshot | 30 | 14 | 12 |
+| qwen2.5-coder-14b-awq | grounded | 29 | 23 | 15 |
+| gpt-oss-20b | oneshot | 30 | 13 | 10 |
+| gpt-oss-20b | grounded | 30 | 26 | 12 |
+
+**Validator drift, measured (C):** 37 scenes were valid on 11 Oct and are invalid now; 0 went the other way. Reasons (fork rules added since, Likely; the 11 Oct service version was never recorded): profile-component 20, route-invalid-from-field 14, containerfield-type-mismatch 7, route-type-mismatch 5, route-invalid-to-field 4, interpolator-key-length 2, tuple-count 1. This is the "which scenes need re-validation when the validator moves" query the in-file `validator_ref` makes possible, and it is also a **lesson**: the old run recorded `validator_ref: unrecorded`, so today it can only be inferred. Every future step now names its commit. Caveat: grounded repair stopped when the OLD validator was satisfied, so its "valid now" drop (qwen3-8b 12 to 3) measures the stricter validator, not worse models.

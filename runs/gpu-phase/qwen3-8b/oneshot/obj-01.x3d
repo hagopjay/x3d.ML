@@ -1,0 +1,19 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:13929,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;965b43ab918ab755126316201f086c9616fed888e160b5ae265bb0aaed4fc887&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;obj-01&quot;,&quot;prompt_sha256&quot;:&quot;bfc338574c263ffe152038dcf2685764da445ade533bf9102008129be2b43058&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2409,&quot;run_id&quot;:&quot;fccfb128-c15d-4183-b6cd-2b501643e41f&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:371,&quot;tokens_out&quot;:188}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;965b43ab918ab755126316201f086c9616fed888e160b5ae265bb0aaed4fc887&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;98aab7bb452752591472dadba3f248c2580a67b5fc71ccce010023502bf2572e&quot;,&quot;prev&quot;:&quot;0c6b032431b339aa8673ee365f37e7d6e01d6898ee3e247fbf7721a03c58d4d4&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;98aab7bb452752591472dadba3f248c2580a67b5fc71ccce010023502bf2572e&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;98aab7bb452752591472dadba3f248c2580a67b5fc71ccce010023502bf2572e&quot;,&quot;prev&quot;:&quot;82b95e08c33fb3156dfff5da0d7f8310bc229296dd3bd1bd3c4f17d6712aa5c9&quot;,&quot;semantic_error_codes&quot;:[&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Red Sphere View' position='0 3 5' orientation='0 1 0 0'/>
+<DirectionalLight direction='0 -1 0' intensity='1'/>
+<PhysicalMaterial name='RedMaterial' diffuseColor='1 0 0'/>
+<Shape>
+<Appearance>
+<Material DEF='RedMaterial'/>
+</Appearance>
+<Sphere radius='1'/>
+</Shape>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.8 0.8 0.8'/>
+</Appearance>
+<PlaneGeometry/>
+</Shape>
+</Scene>
+</X3D>

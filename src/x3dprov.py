@@ -36,9 +36,18 @@ def _strip_prov(root):
     return root
 
 
+_META_RE = re.compile(r"""\s*<meta\s+name=(["'])x3dprov\.[^"']*\1[^>]*?/>""")
+
+
 def content_hash(xml) -> str:
-    """sha256 of the scene content: comments dropped, x3dprov metas removed, whitespace-only text dropped, C14N."""
-    root = _strip_prov(_parse(xml))
+    """sha256 of the scene content. Well-formed XML: comments dropped, x3dprov metas removed, whitespace-only text dropped,
+    C14N ("c14n:" prefix not added, hash is bare). Not well-formed (models do emit that): x3dprov metas removed textually,
+    whitespace runs collapsed, hash of the text. A broken scene stays traceable; it just can't be canonicalised."""
+    text = xml.decode("utf-8", "replace") if isinstance(xml, bytes) else xml
+    try:
+        root = _strip_prov(_parse(text))
+    except etree.XMLSyntaxError:
+        return _sha(re.sub(r"\s+", " ", _META_RE.sub("", text)).strip().encode("utf-8"))
     for el in root.iter():
         if el.text is not None and not el.text.strip():
             el.text = None
@@ -51,14 +60,14 @@ def _dumps(d) -> str:
     return json.dumps(d, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
 
+_STEP_META = re.compile(r"""<meta\s+name=(["'])x3dprov\.step\.(\d+)\1\s+content=(["'])(.*?)\3\s*/>""", re.S)
+
+
 def read_steps(xml):
-    root = _parse(xml)
-    out = []
-    for m in root.xpath("//head/meta[starts-with(@name,'x3dprov.step.')]"):
-        mm = _STEP_RE.match(m.get("name"))
-        if mm:
-            out.append((int(mm.group(1)), m.get("content")))
-    return sorted(out)
+    """(n, json_text) pairs in step order; regex based so it also works on scenes that are not well-formed XML."""
+    from html import unescape
+    text = xml.decode("utf-8", "replace") if isinstance(xml, bytes) else xml
+    return sorted((int(m.group(2)), unescape(m.group(4))) for m in _STEP_META.finditer(text))
 
 
 def add_step(xml_before, step: dict, xml_after=None) -> str:
@@ -81,7 +90,7 @@ def add_step(xml_before, step: dict, xml_after=None) -> str:
     metas.append('<meta name="x3dprov.step.%d" content=%s/>' % (n, _attr(_dumps(rec))))
     if steps:
         metas.insert(0, '<meta name="x3dprov.version" content="%s"/>' % SCHEMA)
-    stripped = re.sub(r"""<meta\s+name=(["'])x3dprov\.[^"']*\1[^>]*?/>""", "", out_xml)
+    stripped = _META_RE.sub("", out_xml)
     return _inject_meta(stripped, "".join(metas))
 
 

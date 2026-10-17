@@ -1,0 +1,36 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:2,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:2,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:76593,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;f9621b52b3f877a4e1472941493ed2cfaf65376cf2dc19ae73fa69e3e8b013d3&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;obj-02&quot;,&quot;prompt_sha256&quot;:&quot;e3d7c614946e76d785657c7ffa03ff40d0921eb59462f6ffe5eab31586d7c924&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.044,&quot;run_id&quot;:&quot;fa9b39b8-fecd-4b4a-a23c-11a7be51434a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:1421,&quot;tokens_out&quot;:1939}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;f9621b52b3f877a4e1472941493ed2cfaf65376cf2dc19ae73fa69e3e8b013d3&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;848f4d84570459d3aa0a1c048a85f4d76fef327ae6c8cd4580b36c5ffeee51e6&quot;,&quot;prev&quot;:&quot;c20bb00a88b7016d1e00c58f3a05e2faa801f0796e5d04373261348de3a31c31&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;848f4d84570459d3aa0a1c048a85f4d76fef327ae6c8cd4580b36c5ffeee51e6&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;848f4d84570459d3aa0a1c048a85f4d76fef327ae6c8cd4580b36c5ffeee51e6&quot;,&quot;prev&quot;:&quot;fb31b804ea4dbb3c2f267d9599aaf6f8d576b10a076f4abb75f27bd9dadda793&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Viewpoint description='Wooden Table View' position='0 0 5' orientation='0 0 0 0'/>
+    <!-- Table top -->
+    <Transform translation='0 0.5 0'>
+      <Shape>
+        <Box size='2 0.05 1'/>
+        <Appearance>
+          <Material diffuseColor='0.55 0.27 0.07'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Leg geometry definition -->
+    <Transform DEF='Leg' translation='0 0 0'>
+      <Shape>
+        <Cylinder radius='0.05' height='1'/>
+        <Appearance>
+          <Material diffuseColor='0.55 0.27 0.07'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Leg instances -->
+    <Transform translation='-0.9 0 0.45'>
+      <Transform USE='Leg'/>
+    </Transform>
+    <Transform translation='0.9 0 0.45'>
+      <Transform USE='Leg'/>
+    </Transform>
+    <Transform translation='-0.9 0 -0.45'>
+      <Transform USE='Leg'/>
+    </Transform>
+    <Transform translation='0.9 0 -0.45'>
+      <Transform USE='Leg'/>
+    </Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,16 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:9595,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;02dca23ebfc4930bff4d47e22a3054d67f73eea6faf1e7a5c2ba78261d144bc6&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;asm-04&quot;,&quot;prompt_sha256&quot;:&quot;eae48f7d4fa5f18d37b5f555698b454851cfde8d9b6534f0958c0bf2f4ed4c42&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:359,&quot;tokens_out&quot;:200}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;02dca23ebfc4930bff4d47e22a3054d67f73eea6faf1e7a5c2ba78261d144bc6&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;a01bbab66854af4a18354fb2c8ef273947dd0651079b8674d3c4a6a496e6f0e3&quot;,&quot;prev&quot;:&quot;48e68d1af82d9e38c79578f5b788b066857896aadaa371827d1695ad6dd945c6&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;a01bbab66854af4a18354fb2c8ef273947dd0651079b8674d3c4a6a496e6f0e3&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;a01bbab66854af4a18354fb2c8ef273947dd0651079b8674d3c4a6a496e6f0e3&quot;,&quot;prev&quot;:&quot;78344217767d0c03efb08b7092fe6015eb6a870558399d3f1c8ab7c32d7109af&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Cylinder height='2' radius='0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0 2.5 0'>
+        <PointLight color='1 0.9 0.7' intensity='1' radius='10'/>
+      </Transform>
+    </Transform>
+    <Viewpoint description='Street Lamp View' position='0 3 5'/>
+  </Scene>
+</X3D>

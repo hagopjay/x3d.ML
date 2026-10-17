@@ -1,0 +1,60 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:2,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:2,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:44026,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;abb9aa076753ef3fb4f279a29016d5c2891dc244714099f1ca9b00a5b76bdf77&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;geo-02&quot;,&quot;prompt_sha256&quot;:&quot;09c3e4c46dc34f1f05ce9b9f247a4d7cd54ab2e719c73e1bc7b0b14b66c5b47d&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:1284,&quot;tokens_out&quot;:984}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:false,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;abb9aa076753ef3fb4f279a29016d5c2891dc244714099f1ca9b00a5b76bdf77&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;7d393205595e2401edad0da247e911095b7a118083299c54dd31a877721d6934&quot;,&quot;prev&quot;:&quot;8a4b4f9e6680c79e8fe8af929a59888a9126db0880e8e121917c55faee61df01&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;7d393205595e2401edad0da247e911095b7a118083299c54dd31a877721d6934&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;7d393205595e2401edad0da247e911095b7a118083299c54dd31a877721d6934&quot;,&quot;prev&quot;:&quot;c9183638398c48337838b22143a9e342be851520f2c278f0af695460ac98873b&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <!-- Building 1: Library -->
+    <Transform translation='0 0 10'>
+      <Shape>
+        <Box size='5 5 5'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.6 0.4'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0 5 2.5'>
+        <Shape>
+          <Text string='"Library"'/>
+          <Appearance>
+            <Material diffuseColor='1 1 1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Building 2: Science Building -->
+    <Transform translation='15 0 10'>
+      <Shape>
+        <Box size='5 5 5'/>
+        <Appearance>
+          <Material diffuseColor='0.4 0.8 0.6'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0 5 2.5'>
+        <Shape>
+          <Text string='"Science Building"'/>
+          <Appearance>
+            <Material diffuseColor='1 1 1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Building 3: Administration Building -->
+    <Transform translation='-15 0 10'>
+      <Shape>
+        <Box size='5 5 5'/>
+        <Appearance>
+          <Material diffuseColor='0.6 0.4 0.8'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0 5 2.5'>
+        <Shape>
+          <Text string='"Administration Building"'/>
+          <Appearance>
+            <Material diffuseColor='1 1 1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Viewpoint -->
+    <Viewpoint description='Campus Buildings' position='0 10 50'/>
+  </Scene>
+</X3D>

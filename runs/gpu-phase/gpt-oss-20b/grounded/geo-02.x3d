@@ -1,0 +1,41 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:65053,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;de42a01b85095df6e874409d7eecb374cd2d33f7810d823f71a0d5e576ea8621&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;geo-02&quot;,&quot;prompt_sha256&quot;:&quot;09c3e4c46dc34f1f05ce9b9f247a4d7cd54ab2e719c73e1bc7b0b14b66c5b47d&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.044,&quot;run_id&quot;:&quot;fa9b39b8-fecd-4b4a-a23c-11a7be51434a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:3406,&quot;tokens_out&quot;:1681}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;de42a01b85095df6e874409d7eecb374cd2d33f7810d823f71a0d5e576ea8621&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;d777b9f955a0fb82d001aa5840f3de3e3da5975e8b698c70ac3d591da6dc4a33&quot;,&quot;prev&quot;:&quot;24f8f5ddfb86ce6f1304cd53d89746b45bbae0d087a1e402ccdbe99a66d5b307&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;d777b9f955a0fb82d001aa5840f3de3e3da5975e8b698c70ac3d591da6dc4a33&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;d777b9f955a0fb82d001aa5840f3de3e3da5975e8b698c70ac3d591da6dc4a33&quot;,&quot;prev&quot;:&quot;e4bc790dc9eabc34c4a2edf4d31676488c833449f9c53c2503ac46c65fee020e&quot;,&quot;semantic_error_codes&quot;:[&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <Viewpoint description='Campus View' position='0 10 20' orientation='0 0 0 0'/>
+    <!-- Marker 1: Library -->
+    <GeoLocation DEF='LibraryLocation' geoSystem='"GD" "WE"' geoCoords='37.7749 -122.4194 0'/>
+    <Transform translation='37.7749 -122.4194 1'>
+      <Shape>
+        <Text string='["Library"]'>
+          <FontStyle size='0.5' justify='MIDDLE MIDDLE'/>
+        </Text>
+        <Appearance>
+          <Material diffuseColor='0 0 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Marker 2: Science Center -->
+    <GeoLocation DEF='ScienceLocation' geoSystem='"GD" "WE"' geoCoords='37.7750 -122.4180 0'/>
+    <Transform translation='37.7750 -122.4180 1'>
+      <Shape>
+        <Text string='["Science Center"]'>
+          <FontStyle size='0.5' justify='MIDDLE MIDDLE'/>
+        </Text>
+        <Appearance>
+          <Material diffuseColor='0 1 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Marker 3: Administration Building -->
+    <GeoLocation DEF='AdminLocation' geoSystem='"GD" "WE"' geoCoords='37.7755 -122.4200 0'/>
+    <Transform translation='37.7755 -122.4200 1'>
+      <Shape>
+        <Text string='["Administration"]'>
+          <FontStyle size='0.5' justify='MIDDLE MIDDLE'/>
+        </Text>
+        <Appearance>
+          <Material diffuseColor='1 0 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

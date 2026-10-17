@@ -1,0 +1,20 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:9887,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;6a152af5839aed8ad0914d03f9a854f07fff275814ea758df31396f0e1ef7730&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;int-03&quot;,&quot;prompt_sha256&quot;:&quot;82663e1609d4a202d7eb8afaa13682d685d154964acd5324f2d686ee2727e9b4&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0183,&quot;run_id&quot;:&quot;8d3d76be-4662-4f9e-8c18-ed20dc27794a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:358,&quot;tokens_out&quot;:237}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;6a152af5839aed8ad0914d03f9a854f07fff275814ea758df31396f0e1ef7730&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;ae8721151d3740437dcc921b3c86999f703f0d79819f574d89b76f0d47ef43d0&quot;,&quot;prev&quot;:&quot;8f6857602632675247958f8e9a8dcca616c28538fdf3e07f9c410670584da63c&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;ae8721151d3740437dcc921b3c86999f703f0d79819f574d89b76f0d47ef43d0&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;ae8721151d3740437dcc921b3c86999f703f0d79819f574d89b76f0d47ef43d0&quot;,&quot;prev&quot;:&quot;f45c230e64039c7a0709bfbb7c7940d0b1da635baee6b925165702bae44b9595&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-unknown&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <Viewpoint description='Drag the cone along the ground plane' position='0 5 10'/>
+    
+    <Transform DEF='ConeTransform'>
+      <Shape>
+        <Cone bottomRadius='1' height='2'/>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    
+    <PlaneSensor DEF='GroundPlaneSensor' enabled='true' maxPosition='10 0 10' minPosition='-10 0 -10'>
+      <Transform USE='ConeTransform'/>
+    </PlaneSensor>
+    
+    <ROUTE fromNode='GroundPlaneSensor' fromField='translation_changed' toNode='ConeTransform' toField='translation'/>
+  </Scene>
+</X3D>

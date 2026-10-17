@@ -1,0 +1,51 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='2'/><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:104858,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;9e43c5a4fb53828500e5635832a4ede2f3adc11bc60e6f23a210ee39e801c57f&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;hanim-05&quot;,&quot;prompt_sha256&quot;:&quot;d07efa0200b05b8ae1b38251d75f49d1c910ba83093a556c12de362cca93b99f&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.044,&quot;run_id&quot;:&quot;fa9b39b8-fecd-4b4a-a23c-11a7be51434a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:3463,&quot;tokens_out&quot;:2962}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;9e43c5a4fb53828500e5635832a4ede2f3adc11bc60e6f23a210ee39e801c57f&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;9e43c5a4fb53828500e5635832a4ede2f3adc11bc60e6f23a210ee39e801c57f&quot;,&quot;prev&quot;:&quot;821423277db9d15d16ef8e66cc887a53b7385018661c896ee3d490747f58cc61&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, as called 11 Oct)&quot;,&quot;validator_ref&quot;:&quot;unrecorded&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;9e43c5a4fb53828500e5635832a4ede2f3adc11bc60e6f23a210ee39e801c57f&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;9e43c5a4fb53828500e5635832a4ede2f3adc11bc60e6f23a210ee39e801c57f&quot;,&quot;prev&quot;:&quot;7098613fcf2dcc142b7353502d5987d5cd7a455556b19b6cc47525de997e28e0&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-type-mismatch&quot;,&quot;route-type-mismatch&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <Viewpoint description='HAnim Wave Demo' position='0 1.5 3' orientation='1 0 0 0'/>
+    <HAnimHumanoid DEF='WaveFigure' version='2.0'>
+      <HAnimJoint DEF='humanoid_root' name='humanoid_root' center='0 1.0 0'>
+        <HAnimSegment DEF='torso' name='torso'>
+          <Transform translation='0 0 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.6 0.4'/>
+              </Appearance>
+              <Box size='0.5 0.8 0.2'/>
+            </Shape>
+          </Transform>
+          <HAnimJoint DEF='l_shoulder' name='l_shoulder' center='-0.2 0.8 0'>
+            <HAnimSegment DEF='l_upper_arm' name='l_upper_arm'>
+              <Transform translation='-0.2 0 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.8 0.6 0.4'/>
+                  </Appearance>
+                  <Box size='0.15 0.4 0.15'/>
+                </Shape>
+              </Transform>
+              <HAnimJoint DEF='l_elbow' name='l_elbow' center='-0.2 0.4 0'>
+                <HAnimSegment DEF='l_lower_arm' name='l_lower_arm'>
+                  <Transform translation='-0.2 0 0'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.8 0.6 0.4'/>
+                      </Appearance>
+                      <Box size='0.15 0.4 0.15'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimSegment>
+      </HAnimJoint>
+    </HAnimHumanoid>
+    <TouchSensor DEF='waveTouch' description='Touch to wave'/>
+    <TimeSensor DEF='waveClock' cycleTime='2' loop='true'/>
+    <OrientationInterpolator DEF='waveInterp' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 0 0 1 0 0'/>
+    <ROUTE fromNode='waveTouch' fromField='isOver' toNode='waveClock' toField='startTime'/>
+    <ROUTE fromNode='waveClock' fromField='fraction_changed' toNode='waveInterp' toField='set_fraction'/>
+    <ROUTE fromNode='waveInterp' fromField='value_changed' toNode='humanoid_root' toField='set_rotation'/>
+  </Scene>
+</X3D>
