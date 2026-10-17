@@ -101,4 +101,17 @@ Conclusion (L): do not compete; **x3dprov is the in-file source of truth and the
 | gpt-oss-20b | oneshot | 30 | 13 | 10 |
 | gpt-oss-20b | grounded | 30 | 26 | 12 |
 
-**Validator drift, measured (C):** 37 scenes were valid on 11 Oct and are invalid now; 0 went the other way. Reasons (fork rules added since, Likely; the 11 Oct service version was never recorded): profile-component 20, route-invalid-from-field 14, containerfield-type-mismatch 7, route-type-mismatch 5, route-invalid-to-field 4, interpolator-key-length 2, tuple-count 1. This is the "which scenes need re-validation when the validator moves" query the in-file `validator_ref` makes possible, and it is also a **lesson**: the old run recorded `validator_ref: unrecorded`, so today it can only be inferred. Every future step now names its commit. Caveat: grounded repair stopped when the OLD validator was satisfied, so its "valid now" drop (qwen3-8b 12 to 3) measures the stricter validator, not worse models.
+**Validator drift, measured and attributed (C, corrected 17 Oct after the coordinator pointed to the recorded validators).** 37 scenes were valid on 11 Oct and are invalid now; 0 went the other way. The 11 Oct verdicts came from the deployed `x3d-mcp-svc` (XSD plus DEF/USE/ROUTE endpoints only, per `x3d-bench-next/open-models-fork/README.md`), not from a fork build. I re-ran all 174 original scenes on seven fork commits (`drift/runval.py`, verdicts in `drift/verdicts_by_fork_commit.json`):
+
+| Fork commit | date | valid of 174 | agree with 11 Oct recorded verdict |
+|---|---|---|---|
+| 8c0a457 (the commit the GPU-phase score quotes) | 8 Oct | 55 | 138 |
+| c9c9788 | 11 Oct | 55 | 138 |
+| 688174f | 12 Oct | 54 | 137 |
+| 76fc439, d61d4de | 13 Oct | 63 | 146 |
+| eb4b4b4 (main) | 15 Oct | 54 | 137 |
+| d5598c4 (spine branch) | 16 Oct | 54 | 137 |
+
+Attribution of the 37 flips: **36 are already invalid on 8c0a457** (so not caused by later fork commits; the service was simply a weaker validator), **1 flips at 688174f** (`tuple-count`). By rule on 8c0a457: profile-component 20, route-invalid-from-field 14, containerfield-type-mismatch 7, route-type-mismatch 5, route-invalid-to-field 4, interpolator-key-length 2 (scenes can hit several). My per-model counts on 8c0a457 and c9c9788 (gpt-oss 10 and 13, coder 12 and 15, qwen3 2 and 3 for one-shot and grounded) match the earlier independent re-validation in `open-models-fork/README.md` exactly. Grounded counts differ from that run by one scene only at eb4b4b4 (gpt-oss grounded 13 to 12). The 13 to 63 jump at 76fc439 and back at eb4b4b4 is a rule that was relaxed then restored on the merge path; not investigated (S).
+
+So my first-pass inference ("fork rules added since 11 Oct") was **wrong**, and this replaces it. The lesson stands in a corrected form: the service's *name* was recorded but not its build digest, and the service and the fork are different validators, which is exactly why every x3dprov validate step names `validator` and `validator_ref`. Caveat unchanged: grounded repair stopped when the weaker service was satisfied, so the grounded "valid now" drop (qwen3-8b 12 to 3) measures the validator, not the model.

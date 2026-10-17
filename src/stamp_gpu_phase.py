@@ -25,7 +25,7 @@ for model in ("qwen3-8b", "qwen2.5-coder-14b-awq", "gpt-oss-20b"):
                "latency_ms": sum(a["latency_ms"] for a in atts), "run_cost_usd": run["cost_usd"],
                "earlier_attempts": [{"attempt": a["attempt"], "xsd_valid": a["xsd_valid"], "semantic_valid": a["semantic_valid"]} for a in atts[:-1]],
                "bodies_of_earlier_attempts": "bucket only, not hashed", "input_sha256": "none"}
-        hist = {"op": "validate", "validator": "x3d-mcp-svc (Cloud Run, as called 11 Oct)", "validator_ref": "unrecorded", "xsd_valid": fin["xsd_valid"],
+        hist = {"op": "validate", "validator": "x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)", "validator_ref": "service name recorded, build digest not", "xsd_valid": fin["xsd_valid"],
                 "semantic_valid": fin["semantic_valid"], "constraints_ok": fin["constraints_ok"], "verdict": "valid" if fin["xsd_valid"] and fin["semantic_valid"] else "invalid", "historical": True}
         x = P.add_step(xml, gen); x = P.add_step(x, hist); cur = D.validate(x); x = P.add_step(x, cur)
         os.makedirs(f"{out}/{model}/{mode}", exist_ok=True); open(f"{out}/{model}/{mode}/{pid}.x3d", "w").write(x)
