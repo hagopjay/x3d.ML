@@ -1,0 +1,24 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:16538,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;2d081264ac8f2c0ac6873d7ae1657e93ec35c41cc4271ad73cb912a89dc54d29&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;geo-04&quot;,&quot;prompt_sha256&quot;:&quot;2b53290cc8dbf8a1ca8adcefd47117716999bcee8f2dc69df5eba173d524169d&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0183,&quot;run_id&quot;:&quot;8d3d76be-4662-4f9e-8c18-ed20dc27794a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:369,&quot;tokens_out&quot;:403}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;2d081264ac8f2c0ac6873d7ae1657e93ec35c41cc4271ad73cb912a89dc54d29&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;ac32fa1aca0c08d7fb7623cfc73433eabcf676e26db3cd49f0046158fad6766c&quot;,&quot;prev&quot;:&quot;f8b801a8aadbc3dc7b93b62fc997473f263fd2d285a0460de662c129ee74e485&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;ac32fa1aca0c08d7fb7623cfc73433eabcf676e26db3cd49f0046158fad6766c&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;ac32fa1aca0c08d7fb7623cfc73433eabcf676e26db3cd49f0046158fad6766c&quot;,&quot;prev&quot;:&quot;452c85ea4550f750756861f26283a869c376c6ac2fa5639b18eb0a6952fa0107&quot;,&quot;semantic_error_codes&quot;:[&quot;interpolator-key-length&quot;,&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='78.925 -3.183 50'>
+      <Transform DEF='DroneTransform'>
+        <Shape>
+          <Box size='2 2 2'/>
+          <Appearance>
+            <Material diffuseColor='0.5 0.5 1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+
+    <TimeSensor DEF='DroneClock' cycleInterval='10' loop='true'/>
+
+    <GeoPositionInterpolator DEF='DronePath' key='0 0.25 0.5 0.75 1' keyValue='-3.183 78.925 50 -3.183 78.925 50 -3.183 78.925 50 -3.183 78.925 50'/>
+
+    <ROUTE fromNode='DroneClock' fromField='fraction_changed' toNode='DronePath' toField='set_fraction'/>
+    <ROUTE fromNode='DronePath' fromField='value_changed' toNode='DroneTransform' toField='translation'/>
+
+    <GeoViewpoint description='Torgersen Hall View' geoSystem='"GD" "WE"' position='-3.183 78.925 50'/>
+    <Viewpoint description='Default View' position='0 0 10'/>
+  </Scene>
+</X3D>

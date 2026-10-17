@@ -1,0 +1,222 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:76023,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;7b3e71c386b4785da001311759c4c9a7fd3ce1c98a9630ba2d0c5a3b190a5d16&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;asm-03&quot;,&quot;prompt_sha256&quot;:&quot;5ffe8681f3bbfcccc47b17247ac1b6c34385691fdece5fcb309a1390244221ce&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.044,&quot;run_id&quot;:&quot;fa9b39b8-fecd-4b4a-a23c-11a7be51434a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:417,&quot;tokens_out&quot;:1927}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;7b3e71c386b4785da001311759c4c9a7fd3ce1c98a9630ba2d0c5a3b190a5d16&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;e0c39d67c7c110f717037ea1cca710a1bb1c2c0243026c0bd17db3f2a36e4b4e&quot;,&quot;prev&quot;:&quot;082fad5560026e541074247fe0efeee78da4e9e7b7529d7a152d18551d8ce068&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;e0c39d67c7c110f717037ea1cca710a1bb1c2c0243026c0bd17db3f2a36e4b4e&quot;,&quot;ms&quot;:3,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;e0c39d67c7c110f717037ea1cca710a1bb1c2c0243026c0bd17db3f2a36e4b4e&quot;,&quot;prev&quot;:&quot;e4cd25026490dc96c93d2c4251ef7de861cf39faf1f9e4fcb9c6c3a61c162ced&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Viewpoint description='Chess Board View' position='4 4 10' orientation='1 0 0 -1.57' />
+    <!-- Tile prototypes -->
+    <Transform DEF='tileWhite'>
+      <Shape>
+        <Box size='1 1 0.1' />
+        <Appearance>
+          <Material diffuseColor='1 1 1' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform DEF='tileBlack'>
+      <Shape>
+        <Box size='1 1 0.1' />
+        <Appearance>
+          <Material diffuseColor='0 0 0' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Chess board tiles -->
+    <Transform translation='0 0 0'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='1 0 0'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='2 0 0'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='3 0 0'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='4 0 0'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='5 0 0'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='6 0 0'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='7 0 0'>
+      <Transform USE='tileBlack' />
+    </Transform>
+
+    <Transform translation='0 0 1'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='1 0 1'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='2 0 1'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='3 0 1'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='4 0 1'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='5 0 1'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='6 0 1'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='7 0 1'>
+      <Transform USE='tileWhite' />
+    </Transform>
+
+    <Transform translation='0 0 2'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='1 0 2'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='2 0 2'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='3 0 2'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='4 0 2'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='5 0 2'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='6 0 2'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='7 0 2'>
+      <Transform USE='tileBlack' />
+    </Transform>
+
+    <Transform translation='0 0 3'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='1 0 3'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='2 0 3'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='3 0 3'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='4 0 3'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='5 0 3'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='6 0 3'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='7 0 3'>
+      <Transform USE='tileWhite' />
+    </Transform>
+
+    <Transform translation='0 0 4'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='1 0 4'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='2 0 4'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='3 0 4'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='4 0 4'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='5 0 4'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='6 0 4'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='7 0 4'>
+      <Transform USE='tileBlack' />
+    </Transform>
+
+    <Transform translation='0 0 5'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='1 0 5'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='2 0 5'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='3 0 5'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='4 0 5'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='5 0 5'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='6 0 5'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='7 0 5'>
+      <Transform USE='tileWhite' />
+    </Transform>
+
+    <Transform translation='0 0 6'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='1 0 6'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='2 0 6'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='3 0 6'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='4 0 6'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='5 0 6'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='6 0 6'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='7 0 6'>
+      <Transform USE='tileBlack' />
+    </Transform>
+
+    <Transform translation='0 0 7'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='1 0 7'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='2 0 7'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='3 0 7'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='4 0 7'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='5 0 7'>
+      <Transform USE='tileWhite' />
+    </Transform>
+    <Transform translation='6 0 7'>
+      <Transform USE='tileBlack' />
+    </Transform>
+    <Transform translation='7 0 7'>
+      <Transform USE='tileWhite' />
+    </Transform>
+  </Scene>
+</X3D>

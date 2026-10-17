@@ -1,0 +1,60 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:60352,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;4ac7844354f2e89be14b1740fd2c33807461adfb83815bd1d2072f5432eedfba&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;anim-02&quot;,&quot;prompt_sha256&quot;:&quot;f8ba1ee0979155c5b3f30a153aa45b345307950bdc14267aaa8539e2a3d6a0a7&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2409,&quot;run_id&quot;:&quot;fccfb128-c15d-4183-b6cd-2b501643e41f&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:374,&quot;tokens_out&quot;:871}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;4ac7844354f2e89be14b1740fd2c33807461adfb83815bd1d2072f5432eedfba&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;465eceb202c3621657275d704718bbc279273ceb0377585159e82da359c92aee&quot;,&quot;prev&quot;:&quot;2af99a31542ffb2c20bbd746b890e68e94facc56da22bffd3833fc6abb11f351&quot;,&quot;semantic_valid&quot;:false,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;465eceb202c3621657275d704718bbc279273ceb0377585159e82da359c92aee&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;465eceb202c3621657275d704718bbc279273ceb0377585159e82da359c92aee&quot;,&quot;prev&quot;:&quot;2eeea554b36a6d65491cbeb0c8921976bdacf63091be45e51f9837e049b7de40&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:null,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Bouncing Ball' position='0 2 5'/>
+<NavigationInfo type='EXAMINE'/>
+<TimeSensor DEF='BounceTimer' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='BouncePath' key='0 0.25 0.5 0.75 1' keyValue='0 0 0 0 2 0 0 2 0 0 0 2 0 0 0 0'/>
+<PositionInterpolator DEF='EaseTopPath' key='0 0.75 1' keyValue='0 2 0 0 2 0'/>
+<OrientationInterpolator DEF='Spin' key='0 1' keyValue='0 1 0 0 0 0 1 0'/>
+<Script DEF='BounceScript'>
+<field name='fraction' type='SFTime' accessType='inputOutput'/>
+<field name='position' type='SFVec3f' accessType='outputOnly'/>
+<field name='orientation' type='SFVec3f' accessType='outputOnly'/>
+<field name='isBouncing' type='SFBool' accessType='outputOnly'/>
+<field name='isSpinning' type='SFBool' accessType='outputOnly'/>
+<IS>
+<connect fromNode='BounceTimer' fromField='fraction' toNode='BounceScript' toField='fraction'/>
+<connect fromNode='BounceScript' fromField='position' toNode='BounceBall' toField='position'/>
+<connect fromNode='BounceScript' fromField='orientation' toNode='BounceBall' toField='orientation'/>
+<connect fromNode='BounceScript' fromField='isBouncing' toNode='BounceBall' toField='isBouncing'/>
+<connect fromNode='BounceScript' fromField='isSpinning' toNode='BounceBall' toField='isSpinning'/>
+</IS>
+<javascript>
+function SFTime fraction_changed(fraction) {
+    var time = fraction;
+    var pos = new SFVec3f();
+    var orient = new SFVec3f();
+    var isBouncing = new SFBool();
+    var isSpinning = new SFBool();
+    var t = time;
+    if (t < 0.5) {
+        pos.setValue(0, 2 * t, 0);
+        orient.setValue(0, 1, 0);
+        isBouncing.setValue(true);
+        isSpinning.setValue(true);
+    } else {
+        pos.setValue(0, 2 - 2 * (t - 0.5), 0);
+        orient.setValue(0, 1, 0);
+        isBouncing.setValue(true);
+        isSpinning.setValue(true);
+    }
+    this.position.setValue(pos);
+    this.orientation.setValue(orient);
+    this.isBouncing.setValue(isBouncing);
+    this.isSpinning.setValue(isSpinning);
+}
+</javascript>
+</Script>
+<Shape DEF='BounceBall'>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+<Sphere radius='0.5'/>
+</Shape>
+<ROUTE fromNode='BounceTimer' fromField='fraction' toNode='BounceScript' toField='fraction'/>
+<ROUTE fromNode='BounceScript' fromField='position' toNode='BounceBall' toField='position'/>
+<ROUTE fromNode='BounceScript' fromField='orientation' toNode='BounceBall' toField='orientation'/>
+<ROUTE fromNode='BounceScript' fromField='isBouncing' toNode='BounceBall' toField='isBouncing'/>
+<ROUTE fromNode='BounceScript' fromField='isSpinning' toNode='BounceBall' toField='isSpinning'/>
+</Scene>
+</X3D>

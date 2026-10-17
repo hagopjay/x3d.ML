@@ -1,0 +1,24 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:41266,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;43a2dfb8e03ade7131553a0220fd4185ad97e06e9b8478fad7b8c68afbbc1950&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;anim-02&quot;,&quot;prompt_sha256&quot;:&quot;f8ba1ee0979155c5b3f30a153aa45b345307950bdc14267aaa8539e2a3d6a0a7&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:2298,&quot;tokens_out&quot;:949}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;43a2dfb8e03ade7131553a0220fd4185ad97e06e9b8478fad7b8c68afbbc1950&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;6d939604e9955694a9abb386374078da2a8f37e778b2bd506720fb64b765bef2&quot;,&quot;prev&quot;:&quot;89313d3d54f86c210ac7b67f0e3f9dde38ab002fc46c630eb02338e8b79a4054&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;6d939604e9955694a9abb386374078da2a8f37e778b2bd506720fb64b765bef2&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;6d939604e9955694a9abb386374078da2a8f37e778b2bd506720fb64b765bef2&quot;,&quot;prev&quot;:&quot;ae9234d68a6fe6092d5a847dffb3eb7a5d3f6476ff848cb66991bce1540f3487&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <Viewpoint description='Bouncing Ball' position='0 5 10'/>
+    
+    <Transform DEF='BallTransform'>
+      <Shape>
+        <Sphere radius='0.5'/>
+        <Appearance>
+          <Material diffuseColor='1 0 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    
+    <TimeSensor DEF='BounceClock' cycleInterval='2' loop='true'/>
+    
+    <PositionInterpolator DEF='BounceInterpolator'>
+      <key>[0, 0.25, 0.5, 0.75, 1]</key>
+      <keyValue>[0 0 0, 0 1.5 0, 0 2 0, 0 1.5 0, 0 0 0]</keyValue>
+    </PositionInterpolator>
+    
+    <ROUTE fromNode='BounceClock' fromField='fraction_changed' toNode='BounceInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='BounceInterpolator' fromField='value_changed' toNode='BallTransform' toField='translation'/>
+  </Scene>
+</X3D>

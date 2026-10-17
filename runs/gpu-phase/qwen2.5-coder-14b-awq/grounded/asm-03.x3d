@@ -1,0 +1,79 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:30436,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;05a3589424a3438da7b24871d57d7732d802875d1ad5d6b4e27ebe1a718e1280&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;asm-03&quot;,&quot;prompt_sha256&quot;:&quot;5ffe8681f3bbfcccc47b17247ac1b6c34385691fdece5fcb309a1390244221ce&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:362,&quot;tokens_out&quot;:700}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:false,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;05a3589424a3438da7b24871d57d7732d802875d1ad5d6b4e27ebe1a718e1280&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;a1da615aa01214ba2f29f0cd6fbc630a1cb2ec67509d019cb2348aa95814cf6d&quot;,&quot;prev&quot;:&quot;42d49b86082bd92995159217aed85bd4f5fb94f2f0c4a882f75e6df38d2b5615&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;a1da615aa01214ba2f29f0cd6fbc630a1cb2ec67509d019cb2348aa95814cf6d&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;a1da615aa01214ba2f29f0cd6fbc630a1cb2ec67509d019cb2348aa95814cf6d&quot;,&quot;prev&quot;:&quot;628fa1ceac7e902e07496b76e1b028936db1a889febcf60cd11aa7156f2dad05&quot;,&quot;semantic_error_codes&quot;:[&quot;route-type-mismatch&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Background skyColor='0.7 0.8 1'/>
+    <Viewpoint description='Chess Board View' position='0 5 10'/>
+    
+    <!-- Define the black tile -->
+    <Shape DEF='BlackTile'>
+      <Box size='1 0.05 1'/>
+      <Appearance>
+        <Material diffuseColor='0 0 0'/>
+      </Appearance>
+    </Shape>
+    
+    <!-- Define the white tile -->
+    <Shape DEF='WhiteTile'>
+      <Box size='1 0.05 1'/>
+      <Appearance>
+        <Material diffuseColor='1 1 1'/>
+      </Appearance>
+    </Shape>
+    
+    <!-- Create the chess board -->
+    <Transform translation='-3 0 -3'>
+      <Group>
+        <!-- Loop through rows -->
+        <Script DEF='RowLoop'>
+          <field name='row' type='SFInt32' accessType='inputOutput' value='0'/>
+          <field name='column' type='SFInt32' accessType='inputOutput' value='0'/>
+          <field name='nextRow' type='SFBool' accessType='outputOnly'/>
+          <field name='nextColumn' type='SFBool' accessType='outputOnly'/>
+          <![CDATA[
+            function row_changed(value) {
+              if (value >= 8) {
+                nextRow = true;
+              } else {
+                nextColumn = true;
+              }
+            }
+            
+            function column_changed(value) {
+              if (value >= 8) {
+                row = row + 1;
+                column = 0;
+              } else {
+                column = column + 1;
+              }
+            }
+          ]]>
+        </Script>
+        
+        <!-- Loop through columns -->
+        <Script DEF='ColumnLoop'>
+          <field name='column' type='SFInt32' accessType='inputOutput' value='0'/>
+          <field name='nextColumn' type='SFBool' accessType='inputOnly'/>
+          <field name='tile' type='SFNode' accessType='outputOnly'/>
+          <![CDATA[
+            function nextColumn_changed(value) {
+              if (value) {
+                if ((RowLoop.row % 2 == 0 && column % 2 == 0) || (RowLoop.row % 2 != 0 && column % 2 != 0)) {
+                  tile = USE BlackTile;
+                } else {
+                  tile = USE WhiteTile;
+                }
+                column = column + 1;
+              }
+            }
+          ]]>
+        </Script>
+        
+        <!-- Route to create tiles -->
+        <ROUTE fromNode='RowLoop' fromField='nextColumn' toNode='ColumnLoop' toField='nextColumn'/>
+        <ROUTE fromNode='ColumnLoop' fromField='tile' toNode='BoardGroup' toField='addChildren'/>
+        
+        <!-- Group to hold the chess board tiles -->
+        <Group DEF='BoardGroup'/>
+      </Group>
+    </Transform>
+  </Scene>
+</X3D>

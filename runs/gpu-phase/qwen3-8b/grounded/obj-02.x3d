@@ -1,0 +1,38 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:false,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:false,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:49606,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;dacf9e85a7dd93f053e8a1afa24a5305a3195ce1d9f1628f6fed004f71114910&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;obj-02&quot;,&quot;prompt_sha256&quot;:&quot;e3d7c614946e76d785657c7ffa03ff40d0921eb59462f6ffe5eab31586d7c924&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2396,&quot;run_id&quot;:&quot;10d86576-8b72-4d2e-afd2-f90bdadea928&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:2345,&quot;tokens_out&quot;:707}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:false,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;dacf9e85a7dd93f053e8a1afa24a5305a3195ce1d9f1628f6fed004f71114910&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;14992c23f3fb6528a956a0113f3279c8ffeb120b56438e80825610ba23bd2c9a&quot;,&quot;prev&quot;:&quot;b4a144171f5d466a7fcdab58b81708ea49a1d9b2d020ec990898ede82c802cc0&quot;,&quot;semantic_valid&quot;:false,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;14992c23f3fb6528a956a0113f3279c8ffeb120b56438e80825610ba23bd2c9a&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;14992c23f3fb6528a956a0113f3279c8ffeb120b56438e80825610ba23bd2c9a&quot;,&quot;prev&quot;:&quot;be1200b33f3ed9b2accc59d2f4e5fe727ecec646c7f153811c90eb8049f10ef4&quot;,&quot;semantic_error_codes&quot;:[&quot;duplicate-def&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Table View' position='0 2 5'/>
+<Group DEF='TableTop'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.8 0.6 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Group>
+<Group DEF='Leg'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.5 0.3 0.2'/>
+</Appearance>
+<Cylinder radius='0.05' height='0.5'/>
+</Shape>
+</Group>
+<Group DEF='Table'>
+<Transform translation='0 0.25 0'>
+<USE DEF='TableTop'/>
+</Transform>
+<Transform translation='0.75 -0.25 0'>
+<USE DEF='Leg'/>
+</Transform>
+<Transform translation='-0.75 -0.25 0'>
+<USE DEF='Leg'/>
+</Transform>
+<Transform translation='0 -0.25 -0.75'>
+<USE DEF='Leg'/>
+</Transform>
+<Transform translation='0 -0.25 0.75'>
+<USE DEF='Leg'/>
+</Transform>
+</Group>
+</Scene>
+</X3D>

@@ -1,0 +1,1171 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:596981,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;da4a201d4f064fdd2981474e508cbc4935f2547f98baa132cfda5265277024f2&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;obj-03&quot;,&quot;prompt_sha256&quot;:&quot;b5aa11086f2da5a43969440acc3631ce6e910a4715aeb4a76e385fd35e9638db&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2409,&quot;run_id&quot;:&quot;fccfb128-c15d-4183-b6cd-2b501643e41f&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:367,&quot;tokens_out&quot;:8000}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;da4a201d4f064fdd2981474e508cbc4935f2547f98baa132cfda5265277024f2&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;24a3b0171ac9ffaab3687ba1c5ab0eabfa84720f7dd61b038e85eef0546ffd5f&quot;,&quot;prev&quot;:&quot;ae68bfb412878627ffa5393a9e0331562762040cf41836b5906ac1055f5b37fb&quot;,&quot;semantic_valid&quot;:false,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;24a3b0171ac9ffaab3687ba1c5ab0eabfa84720f7dd61b038e85eef0546ffd5f&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;24a3b0171ac9ffaab3687ba1c5ab0eabfa84720f7dd61b038e85eef0546ffd5f&quot;,&quot;prev&quot;:&quot;364b9f794eaedb32701e6789df166ffd8de97b5e23c32c8f3afca6d7820e9a85&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:null,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Traffic Cone' position='0 2 5' orientation='0 1 0 0'/>
+<Group DEF='Base'>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Group>
+<Group DEF='Cone'>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.7' bottomRadius='0.1' topRadius='0'/>
+</Group>
+<Group DEF='ConeTop'>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Group>
+<Group DEF='ConeBottom'>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Base'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='0.2 0.2 0.2'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Cone'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.35' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeTop'>
+<Transform translation='0 0.7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0.65 0'/>
+</Appearance>
+<Cone height='0.1' bottomRadius='0.1' topRadius='0'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='ConeBottom'>
+<Transform translation='0 0.35 0'>
+<Shape>
+<

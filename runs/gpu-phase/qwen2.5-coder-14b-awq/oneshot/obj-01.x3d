@@ -1,0 +1,27 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:12104,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;d1e4f0401ca5d5a3960e011a45ef9d322e3ec480e6a3d404b9c7b33222d60dcf&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;obj-01&quot;,&quot;prompt_sha256&quot;:&quot;bfc338574c263ffe152038dcf2685764da445ade533bf9102008129be2b43058&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0183,&quot;run_id&quot;:&quot;8d3d76be-4662-4f9e-8c18-ed20dc27794a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:367,&quot;tokens_out&quot;:268}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;d1e4f0401ca5d5a3960e011a45ef9d322e3ec480e6a3d404b9c7b33222d60dcf&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;c803ffbbd116fb29fbb82ceb1dd6f504d7c60b9b988d8d4ce3d3685f2022fc3f&quot;,&quot;prev&quot;:&quot;edff503494f31316f8d3586adf8f0da477ed7bb2447bc7213c304fb741c3b197&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;c803ffbbd116fb29fbb82ceb1dd6f504d7c60b9b988d8d4ce3d3685f2022fc3f&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;c803ffbbd116fb29fbb82ceb1dd6f504d7c60b9b988d8d4ce3d3685f2022fc3f&quot;,&quot;prev&quot;:&quot;f3aaf3ec0f45660b0d409d591bc00f8f3354fbe29e4061dd2f84e72ac7d6e5a7&quot;,&quot;semantic_error_codes&quot;:[&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <!-- Ground Plane -->
+    <Shape>
+      <Appearance>
+        <Material diffuseColor='0.5 0.5 0.5'/>
+      </Appearance>
+      <Box size='10 0.1 10'/>
+    </Shape>
+
+    <!-- Red PBR Sphere -->
+    <Transform translation='0 1.5 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColorFactor='1 0 0' roughnessFactor='0.5' metallicFactor='0.8'/>
+        </Appearance>
+        <Sphere radius='1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Directional Light -->
+    <DirectionalLight direction='0 -1 0' color='1 1 1' intensity='0.8'/>
+
+    <!-- Named Viewpoint -->
+    <Viewpoint description='Red PBR Sphere Viewpoint' position='0 2 5'/>
+  </Scene>
+</X3D>

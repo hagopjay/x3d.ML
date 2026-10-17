@@ -1,0 +1,2004 @@
+[
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "anim-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "anim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "anim-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "anim-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "route-invalid-from-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "anim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "asm-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "asm-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "asm-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "asm-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "geo-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "geo-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "geo-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "geo-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "interpolator-key-length",
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "geo-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "hanim-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "hanim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "hanim-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component",
+   "route-invalid-from-field",
+   "route-invalid-to-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "hanim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "int-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-to-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "int-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-invalid-to-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "int-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-missing-to-node"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "int-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-to-field"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "obj-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "obj-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "duplicate-def"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "grounded",
+  "prompt": "obj-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "anim-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-missing-to-node"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "anim-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "anim-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-missing-to-node"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "anim-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "anim-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "asm-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "asm-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "asm-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "duplicate-def"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "asm-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "asm-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "geo-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "geo-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "geo-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "geo-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "geo-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "hanim-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "hanim-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "hanim-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "naming-convention",
+   "profile-component",
+   "route-invalid-from-field",
+   "route-invalid-to-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "hanim-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "hanim-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-to-field",
+   "route-missing-to-node"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "int-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "int-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-invalid-to-field",
+   "route-missing-to-node",
+   "route-wrong-access-type"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "int-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "int-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-missing-from-node"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "int-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "obj-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "obj-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "duplicate-def"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "obj-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "obj-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen3-8b",
+  "mode": "oneshot",
+  "prompt": "obj-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "anim-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "anim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "anim-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "anim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "anim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "asm-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "asm-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "asm-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "duplicate-def"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "asm-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "asm-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "geo-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "geo-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "geo-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "geo-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "interpolator-key-length",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "geo-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "hanim-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "hanim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "hanim-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "hanim-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "duplicate-def",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "hanim-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "int-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "int-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "int-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "int-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "int-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "obj-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "obj-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "obj-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "obj-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component",
+   "tuple-count"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "oneshot",
+  "prompt": "obj-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "anim-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 3
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "anim-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 3
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "anim-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "anim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "anim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "asm-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "asm-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 2
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "asm-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-type-mismatch"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "asm-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "asm-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "geo-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "geo-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 2
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "geo-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "geo-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "geo-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "hanim-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "hanim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "hanim-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "hanim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "hanim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "int-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "int-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-type-mismatch"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "int-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "int-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-type-mismatch"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "int-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 2
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "obj-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 2
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "obj-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "obj-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "qwen2.5-coder-14b-awq",
+  "mode": "grounded",
+  "prompt": "obj-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "tuple-count"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "anim-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "anim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "interpolator-key-length"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "anim-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "anim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "anim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "asm-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "asm-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "asm-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "asm-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "asm-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "geo-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "geo-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "geo-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "geo-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "geo-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "hanim-01",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "hanim-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component",
+   "route-type-mismatch"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "hanim-03",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "hanim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "hanim-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "interpolator-key-length",
+   "profile-component",
+   "route-invalid-to-field",
+   "tuple-count"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "int-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "int-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-invalid-to-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "int-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "int-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-to-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "int-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-invalid-to-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "obj-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "obj-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "obj-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "obj-04",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-unknown",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "oneshot",
+  "prompt": "obj-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "tuple-count"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "anim-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "anim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "anim-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "anim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "anim-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "asm-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "asm-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "asm-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "asm-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "asm-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "geo-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "geo-02",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "geo-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "geo-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component",
+   "route-invalid-from-field",
+   "route-type-mismatch"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "geo-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "hanim-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "hanim-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component",
+   "route-invalid-to-field"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "hanim-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "hanim-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "profile-component"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "hanim-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [
+   "containerfield-type-mismatch",
+   "route-type-mismatch"
+  ],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "int-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-type-mismatch"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "int-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "int-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field"
+  ],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "int-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "route-invalid-from-field",
+   "route-invalid-to-field"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "int-05",
+  "status": "verified",
+  "hist": "invalid",
+  "now": "invalid",
+  "now_codes": [],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "obj-01",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 3
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "obj-02",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 2
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "obj-03",
+  "status": "verified",
+  "hist": "valid",
+  "now": "valid",
+  "now_codes": [],
+  "attempts": 1
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "obj-04",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "profile-component"
+  ],
+  "attempts": 2
+ },
+ {
+  "model": "gpt-oss-20b",
+  "mode": "grounded",
+  "prompt": "obj-05",
+  "status": "verified",
+  "hist": "valid",
+  "now": "invalid",
+  "now_codes": [
+   "tuple-count"
+  ],
+  "attempts": 2
+ }
+]

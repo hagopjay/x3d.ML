@@ -1,0 +1,39 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:2,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:2,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:32123,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;9240d609fae7944fdab596e7ea5dcd40c996860a3fbc2f4d87ef7fa606105962&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;hanim-01&quot;,&quot;prompt_sha256&quot;:&quot;351c346430c85444dad993302d60fa69456b7beeba3a93f186ff268678311d12&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:1167,&quot;tokens_out&quot;:728}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;9240d609fae7944fdab596e7ea5dcd40c996860a3fbc2f4d87ef7fa606105962&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;7c56ed09bb544aecb26bc5bb8c59243b3a448c88b68ae318053c2a4464d00737&quot;,&quot;prev&quot;:&quot;0aa58d3b55f41591547e18f89b966d4db8400ed86bbcdd270b774f03989b2801&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;7c56ed09bb544aecb26bc5bb8c59243b3a448c88b68ae318053c2a4464d00737&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;7c56ed09bb544aecb26bc5bb8c59243b3a448c88b68ae318053c2a4464d00737&quot;,&quot;prev&quot;:&quot;fa51b8f5fe8945b2420812038e56e5a90abdcc1a0a5dae74fbb842c956da39e8&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-type-mismatch&quot;,&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Viewpoint description='HAnim Humanoid' position='0 0 5'/>
+    
+    <!-- HAnimHumanoid -->
+    <HAnimHumanoid name='humanoid_root' version='2.0'>
+      <HAnimJoint name='sacroiliac'>
+        <HAnimSegment DEF='SacroiliacSegment'>
+          <Shape>
+            <Box size='0.5 0.5 0.5'/>
+            <Appearance>
+              <Material diffuseColor='1 0 0'/>
+            </Appearance>
+          </Shape>
+        </HAnimSegment>
+        <HAnimJoint name='l_hip'>
+          <HAnimSegment DEF='LHipSegment'>
+            <Shape>
+              <Box size='0.5 0.5 0.5'/>
+              <Appearance>
+                <Material diffuseColor='0 1 0'/>
+              </Appearance>
+            </Shape>
+          </HAnimSegment>
+        </HAnimJoint>
+        <HAnimJoint name='r_hip'>
+          <HAnimSegment DEF='RHipSegment'>
+            <Shape>
+              <Box size='0.5 0.5 0.5'/>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+            </Shape>
+          </HAnimSegment>
+        </HAnimJoint>
+      </HAnimJoint>
+    </HAnimHumanoid>
+  </Scene>
+</X3D>

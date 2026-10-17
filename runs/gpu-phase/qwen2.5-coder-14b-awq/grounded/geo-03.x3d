@@ -1,0 +1,18 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:44986,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;4d489b0055b4cad9fa9f8de83582f19ff99f5e63dad822c3acf5ad92d7b770d2&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;geo-03&quot;,&quot;prompt_sha256&quot;:&quot;35550664483de35454735a9beaaf9c23f5ec4a1bda6d57f97b8212853271b134&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:2383,&quot;tokens_out&quot;:1005}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;4d489b0055b4cad9fa9f8de83582f19ff99f5e63dad822c3acf5ad92d7b770d2&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;db298a4d8e0a98435f937dca2fcf84aaeb35e59ad3c6f798cff09a694881be37&quot;,&quot;prev&quot;:&quot;676165f9dd6416ba83904ca7b71758ea3fb6ed9657722ef93a6f486fa3027770&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;db298a4d8e0a98435f937dca2fcf84aaeb35e59ad3c6f798cff09a694881be37&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;db298a4d8e0a98435f937dca2fcf84aaeb35e59ad3c6f798cff09a694881be37&quot;,&quot;prev&quot;:&quot;f8626f73a4b635d13ade8c5d3d8de8e3ac4d3a670983eeae04a199696c3227a2&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-unknown&quot;,&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <Background skyColor='0.7 0.8 1.0'/>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='34.0522 -118.2437 0'>
+      <Transform translation='0 0 0'>
+        <Shape>
+          <GeoElevationGrid xDimension='5' zDimension='5' xSpacing='20' zSpacing='20' height='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'>
+            <Appearance>
+              <Material diffuseColor='0.6 0.4 0.2'/>
+            </Appearance>
+          </GeoElevationGrid>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoViewpoint description='Drillfield View' geoSystem='"GD" "WE"' position='34.0522 -118.2437 50'/>
+    <Viewpoint description='Local View' position='0 0 50'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,57 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:23911,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;d4a0334c508776d41df0f982a27d70be680d7978732956491f7bb06aeac8561d&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;asm-01&quot;,&quot;prompt_sha256&quot;:&quot;18abec4b72c397e190c08011e938a4e05f36cf259af02db5b2b7197c75ed855a&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0808,&quot;run_id&quot;:&quot;afb0d88f-cd44-404e-a02e-ba5ee84e6b5e&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:372,&quot;tokens_out&quot;:546}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;d4a0334c508776d41df0f982a27d70be680d7978732956491f7bb06aeac8561d&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;2ab24465d11a0509fc9747da985eaef1eacc1ba2bf7baad5bbfd22861854d083&quot;,&quot;prev&quot;:&quot;08c16134866620e35f47519608712173ebdffd3c1f48a67f7de5dd9c46e8140c&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;2ab24465d11a0509fc9747da985eaef1eacc1ba2bf7baad5bbfd22861854d083&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;2ab24465d11a0509fc9747da985eaef1eacc1ba2bf7baad5bbfd22861854d083&quot;,&quot;prev&quot;:&quot;c2a9cef2d0c8986d80bc5b745d1ebc0e4b04ea56780eae9c4ab714792c75548e&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Viewpoint description='Simple House Viewpoint' position='0 5 10'/>
+    
+    <!-- House Body -->
+    <Transform DEF='HouseBody' translation='0 -1 0'>
+      <Shape>
+        <Box size='4 2 3'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.6 0.4'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    
+    <!-- Pyramid Roof -->
+    <Transform DEF='PyramidRoof' translation='0 1 0'>
+      <Shape>
+        <IndexedFaceSet coordIndex='0 1 2 3 -1 0 1 4 -1 1 2 4 -1 2 3 4 -1'>
+          <Coordinate point='-2 2 1.5 2 2 1.5 2 -2 1.5 -2 -2 1.5 0 3 1.5'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <Material diffuseColor='0.5 0.3 0.1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    
+    <!-- Door -->
+    <Transform DEF='Door' translation='-1 0 0'>
+      <Shape>
+        <Box size='1 2 0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.7 0.5 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    
+    <!-- Window 1 -->
+    <Transform DEF='Window1' translation='1 0 1.1'>
+      <Shape>
+        <Box size='1 1 0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.4 0.6'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    
+    <!-- Window 2 -->
+    <Transform DEF='Window2' translation='1 0 -1.1'>
+      <Shape>
+        <Box size='1 1 0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.4 0.6'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

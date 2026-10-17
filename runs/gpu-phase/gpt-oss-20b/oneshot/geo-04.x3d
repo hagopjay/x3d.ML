@@ -1,0 +1,40 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:23408,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;69ea0c1507b5ed57005f4167d31915720bf30eb6b5b9456bff5b27c581e4098f&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;geo-04&quot;,&quot;prompt_sha256&quot;:&quot;2b53290cc8dbf8a1ca8adcefd47117716999bcee8f2dc69df5eba173d524169d&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0253,&quot;run_id&quot;:&quot;7bddcbef-41e0-4b4b-a464-d07f20a05049&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:424,&quot;tokens_out&quot;:653}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;69ea0c1507b5ed57005f4167d31915720bf30eb6b5b9456bff5b27c581e4098f&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;b4de4389a1d57e24f0aa02684736fec3beb2c5d780f5c00eecb2935a99006284&quot;,&quot;prev&quot;:&quot;8d5dca60aacaa3bb792dc8925793a22b4a45fc864727c3a867e41cf1e4eddaa0&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;b4de4389a1d57e24f0aa02684736fec3beb2c5d780f5c00eecb2935a99006284&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;b4de4389a1d57e24f0aa02684736fec3beb2c5d780f5c00eecb2935a99006284&quot;,&quot;prev&quot;:&quot;3d609db90d4fc2c5ff07e845dcc1fe074a35314560e38835f33b8ac6e954ecb7&quot;,&quot;semantic_error_codes&quot;:[&quot;profile-component&quot;,&quot;route-invalid-from-field&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <!-- GeoLocation at Torgersen Hall -->
+    <GeoLocation DEF='TorgersenHall' geoSystem='"GD" "WE"' geoCoords='59.9127 10.7460 0' />
+    <!-- GeoViewpoint positioned 50m above the hall -->
+    <GeoViewpoint DEF='GeoVP' description='Drone view' geoSystem='"GD" "WE"' position='59.9127 10.7460 50' />
+    <!-- Simple viewpoint for quick start -->
+    <Viewpoint description='Default View' position='0 0 100' orientation='0 0 1 0' />
+    <!-- Drone: small box -->
+    <Transform DEF='Drone' translation='0 0 0'>
+      <Shape>
+        <Box size='2 0.5 1' />
+        <Appearance>
+          <Material diffuseColor='0 0 1' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- GeoCoordinate defining square path 50m above hall -->
+    <GeoCoordinate DEF='PathCoords' geoSystem='"GD" "WE"' geoCoord='
+      59.9127 10.7460 50
+      59.9127 10.7465 50
+      59.9122 10.7465 50
+      59.9122 10.7460 50
+      59.9127 10.7460 50
+    ' />
+    <!-- TimeSensor for looping animation -->
+    <TimeSensor DEF='Clock' cycleInterval='20' loop='true' />
+    <!-- GeoPositionInterpolator to follow square path -->
+    <GeoPositionInterpolator DEF='DronePath' key='0 0.25 0.5 0.75 1' keyValue='
+      59.9127 10.7460 50
+      59.9127 10.7465 50
+      59.9122 10.7465 50
+      59.9122 10.7460 50
+      59.9127 10.7460 50
+    ' />
+    <!-- ROUTEs to animate drone -->
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='DronePath' toField='set_fraction' />
+    <ROUTE fromNode='DronePath' fromField='position_changed' toNode='Drone' toField='set_translation' />
+  </Scene>
+</X3D>

@@ -1,0 +1,135 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:66857,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;1eff533d71af8f407ba58f8f6a44ad69015c468875dfbc9990e58f8cc0693a56&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;asm-05&quot;,&quot;prompt_sha256&quot;:&quot;04e1335bcc11284826330ca5868e5bbdb3c05b22e36fb08d4b12ab5fbca5a564&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2396,&quot;run_id&quot;:&quot;10d86576-8b72-4d2e-afd2-f90bdadea928&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:366,&quot;tokens_out&quot;:942}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;1eff533d71af8f407ba58f8f6a44ad69015c468875dfbc9990e58f8cc0693a56&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;f2d6bcadd8e6aedad7450a41ced96c6d74d393cb6fc3546842388bc17d8e0e2f&quot;,&quot;prev&quot;:&quot;83617fadde108f37d4f38f6955c9d22e04827056cdf5f088e5b734ad1c6b0688&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;f2d6bcadd8e6aedad7450a41ced96c6d74d393cb6fc3546842388bc17d8e0e2f&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;f2d6bcadd8e6aedad7450a41ced96c6d74d393cb6fc3546842388bc17d8e0e2f&quot;,&quot;prev&quot;:&quot;7db4e9e89d3e3538e9311341681f666f8be52fa50199c1832c732aa437b50ba1&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+<Scene>
+<Viewpoint description='Bookshelf View' position='0 3 5' orientation='0 1 0 0'/>
+<Group DEF='Bookshelf'>
+<Transform translation='0 0 -2'>
+<Group DEF='Shelf1'>
+<Transform translation='0 0 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 0.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.6 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 1 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.6'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 1.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.2 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 2 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.4 0.6'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Shelf2'>
+<Transform translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 3 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.6 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 3.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.6'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 4 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.2 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 4.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.4 0.6'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+</Group>
+<Group DEF='Shelf3'>
+<Transform translation='0 5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 5.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.6 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 6 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.6'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 6.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.2 0.4'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+<Transform translation='0 7 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.4 0.6'/>
+</Appearance>
+<Box size='2 0.2 1'/>
+</Shape>
+</Transform>
+</Group>
+</Transform>
+</Group>
+</Scene>
+</X3D>

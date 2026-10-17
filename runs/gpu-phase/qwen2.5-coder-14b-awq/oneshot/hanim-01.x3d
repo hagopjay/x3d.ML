@@ -1,0 +1,53 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:19732,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;654cadb55f1e2b5eab2d389be88a99cf89c3700b8ce67aa68e7c3c4b42e73186&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;hanim-01&quot;,&quot;prompt_sha256&quot;:&quot;351c346430c85444dad993302d60fa69456b7beeba3a93f186ff268678311d12&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0183,&quot;run_id&quot;:&quot;8d3d76be-4662-4f9e-8c18-ed20dc27794a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:376,&quot;tokens_out&quot;:474}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;654cadb55f1e2b5eab2d389be88a99cf89c3700b8ce67aa68e7c3c4b42e73186&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;2e229836a9a094d528f008c02e667d6577b65c93fa65f491fabcdcf3a22c1a6a&quot;,&quot;prev&quot;:&quot;4985bb0d116e5ac3b85d1c33c5d1f1195c4e77806f30f49e2ee2ccc8cb2d5749&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;2e229836a9a094d528f008c02e667d6577b65c93fa65f491fabcdcf3a22c1a6a&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;2e229836a9a094d528f008c02e667d6577b65c93fa65f491fabcdcf3a22c1a6a&quot;,&quot;prev&quot;:&quot;e5645aa18e90076944376a9a891b6f1bf493522fd1fbde9b33a381688e889703&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-type-mismatch&quot;,&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <Viewpoint description='HAnim Humanoid' position='0 0 5'/>
+    
+    <!-- HAnimHumanoid -->
+    <HAnimHumanoid name='humanoid_root' version='2.0'>
+      <!-- HAnimJoint for sacroiliac -->
+      <HAnimJoint name='sacroiliac'>
+        <Transform translation='0 0 0'>
+          <Shape>
+            <Box size='0.5 0.5 0.5'/>
+            <Appearance>
+              <Material diffuseColor='1 0 0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        
+        <!-- HAnimSegment for sacroiliac -->
+        <HAnimSegment name='sacroiliac_segment'>
+          <!-- HAnimJoint for l_hip -->
+          <HAnimJoint name='l_hip'>
+            <Transform translation='-1 -0.5 -1'>
+              <Shape>
+                <Box size='0.5 0.5 0.5'/>
+                <Appearance>
+                  <Material diffuseColor='0 1 0'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+            
+            <!-- HAnimSegment for l_hip -->
+            <HAnimSegment name='l_hip_segment'/>
+          </HAnimJoint>
+          
+          <!-- HAnimJoint for r_hip -->
+          <HAnimJoint name='r_hip'>
+            <Transform translation='1 -0.5 -1'>
+              <Shape>
+                <Box size='0.5 0.5 0.5'/>
+                <Appearance>
+                  <Material diffuseColor='0 0 1'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+            
+            <!-- HAnimSegment for r_hip -->
+            <HAnimSegment name='r_hip_segment'/>
+          </HAnimJoint>
+        </HAnimSegment>
+      </HAnimJoint>
+    </HAnimHumanoid>
+  </Scene>
+</X3D>

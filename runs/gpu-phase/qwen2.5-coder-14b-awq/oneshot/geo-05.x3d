@@ -1,0 +1,25 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:12201,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen2.5-coder-14b-awq&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;57cb1fcc05458c856300725b7bcf56db13c641ab5e97993f91df4ad4d56d94ef&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;geo-05&quot;,&quot;prompt_sha256&quot;:&quot;4e62b71a92f91436478681168f63b6b0f9391e31600ffedd3ee254872af6ac62&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0183,&quot;run_id&quot;:&quot;8d3d76be-4662-4f9e-8c18-ed20dc27794a&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:364,&quot;tokens_out&quot;:295}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;57cb1fcc05458c856300725b7bcf56db13c641ab5e97993f91df4ad4d56d94ef&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;c9e420603546350966cfec1cfff3b284808a51aa07ed718b5aa5f616f31653f0&quot;,&quot;prev&quot;:&quot;18ca23136b4e41937058a3c6d8fd97c8cb59c618589ca6b0291724b5553ffdff&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;c9e420603546350966cfec1cfff3b284808a51aa07ed718b5aa5f616f31653f0&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;c9e420603546350966cfec1cfff3b284808a51aa07ed718b5aa5f616f31653f0&quot;,&quot;prev&quot;:&quot;d0285fd8c9e22e1c5e4b1c69aea7de61f252354cd0ce66e00ee2c93b6e3a2ba9&quot;,&quot;semantic_error_codes&quot;:[&quot;profile-component&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='47.6062 -122.3321 0'>
+      <GeoLOD range='200'>
+        <LevelOfDetail>
+          <Switch whichChoice='0'>
+            <Transform translation='0 0 0'>
+              <Shape>
+                <Box size='2 2 2'/>
+                <Appearance>
+                  <Material diffuseColor='1 0 0'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+            <Transform translation='0 0 0'>
+              <Inline url='statue.x3d'/>
+            </Transform>
+          </Switch>
+        </LevelOfDetail>
+      </GeoLOD>
+    </GeoLocation>
+    <GeoViewpoint description='Statue View' geoSystem='"GD" "WE"' position='47.6062 -122.3321 0'/>
+    <Viewpoint description='Default View' position='0 0 10'/>
+  </Scene>
+</X3D>

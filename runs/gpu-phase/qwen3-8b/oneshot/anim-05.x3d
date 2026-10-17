@@ -1,0 +1,41 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:38182,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;c01ad2b03a072f79463e91a104e5578679b6880fb69ea81e68112dece0eb855e&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;anim-05&quot;,&quot;prompt_sha256&quot;:&quot;9b09582cf95939be9c9562fa71b338f7ac86aa348fb62ccfee5c36777bdd7174&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2409,&quot;run_id&quot;:&quot;fccfb128-c15d-4183-b6cd-2b501643e41f&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:361,&quot;tokens_out&quot;:545}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:false,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;c01ad2b03a072f79463e91a104e5578679b6880fb69ea81e68112dece0eb855e&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;f054d158c0d7df57e01a466bbc42e00d6ca270adc79c80bc639b35dfc742e3c4&quot;,&quot;prev&quot;:&quot;2bc51bb2954cdb7eb45ace785f5d51b9caf5aa424c9037399ca98b968b432e69&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;f054d158c0d7df57e01a466bbc42e00d6ca270adc79c80bc639b35dfc742e3c4&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;f054d158c0d7df57e01a466bbc42e00d6ca270adc79c80bc639b35dfc742e3c4&quot;,&quot;prev&quot;:&quot;1a201bba71ed9e5c918947ff8246f2603652cabc77cee9d183f8fddc808abe28&quot;,&quot;semantic_error_codes&quot;:[&quot;route-invalid-from-field&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Default View' position='0 3 5'/>
+<TimeSensor DEF='TimeSensor1' cycleInterval='5' loop='TRUE'/>
+<TimeSensor DEF='TimeSensor2' cycleInterval='3' loop='TRUE'/>
+<TimeSensor DEF='TimeSensor3' cycleInterval='8' loop='TRUE'/>
+<OrientationInterpolator DEF='Cube1Rot' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 0 1 0 0 0'/>
+<OrientationInterpolator DEF='Cube2Rot' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 0 1 0 0 0'/>
+<OrientationInterpolator DEF='Cube3Rot' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 0 1 0 0 0'/>
+<ROUTE fromNode='TimeSensor1' fromField='fractionCurrent' toNode='Cube1Rot' toField='set_fraction'/>
+<ROUTE fromNode='TimeSensor2' fromField='fractionCurrent' toNode='Cube2Rot' toField='set_fraction'/>
+<ROUTE fromNode='TimeSensor3' fromField='fractionCurrent' toNode='Cube3Rot' toField='set_fraction'/>
+<Transform DEF='Cube1Transform'>
+<Shape>
+<Appearance>
+<Material DEF='Cube1Mat' diffuseColor='1 0 0'/>
+</Appearance>
+<Box DEF='Cube1' size='1 1 1'/>
+</Shape>
+<OrientationInterpolator USE='Cube1Rot'/>
+</Transform>
+<Transform DEF='Cube2Transform'>
+<Shape>
+<Appearance>
+<Material DEF='Cube2Mat' diffuseColor='0 1 0'/>
+</Appearance>
+<Box DEF='Cube2' size='1 1 1'/>
+</Shape>
+<OrientationInterpolator USE='Cube2Rot'/>
+</Transform>
+<Transform DEF='Cube3Transform'>
+<Shape>
+<Appearance>
+<Material DEF='Cube3Mat' diffuseColor='0 0 1'/>
+</Appearance>
+<Box DEF='Cube3' size='1 1 1'/>
+</Shape>
+<OrientationInterpolator USE='Cube3Rot'/>
+</Transform>
+</Scene>
+</X3D>

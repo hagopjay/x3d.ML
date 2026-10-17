@@ -1,0 +1,43 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:56355,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;8695ef96de1e80ce906bf275b25420325642a957d0802cfcfc716bcb26bfa411&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;hanim-02&quot;,&quot;prompt_sha256&quot;:&quot;d1b9b76e0dff3322ab0f2223518fa3c572e596b7d3a95d049e857b722989a26f&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0253,&quot;run_id&quot;:&quot;7bddcbef-41e0-4b4b-a464-d07f20a05049&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:420,&quot;tokens_out&quot;:1675}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;8695ef96de1e80ce906bf275b25420325642a957d0802cfcfc716bcb26bfa411&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;244ae7c1d5a3816a3cb3232c721495f29302a3f4b7ea4e3a43f88a89d53476c7&quot;,&quot;prev&quot;:&quot;a7cd929f18e34312e03ad0ec2034afc76f91141ff3ab9243a791a68275ec87c4&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;244ae7c1d5a3816a3cb3232c721495f29302a3f4b7ea4e3a43f88a89d53476c7&quot;,&quot;ms&quot;:1,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;244ae7c1d5a3816a3cb3232c721495f29302a3f4b7ea4e3a43f88a89d53476c7&quot;,&quot;prev&quot;:&quot;1bab342b1e1ee29c1480a50d1ddc49533b40e23842f19bc38874f137c48c835c&quot;,&quot;semantic_error_codes&quot;:[&quot;containerfield-type-mismatch&quot;,&quot;profile-component&quot;,&quot;route-type-mismatch&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+  <Scene>
+    <HAnimHumanoid DEF='Humanoid' name='SimpleHumanoid' version='2.0'>
+      <HAnimJoint DEF='humanoidRoot' name='humanoidRoot' pos='0 0 0' orient='0 0 1 0'>
+        <HAnimSegment DEF='humanoidRootSegment' name='humanoidRoot'>
+          <Transform translation='0 0 0'>
+            <Shape>
+              <Box size='0.1 0.1 0.1'/>
+            </Shape>
+          </Transform>
+        </HAnimSegment>
+        <HAnimJoint DEF='rightShoulder' name='rightShoulder' pos='0.2 1.5 0' orient='0 0 1 0'>
+          <HAnimSegment DEF='rightUpperArm' name='rightUpperArm'>
+            <Transform translation='0 0 0'>
+              <Shape>
+                <Cylinder radius='0.05' height='0.5'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          <HAnimJoint DEF='rightElbow' name='rightElbow' pos='0.2 1.0 0' orient='0 0 1 0'>
+            <HAnimSegment DEF='rightLowerArm' name='rightLowerArm'>
+              <Transform translation='0 0 0'>
+                <Shape>
+                  <Cylinder radius='0.04' height='0.4'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+    </HAnimHumanoid>
+
+    <Viewpoint DEF='defaultVP' description='Default View' position='0 2 5' orientation='0 0 1 0'/>
+
+    <TouchSensor DEF='waveSensor' description='Wave shoulder'/>
+    <TimeSensor DEF='waveClock' cycleInterval='2' loop='true'/>
+    <OrientationInterpolator DEF='waveInterp' key='0 0.5 1' keyValue='0 0 1 0 0 0 1 0.5 0 0 1 0'/>
+    <ROUTE fromField='fraction_changed' fromNode='waveClock' toField='set_fraction' toNode='waveInterp'/>
+    <ROUTE fromField='value_changed' fromNode='waveInterp' toField='set_rotation' toNode='rightShoulder'/>
+    <ROUTE fromField='isActive' fromNode='waveSensor' toField='set_startTime' toNode='waveClock'/>
+    <ROUTE fromField='isActive' fromNode='waveSensor' toField='set_stopTime' toNode='waveClock'/>
+  </Scene>
+</X3D>

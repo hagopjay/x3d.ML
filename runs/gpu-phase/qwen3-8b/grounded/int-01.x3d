@@ -1,0 +1,28 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:3,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;report_repair&quot;,&quot;earlier_attempts&quot;:[{&quot;attempt&quot;:1,&quot;semantic_valid&quot;:false,&quot;xsd_valid&quot;:false},{&quot;attempt&quot;:2,&quot;semantic_valid&quot;:true,&quot;xsd_valid&quot;:false}],&quot;final_attempt&quot;:3,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:67954,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;qwen3-8b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;99ba240f8225aca184b98f7fe17ae23113f5e801e0e373b23247da25f13d7fba&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;int-01&quot;,&quot;prompt_sha256&quot;:&quot;9bf8b7c65ba2d0686409624ff5599784f08aba85637afecd5d2c077787c9958c&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.2396,&quot;run_id&quot;:&quot;10d86576-8b72-4d2e-afd2-f90bdadea928&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:2321,&quot;tokens_out&quot;:911}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:false,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;99ba240f8225aca184b98f7fe17ae23113f5e801e0e373b23247da25f13d7fba&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;0b70c6d686dd35238f0f900104e0d071699156ecd2f2d7ba3f0e889a7ecd09d0&quot;,&quot;prev&quot;:&quot;286f46e0f1966462a4ab7552d536993783389cf6acc4d8ae627721377f891189&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd_valid&quot;:false}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;0b70c6d686dd35238f0f900104e0d071699156ecd2f2d7ba3f0e889a7ecd09d0&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;0b70c6d686dd35238f0f900104e0d071699156ecd2f2d7ba3f0e889a7ecd09d0&quot;,&quot;prev&quot;:&quot;5a216418c2ba32e77c7874be73af8bd79f97c2e1d26abfdfa816ca4546702a0f&quot;,&quot;semantic_error_codes&quot;:[&quot;route-invalid-to-field&quot;],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;invalid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:false}"/></head>
+<Scene>
+<Viewpoint description='Default View' position='0 3 5'/>
+<Group>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+<Box size='1 0.2 1'/>
+</Shape>
+<TouchSensor description='Button' DEF='Button'/>
+<ROUTE fromNode='Button' fromField='touchTime' toNode='TimeSensor' toField='set_startTime'/>
+</Group>
+<Group DEF='CylinderGroup'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 1 0'/>
+</Appearance>
+<Cylinder radius='0.2' height='2'/>
+</Shape>
+<RotationInterpolator DEF='SpinInterpolator' 
+    key='0 1' 
+    keyValue='0 1 0 0 1 0 0 1'/>
+<TimeSensor DEF='TimeSensor' cycleInterval='5' loop='TRUE'/>
+<ROUTE fromNode='TimeSensor' fromField='fraction_changed' toNode='SpinInterpolator' toField='set_fraction'/>
+</Group>
+</Scene>
+</X3D>

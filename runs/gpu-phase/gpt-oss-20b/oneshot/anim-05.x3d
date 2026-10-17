@@ -1,0 +1,48 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:26741,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;380882442b5271bdff29eb07e06f3a55e723308ecad9af2d92832fb3f312f23b&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;anim-05&quot;,&quot;prompt_sha256&quot;:&quot;9b09582cf95939be9c9562fa71b338f7ac86aa348fb62ccfee5c36777bdd7174&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0253,&quot;run_id&quot;:&quot;7bddcbef-41e0-4b4b-a464-d07f20a05049&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:412,&quot;tokens_out&quot;:693}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;380882442b5271bdff29eb07e06f3a55e723308ecad9af2d92832fb3f312f23b&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;b83410c6935094f103ca3e5a1d547d94a878e40c912ffbbec09d3dac1416e890&quot;,&quot;prev&quot;:&quot;a24480a9e9bef027d83966a1b5b4af1980854057ba6f9be7f915460b8be7057e&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;b83410c6935094f103ca3e5a1d547d94a878e40c912ffbbec09d3dac1416e890&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;b83410c6935094f103ca3e5a1d547d94a878e40c912ffbbec09d3dac1416e890&quot;,&quot;prev&quot;:&quot;8dda2bfcb95a54aff03fd731d59841aad7e718bc8ea8e58c50ebbd35b4ca34de&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Viewpoint description='Rotating Cubes' position='0 0 10' />
+    
+    <!-- Cube 1 -->
+    <Transform DEF='Cube1Transform'>
+      <Shape>
+        <Box size='1 1 1' />
+        <Appearance>
+          <Material diffuseColor='1 0 0' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='Cube1Timer' cycleInterval='4' loop='true' />
+    <OrientationInterpolator DEF='Cube1Interp' key='0 1' keyValue='0 1 0 0 0 1 0 3.14159' />
+    <ROUTE fromField='fraction_changed' fromNode='Cube1Timer' toField='set_fraction' toNode='Cube1Interp' />
+    <ROUTE fromField='value_changed' fromNode='Cube1Interp' toField='set_rotation' toNode='Cube1Transform' />
+    
+    <!-- Cube 2 -->
+    <Transform DEF='Cube2Transform' translation='2 0 0'>
+      <Shape>
+        <Box size='1 1 1' />
+        <Appearance>
+          <Material diffuseColor='0 1 0' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='Cube2Timer' cycleInterval='6' loop='true' />
+    <OrientationInterpolator DEF='Cube2Interp' key='0 1' keyValue='0 1 0 0 0 1 0 6.28318' />
+    <ROUTE fromField='fraction_changed' fromNode='Cube2Timer' toField='set_fraction' toNode='Cube2Interp' />
+    <ROUTE fromField='value_changed' fromNode='Cube2Interp' toField='set_rotation' toNode='Cube2Transform' />
+    
+    <!-- Cube 3 -->
+    <Transform DEF='Cube3Transform' translation='-2 0 0'>
+      <Shape>
+        <Box size='1 1 1' />
+        <Appearance>
+          <Material diffuseColor='0 0 1' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='Cube3Timer' cycleInterval='8' loop='true' />
+    <OrientationInterpolator DEF='Cube3Interp' key='0 1' keyValue='0 1 0 0 0 1 0 9.42478' />
+    <ROUTE fromField='fraction_changed' fromNode='Cube3Timer' toField='set_fraction' toNode='Cube3Interp' />
+    <ROUTE fromField='value_changed' fromNode='Cube3Interp' toField='set_rotation' toNode='Cube3Transform' />
+    
+  </Scene>
+</X3D>

@@ -1,0 +1,281 @@
+{
+ "drifted": [
+  "gpt-oss-20b/grounded/anim-04.x3d",
+  "gpt-oss-20b/grounded/geo-01.x3d",
+  "gpt-oss-20b/grounded/geo-03.x3d",
+  "gpt-oss-20b/grounded/geo-04.x3d",
+  "gpt-oss-20b/grounded/hanim-01.x3d",
+  "gpt-oss-20b/grounded/hanim-02.x3d",
+  "gpt-oss-20b/grounded/hanim-03.x3d",
+  "gpt-oss-20b/grounded/hanim-04.x3d",
+  "gpt-oss-20b/grounded/int-01.x3d",
+  "gpt-oss-20b/grounded/int-02.x3d",
+  "gpt-oss-20b/grounded/int-03.x3d",
+  "gpt-oss-20b/grounded/int-04.x3d",
+  "gpt-oss-20b/grounded/obj-04.x3d",
+  "gpt-oss-20b/grounded/obj-05.x3d",
+  "gpt-oss-20b/oneshot/anim-02.x3d",
+  "gpt-oss-20b/oneshot/geo-01.x3d",
+  "gpt-oss-20b/oneshot/hanim-04.x3d",
+  "qwen2.5-coder-14b-awq/grounded/asm-03.x3d",
+  "qwen2.5-coder-14b-awq/grounded/geo-01.x3d",
+  "qwen2.5-coder-14b-awq/grounded/geo-04.x3d",
+  "qwen2.5-coder-14b-awq/grounded/hanim-01.x3d",
+  "qwen2.5-coder-14b-awq/grounded/hanim-04.x3d",
+  "qwen2.5-coder-14b-awq/grounded/int-02.x3d",
+  "qwen2.5-coder-14b-awq/grounded/int-03.x3d",
+  "qwen2.5-coder-14b-awq/grounded/int-04.x3d",
+  "qwen2.5-coder-14b-awq/oneshot/geo-01.x3d",
+  "qwen2.5-coder-14b-awq/oneshot/geo-04.x3d",
+  "qwen3-8b/grounded/anim-01.x3d",
+  "qwen3-8b/grounded/anim-02.x3d",
+  "qwen3-8b/grounded/anim-03.x3d",
+  "qwen3-8b/grounded/anim-05.x3d",
+  "qwen3-8b/grounded/geo-03.x3d",
+  "qwen3-8b/grounded/hanim-02.x3d",
+  "qwen3-8b/grounded/hanim-05.x3d",
+  "qwen3-8b/grounded/int-02.x3d",
+  "qwen3-8b/grounded/int-04.x3d",
+  "qwen3-8b/oneshot/geo-04.x3d"
+ ],
+ "first": {
+  "gpt-oss-20b/grounded/anim-04.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "gpt-oss-20b/grounded/geo-01.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/grounded/geo-03.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/grounded/geo-04.x3d": [
+   "8c0a457",
+   [
+    "profile-component",
+    "route-invalid-from-field",
+    "route-type-mismatch"
+   ]
+  ],
+  "gpt-oss-20b/grounded/hanim-01.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/grounded/hanim-02.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component",
+    "route-invalid-to-field"
+   ]
+  ],
+  "gpt-oss-20b/grounded/hanim-03.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/grounded/hanim-04.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/grounded/int-01.x3d": [
+   "8c0a457",
+   [
+    "route-type-mismatch"
+   ]
+  ],
+  "gpt-oss-20b/grounded/int-02.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "gpt-oss-20b/grounded/int-03.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "gpt-oss-20b/grounded/int-04.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field",
+    "route-invalid-to-field"
+   ]
+  ],
+  "gpt-oss-20b/grounded/obj-04.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/grounded/obj-05.x3d": [
+   "688174f",
+   [
+    "tuple-count"
+   ]
+  ],
+  "gpt-oss-20b/oneshot/anim-02.x3d": [
+   "8c0a457",
+   [
+    "interpolator-key-length"
+   ]
+  ],
+  "gpt-oss-20b/oneshot/geo-01.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "gpt-oss-20b/oneshot/hanim-04.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/asm-03.x3d": [
+   "8c0a457",
+   [
+    "route-type-mismatch"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/geo-01.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/geo-04.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/hanim-01.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/hanim-04.x3d": [
+   "8c0a457",
+   [
+    "containerfield-type-mismatch",
+    "profile-component"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/int-02.x3d": [
+   "8c0a457",
+   [
+    "route-type-mismatch"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/int-03.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/grounded/int-04.x3d": [
+   "8c0a457",
+   [
+    "route-type-mismatch"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/oneshot/geo-01.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "qwen2.5-coder-14b-awq/oneshot/geo-04.x3d": [
+   "8c0a457",
+   [
+    "interpolator-key-length",
+    "profile-component"
+   ]
+  ],
+  "qwen3-8b/grounded/anim-01.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen3-8b/grounded/anim-02.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen3-8b/grounded/anim-03.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen3-8b/grounded/anim-05.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen3-8b/grounded/geo-03.x3d": [
+   "8c0a457",
+   [
+    "profile-component"
+   ]
+  ],
+  "qwen3-8b/grounded/hanim-02.x3d": [
+   "8c0a457",
+   [
+    "profile-component",
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen3-8b/grounded/hanim-05.x3d": [
+   "8c0a457",
+   [
+    "profile-component",
+    "route-invalid-from-field"
+   ]
+  ],
+  "qwen3-8b/grounded/int-02.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-from-field",
+    "route-invalid-to-field"
+   ]
+  ],
+  "qwen3-8b/grounded/int-04.x3d": [
+   "8c0a457",
+   [
+    "route-invalid-to-field"
+   ]
+  ],
+  "qwen3-8b/oneshot/geo-04.x3d": [
+   "8c0a457",
+   [
+    "profile-component",
+    "route-invalid-from-field"
+   ]
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'><head><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;attempts_total&quot;:1,&quot;bodies_of_earlier_attempts&quot;:&quot;bucket only, not hashed&quot;,&quot;condition&quot;:&quot;oneshot&quot;,&quot;earlier_attempts&quot;:[],&quot;final_attempt&quot;:1,&quot;hardware&quot;:&quot;g2-standard-8 on-demand, 1x NVIDIA L4 24 GB, vLLM 0.11.0, us-central1&quot;,&quot;input_sha256&quot;:&quot;none&quot;,&quot;latency_ms&quot;:13642,&quot;max_tokens&quot;:8000,&quot;model&quot;:&quot;gpt-oss-20b&quot;,&quot;op&quot;:&quot;generate&quot;,&quot;output_sha256&quot;:&quot;15d8b74e4f7f2135c4b6910786c0cb155577357fd3700fcb4bcba73a7f84c87d&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;,&quot;prompt_id&quot;:&quot;obj-03&quot;,&quot;prompt_sha256&quot;:&quot;b5aa11086f2da5a43969440acc3631ce6e910a4715aeb4a76e385fd35e9638db&quot;,&quot;provider&quot;:&quot;vllm_l4&quot;,&quot;run_cost_usd&quot;:0.0253,&quot;run_id&quot;:&quot;7bddcbef-41e0-4b4b-a464-d07f20a05049&quot;,&quot;temperature&quot;:0.4,&quot;tokens_in&quot;:419,&quot;tokens_out&quot;:378}"/><meta name="x3dprov.step.2" content="{&quot;constraints_ok&quot;:true,&quot;historical&quot;:true,&quot;input_sha256&quot;:&quot;15d8b74e4f7f2135c4b6910786c0cb155577357fd3700fcb4bcba73a7f84c87d&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;9b2fba664a617f479f21862e5d69c97e2864775310a6130123360a700f4f13cf&quot;,&quot;prev&quot;:&quot;c82399654ff3a495fc2947fc1c026891145dce29ef33c1190f935d45b97d7456&quot;,&quot;semantic_valid&quot;:true,&quot;validator&quot;:&quot;x3d-mcp-svc (Cloud Run, deployed 11 Oct; XSD + DEF/USE/ROUTE endpoints only, per x3d-bench-next/open-models-fork/README.md)&quot;,&quot;validator_ref&quot;:&quot;service name recorded, build digest not&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;input_sha256&quot;:&quot;9b2fba664a617f479f21862e5d69c97e2864775310a6130123360a700f4f13cf&quot;,&quot;ms&quot;:0,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;9b2fba664a617f479f21862e5d69c97e2864775310a6130123360a700f4f13cf&quot;,&quot;prev&quot;:&quot;858aaadadb240f8f86666f3578e355a4970b8ef2257d244d97d98663b1318aaa&quot;,&quot;semantic_error_codes&quot;:[],&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;eb4b4b4&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/></head>
+  <Scene>
+    <Viewpoint description='Traffic Cone View' position='0 1 2' orientation='1 0 0 -0.5' />
+    <Transform translation='0 0 0'>
+      <Shape DEF='Base'>
+        <Box size='0.2 0.2 0.02' />
+        <Appearance>
+          <Material diffuseColor='0 0 0' specularColor='0 0 0' />
+        </Appearance>
+      </Shape>
+      <Transform translation='0 0.035 0'>
+        <Shape DEF='Cone'>
+          <Cone bottomRadius='0.1' height='0.7' />
+          <Appearance>
+            <Material diffuseColor='1 0.5 0' specularColor='0.2 0.2 0.2' />
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>
