@@ -1,0 +1,147 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Windmill on a Grassy Hill'/>
+    <meta name='description' content='A white tapered windmill with four blades rotating continuously once every eight seconds.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Windmill on a Grassy Hill'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Background skyColor='0.43 0.69 0.91'/>
+    <Viewpoint description='Windmill and grassy hill' position='9 7 17' orientation='-0.35 0.93 0 0.52' centerOfRotation='0 3.5 0'/>
+    <DirectionalLight direction='-0.5 -1 -0.7' intensity='0.95' color='1 0.95 0.85'/>
+    <DirectionalLight direction='0.7 -0.3 0.4' intensity='0.35' color='0.75 0.85 1'/>
+
+    <Transform translation='0 -0.16 0'>
+      <Shape>
+        <Appearance DEF='Grass'>
+          <Material diffuseColor='0.27 0.48 0.13' roughness='0.95'/>
+        </Appearance>
+        <Box size='100 0.2 100'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-8 0 -8'>
+      <Shape>
+        <Appearance USE='Grass'/>
+        <ElevationGrid xDimension='9' zDimension='9' xSpacing='2' zSpacing='2' creaseAngle='1.4'
+          height='
+            0 0 0.02 0.04 0.05 0.04 0.02 0 0
+            0 0.06 0.15 0.25 0.30 0.25 0.15 0.06 0
+            0.02 0.15 0.36 0.59 0.70 0.59 0.36 0.15 0.02
+            0.04 0.25 0.59 0.96 1.15 0.96 0.59 0.25 0.04
+            0.05 0.30 0.70 1.15 1.40 1.15 0.70 0.30 0.05
+            0.04 0.25 0.59 0.96 1.15 0.96 0.59 0.25 0.04
+            0.02 0.15 0.36 0.59 0.70 0.59 0.36 0.15 0.02
+            0 0.06 0.15 0.25 0.30 0.25 0.15 0.06 0
+            0 0 0.02 0.04 0.05 0.04 0.02 0 0'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 1.24 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.94 0.93 0.87' specularColor='0.12 0.12 0.12' shininess='0.12'/>
+        </Appearance>
+        <Extrusion
+          spine='0 0 0, 0 4.4 0'
+          scale='1.2 1.2, 0.72 0.72'
+          crossSection='
+            1 0, 0.92388 -0.38268, 0.70711 -0.70711, 0.38268 -0.92388,
+            0 -1, -0.38268 -0.92388, -0.70711 -0.70711, -0.92388 -0.38268,
+            -1 0, -0.92388 0.38268, -0.70711 0.70711, -0.38268 0.92388,
+            0 1, 0.38268 0.92388, 0.70711 0.70711, 0.92388 0.38268, 1 0'
+          creaseAngle='1.2'/>
+      </Shape>
+
+      <Transform translation='0 4.85 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.10 0.12 0.14' specularColor='0.22 0.24 0.26' shininess='0.25'/>
+          </Appearance>
+          <Cone bottomRadius='1.02' height='1.3'/>
+        </Shape>
+      </Transform>
+
+      <Transform translation='0 0.68 1.12'>
+        <Shape>
+          <Appearance DEF='Wood'>
+            <Material diffuseColor='0.22 0.12 0.06'/>
+          </Appearance>
+          <Box size='0.53 1.15 0.20'/>
+        </Shape>
+        <Transform translation='0.16 0 0.115'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.75 0.58 0.24' specularColor='0.6 0.5 0.2'/>
+            </Appearance>
+            <Sphere radius='0.035'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <Transform translation='0 2.23 0.96'>
+        <Shape>
+          <Appearance USE='Wood'/>
+          <Box size='0.43 0.60 0.14'/>
+        </Shape>
+        <Transform translation='0 0 0.08'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.12 0.25 0.31' specularColor='0.55 0.65 0.7' shininess='0.65'/>
+            </Appearance>
+            <Box size='0.31 0.46 0.025'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <Transform translation='0 3.55 1.06'>
+        <Transform DEF='Rotor'>
+          <Transform translation='0 1.42 0'>
+            <Group DEF='Blade'>
+              <Shape>
+                <Appearance USE='Wood'/>
+                <Box size='0.43 2.36 0.12'/>
+              </Shape>
+              <Transform translation='0 0 0.075'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.88 0.81 0.60'/>
+                  </Appearance>
+                  <Box size='0.30 2.18 0.055'/>
+                </Shape>
+              </Transform>
+            </Group>
+          </Transform>
+          <Transform rotation='0 0 1 1.570796327'>
+            <Transform translation='0 1.42 0'>
+              <Group USE='Blade'/>
+            </Transform>
+          </Transform>
+          <Transform rotation='0 0 1 3.141592654'>
+            <Transform translation='0 1.42 0'>
+              <Group USE='Blade'/>
+            </Transform>
+          </Transform>
+          <Transform rotation='0 0 1 4.712388980'>
+            <Transform translation='0 1.42 0'>
+              <Group USE='Blade'/>
+            </Transform>
+          </Transform>
+          <Transform rotation='1 0 0 1.570796327'>
+            <Shape>
+              <Appearance USE='Wood'/>
+              <Cylinder radius='0.24' height='0.38'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='WindClock' cycleInterval='8' loop='true'/>
+    <OrientationInterpolator DEF='BladeRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 0 1 0, 0 0 1 1.570796327, 0 0 1 3.141592654, 0 0 1 4.712388980, 0 0 1 6.283185307'/>
+    <ROUTE fromNode='WindClock' fromField='fraction_changed' toNode='BladeRotation' toField='set_fraction'/>
+    <ROUTE fromNode='BladeRotation' fromField='value_changed' toNode='Rotor' toField='set_rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,248 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='bookshelf.x3d' name='title'/>
+    <meta content='A wooden bookshelf with three shelves holding five colorful books each.' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Bookshelf with Books'/>
+    <Viewpoint description='Bookshelf Front View' position='0 0.9 2.6'/>
+    <Viewpoint description='Bookshelf Angle View' orientation='-0.18 0.97 0.16 0.62' position='1.8 1.2 2.0'/>
+    <Viewpoint description='Close-up View' position='0 1.2 1.3'/>
+
+    <DirectionalLight direction='-0.4 -0.8 -0.6' intensity='0.85'/>
+    <DirectionalLight direction='0.5 0.4 0.6' intensity='0.35'/>
+
+    <Background skyColor='0.92 0.92 0.94'/>
+
+    <!-- Bookshelf Frame -->
+    <Group DEF='BookshelfStructure'>
+      <!-- Left Wall -->
+      <Transform translation='-0.52 0.88 0'>
+        <Shape>
+          <Appearance DEF='WoodApp'>
+            <Material diffuseColor='0.42 0.26 0.14' roughness='0.4' specularColor='0.12 0.08 0.04'/>
+          </Appearance>
+          <Box size='0.04 1.76 0.36'/>
+        </Shape>
+      </Transform>
+
+      <!-- Right Wall -->
+      <Transform translation='0.52 0.88 0'>
+        <Shape>
+          <Appearance USE='WoodApp'/>
+          <Box size='0.04 1.76 0.36'/>
+        </Shape>
+      </Transform>
+
+      <!-- Back Panel -->
+      <Transform translation='0 0.88 -0.17'>
+        <Shape>
+          <Appearance DEF='DarkWoodApp'>
+            <Material diffuseColor='0.32 0.19 0.10' roughness='0.5' specularColor='0.08 0.05 0.03'/>
+          </Appearance>
+          <Box size='1.0 1.76 0.02'/>
+        </Shape>
+      </Transform>
+
+      <!-- Bottom Plinth Board -->
+      <Transform translation='0 0.04 0'>
+        <Shape>
+          <Appearance USE='WoodApp'/>
+          <Box size='1.0 0.08 0.36'/>
+        </Shape>
+      </Transform>
+
+      <!-- Top Board -->
+      <Transform translation='0 1.74 0'>
+        <Shape>
+          <Appearance USE='WoodApp'/>
+          <Box size='1.08 0.04 0.38'/>
+        </Shape>
+      </Transform>
+
+      <!-- Shelf 1 (Bottom shelf level) -->
+      <Transform translation='0 0.09 0.005'>
+        <Shape>
+          <Appearance USE='WoodApp'/>
+          <Box size='1.0 0.03 0.35'/>
+        </Shape>
+      </Transform>
+
+      <!-- Shelf 2 (Middle shelf level) -->
+      <Transform translation='0 0.64 0.005'>
+        <Shape>
+          <Appearance USE='WoodApp'/>
+          <Box size='1.0 0.03 0.35'/>
+        </Shape>
+      </Transform>
+
+      <!-- Shelf 3 (Top shelf level) -->
+      <Transform translation='0 1.19 0.005'>
+        <Shape>
+          <Appearance USE='WoodApp'/>
+          <Box size='1.0 0.03 0.35'/>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <!-- Books on Shelf 1 (Bottom Shelf, surface Y = 0.105) -->
+    <Group DEF='Shelf1Books'>
+      <!-- Book 1: Crimson Red -->
+      <Transform translation='-0.34 0.28 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.75 0.12 0.12' specularColor='0.15 0.1 0.1'/>
+          </Appearance>
+          <Box size='0.055 0.35 0.24'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 2: Deep Navy Blue -->
+      <Transform translation='-0.275 0.265 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.1 0.2 0.65' specularColor='0.1 0.1 0.2'/>
+          </Appearance>
+          <Box size='0.06 0.32 0.23'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 3: Amber Gold -->
+      <Transform translation='-0.21 0.295 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.62 0.12' specularColor='0.2 0.15 0.05'/>
+          </Appearance>
+          <Box size='0.05 0.38 0.25'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 4: Forest Green -->
+      <Transform translation='-0.15 0.255 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.12 0.48 0.2' specularColor='0.1 0.15 0.1'/>
+          </Appearance>
+          <Box size='0.055 0.30 0.22'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 5: Leaning Violet/Plum -->
+      <Transform center='0 -0.16 0' rotation='0 0 1 -0.17' translation='-0.08 0.27 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.5 0.15 0.55' specularColor='0.15 0.1 0.15'/>
+          </Appearance>
+          <Box size='0.045 0.33 0.23'/>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <!-- Books on Shelf 2 (Middle Shelf, surface Y = 0.655) -->
+    <Group DEF='Shelf2Books'>
+      <!-- Book 1: Burnt Orange -->
+      <Transform translation='-0.20 0.835 0.01'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.88 0.42 0.08' specularColor='0.2 0.1 0.05'/>
+          </Appearance>
+          <Box size='0.06 0.36 0.25'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 2: Turquoise / Teal -->
+      <Transform translation='-0.135 0.82 0.005'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.08 0.58 0.58' specularColor='0.1 0.2 0.2'/>
+          </Appearance>
+          <Box size='0.05 0.33 0.24'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 3: Dark Chocolate / Charcoal -->
+      <Transform translation='-0.075 0.845 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.22 0.18 0.18' specularColor='0.1 0.1 0.1'/>
+          </Appearance>
+          <Box size='0.055 0.38 0.26'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 4: Canary Yellow -->
+      <Transform translation='-0.015 0.81 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.92 0.82 0.15' specularColor='0.2 0.2 0.1'/>
+          </Appearance>
+          <Box size='0.048 0.31 0.23'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 5: Wine Red -->
+      <Transform translation='0.045 0.83 0.01'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.58 0.08 0.2' specularColor='0.15 0.05 0.08'/>
+          </Appearance>
+          <Box size='0.052 0.35 0.24'/>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <!-- Books on Shelf 3 (Top Shelf, surface Y = 1.205) -->
+    <Group DEF='Shelf3Books'>
+      <!-- Book 1: Leaning Sage Green -->
+      <Transform center='0 -0.16 0' rotation='0 0 1 0.16' translation='0.04 1.375 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.36 0.62 0.42' specularColor='0.1 0.15 0.1'/>
+          </Appearance>
+          <Box size='0.05 0.34 0.24'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 2: Cobalt Blue -->
+      <Transform translation='0.11 1.385 0.005'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.35 0.82' specularColor='0.1 0.15 0.25'/>
+          </Appearance>
+          <Box size='0.055 0.36 0.25'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 3: Coral Pink -->
+      <Transform translation='0.175 1.36 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.28 0.38' specularColor='0.2 0.1 0.1'/>
+          </Appearance>
+          <Box size='0.06 0.31 0.23'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 4: Royal Purple -->
+      <Transform translation='0.24 1.39 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.38 0.12 0.65' specularColor='0.15 0.08 0.2'/>
+          </Appearance>
+          <Box size='0.052 0.37 0.25'/>
+        </Shape>
+      </Transform>
+
+      <!-- Book 5: Olive Gold -->
+      <Transform translation='0.30 1.365 0.01'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.62 0.58 0.18' specularColor='0.15 0.15 0.08'/>
+          </Appearance>
+          <Box size='0.05 0.32 0.23'/>
+        </Shape>
+      </Transform>
+    </Group>
+  </Scene>
+</X3D>

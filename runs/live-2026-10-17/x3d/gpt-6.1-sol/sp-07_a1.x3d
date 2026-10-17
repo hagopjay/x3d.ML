@@ -1,0 +1,149 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Rotating DNA Double Helix'/>
+    <meta name='description' content='Blue and orange spherical strands connected by twenty base-pair rungs. Touch the helix to restart its slow rotation.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Rotating DNA Double Helix'/>
+    <Background skyColor='0.018 0.027 0.055'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='DNA double helix' position='0 0.6 13' fieldOfView='0.72'/>
+    <DirectionalLight direction='-0.5 -0.5 -1' intensity='0.95' color='1 0.96 0.91'/>
+    <DirectionalLight direction='0.7 0.2 1' intensity='0.65' color='0.55 0.72 1'/>
+
+    <Transform DEF='HelixRotor'>
+      <TouchSensor DEF='HelixTouch' description='Restart the slow rotation'/>
+
+      <Transform translation='0 -3.8 0'>
+        <Transform translation='1.35 0 0'>
+          <Shape DEF='BlueBead'>
+            <Appearance>
+              <Material diffuseColor='0.025 0.35 1' specularColor='0.7 0.85 1' shininess='0.65'/>
+            </Appearance>
+            <Sphere radius='0.19'/>
+          </Shape>
+        </Transform>
+        <Transform translation='-1.35 0 0'>
+          <Shape DEF='OrangeBead'>
+            <Appearance>
+              <Material diffuseColor='1 0.31 0.035' specularColor='1 0.8 0.5' shininess='0.65'/>
+            </Appearance>
+            <Sphere radius='0.19'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='BasePair' rotation='0 0 1 1.570796327'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.66 0.74 0.83' specularColor='0.6 0.65 0.7' shininess='0.45'/>
+            </Appearance>
+            <Cylinder radius='0.045' height='2.7'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <Transform translation='0 -3.4 0' rotation='0 1 0 0.628318531'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -3 0' rotation='0 1 0 1.256637061'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -2.6 0' rotation='0 1 0 1.884955592'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -2.2 0' rotation='0 1 0 2.513274123'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -1.8 0' rotation='0 1 0 3.141592654'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -1.4 0' rotation='0 1 0 3.769911184'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -1 0' rotation='0 1 0 4.398229715'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -0.6 0' rotation='0 1 0 5.026548246'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 -0.2 0' rotation='0 1 0 5.654866776'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 0.2 0' rotation='0 1 0 6.283185307'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 0.6 0' rotation='0 1 0 6.911503838'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 1 0' rotation='0 1 0 7.539822369'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 1.4 0' rotation='0 1 0 8.168140899'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 1.8 0' rotation='0 1 0 8.796459430'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 2.2 0' rotation='0 1 0 9.424777961'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 2.6 0' rotation='0 1 0 10.053096491'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 3 0' rotation='0 1 0 10.681415022'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 3.4 0' rotation='0 1 0 11.309733553'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+      <Transform translation='0 3.8 0' rotation='0 1 0 11.938052084'>
+        <Transform translation='1.35 0 0'><Shape USE='BlueBead'/></Transform>
+        <Transform translation='-1.35 0 0'><Shape USE='OrangeBead'/></Transform>
+        <Transform USE='BasePair'/>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='RotationClock' cycleInterval='40' loop='true'/>
+    <OrientationInterpolator DEF='RotationPath'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796327, 0 1 0 3.141592654, 0 1 0 4.712388980, 0 1 0 6.283185307'/>
+    <ROUTE fromNode='RotationClock' fromField='fraction_changed' toNode='RotationPath' toField='set_fraction'/>
+    <ROUTE fromNode='RotationPath' fromField='value_changed' toNode='HelixRotor' toField='set_rotation'/>
+    <ROUTE fromNode='HelixTouch' fromField='touchTime' toNode='RotationClock' toField='set_startTime'/>
+  </Scene>
+</X3D>

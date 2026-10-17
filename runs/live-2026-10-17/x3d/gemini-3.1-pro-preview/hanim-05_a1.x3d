@@ -1,0 +1,21 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Waving HAnim Figure' position='0 1 4'/>
+    <DirectionalLight direction='0 -1 -1' intensity='0.8'/>
+    <DirectionalLight direction='0 1 1' intensity='0.4'/>
+
+    <Group>
+      <TouchSensor DEF='TouchAnim' description='Touch to make figure wave'/>
+      <TimeSensor DEF='WaveClock' cycleInterval='3.0' loop='false'/>
+      <OrientationInterpolator DEF='ShoulderAnim' key='0 0.1 0.9 1' keyValue='0 0 1 0, 0 0 1 2.5, 0 0 1 2.5, 0 0 1 0'/>
+      <OrientationInterpolator DEF='ElbowAnim' key='0 0.1 0.3 0.5 0.7 0.9 1' keyValue='0 0 1 0, 0 0 1 0, 0 0 1 1.0, 0 0 1 -0.5, 0 0 1 1.0, 0 0 1 0, 0 0 1 0'/>
+
+      <HAnimHumanoid DEF='SimpleMan' name='SimpleMan' version='2.0'>
+        <HAnimJoint DEF='humanoid_root' name='humanoid_root' center='0 1 0' containerField='skeleton'>
+          <HAnimSegment DEF='seg_root' name='sacrum'>
+            <Transform translation='0 1 0'>
+              <Shape>
+                <Box size='0.3 0.2 0.

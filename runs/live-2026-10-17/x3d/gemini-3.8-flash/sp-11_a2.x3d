@@ -1,0 +1,328 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='gyroscope.x3d' name='title'/>
+    <meta content='Three nested gimbal rings rotating on orthogonal axes around a central high-speed spinning rotor disc.' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Precision Mechanical Gyroscope'/>
+    <Viewpoint description='Gimbal Perspective' position='0 1.2 5.5' orientation='1 0 0 -0.15'/>
+    <Viewpoint description='Close-up Core' position='0 0 3'/>
+    <Viewpoint description='Top View' position='0 6 0' orientation='1 0 0 -1.5708'/>
+
+    <!-- Lighting -->
+    <DirectionalLight direction='-0.6 -0.8 -0.5' intensity='1.2' color='1 0.98 0.95'/>
+    <DirectionalLight direction='0.7 0.5 0.6' intensity='0.6' color='0.8 0.85 1.0'/>
+    <PointLight location='0 0 0' intensity='0.4' radius='4' color='1 0.9 0.7'/>
+
+    <!-- Static Stand and Cradle -->
+    <Transform translation='0 -2.6 0'>
+      <!-- Heavy Cast Iron Base -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.12 0.13 0.15' specularColor='0.5 0.5 0.5' shininess='0.4'/>
+        </Appearance>
+        <Cylinder height='0.15' radius='1.5'/>
+      </Shape>
+      <Transform translation='0 0.15 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.12 0.13 0.15' specularColor='0.5 0.5 0.5' shininess='0.4'/>
+          </Appearance>
+          <Cone bottomRadius='1.2' height='0.25'/>
+        </Shape>
+      </Transform>
+      <!-- Base Pillar -->
+      <Transform translation='0 0.55 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.75 0.75 0.78' specularColor='0.9 0.9 0.9' shininess='0.85'/>
+          </Appearance>
+          <Cylinder height='0.6' radius='0.18'/>
+        </Shape>
+      </Transform>
+      <!-- Base Pivot Socket -->
+      <Transform translation='0 0.85 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.68 0.2' specularColor='0.95 0.85 0.4' shininess='0.9'/>
+          </Appearance>
+          <Sphere radius='0.22'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Support Arms holding outer ring vertical axis -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.26 0.28' specularColor='0.8 0.8 0.8' shininess='0.7'/>
+        </Appearance>
+        <Extrusion crossSection='-0.08 -0.05, 0.08 -0.05, 0.08 0.05, -0.08 0.05, -0.08 -0.05'
+                   spine='0 -1.75 0, -2.4 -1.75 0, -2.4 0 0, -2.4 1.75 0, 0 1.75 0'
+                   convex='true'/>
+      </Shape>
+      <!-- Pivot Bearing Caps -->
+      <Transform translation='0 -1.75 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.68 0.2' specularColor='0.95 0.85 0.4' shininess='0.9'/>
+          </Appearance>
+          <Cylinder height='0.18' radius='0.12'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 1.75 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.68 0.2' specularColor='0.95 0.85 0.4' shininess='0.9'/>
+          </Appearance>
+          <Cylinder height='0.18' radius='0.12'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- GIMBAL 1: Outer Ring (Rotates about Y Axis) -->
+    <Transform DEF='OuterGimbalTransform'>
+      <!-- Outer Ring Mesh (Radius 2.0, Square Profile) -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.88 0.72 0.22' specularColor='0.98 0.88 0.5' shininess='0.85'/>
+        </Appearance>
+        <Extrusion beginCap='false' endCap='false'
+                   crossSection='-0.05 -0.05, 0.05 -0.05, 0.05 0.05, -0.05 0.05, -0.05 -0.05'
+                   spine='2.000 0.000 0.000, 1.848 0.000 0.765, 1.414 0.000 1.414, 0.765 0.000 1.848,
+                          0.000 0.000 2.000, -0.765 0.000 1.848, -1.414 0.000 1.414, -1.848 0.000 0.765,
+                          -2.000 0.000 0.000, -1.848 0.000 -0.765, -1.414 0.000 -1.414, -0.765 0.000 -1.848,
+                          0.000 0.000 -2.000, 0.765 0.000 -1.848, 1.414 0.000 -1.414, 1.848 0.000 -0.765,
+                          2.000 0.000 0.000'/>
+      </Shape>
+      <!-- Vertical Pivot Pins connecting to frame -->
+      <Transform translation='0 1.9 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.8 0.85' specularColor='0.95 0.95 0.95' shininess='0.9'/>
+          </Appearance>
+          <Cylinder height='0.3' radius='0.05'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 -1.9 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.8 0.85' specularColor='0.95 0.95 0.95' shininess='0.9'/>
+          </Appearance>
+          <Cylinder height='0.3' radius='0.05'/>
+        </Shape>
+      </Transform>
+      <!-- Horizontal Bearings for Middle Ring along X Axis -->
+      <Transform rotation='0 0 1 1.5708' translation='1.8 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.75 0.78 0.82' specularColor='0.95 0.95 0.95' shininess='0.9'/>
+          </Appearance>
+          <Cylinder height='0.35' radius='0.08'/>
+        </Shape>
+      </Transform>
+      <Transform rotation='0 0 1 1.5708' translation='-1.8 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.75 0.78 0.82' specularColor='0.95 0.95 0.95' shininess='0.9'/>
+          </Appearance>
+          <Cylinder height='0.35' radius='0.08'/>
+        </Shape>
+      </Transform>
+
+      <!-- GIMBAL 2: Middle Ring (Rotates about X Axis) -->
+      <Transform DEF='MiddleGimbalTransform'>
+        <!-- Middle Ring Mesh (Radius 1.6, in YZ plane) -->
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.82 0.86' specularColor='0.95 0.95 1.0' shininess='0.95'/>
+          </Appearance>
+          <Extrusion beginCap='false' endCap='false'
+                     crossSection='-0.045 -0.045, 0.045 -0.045, 0.045 0.045, -0.045 0.045, -0.045 -0.045'
+                     spine='0.000 1.600 0.000, 0.000 1.478 0.612, 0.000 1.131 1.131, 0.000 0.612 1.478,
+                            0.000 0.000 1.600, 0.000 -0.612 1.478, 0.000 -1.131 1.131, 0.000 -1.478 0.612,
+                            0.000 -1.600 0.000, 0.000 -1.478 -0.612, 0.000 -1.131 -1.131, 0.000 -0.612 -1.478,
+                            0.000 0.000 -1.600, 0.000 0.612 -1.478, 0.000 1.131 -1.131, 0.000 1.478 -0.612,
+                            0.000 1.600 0.000'/>
+        </Shape>
+        <!-- Bearings for Inner Ring along Z Axis -->
+        <Transform rotation='1 0 0 1.5708' translation='0 0 1.45'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.85 0.68 0.2' specularColor='0.95 0.85 0.4' shininess='0.9'/>
+            </Appearance>
+            <Cylinder height='0.3' radius='0.075'/>
+          </Shape>
+        </Transform>
+        <Transform rotation='1 0 0 1.5708' translation='0 0 -1.45'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.85 0.68 0.2' specularColor='0.95 0.85 0.4' shininess='0.9'/>
+            </Appearance>
+            <Cylinder height='0.3' radius='0.075'/>
+          </Shape>
+        </Transform>
+
+        <!-- GIMBAL 3: Inner Ring (Rotates about Z Axis) -->
+        <Transform DEF='InnerGimbalTransform'>
+          <!-- Inner Ring Mesh (Radius 1.2, in XY plane) -->
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.86 0.42 0.22' specularColor='0.95 0.7 0.5' shininess='0.8'/>
+            </Appearance>
+            <Extrusion beginCap='false' endCap='false'
+                       crossSection='-0.04 -0.04, 0.04 -0.04, 0.04 0.04, -0.04 0.04, -0.04 -0.04'
+                       spine='1.200 0.000 0.000, 1.109 0.459 0.000, 0.849 0.849 0.000, 0.459 1.109 0.000,
+                              0.000 1.200 0.000, -0.459 1.109 0.000, -0.849 0.849 0.000, -1.109 0.459 0.000,
+                              -1.200 0.000 0.000, -1.109 -0.459 0.000, -0.849 -0.849 0.000, -0.459 -1.109 0.000,
+                              0.000 -1.200 0.000, 0.459 -1.109 0.000, 0.849 -0.849 0.000, 1.109 -0.459 0.000,
+                              1.200 0.000 0.000'/>
+          </Shape>
+          <!-- Bearings for Central Rotor Axle along Y Axis -->
+          <Transform translation='0 1.1 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.75 0.78 0.82' specularColor='0.95 0.95 0.95' shininess='0.9'/>
+              </Appearance>
+              <Cylinder height='0.25' radius='0.065'/>
+            </Shape>
+          </Transform>
+          <Transform translation='0 -1.1 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.75 0.78 0.82' specularColor='0.95 0.95 0.95' shininess='0.9'/>
+              </Appearance>
+              <Cylinder height='0.25' radius='0.065'/>
+            </Shape>
+          </Transform>
+
+          <!-- CENTRAL ROTOR (Spins rapidly around Y Axis) -->
+          <Transform DEF='RotorTransform'>
+            <!-- Central Steel Axle -->
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.9 0.92 0.95' specularColor='1 1 1' shininess='0.95'/>
+              </Appearance>
+              <Cylinder height='2.1' radius='0.035'/>
+            </Shape>
+
+            <!-- Heavy Brass Flywheel Rim -->
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.95 0.75 0.15' specularColor='1.0 0.9 0.5' shininess='0.9'/>
+              </Appearance>
+              <Extrusion beginCap='false' endCap='false'
+                         crossSection='-0.08 -0.12, 0.08 -0.12, 0.08 0.12, -0.08 0.12, -0.08 -0.12'
+                         spine='0.800 0 0.000, 0.739 0 0.306, 0.566 0 0.566, 0.306 0 0.739,
+                                0.000 0 0.800, -0.306 0 0.739, -0.566 0 0.566, -0.739 0 0.306,
+                                -0.800 0 0.000, -0.739 0 -0.306, -0.566 0 -0.566, -0.306 0 -0.739,
+                                0.000 0 -0.800, 0.306 0 -0.739, 0.566 0 -0.566, 0.739 0 -0.306,
+                                0.800 0 0.000'/>
+            </Shape>
+
+            <!-- Rotor Central Hub -->
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.95 0.75 0.15' specularColor='1.0 0.9 0.5' shininess='0.9'/>
+              </Appearance>
+              <Cylinder height='0.28' radius='0.22'/>
+            </Shape>
+
+            <!-- Disc Webbing between Hub and Rim -->
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.7 0.55 0.12' specularColor='0.85 0.75 0.4' shininess='0.7'/>
+              </Appearance>
+              <Cylinder height='0.04' radius='0.75'/>
+            </Shape>
+
+            <!-- 4 Visible Radial Spokes / Inspection Ports -->
+            <Transform rotation='0 1 0 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.9 0.9 0.92' specularColor='1 1 1' shininess='0.9'/>
+                </Appearance>
+                <Cylinder height='0.07' radius='0.03'/>
+              </Shape>
+              <Transform rotation='0 0 1 1.5708'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.9 0.72 0.2' specularColor='1 0.9 0.5' shininess='0.85'/>
+                  </Appearance>
+                  <Cylinder height='1.5' radius='0.025'/>
+                </Shape>
+              </Transform>
+            </Transform>
+            <Transform rotation='0 1 0 1.5708'>
+              <Transform rotation='0 0 1 1.5708'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.9 0.72 0.2' specularColor='1 0.9 0.5' shininess='0.85'/>
+                  </Appearance>
+                  <Cylinder height='1.5' radius='0.025'/>
+                </Shape>
+              </Transform>
+            </Transform>
+
+            <!-- Strobe / Contrast Marker on Rotor Rim -->
+            <Transform translation='0.8 0 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.9 0.1 0.1' specularColor='1 0.5 0.5' shininess='0.6'/>
+                </Appearance>
+                <Box size='0.06 0.25 0.08'/>
+              </Shape>
+            </Transform>
+            <Transform translation='-0.8 0 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.1 0.9' specularColor='0.5 0.5 1' shininess='0.6'/>
+                </Appearance>
+                <Box size='0.06 0.25 0.08'/>
+              </Shape>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Animation Clocks -->
+    <!-- Fast spinning rotor disc (0.35s period) -->
+    <TimeSensor DEF='RotorTimer' cycleInterval='0.35' loop='true'/>
+    <OrientationInterpolator DEF='RotorSpin'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+
+    <!-- Inner Gimbal: rotation about Z Axis (4.8s period) -->
+    <TimeSensor DEF='InnerTimer' cycleInterval='4.8' loop='true'/>
+    <OrientationInterpolator DEF='InnerSpin'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 0 1 0, 0 0 1 1.5708, 0 0 1 3.1416, 0 0 1 4.7124, 0 0 1 6.2832'/>
+
+    <!-- Middle Gimbal: tumbling rotation about X Axis (8.5s period) -->
+    <TimeSensor DEF='MiddleTimer' cycleInterval='8.5' loop='true'/>
+    <OrientationInterpolator DEF='MiddleSpin'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='1 0 0 0, 1 0 0 1.5708, 1 0 0 3.1416, 1 0 0 4.7124, 1 0 0 6.2832'/>
+
+    <!-- Outer Gimbal: slow precession about Y Axis (14.0s period) -->
+    <TimeSensor DEF='OuterTimer' cycleInterval='14.0' loop='true'/>
+    <OrientationInterpolator DEF='OuterSpin'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+
+    <!-- Animation ROUTEs -->
+    <ROUTE fromNode='RotorTimer' fromField='fraction_changed' toNode='RotorSpin' toField='set_fraction'/>
+    <ROUTE fromNode='RotorSpin' fromField='value_changed' toNode='RotorTransform' toField='set_rotation'/>
+
+    <ROUTE fromNode='InnerTimer' fromField='fraction_changed' toNode='InnerSpin' toField='set_fraction'/>
+    <ROUTE fromNode='InnerSpin' fromField='value_changed' toNode='InnerGimbalTransform' toField='set_rotation'/>
+
+    <ROUTE fromNode='MiddleTimer' fromField='fraction_changed' toNode='MiddleSpin' toField='set_fraction'/>
+    <ROUTE fromNode='MiddleSpin' fromField='value_changed' toNode='MiddleGimbalTransform' toField='set_rotation'/>
+
+    <ROUTE fromNode='OuterTimer' fromField='fraction_changed' toNode='OuterSpin' toField='set_fraction'/>
+    <ROUTE fromNode='OuterSpin' fromField='value_changed' toNode='OuterGimbalTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

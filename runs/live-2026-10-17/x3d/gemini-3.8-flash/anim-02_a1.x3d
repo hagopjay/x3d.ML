@@ -1,0 +1,77 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='bouncing_ball.x3d' name='title'/>
+    <meta content='A ball that bounces up and down between y=0 and y=2 forever with ease at the top.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Bouncing Ball'/>
+
+    <Viewpoint description='Bouncing Ball View' position='0 1.2 5'/>
+
+    <Background skyColor='0.1 0.12 0.18'/>
+
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.9'/>
+    <DirectionalLight direction='0.5 0.5 1' intensity='0.3'/>
+
+    <!-- Ground reference disc at y=0 -->
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material baseColor='0.2 0.25 0.3' roughness='0.8'/>
+        </Appearance>
+        <Cylinder height='0.02' radius='1.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Vertical height marker post -->
+    <Transform translation='-0.8 1 0'>
+      <Shape>
+        <Appearance>
+          <Material baseColor='0.3 0.35 0.4' roughness='0.5'/>
+        </Appearance>
+        <Cylinder height='2' radius='0.015'/>
+      </Shape>
+    </Transform>
+
+    <!-- Apex indicator at y=2 -->
+    <Transform translation='-0.8 2 0'>
+      <Shape>
+        <Appearance>
+          <Material baseColor='0.8 0.7 0.2' emissiveColor='0.2 0.18 0.05'/>
+        </Appearance>
+        <Sphere radius='0.05'/>
+      </Shape>
+    </Transform>
+
+    <!-- Base indicator at y=0 -->
+    <Transform translation='-0.8 0 0'>
+      <Shape>
+        <Appearance>
+          <Material baseColor='0.8 0.7 0.2' emissiveColor='0.2 0.18 0.05'/>
+        </Appearance>
+        <Sphere radius='0.05'/>
+      </Shape>
+    </Transform>
+
+    <!-- Animated Bouncing Ball -->
+    <Transform DEF='BallTransform' translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material baseColor='0.9 0.2 0.2' metallic='0.1' roughness='0.3'/>
+        </Appearance>
+        <Sphere radius='0.25'/>
+      </Shape>
+    </Transform>
+
+    <!-- TimeSensor running continuously -->
+    <TimeSensor DEF='BounceTimer' cycleInterval='1.6' loop='true'/>
+
+    <!-- PositionInterpolator with keys clustered near apex (t=0.5) to create gravity ease -->
+    <PositionInterpolator DEF='BounceInterpolator'
+      key='0.00 0.10 0.20 0.30 0.37 0.43 0.47 0.50 0.53 0.57 0.63 0.70 0.80 0.90 1.00'
+      keyValue='0 0 0, 0 0.72 0, 0 1.28 0, 0 1.68 0, 0 1.865 0, 0 1.961 0, 0 1.993 0, 0 2.0 0, 0 1.993 0, 0 1.961 0, 0 1.865 0, 0 1.68 0, 0 1.28 0, 0 0.72 0, 0 0 0'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='BounceTimer' toField='set_fraction' toNode='BounceInterpolator'/>
+    <ROUTE fromField='value_changed' fromNode='BounceInterpolator' toField='set_translation' toNode='BallTransform'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,145 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Pendulum Clock' position='0 0.5 3.5' centerOfRotation='0 0 0'/>
+    <Background skyColor='0.8 0.85 0.9'/>
+    <DirectionalLight direction='-0.5 -0.5 -0.5' intensity='0.8'/>
+
+    <!-- Floor -->
+    <Transform translation='0 -1.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.3 0.3'/>
+        </Appearance>
+        <Box size='3 0.02 3'/>
+      </Shape>
+    </Transform>
+
+    <!-- Clock Case -->
+    <!-- Base -->
+    <Transform translation='0 -1.2 0'>
+      <Shape>
+        <Appearance DEF='WoodApp'>
+          <Material diffuseColor='0.35 0.16 0.05'/>
+        </Appearance>
+        <Box size='0.6 0.6 0.3'/>
+      </Shape>
+    </Transform>
+    <!-- Trunk Back -->
+    <Transform translation='0 -0.1 -0.125'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.5 1.6 0.05'/>
+      </Shape>
+    </Transform>
+    <!-- Trunk Left -->
+    <Transform translation='-0.225 -0.1 0'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.05 1.6 0.2'/>
+      </Shape>
+    </Transform>
+    <!-- Trunk Right -->
+    <Transform translation='0.225 -0.1 0'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.05 1.6 0.2'/>
+      </Shape>
+    </Transform>
+    <!-- Hood -->
+    <Transform translation='0 1.1 0'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.6 0.8 0.3'/>
+      </Shape>
+    </Transform>
+
+    <!-- Clock Face -->
+    <Transform translation='0 1.1 0.16' rotation='1 0 0 1.5708'>
+      <TouchSensor DEF='FaceTouch' description='Restart Pendulum'/>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Cylinder radius='0.22' height='0.02'/>
+      </Shape>
+    </Transform>
+
+    <!-- Ticks -->
+    <Transform translation='0 1.1 0.175'>
+      <Transform translation='0 0.18 0'>
+        <Shape DEF='Tick'>
+          <Appearance DEF='BlackApp'>
+            <Material diffuseColor='0 0 0'/>
+          </Appearance>
+          <Box size='0.015 0.05 0.01'/>
+        </Shape>
+      </Transform>
+      <Transform rotation='0 0 1 0.5236'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 1.0472'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 1.5708'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 2.0944'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 2.6180'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 3.1416'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 3.6652'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 4.1888'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 4.7124'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 5.2360'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+      <Transform rotation='0 0 1 5.7596'><Transform translation='0 0.18 0'><Shape USE='Tick'/></Transform></Transform>
+    </Transform>
+
+    <!-- Hands -->
+    <Transform translation='0 1.1 0.18'>
+      <!-- Minute Hand -->
+      <Transform translation='0 0.07 0'>
+        <Shape>
+          <Appearance USE='BlackApp'/>
+          <Box size='0.01 0.14 0.01'/>
+        </Shape>
+      </Transform>
+      <!-- Hour Hand -->
+      <Transform rotation='0 0 1 -2.0944'>
+        <Transform translation='0 0.05 0.005'>
+          <Shape>
+            <Appearance USE='BlackApp'/>
+            <Box size='0.015 0.1 0.01'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <!-- Center Pin -->
+      <Transform translation='0 0 0.01' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='BlackApp'/>
+          <Cylinder radius='0.02' height='0.03'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Pendulum -->
+    <Transform DEF='PendulumTransform' center='0 0.8 0'>
+      <!-- Rod -->
+      <Transform translation='0 0.3 0'>
+        <Shape>
+          <Appearance DEF='BrassApp'>
+            <Material diffuseColor='0.8 0.6 0.1' shininess='0.8' specularColor='0.9 0.8 0.4'/>
+          </Appearance>
+          <Cylinder radius='0.01' height='1.0'/>
+        </Shape>
+      </Transform>
+      <!-- Bob -->
+      <Transform translation='0 -0.2 0.01' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='BrassApp'/>
+          <Cylinder radius='0.08' height='0.01'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Animation -->
+    <TimeSensor DEF='ClockTimer' cycleInterval='2.0' loop='true'/>
+    <OrientationInterpolator DEF='PendulumSwing' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 0, 0 0 1 0.1, 0 0 1 0, 0 0 1 -0.1, 0 0 1 0'/>
+
+    <ROUTE fromNode='FaceTouch' fromField='touchTime' toNode='ClockTimer' toField='startTime'/>
+    <ROUTE fromNode='ClockTimer' fromField='fraction_changed' toNode='PendulumSwing' toField='set_fraction'/>
+    <ROUTE fromNode='PendulumSwing' fromField='value_changed' toNode='PendulumTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

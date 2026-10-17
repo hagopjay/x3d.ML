@@ -1,0 +1,75 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Touch to Spin'/>
+    <Background skyColor='0.06 0.08 0.12'/>
+    <Viewpoint description='Button and spinning cylinder' position='0 2.5 8' orientation='1 0 0 -0.16'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <DirectionalLight direction='-1 -1 -1' intensity='0.9'/>
+
+    <Transform translation='0 -0.15 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.18 0.21 0.27'/>
+        </Appearance>
+        <Box size='7 0.2 4'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='1.25 1 0'>
+      <Transform DEF='Spinner'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.08 0.48 0.85' specularColor='0.6 0.6 0.6' shininess='0.5'/>
+          </Appearance>
+          <Cylinder radius='0.7' height='2'/>
+        </Shape>
+        <Transform translation='0 0 0.7'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1 0.7 0.08'/>
+            </Appearance>
+            <Box size='0.15 1.9 0.05'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0.48 1.025 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1 0.7 0.08'/>
+            </Appearance>
+            <Box size='0.25 0.05 0.15'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <Transform translation='-1.6 0.45 0.6'>
+      <TouchSensor DEF='StartButton' description='Start the cylinder spinning'/>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.12 0.7 0.3' specularColor='0.4 0.4 0.4'/>
+        </Appearance>
+        <Box size='1.6 0.8 0.5'/>
+      </Shape>
+      <Transform translation='0 -0.09 0.26'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 1 1'/>
+          </Appearance>
+          <Text string='"START"'>
+            <FontStyle size='0.28' justify='"MIDDLE" "FIRST"'/>
+          </Text>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Initially stopped. Once active, a TimeSensor ignores further startTime events. -->
+    <TimeSensor DEF='SpinClock' cycleInterval='3' loop='true' startTime='-1' stopTime='0'/>
+    <OrientationInterpolator DEF='SpinRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+
+    <ROUTE fromNode='StartButton' fromField='touchTime' toNode='SpinClock' toField='set_startTime'/>
+    <ROUTE fromNode='SpinClock' fromField='fraction_changed' toNode='SpinRotation' toField='set_fraction'/>
+    <ROUTE fromNode='SpinRotation' fromField='value_changed' toNode='Spinner' toField='set_rotation'/>
+  </Scene>
+</X3D>

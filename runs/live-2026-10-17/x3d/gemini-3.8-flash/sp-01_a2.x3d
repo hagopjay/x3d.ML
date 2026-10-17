@@ -1,0 +1,214 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='lighthouse.x3d'/>
+    <meta name='description' content='A lighthouse on a small rocky island with rotating light beam sweeping across dark sea.'/>
+  </head>
+  <Scene>
+    <!-- Night Sky Background -->
+    <Background skyAngle='1.2 1.57' skyColor='0.01 0.02 0.05 0.03 0.05 0.12 0.05 0.08 0.18' groundAngle='1.57' groundColor='0.01 0.02 0.04 0.02 0.03 0.06'/>
+
+    <!-- Camera Viewpoint -->
+    <Viewpoint description='Lighthouse Island View' position='0 8 36' orientation='1 0 0 -0.05'/>
+
+    <!-- Moon/Ambient Directional Light -->
+    <DirectionalLight direction='0.5 -1 -0.5' intensity='0.25' color='0.6 0.7 0.9'/>
+
+    <!-- Sea Plane -->
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.02 0.06 0.16' specularColor='0.2 0.35 0.5' shininess='0.7'/>
+        </Appearance>
+        <Box size='300 0.2 300'/>
+      </Shape>
+    </Transform>
+
+    <!-- Rocky Island Mound -->
+    <Transform translation='0 0 0'>
+      <!-- Main rock plateau -->
+      <Transform translation='0 0.4 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.22 0.2 0.18'/>
+          </Appearance>
+          <Cylinder radius='8.5' height='1.0'/>
+        </Shape>
+      </Transform>
+      <!-- Upper rock ledge -->
+      <Transform translation='0 1.0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.25 0.23 0.2'/>
+          </Appearance>
+          <Cylinder radius='6.5' height='0.6'/>
+        </Shape>
+      </Transform>
+      <!-- Surrounding boulder details -->
+      <Transform translation='5.5 0.5 3.5' scale='2.2 0.8 1.8'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.18 0.17 0.16'/>
+          </Appearance>
+          <Sphere radius='1.0'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-6.0 0.4 2.0' scale='2.0 0.7 2.2'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.19 0.17'/>
+          </Appearance>
+          <Sphere radius='1.0'/>
+        </Shape>
+      </Transform>
+      <Transform translation='1.0 0.4 -6.5' scale='2.5 0.9 1.6'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.19 0.18 0.16'/>
+          </Appearance>
+          <Sphere radius='1.0'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Lighthouse Structure -->
+    <Transform translation='0 1.3 0'>
+      <!-- Stone Foundation Base -->
+      <Transform translation='0 0.3 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.32'/>
+          </Appearance>
+          <Cylinder radius='2.6' height='0.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- White Tower Section 1 (Bottom) -->
+      <Transform translation='0 1.7 0'>
+        <Shape>
+          <Appearance DEF='TowerWhite'>
+            <Material diffuseColor='0.92 0.92 0.94' shininess='0.2'/>
+          </Appearance>
+          <Cylinder radius='2.3' height='2.2'/>
+        </Shape>
+      </Transform>
+
+      <!-- Red Band 1 -->
+      <Transform translation='0 3.6 0'>
+        <Shape>
+          <Appearance DEF='TowerRed'>
+            <Material diffuseColor='0.8 0.12 0.12' shininess='0.2'/>
+          </Appearance>
+          <Cylinder radius='2.05' height='1.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- White Tower Section 2 (Middle) -->
+      <Transform translation='0 5.4 0'>
+        <Shape>
+          <Appearance USE='TowerWhite'/>
+          <Cylinder radius='1.8' height='2.0'/>
+        </Shape>
+      </Transform>
+
+      <!-- Red Band 2 -->
+      <Transform translation='0 7.2 0'>
+        <Shape>
+          <Appearance USE='TowerRed'/>
+          <Cylinder radius='1.55' height='1.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- White Tower Section 3 (Top) -->
+      <Transform translation='0 8.8 0'>
+        <Shape>
+          <Appearance USE='TowerWhite'/>
+          <Cylinder radius='1.35' height='1.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- Observation Gallery Platform -->
+      <Transform translation='0 9.7 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.25 0.25 0.28'/>
+          </Appearance>
+          <Cylinder radius='1.7' height='0.2'/>
+        </Shape>
+      </Transform>
+      <!-- Gallery Railing -->
+      <Transform translation='0 10.1 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.15 0.16'/>
+          </Appearance>
+          <Cylinder radius='1.65' height='0.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- Glass Lantern Room -->
+      <Transform translation='0 10.6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.9 1.0' specularColor='0.9 0.9 1.0' shininess='0.9' transparency='0.65'/>
+          </Appearance>
+          <Cylinder radius='1.15' height='1.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- Lantern Lamp (Light Bulb) -->
+      <Transform translation='0 10.6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 1 0.8' emissiveColor='1 1 0.7'/>
+          </Appearance>
+          <Sphere radius='0.35'/>
+        </Shape>
+      </Transform>
+
+      <!-- Lantern Roof / Dome -->
+      <Transform translation='0 11.9 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.35 0.25'/>
+          </Appearance>
+          <Cone bottomRadius='1.35' height='1.0'/>
+        </Shape>
+      </Transform>
+
+      <!-- Roof Finial Spire -->
+      <Transform translation='0 12.6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.15 0.15'/>
+          </Appearance>
+          <Cylinder radius='0.05' height='0.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- Rotating Light Beam and Lantern Illumination -->
+      <Transform DEF='BeamTransform' translation='0 10.6 0'>
+        <!-- Sweeping Light Beam: Thin long pale yellow box extending outward -->
+        <Transform translation='0 0 20'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1.0 0.98 0.7' emissiveColor='0.95 0.9 0.55' transparency='0.4'/>
+            </Appearance>
+            <Box size='0.4 0.4 40'/>
+          </Shape>
+        </Transform>
+        <!-- Light projector effect on surrounding atmosphere -->
+        <SpotLight location='0 0 0' direction='0 0 1' beamWidth='0.1' cutOffAngle='0.3' color='1 0.98 0.7' intensity='1.0' radius='100'/>
+      </Transform>
+
+      <!-- General Lantern Room Glow -->
+      <PointLight location='0 10.6 0' color='1 0.95 0.7' intensity='0.8' radius='12'/>
+    </Transform>
+
+    <!-- Animation: Sweeps around lantern once every 6 seconds -->
+    <TimeSensor DEF='BeamTimer' cycleInterval='6.0' loop='true'/>
+    <OrientationInterpolator DEF='BeamRotator' key='0.0 0.25 0.5 0.75 1.0' keyValue='0 1 0 0.0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+
+    <ROUTE fromNode='BeamTimer' fromField='fraction_changed' toNode='BeamRotator' toField='set_fraction'/>
+    <ROUTE fromNode='BeamRotator' fromField='value_changed' toNode='BeamTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

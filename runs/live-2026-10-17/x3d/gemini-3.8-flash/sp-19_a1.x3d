@@ -1,0 +1,429 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='lunar_base.x3d' name='title'/>
+    <meta content='A lunar base with three white dome habitats, connecting tunnels, regolith ground, rover, and Earth in the sky.' name='description'/>
+    <meta content='X3D-Edit 4.0, https://savage.nps.edu/X3D-Edit' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Lunar Base Outpost'/>
+
+    <!-- Lunar stark lighting and dark sky -->
+    <Background skyColor='0 0 0'/>
+    <DirectionalLight color='1 0.98 0.95' direction='-0.7 -0.5 -0.5' intensity='1.3'/>
+    <DirectionalLight color='0.15 0.25 0.4' direction='0.4 0.6 0.5' intensity='0.35'/>
+
+    <Viewpoint description='Lunar Base Overview' position='0 9 28' orientation='1 0 0 -0.2'/>
+    <Viewpoint description='Close-up Habitats' position='-2 3 14' orientation='0 1 0 -0.1'/>
+    <Viewpoint description='Rover Perspective' position='9 2.5 11' orientation='0 1 0 0.8'/>
+    <Viewpoint description='Earth in Sky' position='0 4 10' orientation='1 0 0 0.35'/>
+
+    <!-- Earth in the lunar sky -->
+    <Transform translation='-35 45 -100'>
+      <!-- Earth body -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.1 0.3 0.75' emissiveColor='0.03 0.08 0.2' shininess='0.6' specularColor='0.3 0.5 0.7'/>
+        </Appearance>
+        <Sphere radius='12'/>
+      </Shape>
+      <!-- Earth cloud swirls / continents representation -->
+      <Transform scale='1.01 1.01 1.01'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.9 0.95' emissiveColor='0.1 0.12 0.15' transparency='0.45'/>
+          </Appearance>
+          <Sphere radius='12'/>
+        </Shape>
+      </Transform>
+      <!-- Earth atmosphere glow rim -->
+      <Transform scale='1.06 1.06 1.06'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.5 1' emissiveColor='0.1 0.25 0.6' transparency='0.85'/>
+          </Appearance>
+          <Sphere radius='12'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Regolith Ground -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.48 0.47 0.46' roughnessFactor='0.9' specularColor='0.05 0.05 0.05'/>
+        </Appearance>
+        <Cylinder height='0.1' radius='75'/>
+      </Shape>
+    </Transform>
+
+    <!-- Regolith crater rims and boulders -->
+    <Transform translation='18 0.1 -15' rotation='1 0 0 1.5708'>
+      <Shape>
+        <Appearance>
+          <Material DEF='RegolithMat' diffuseColor='0.42 0.41 0.4' roughnessFactor='0.95'/>
+        </Appearance>
+        <Torus innerRadius='0.5' outerRadius='6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-22 0.1 12' rotation='1 0 0 1.5708'>
+      <Shape>
+        <Appearance>
+          <Material USE='RegolithMat'/>
+        </Appearance>
+        <Torus innerRadius='0.3' outerRadius='4'/>
+      </Shape>
+    </Transform>
+
+    <!-- Scattered lunar boulders -->
+    <Transform translation='-12 0.4 8' scale='0.9 0.6 0.8'>
+      <Shape DEF='Boulder'>
+        <Appearance>
+          <Material diffuseColor='0.38 0.37 0.36' roughnessFactor='0.9'/>
+        </Appearance>
+        <Sphere radius='0.7'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-13.2 0.3 9' scale='0.5 0.4 0.5'>
+      <Shape USE='Boulder'/>
+    </Transform>
+    <Transform translation='14 0.5 5' scale='1.1 0.8 1'>
+      <Shape USE='Boulder'/>
+    </Transform>
+    <Transform translation='8 0.25 -8' scale='0.6 0.4 0.5'>
+      <Shape USE='Boulder'/>
+    </Transform>
+    <Transform translation='-5 0.35 -14' scale='0.8 0.5 0.7'>
+      <Shape USE='Boulder'/>
+    </Transform>
+
+    <!-- Habitat Materials -->
+    <!-- Central Main Habitat Dome -->
+    <Transform translation='0 0 0'>
+      <!-- Lower collar/base ring -->
+      <Transform translation='0 0.4 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='CollarMat' diffuseColor='0.3 0.32 0.35' roughnessFactor='0.5'/>
+          </Appearance>
+          <Cylinder height='0.8' radius='5.1'/>
+        </Shape>
+      </Transform>
+      <!-- Main Dome -->
+      <Transform translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='DomeMat' diffuseColor='0.92 0.93 0.95' roughnessFactor='0.3' specularColor='0.2 0.2 0.2'/>
+          </Appearance>
+          <Sphere radius='5'/>
+        </Shape>
+      </Transform>
+      <!-- Skylight / Comm Hub Cap on top -->
+      <Transform translation='0 4.8 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.25 0.4' roughnessFactor='0.2' specularColor='0.8 0.8 0.9'/>
+          </Appearance>
+          <Cylinder height='0.4' radius='1.2'/>
+        </Shape>
+      </Transform>
+      <!-- Central Antenna Mast -->
+      <Transform translation='0 6.5 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='MetalMat' diffuseColor='0.7 0.72 0.75' metalnessFactor='0.8' roughnessFactor='0.3'/>
+          </Appearance>
+          <Cylinder height='3' radius='0.08'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 7.8 0' rotation='1 0 0 0.6'>
+        <Shape>
+          <Appearance>
+            <Material USE='MetalMat'/>
+          </Appearance>
+          <Cone bottomRadius='0.8' height='0.4'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- West Living Habitat Dome -->
+    <Transform translation='-11 0 -2'>
+      <Transform translation='0 0.3 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='CollarMat'/>
+          </Appearance>
+          <Cylinder height='0.6' radius='3.6'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='DomeMat'/>
+          </Appearance>
+          <Sphere radius='3.5'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 3.35 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.3 0.45' roughnessFactor='0.2'/>
+          </Appearance>
+          <Cylinder height='0.3' radius='0.8'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- East Science Habitat Dome -->
+    <Transform translation='11 0 -1'>
+      <Transform translation='0 0.3 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='CollarMat'/>
+          </Appearance>
+          <Cylinder height='0.6' radius='3.6'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='DomeMat'/>
+          </Appearance>
+          <Sphere radius='3.5'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 3.35 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.3 0.45' roughnessFactor='0.2'/>
+          </Appearance>
+          <Cylinder height='0.3' radius='0.8'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Connecting Tube 1: Center to West -->
+    <!-- Distance ~11.18, angle ~-10 deg from -X axis -->
+    <Transform translation='-5.5 0.9 -1' rotation='0 0 1 1.5708'>
+      <Transform rotation='1 0 0 0.18'>
+        <Shape>
+          <Appearance>
+            <Material DEF='TubeMat' diffuseColor='0.88 0.89 0.9' roughnessFactor='0.4'/>
+          </Appearance>
+          <Cylinder height='7' radius='1.1'/>
+        </Shape>
+        <!-- Tube structural rib rings -->
+        <Transform translation='0 -2 0'>
+          <Shape DEF='TubeRing'>
+            <Appearance>
+              <Material USE='CollarMat'/>
+            </Appearance>
+            <Cylinder height='0.2' radius='1.18'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 0 0'>
+          <Shape USE='TubeRing'/>
+        </Transform>
+        <Transform translation='0 2 0'>
+          <Shape USE='TubeRing'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Connecting Tube 2: Center to East -->
+    <!-- Distance ~11.04, angle ~-5 deg from +X axis -->
+    <Transform translation='5.5 0.9 -0.5' rotation='0 0 1 1.5708'>
+      <Transform rotation='1 0 0 -0.09'>
+        <Shape>
+          <Appearance>
+            <Material USE='TubeMat'/>
+          </Appearance>
+          <Cylinder height='7' radius='1.1'/>
+        </Shape>
+        <Transform translation='0 -2 0'>
+          <Shape USE='TubeRing'/>
+        </Transform>
+        <Transform translation='0 0 0'>
+          <Shape USE='TubeRing'/>
+        </Transform>
+        <Transform translation='0 2 0'>
+          <Shape USE='TubeRing'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Main Front Airlock (Center Dome southward) -->
+    <Transform translation='0 0.9 4.8' rotation='1 0 0 1.5708'>
+      <Shape>
+        <Appearance>
+          <Material USE='TubeMat'/>
+        </Appearance>
+        <Cylinder height='2.2' radius='1.1'/>
+      </Shape>
+      <!-- Outer hatch frame -->
+      <Transform translation='0 1.1 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.2 0.1' roughnessFactor='0.4'/>
+          </Appearance>
+          <Cylinder height='0.2' radius='1.15'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Solar Power Station -->
+    <Transform translation='-7 0 -11'>
+      <!-- Vertical post -->
+      <Shape>
+        <Appearance>
+          <Material USE='MetalMat'/>
+        </Appearance>
+        <Cylinder height='3' radius='0.12'/>
+      </Shape>
+      <!-- Angled solar panel assembly -->
+      <Transform translation='0 1.6 0' rotation='1 0 0 -0.65'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.08 0.12 0.28' roughnessFactor='0.2' specularColor='0.5 0.6 0.8'/>
+          </Appearance>
+          <Box size='6 0.08 2.5'/>
+        </Shape>
+        <!-- Panel grid backing/frame -->
+        <Transform translation='0 -0.05 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='CollarMat'/>
+            </Appearance>
+            <Box size='6.1 0.06 2.6'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Small Lunar Rover -->
+    <Transform DEF='Rover' translation='6 0 7' rotation='0 1 0 2.2'>
+      <!-- Main Chassis -->
+      <Transform translation='0 0.75 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.7 0.2' metalnessFactor='0.3' roughnessFactor='0.4'/>
+          </Appearance>
+          <Box size='1.8 0.5 2.6'/>
+        </Shape>
+        <!-- Equipment pack on back -->
+        <Transform translation='0 0.45 -0.6'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.9 0.9 0.92' roughnessFactor='0.3'/>
+            </Appearance>
+            <Box size='1.4 0.5 1.1'/>
+          </Shape>
+        </Transform>
+        <!-- Rover Solar Panel roof -->
+        <Transform translation='0 0.4 0.4' rotation='1 0 0 -0.1'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.05 0.1 0.25' specularColor='0.6 0.6 0.8'/>
+            </Appearance>
+            <Box size='1.6 0.05 1.2'/>
+          </Shape>
+        </Transform>
+        <!-- Sensor Mast -->
+        <Transform translation='0.6 0.8 0.9'>
+          <Shape>
+            <Appearance>
+              <Material USE='MetalMat'/>
+            </Appearance>
+            <Cylinder height='1.1' radius='0.04'/>
+          </Shape>
+          <!-- Mast head / stereo cameras -->
+          <Transform translation='0 0.55 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.2 0.2 0.2' roughnessFactor='0.3'/>
+              </Appearance>
+              <Box size='0.35 0.15 0.2'/>
+            </Shape>
+            <!-- Lenses -->
+            <Transform translation='-0.1 0 0.1' rotation='1 0 0 1.5708'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.3 0.8' specularColor='1 1 1'/>
+                </Appearance>
+                <Cylinder height='0.08' radius='0.04'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.1 0 0.1' rotation='1 0 0 1.5708'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.3 0.8' specularColor='1 1 1'/>
+                </Appearance>
+                <Cylinder height='0.08' radius='0.04'/>
+              </Shape>
+            </Transform>
+          </Transform>
+        </Transform>
+        <!-- High Gain Antenna Dish on Rover -->
+        <Transform translation='-0.5 0.7 -0.8' rotation='1 0 0 0.8'>
+          <Shape>
+            <Appearance>
+              <Material USE='MetalMat'/>
+            </Appearance>
+            <Cylinder height='0.6' radius='0.03'/>
+          </Shape>
+          <Transform translation='0 0.3 0'>
+            <Shape>
+              <Appearance>
+                <Material USE='MetalMat'/>
+              </Appearance>
+              <Cone bottomRadius='0.3' height='0.15'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <!-- Wheels (6-wheel rocker bogie design) -->
+      <!-- Left Front -->
+      <Transform translation='1.1 0.4 0.9' rotation='0 0 1 1.5708'>
+        <Shape DEF='Wheel'>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.22' roughnessFactor='0.8'/>
+          </Appearance>
+          <Cylinder height='0.3' radius='0.4'/>
+        </Shape>
+        <!-- Wheel hub -->
+        <Shape DEF='Hub'>
+          <Appearance>
+            <Material USE='MetalMat'/>
+          </Appearance>
+          <Cylinder height='0.35' radius='0.18'/>
+        </Shape>
+      </Transform>
+      <!-- Left Middle -->
+      <Transform translation='1.1 0.4 0' rotation='0 0 1 1.5708'>
+        <Shape USE='Wheel'/>
+        <Shape USE='Hub'/>
+      </Transform>
+      <!-- Left Rear -->
+      <Transform translation='1.1 0.4 -0.9' rotation='0 0 1 1.5708'>
+        <Shape USE='Wheel'/>
+        <Shape USE='Hub'/>
+      </Transform>
+      <!-- Right Front -->
+      <Transform translation='-1.1 0.4 0.9' rotation='0 0 1 1.5708'>
+        <Shape USE='Wheel'/>
+        <Shape USE='Hub'/>
+      </Transform>
+      <!-- Right Middle -->
+      <Transform translation='-1.1 0.4 0' rotation='0 0 1 1.5708'>
+        <Shape USE='Wheel'/>
+        <Shape USE='Hub'/>
+      </Transform>
+      <!-- Right Rear -->
+      <Transform translation='-1.1 0.4 -0.9' rotation='0 0 1 1.5708'>
+        <Shape USE='Wheel'/>
+        <Shape USE='Hub'/>
+      </Transform>
+    </Transform>
+
+  </Scene>
+</X3D>

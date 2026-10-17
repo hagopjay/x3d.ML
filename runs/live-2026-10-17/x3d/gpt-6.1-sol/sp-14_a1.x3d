@@ -1,0 +1,236 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Eight-Horse Carousel'/>
+    <meta name='description' content='A rotating carousel with eight alternating rising and falling horses. Hover over the carousel to illuminate its central light.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Eight-Horse Carousel'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Background skyColor='0.12 0.20 0.32'/>
+    <Viewpoint description='Carousel overview' position='11 8 15' orientation='-0.337 0.927 0.164 0.678' centerOfRotation='0 3.5 0'/>
+    <DirectionalLight direction='-0.5 -1 -0.4' intensity='0.9'/>
+    <DirectionalLight direction='0.8 -0.5 0.7' intensity='0.5' color='0.65 0.78 1'/>
+    <PointLight DEF='HoverLight' location='0 4.6 0' color='1 0.75 0.35' intensity='1.5' radius='12' attenuation='1 0.04 0.02' on='false'/>
+
+    <Transform translation='0 -0.15 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.16 0.27 0.22'/>
+        </Appearance>
+        <Cylinder radius='13' height='0.2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.22 0.25 0.29'/>
+        </Appearance>
+        <Cylinder radius='5' height='0.2'/>
+      </Shape>
+    </Transform>
+
+    <Transform DEF='Carousel'>
+      <TouchSensor DEF='CarouselTouch' description='Hover to illuminate the carousel'/>
+      <Transform translation='0 0.35 0'>
+        <Shape>
+          <Appearance DEF='Gold'>
+            <Material diffuseColor='0.92 0.63 0.16' specularColor='0.8 0.7 0.4' shininess='0.65'/>
+          </Appearance>
+          <Cylinder radius='4.7' height='0.5'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0.61 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.46 0.18 0.10' specularColor='0.25 0.18 0.1'/>
+          </Appearance>
+          <Cylinder radius='4.55' height='0.04'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 3.25 0'>
+        <Shape>
+          <Appearance DEF='Red'>
+            <Material diffuseColor='0.7 0.045 0.075' specularColor='0.5 0.25 0.2' shininess='0.45'/>
+          </Appearance>
+          <Cylinder radius='0.48' height='5.3'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 5.88 0'>
+        <Shape>
+          <Appearance USE='Gold'/>
+          <Cylinder radius='5.05' height='0.18'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 6.88 0'>
+        <Shape>
+          <Appearance USE='Red'/>
+          <Cone bottomRadius='5.05' height='1.9'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 7.9 0'>
+        <Shape>
+          <Appearance USE='Gold'/>
+          <Sphere radius='0.22'/>
+        </Shape>
+      </Transform>
+
+      <Transform rotation='0 1 0 0'>
+        <Transform DEF='Pole' translation='0 3.25 3.3'>
+          <Shape>
+            <Appearance USE='Gold'/>
+            <Cylinder radius='0.045' height='5.3'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Horse1' translation='0 1.55 3.3'>
+          <Group DEF='HorseModel'>
+            <Shape>
+              <Appearance DEF='Ivory'>
+                <Material diffuseColor='0.94 0.86 0.68' specularColor='0.3 0.25 0.18' shininess='0.3'/>
+              </Appearance>
+              <Box size='1.2 0.5 0.46'/>
+            </Shape>
+            <Transform translation='0.48 0.32 0' rotation='0 0 1 -0.35'>
+              <Shape>
+                <Appearance USE='Ivory'/>
+                <Box size='0.28 0.67 0.36'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.69 0.62 0'>
+              <Shape>
+                <Appearance USE='Ivory'/>
+                <Box size='0.52 0.28 0.34'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.56 0.83 -0.11'>
+              <Shape>
+                <Appearance USE='Ivory'/>
+                <Box size='0.12 0.2 0.09'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.56 0.83 0.11'>
+              <Shape>
+                <Appearance USE='Ivory'/>
+                <Box size='0.12 0.2 0.09'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.4 -0.52 0.16'>
+              <Shape DEF='Leg'>
+                <Appearance USE='Ivory'/>
+                <Cylinder radius='0.075' height='0.65'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.4 -0.52 -0.16'>
+              <Shape USE='Leg'/>
+            </Transform>
+            <Transform translation='-0.4 -0.52 0.16'>
+              <Shape USE='Leg'/>
+            </Transform>
+            <Transform translation='-0.4 -0.52 -0.16'>
+              <Shape USE='Leg'/>
+            </Transform>
+            <Transform translation='-0.68 -0.1 0' rotation='0 0 1 -0.55'>
+              <Shape>
+                <Appearance DEF='Dark'>
+                  <Material diffuseColor='0.12 0.065 0.035'/>
+                </Appearance>
+                <Cylinder radius='0.065' height='0.52'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.35 0.48 0'>
+              <Shape>
+                <Appearance USE='Dark'/>
+                <Box size='0.12 0.56 0.39'/>
+              </Shape>
+            </Transform>
+            <Transform translation='-0.08 0.28 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.025 0.38 0.43' specularColor='0.3 0.6 0.6' shininess='0.5'/>
+                </Appearance>
+                <Box size='0.48 0.13 0.56'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.72 0.68 0.176'>
+              <Shape DEF='Eye'>
+                <Appearance USE='Dark'/>
+                <Sphere radius='0.035'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0.72 0.68 -0.176'>
+              <Shape USE='Eye'/>
+            </Transform>
+          </Group>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 0.785398'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse2' translation='0 2.25 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+      <Transform rotation='0 1 0 1.570796'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse3' translation='0 1.55 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+      <Transform rotation='0 1 0 2.356194'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse4' translation='0 2.25 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+      <Transform rotation='0 1 0 3.141593'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse5' translation='0 1.55 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+      <Transform rotation='0 1 0 3.926991'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse6' translation='0 2.25 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+      <Transform rotation='0 1 0 4.712389'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse7' translation='0 1.55 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+      <Transform rotation='0 1 0 5.497787'>
+        <Transform USE='Pole'/>
+        <Transform DEF='Horse8' translation='0 2.25 3.3'>
+          <Group USE='HorseModel'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='RotationClock' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='PlatformRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+    <TimeSensor DEF='HorseClock' cycleInterval='2.5' loop='true'/>
+    <PositionInterpolator DEF='OddHorseMotion'
+      key='0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 1'
+      keyValue='0 1.55 3.3, 0 1.6525 3.3, 0 1.9 3.3, 0 2.1475 3.3, 0 2.25 3.3, 0 2.1475 3.3, 0 1.9 3.3, 0 1.6525 3.3, 0 1.55 3.3'/>
+    <PositionInterpolator DEF='EvenHorseMotion'
+      key='0 0.125 0.25 0.375 0.5 0.625 0.75 0.875 1'
+      keyValue='0 2.25 3.3, 0 2.1475 3.3, 0 1.9 3.3, 0 1.6525 3.3, 0 1.55 3.3, 0 1.6525 3.3, 0 1.9 3.3, 0 2.1475 3.3, 0 2.25 3.3'/>
+
+    <ROUTE fromNode='RotationClock' fromField='fraction_changed' toNode='PlatformRotation' toField='set_fraction'/>
+    <ROUTE fromNode='PlatformRotation' fromField='value_changed' toNode='Carousel' toField='set_rotation'/>
+    <ROUTE fromNode='HorseClock' fromField='fraction_changed' toNode='OddHorseMotion' toField='set_fraction'/>
+    <ROUTE fromNode='HorseClock' fromField='fraction_changed' toNode='EvenHorseMotion' toField='set_fraction'/>
+    <ROUTE fromNode='OddHorseMotion' fromField='value_changed' toNode='Horse1' toField='set_translation'/>
+    <ROUTE fromNode='OddHorseMotion' fromField='value_changed' toNode='Horse3' toField='set_translation'/>
+    <ROUTE fromNode='OddHorseMotion' fromField='value_changed' toNode='Horse5' toField='set_translation'/>
+    <ROUTE fromNode='OddHorseMotion' fromField='value_changed' toNode='Horse7' toField='set_translation'/>
+    <ROUTE fromNode='EvenHorseMotion' fromField='value_changed' toNode='Horse2' toField='set_translation'/>
+    <ROUTE fromNode='EvenHorseMotion' fromField='value_changed' toNode='Horse4' toField='set_translation'/>
+    <ROUTE fromNode='EvenHorseMotion' fromField='value_changed' toNode='Horse6' toField='set_translation'/>
+    <ROUTE fromNode='EvenHorseMotion' fromField='value_changed' toNode='Horse8' toField='set_translation'/>
+    <ROUTE fromNode='CarouselTouch' fromField='isOver' toNode='HoverLight' toField='set_on'/>
+  </Scene>
+</X3D>

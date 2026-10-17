@@ -1,0 +1,39 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head/>
+  <Scene>
+    <Viewpoint description='Waving right arm' position='0 0 5'/>
+    <Background skyColor='0.7 0.8 1'/>
+    <NavigationInfo type='"EXAMINE" "ANY" "WALK"'/>
+    <DirectionalLight direction='0 -1 0' intensity='0.8' color='1 1 1'/>
+
+    <HAnimHumanoid version='2.0'>
+      <HAnimJoint name='HumanoidRoot'>
+        <HAnimSegment name='HumanoidRootSegment'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.8 0.6 0.4'/>
+            </Appearance>
+            <Box size='0.2 0.2 0.2'/>
+          </Shape>
+        </HAnimSegment>
+        <HAnimJoint name='RightShoulder' DEF='RightShoulderJoint'>
+          <HAnimSegment name='RightUpperArm'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.6 0.4'/>
+              </Appearance>
+              <Cylinder radius='0.05' height='0.3'/>
+            </Shape>
+          </HAnimSegment>
+        </HAnimJoint>
+      </HAnimJoint>
+    </HAnimHumanoid>
+
+    <TimeSensor DEF='WaveTS' cycleInterval='2' loop='true'/>
+    <OrientationInterpolator DEF='WaveOI'
+        key='0 0.5 1'
+        keyValue='0 1 0 0 0 1 0 1.5708 0 1 0 0'/>
+    <ROUTE fromNode='WaveTS' fromField='fraction_changed' toNode='WaveOI' toField='set_fraction'/>
+    <ROUTE fromNode='WaveOI' fromField='value_changed' toNode='RightShoulderJoint' toField='rotation'/>
+  </Scene>
+</X3D>

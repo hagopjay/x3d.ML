@@ -1,0 +1,82 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Desk Lamp View' position='0 0.5 2.5' orientation='1 0 0 -0.15'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    
+    <DirectionalLight direction='0.5 -1 -0.5' intensity='0.3'/>
+    
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.35 0.18 0.05' roughness='0.8' metallic='0.0'/>
+        </Appearance>
+        <Box size='2.5 0.1 1.5'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-0.8 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial DEF='LampMetal' baseColor='0.1 0.1 0.15' roughness='0.4' metallic='0.8'/>
+        </Appearance>
+        <Cylinder radius='0.25' height='0.04'/>
+      </Shape>
+
+      <Transform translation='0 0.02 0' rotation='0 0 1 0.4'>
+        <Transform translation='0 0.3 0'>
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial USE='LampMetal'/>
+            </Appearance>
+            <Cylinder radius='0.025' height='0.6'/>
+          </Shape>
+        </Transform>
+
+        <Transform DEF='UpperArmJoint' translation='0 0.6 0' rotation='0 0 1 -0.8'>
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial USE='LampMetal'/>
+            </Appearance>
+            <Sphere radius='0.04'/>
+          </Shape>
+          
+          <Transform translation='0 0.25 0'>
+            <Shape>
+              <Appearance>
+                <PhysicalMaterial USE='LampMetal'/>
+              </Appearance>
+              <Cylinder radius='0.02' height='0.5'/>
+            </Shape>
+          </Transform>
+
+          <Transform translation='0 0.5 0' rotation='0 0 1 0.4'>
+            <Shape>
+              <Appearance>
+                <PhysicalMaterial USE='LampMetal'/>
+              </Appearance>
+              <Sphere radius='0.03'/>
+            </Shape>
+            
+            <Transform translation='0 -0.15 0'>
+              <Shape>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0.8 0.8 0.82' roughness='0.5' metallic='0.1'/>
+                </Appearance>
+                <Cone bottomRadius='0.18' height='0.25' bottom='false'/>
+              </Shape>
+              <SpotLight global='true' location='0 -0.05 0' direction='0 -1 0' beamWidth='0.6' cutOffAngle='0.8' radius='4.0' intensity='3.0' color='1 0.95 0.8'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='Timer' cycleInterval='6.0' loop='true'/>
+    <OrientationInterpolator DEF='Sway' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 -0.8, 0 0 1 -0.5, 0 0 1 -0.8, 0 0 1 -1.1, 0 0 1 -0.8'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Sway' toField='set_fraction'/>
+    <ROUTE fromNode='Sway' fromField='value_changed' toNode='UpperArmJoint' toField='rotation'/>
+  </Scene>
+</X3D>

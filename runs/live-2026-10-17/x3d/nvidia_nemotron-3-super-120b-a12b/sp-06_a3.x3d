@@ -1,0 +1,64 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+  <!-- Hill -->
+  <ElevationGrid xDimension='5' zDimension='5' xSpacing='2' zSpacing='2'
+    height='0 0 0 0 0 0 0 1 0 0 0 1 2 1 0 0 0 1 0 0 0 0 0 0 0'/>
+  <!-- Windmill base -->
+  <Transform translation='4 2 4'>
+    <!-- Tower -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Cone bottomRadius='0.5' height='3'/>
+      </Shape>
+    </Transform>
+    <!-- Roof -->
+    <Transform translation='0 3 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.2'/>
+        </Appearance>
+        <Cone bottomRadius='0.4' height='0.5'/>
+      </Shape>
+    </Transform>
+    <!-- Blade assembly -->
+    <Transform DEF='bladeAssembly' translation='0 3.5 0'>
+      <!-- Blade shape -->
+      <Shape DEF='bladeShape'>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.6'/>
+        </Appearance>
+        <Box size='0.05 0.2 2'/>
+      </Shape>
+      <!-- Blade 0 -->
+      <Transform translation='1 0 0'>
+        <USE DEF='bladeShape'/>
+      </Transform>
+      <!-- Blade 90 -->
+      <Transform translation='0 0 1'>
+        <USE DEF='bladeShape'/>
+        <Transform rotation='0 1 0 1.5707963267948966'/>
+      </Transform>
+      <!-- Blade 180 -->
+      <Transform translation='-1 0 0'>
+        <USE DEF='bladeShape'/>
+        <Transform rotation='0 1 0 3.141592653589793'/>
+      </Transform>
+      <!-- Blade 270 -->
+      <Transform translation='0 0 -1'>
+        <USE DEF='bladeShape'/>
+        <Transform rotation='0 1 0 4.71238898038469'/>
+      </Transform>
+    </Transform>
+  </Transform>
+  <!-- Animation -->
+  <TimeSensor DEF='bladeTimer' cycleInterval='8' loop='true'/>
+  <OrientationInterpolator DEF='bladeOri' key='0 1' keyValue='0 0 1 0 0 0 1 6.283185307179586'/>
+  <ROUTE fromNode='bladeTimer' fromField='fraction_changed' toNode='bladeOri' toField='set_fraction'/>
+  <ROUTE fromNode='bladeOri' fromField='value_changed' toNode='bladeAssembly' toField='rotation'/>
+  <!-- Viewpoint -->
+  <Viewpoint description='View of windmill on hill' position='6 8 6'/>
+</Scene>
+</X3D>

@@ -1,0 +1,17 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <TimeSensor DEF='ts' loop='true' cycleInterval='4' />
+    <OrientationInterpolator DEF='ori' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586' />
+    <Transform DEF='cubeTransform' rotation='0 1 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 1' />
+        </Appearance>
+        <Box size='2 2 2' />
+      </Shape>
+    </Transform>
+    <Viewpoint description='Rotating blue cube' position='0 0 5' />
+    <ROUTE fromNode='ts' fromField='fraction_changed' toNode='ori' toField='set_fraction' />
+    <ROUTE fromNode='ori' fromField='value_changed' toNode='cubeTransform' toField='rotation' />
+  </Scene>
+</X3D>

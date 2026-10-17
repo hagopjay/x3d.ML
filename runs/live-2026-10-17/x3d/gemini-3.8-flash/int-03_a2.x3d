@@ -1,0 +1,92 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Draggable Cone with PlaneSensor'/>
+    <meta name='description' content='A 3D cone that can be dragged across the ground plane using an X3D PlaneSensor.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Draggable Cone'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <Viewpoint description='Overview' position='0 7 12' orientation='1 0 0 -0.5236'/>
+
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.9' ambientIntensity='0.2'/>
+    <DirectionalLight direction='0.5 0.5 0.5' intensity='0.3'/>
+
+    <!-- Ground Platform -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.22 0.25 0.28' shininess='0.1' specularColor='0.1 0.1 0.1'/>
+        </Appearance>
+        <Box size='18 0.1 18'/>
+      </Shape>
+    </Transform>
+
+    <!-- Boundary Marker Ring -->
+    <Transform translation='0 0.005 0' rotation='1 0 0 1.5707963'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.35 0.4 0.45' emissiveColor='0.1 0.12 0.15'/>
+        </Appearance>
+        <Cylinder height='0.01' radius='8.2' top='false' bottom='false'/>
+      </Shape>
+    </Transform>
+
+    <!-- Ground Grid Center Lines -->
+    <Transform translation='0 0.002 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.35 0.38'/>
+        </Appearance>
+        <Box size='16 0.002 0.04'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.002 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.35 0.38'/>
+        </Appearance>
+        <Box size='0.04 0.002 16'/>
+      </Shape>
+    </Transform>
+
+    <!-- Draggable Assembly: Sensor oriented to the X-Z ground plane -->
+    <Transform rotation='1 0 0 -1.5707963'>
+      <PlaneSensor DEF='GroundPlaneSensor' description='Click and drag to move cone' minPosition='-7.5 -7.5' maxPosition='7.5 7.5'/>
+
+      <!-- Target Transform receiving translation in parent sensor coordinates -->
+      <Transform DEF='DraggableTransform' rotation='1 0 0 1.5707963'>
+        <!-- Soft Contact Shadow -->
+        <Transform translation='0 0.005 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0 0 0' transparency='0.6'/>
+            </Appearance>
+            <Cylinder height='0.005' radius='1.1'/>
+          </Shape>
+        </Transform>
+
+        <!-- Upright Cone Geometry sitting on Y=0 -->
+        <Transform translation='0 1.25 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1.0 0.35 0.05' specularColor='0.8 0.8 0.8' shininess='0.7'/>
+            </Appearance>
+            <Cone bottomRadius='0.9' height='2.5'/>
+          </Shape>
+        </Transform>
+
+        <!-- Cone Base Accent -->
+        <Transform translation='0 0.08 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.9 0.9 0.95' specularColor='0.6 0.6 0.6' shininess='0.5'/>
+            </Appearance>
+            <Cylinder height='0.15' radius='0.95'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <ROUTE fromNode='GroundPlaneSensor' fromField='translation_changed' toNode='DraggableTransform' toField='set_translation'/>
+  </Scene>
+</X3D>

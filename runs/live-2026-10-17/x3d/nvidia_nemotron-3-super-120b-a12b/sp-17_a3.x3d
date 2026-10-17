@@ -1,0 +1,89 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <DirectionalLight direction="0 -1 -1" intensity="0.8"/>
+    <Background skyColor="0.7 0.8 1"/>
+    <Viewpoint description="Pendulum clock" position="0 3 5" orientation="0 1 0 -0.3"/>
+    <!-- Case -->
+    <Shape>
+      <Box size="0.5 2 0.5"/>
+      <Appearance>
+        <Material diffuseColor="0.55 0.27 0.07"/>
+      </Appearance>
+    </Shape>
+    <!-- Face with tick marks -->
+    <Transform rotation="1 0 0 1.5708" translation="0 0 0.26">
+      <Shape>
+        <Cylinder radius="0.45" height="0.02"/>
+        <Appearance>
+          <Material diffuseColor="1 1 1"/>
+        </Appearance>
+      </Shape>
+      <Transform>
+        <!-- Tick mark definition -->
+        <Shape DEF="TickMark">
+          <Box size="0.02 0.04 0.01"/>
+          <Appearance>
+            <Material diffuseColor="0.2 0.2 0.2"/>
+          </Appearance>
+        </Shape>
+        <!-- Instances -->
+        <Transform rotation="0 0 1 0.0000" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 0.5236" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 1.0472" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 1.5708" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 2.0944" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 2.6180" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 3.1416" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 3.6652" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 4.1888" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 4.7124" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 5.2360" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+        <Transform rotation="0 0 1 5.7596" translation="0 0.4 0">
+          <Shape USE="TickMark"/>
+        </Transform>
+      </Transform>
+    </Transform>
+    <!-- Pendulum -->
+    <Transform translation="0 1 0.26">
+      <Transform DEF="PendulumTransform">
+        <Transform translation="0 -0.4 0">
+          <Shape>
+            <Box size="0.05 0.8 0.05"/>
+            <Appearance>
+              <Material diffuseColor="0.8 0.8 0.6"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <!-- Animation -->
+    <TimeSensor DEF="Timer" cycleInterval="2" loop="true"/>
+    <OrientationInterpolator DEF="PendulumRot"
+          key="0 1"
+          keyValue="0 0 1 -0.2618 0 0 1 0.2618"/>
+    <ROUTE fromNode="Timer" fromField="fraction_changed" toNode="PendulumRot" toField="set_fraction"/>
+    <ROUTE fromNode="PendulumRot" fromField="value_changed" toNode="PendulumTransform" toField="set_rotation"/>
+  </Scene>
+</X3D>

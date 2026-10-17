@@ -1,0 +1,244 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='friendly_robot.x3d' name='title'/>
+    <meta content='A friendly animated robot with box body, cylindrical arms and legs, spherical head with emissive yellow eyes, and alternating swinging arms.' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Friendly Robot'/>
+    <Background skyColor='0.15 0.18 0.24 0.45 0.5 0.6 0.8 0.85 0.9' skyAngle='1.2 1.57'/>
+    <Viewpoint description='Friendly Robot Front View' position='0 1.6 4.8'/>
+
+    <DirectionalLight ambientIntensity='0.3' direction='-0.5 -1 -0.8' intensity='0.9'/>
+    <DirectionalLight ambientIntensity='0.1' direction='0.6 0.5 0.5' intensity='0.4'/>
+
+    <!-- Ground plane for scene context -->
+    <Shape>
+      <Appearance>
+        <Material diffuseColor='0.2 0.25 0.3' shininess='0.1'/>
+      </Appearance>
+      <Box size='10 0.05 10'/>
+    </Shape>
+
+    <!-- Robot Root -->
+    <Transform translation='0 0 0'>
+      <!-- Torso / Box Body -->
+      <Transform translation='0 1.6 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='RobotBodyMat' diffuseColor='0.22 0.55 0.78' shininess='0.4' specularColor='0.4 0.7 0.9'/>
+          </Appearance>
+          <Box size='1.2 1.4 0.8'/>
+        </Shape>
+        <!-- Belly Screen / Accent Panel -->
+        <Transform translation='0 0 0.41'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.1 0.15 0.2' shininess='0.8' specularColor='0.6 0.8 0.9'/>
+            </Appearance>
+            <Box size='0.8 0.8 0.05'/>
+          </Shape>
+        </Transform>
+        <!-- Heart / Chest Indicator Button -->
+        <Transform translation='0 0.22 0.44'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.2 0.8 0.4' emissiveColor='0.1 0.6 0.3'/>
+            </Appearance>
+            <Cylinder height='0.04' radius='0.09'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Head Structure -->
+      <Transform translation='0 2.65 0'>
+        <!-- Spherical Head -->
+        <Shape>
+          <Appearance>
+            <Material USE='RobotBodyMat'/>
+          </Appearance>
+          <Sphere radius='0.52'/>
+        </Shape>
+
+        <!-- Left Eye (Emissive Yellow) -->
+        <Transform translation='-0.18 0.08 0.44'>
+          <Shape>
+            <Appearance>
+              <Material DEF='YellowEyeMat' diffuseColor='1 0.85 0' emissiveColor='1 0.9 0.1'/>
+            </Appearance>
+            <Sphere radius='0.09'/>
+          </Shape>
+        </Transform>
+
+        <!-- Right Eye (Emissive Yellow) -->
+        <Transform translation='0.18 0.08 0.44'>
+          <Shape>
+            <Appearance>
+              <Material USE='YellowEyeMat'/>
+            </Appearance>
+            <Sphere radius='0.09'/>
+          </Shape>
+        </Transform>
+
+        <!-- Friendly Smile -->
+        <Transform rotation='0 0 1 1.5708' translation='0 -0.16 0.47'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.1 0.12 0.15'/>
+            </Appearance>
+            <Cylinder height='0.28' radius='0.03'/>
+          </Shape>
+        </Transform>
+
+        <!-- Antenna -->
+        <Transform translation='0 0.52 0'>
+          <Shape>
+            <Appearance>
+              <Material DEF='RobotJointMat' diffuseColor='0.7 0.72 0.75' shininess='0.7' specularColor='0.9 0.9 0.9'/>
+            </Appearance>
+            <Cylinder height='0.3' radius='0.03'/>
+          </Shape>
+          <Transform translation='0 0.18 0'>
+            <Shape>
+              <Appearance>
+                <Material USE='YellowEyeMat'/>
+              </Appearance>
+              <Sphere radius='0.07'/>
+            </Shape>
+          </Transform>
+        </Transform>
+
+        <!-- Left Ear -->
+        <Transform rotation='0 0 1 1.5708' translation='-0.54 0 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='RobotJointMat'/>
+            </Appearance>
+            <Cylinder height='0.12' radius='0.1'/>
+          </Shape>
+        </Transform>
+
+        <!-- Right Ear -->
+        <Transform rotation='0 0 1 1.5708' translation='0.54 0 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='RobotJointMat'/>
+            </Appearance>
+            <Cylinder height='0.12' radius='0.1'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Left Leg -->
+      <Transform translation='-0.35 0.5 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='RobotJointMat'/>
+          </Appearance>
+          <Cylinder height='0.8' radius='0.14'/>
+        </Shape>
+        <!-- Left Foot -->
+        <Transform translation='0 -0.42 0.08'>
+          <Shape>
+            <Appearance>
+              <Material USE='RobotBodyMat'/>
+            </Appearance>
+            <Box size='0.32 0.16 0.44'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Right Leg -->
+      <Transform translation='0.35 0.5 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='RobotJointMat'/>
+          </Appearance>
+          <Cylinder height='0.8' radius='0.14'/>
+        </Shape>
+        <!-- Right Foot -->
+        <Transform translation='0 -0.42 0.08'>
+          <Shape>
+            <Appearance>
+              <Material USE='RobotBodyMat'/>
+            </Appearance>
+            <Box size='0.32 0.16 0.44'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Left Arm (Pivots at shoulder) -->
+      <Transform DEF='LeftArmPivot' center='0 0 0' translation='-0.75 2.15 0'>
+        <!-- Shoulder Joint Sphere -->
+        <Shape>
+          <Appearance>
+            <Material USE='RobotJointMat'/>
+          </Appearance>
+          <Sphere radius='0.15'/>
+        </Shape>
+        <!-- Arm Cylinder hanging down -->
+        <Transform translation='0 -0.45 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='RobotJointMat'/>
+            </Appearance>
+            <Cylinder height='0.75' radius='0.11'/>
+          </Shape>
+          <!-- Left Hand -->
+          <Transform translation='0 -0.42 0'>
+            <Shape>
+              <Appearance>
+                <Material USE='RobotBodyMat'/>
+              </Appearance>
+              <Sphere radius='0.15'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <!-- Right Arm (Pivots at shoulder) -->
+      <Transform DEF='RightArmPivot' center='0 0 0' translation='0.75 2.15 0'>
+        <!-- Shoulder Joint Sphere -->
+        <Shape>
+          <Appearance>
+            <Material USE='RobotJointMat'/>
+          </Appearance>
+          <Sphere radius='0.15'/>
+        </Shape>
+        <!-- Arm Cylinder hanging down -->
+        <Transform translation='0 -0.45 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='RobotJointMat'/>
+            </Appearance>
+            <Cylinder height='0.75' radius='0.11'/>
+          </Shape>
+          <!-- Right Hand -->
+          <Transform translation='0 -0.42 0'>
+            <Shape>
+              <Appearance>
+                <Material USE='RobotBodyMat'/>
+              </Appearance>
+              <Sphere radius='0.15'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Swing Animation Components -->
+    <TimeSensor DEF='ArmSwingClock' cycleInterval='1.6' loop='true'/>
+
+    <!-- Left Arm Interpolator: swings forward first (+X angle), then backward (-X angle) -->
+    <OrientationInterpolator DEF='LeftArmInterpolator' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0  1 0 0 0.6  1 0 0 0  1 0 0 -0.6  1 0 0 0'/>
+
+    <!-- Right Arm Interpolator: swings backward first (-X angle), then forward (+X angle) -->
+    <OrientationInterpolator DEF='RightArmInterpolator' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0  1 0 0 -0.6  1 0 0 0  1 0 0 0.6  1 0 0 0'/>
+
+    <!-- Routes to drive arm swinging indefinitely -->
+    <ROUTE fromField='fraction_changed' fromNode='ArmSwingClock' toField='set_fraction' toNode='LeftArmInterpolator'/>
+    <ROUTE fromField='value_changed' fromNode='LeftArmInterpolator' toField='set_rotation' toNode='LeftArmPivot'/>
+    <ROUTE fromField='fraction_changed' fromNode='ArmSwingClock' toField='set_fraction' toNode='RightArmInterpolator'/>
+    <ROUTE fromField='value_changed' fromNode='RightArmInterpolator' toField='set_rotation' toNode='RightArmPivot'/>
+  </Scene>
+</X3D>

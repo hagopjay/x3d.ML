@@ -1,0 +1,9 @@
+
+    Look how clear, precise, and completely valid that percent-encoded URI is!
+    Let's check the remaining parts of that subscene to percent-encode:
+    `</Transform><Transform translation='-1.8 23.5 0.5' rotation='1 0 0 0.4'><Shape><Appearance USE='Copper'/><Box size='0.5 2.2 1.4'/></Shape></Transform></Scene></X3D>`:
+    `%3C%2FTransform%3E%3CTransform%20translation%3D%27-1.8%2023.5%200.5%27%20rotation%3D%271%200%200%200.4%27%3E%3CShape%3E%3CAppearance%20USE%3D%27Copper%27%2F%3E%3CBox%20size%3D%270.5%202.2%201.4%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3C%2FScene%3E%3C%2FX3D%3E`
+
+    Wait, what about the torch arm?
+    In the previous fragment:
+    `...%3CTransform%20translation%3D%272%2025%200%27%20rotation%3D%270%200%201%20-0.5%27%3E%3CShape%3E%3CAppearance%20USE%3D%27Copper%27%2F%3E%3CCylinder%20radius%3D%270.45%27%20height%3D%274%27%2F%3E%3C%2FShape%3E%3CTransform%20translation%3D%270%202.

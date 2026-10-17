@@ -1,0 +1,207 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Carousel View' position='0 4 16' orientation='1 0 0 -0.1'/>
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.8'/>
+
+    <Transform DEF='CarouselRoot'>
+      <Transform translation='0 0.25 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.3'/>
+          </Appearance>
+          <Cylinder radius='5' height='0.5'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.1 0.1'/>
+          </Appearance>
+          <Cone bottomRadius='5.2' height='1.5'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.8 0.2'/>
+          </Appearance>
+          <Cylinder radius='0.6' height='5'/>
+        </Shape>
+      </Transform>
+
+      <Transform rotation='0 1 0 0'>
+        <Transform translation='4 2.5 0'>
+          <Shape DEF='PoleGeom'>
+            <Appearance>
+              <Material diffuseColor='0.9 0.9 0.9'/>
+            </Appearance>
+            <Cylinder radius='0.05' height='5'/>
+          </Shape>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H0'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group DEF='HorseEvenGeom'>
+                <Transform>
+                  <Shape>
+                    <Appearance DEF='EvenApp'>
+                      <Material diffuseColor='0.2 0.4 0.8'/>
+                    </Appearance>
+                    <Box size='1.2 0.5 0.4'/>
+                  </Shape>
+                </Transform>
+                <Transform translation='0.6 0.4 0' rotation='0 0 1 -0.5'>
+                  <Shape>
+                    <Appearance USE='EvenApp'/>
+                    <Cylinder radius='0.15' height='0.6'/>
+                  </Shape>
+                </Transform>
+                <Transform translation='0.8 0.7 0' rotation='0 0 1 -1.5'>
+                  <Shape>
+                    <Appearance USE='EvenApp'/>
+                    <Cylinder radius='0.12' height='0.5'/>
+                  </Shape>
+                </Transform>
+              </Group>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 0.7854'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H1'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group DEF='HorseOddGeom'>
+                <Transform>
+                  <Shape>
+                    <Appearance DEF='OddApp'>
+                      <Material diffuseColor='0.8 0.6 0.1'/>
+                    </Appearance>
+                    <Box size='1.2 0.5 0.4'/>
+                  </Shape>
+                </Transform>
+                <Transform translation='0.6 0.4 0' rotation='0 0 1 -0.5'>
+                  <Shape>
+                    <Appearance USE='OddApp'/>
+                    <Cylinder radius='0.15' height='0.6'/>
+                  </Shape>
+                </Transform>
+                <Transform translation='0.8 0.7 0' rotation='0 0 1 -1.5'>
+                  <Shape>
+                    <Appearance USE='OddApp'/>
+                    <Cylinder radius='0.12' height='0.5'/>
+                  </Shape>
+                </Transform>
+              </Group>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 1.5708'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H2'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group USE='HorseEvenGeom'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 2.3562'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H3'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group USE='HorseOddGeom'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 3.1416'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H4'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group USE='HorseEvenGeom'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 3.9270'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H5'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group USE='HorseOddGeom'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 4.7124'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H6'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group USE='HorseEvenGeom'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <Transform rotation='0 1 0 5.4978'>
+        <Transform translation='4 2.5 0'>
+          <Shape USE='PoleGeom'/>
+        </Transform>
+        <Transform translation='4 0 0'>
+          <Transform DEF='H7'>
+            <Transform rotation='0 1 0 1.5708'>
+              <Group USE='HorseOddGeom'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='ClockRot' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='InterpRot' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <ROUTE fromNode='ClockRot' fromField='fraction_changed' toNode='InterpRot' toField='set_fraction'/>
+    <ROUTE fromNode='InterpRot' fromField='value_changed' toNode='CarouselRoot' toField='rotation'/>
+
+    <TimeSensor DEF='ClockBounce' cycleInterval='2' loop='true'/>
+    <PositionInterpolator DEF='InterpEven' key='0 0.5 1' keyValue='0 1 0, 0 2.5 0, 0 1 0'/>
+    <PositionInterpolator DEF='InterpOdd' key='0 0.5 1' keyValue='0 2.5 0, 0 1 0, 0 2.5 0'/>
+    
+    <ROUTE fromNode='ClockBounce' fromField='fraction_changed' toNode='InterpEven' toField='set_fraction'/>
+    <ROUTE fromNode='ClockBounce' fromField='fraction_changed' toNode='InterpOdd' toField='set_fraction'/>
+
+    <ROUTE fromNode='InterpEven' fromField='value_changed' toNode='H0' toField='translation'/>
+    <ROUTE fromNode='InterpEven' fromField='value_changed' toNode='H2' toField='translation'/>
+    <ROUTE fromNode='InterpEven' fromField='value_changed' toNode='H4' toField='translation'/>
+    <ROUTE fromNode='InterpEven' fromField='value_changed' toNode='H6' toField='translation'/>
+
+    <ROUTE fromNode='InterpOdd' fromField='value_changed' toNode='H1' toField='translation'/>
+    <ROUTE fromNode='InterpOdd' fromField='value_changed' toNode='H3' toField='translation'/>
+    <ROUTE fromNode='InterpOdd' fromField='value_changed' toNode='H5' toField='translation'/>
+    <ROUTE fromNode='InterpOdd' fromField='value_changed' toNode='H7' toField='translation'/>
+
+  </Scene>
+</X3D>

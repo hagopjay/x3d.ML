@@ -3,3 +3,4 @@ demo/build/*
 demo/node_modules/
 demo/shots/
 __pycache__/
+demo/tests/shots/

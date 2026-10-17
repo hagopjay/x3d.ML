@@ -1,0 +1,112 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='SolarSystem.x3d' name='title'/>
+    <meta content='Solar system model showing the Sun and three planets orbiting at different distances.' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Solar System'/>
+    <Background skyColor='0.01 0.01 0.03'/>
+    <Viewpoint description='Solar System Overview' orientation='1 0 0 -0.65' position='0 22 28'/>
+    <Viewpoint description='Ecliptic Plane View' position='0 1 24'/>
+
+    <!-- Sun and Central Light Source -->
+    <PointLight color='1 0.95 0.85' intensity='2' location='0 0 0' radius='60'/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0' emissiveColor='1 0.85 0.2'/>
+        </Appearance>
+        <Sphere radius='2'/>
+      </Shape>
+      <!-- Sun Glow Aura -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.7 0' emissiveColor='0.5 0.3 0' transparency='0.6'/>
+        </Appearance>
+        <Sphere radius='2.25'/>
+      </Shape>
+    </Transform>
+
+    <!-- Planet 1 (Inner Terrestrial Planet) -->
+    <Transform DEF='Orbit1'>
+      <Transform translation='5 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.75 0.5 0.35' shininess='0.2' specularColor='0.2 0.2 0.2'/>
+          </Appearance>
+          <Sphere radius='0.35'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Planet 2 (Mid Habitable Planet with Moon) -->
+    <Transform DEF='Orbit2'>
+      <Transform translation='9 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.45 0.85' shininess='0.5' specularColor='0.4 0.4 0.5'/>
+          </Appearance>
+          <Sphere radius='0.6'/>
+        </Shape>
+        <!-- Child Moon Orbit -->
+        <Transform DEF='MoonOrbit'>
+          <Transform translation='1.1 0 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.7 0.7 0.7' shininess='0.1' specularColor='0.1 0.1 0.1'/>
+              </Appearance>
+              <Sphere radius='0.15'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Planet 3 (Outer Gas Giant with Ring) -->
+    <Transform DEF='Orbit3'>
+      <Transform translation='14 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.65 0.4' shininess='0.3' specularColor='0.25 0.2 0.15'/>
+          </Appearance>
+          <Sphere radius='1.1'/>
+        </Shape>
+        <!-- Planetary Ring -->
+        <Transform rotation='1 0 0 0.35'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.75 0.6 0.45' specularColor='0.1 0.1 0.1' transparency='0.4'/>
+            </Appearance>
+            <Cylinder height='0.02' radius='2.1'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Animation Timers -->
+    <TimeSensor DEF='Timer1' cycleInterval='5' loop='true'/>
+    <TimeSensor DEF='Timer2' cycleInterval='11' loop='true'/>
+    <TimeSensor DEF='Timer3' cycleInterval='20' loop='true'/>
+    <TimeSensor DEF='TimerMoon' cycleInterval='2.5' loop='true'/>
+
+    <!-- Rotation Interpolators -->
+    <OrientationInterpolator DEF='Rotator1' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <OrientationInterpolator DEF='Rotator2' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <OrientationInterpolator DEF='Rotator3' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <OrientationInterpolator DEF='RotatorMoon' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+
+    <!-- Animation Routing -->
+    <ROUTE fromField='fraction_changed' fromNode='Timer1' toField='set_fraction' toNode='Rotator1'/>
+    <ROUTE fromField='value_changed' fromNode='Rotator1' toField='set_rotation' toNode='Orbit1'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='Timer2' toField='set_fraction' toNode='Rotator2'/>
+    <ROUTE fromField='value_changed' fromNode='Rotator2' toField='set_rotation' toNode='Orbit2'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='Timer3' toField='set_fraction' toNode='Rotator3'/>
+    <ROUTE fromField='value_changed' fromNode='Rotator3' toField='set_rotation' toNode='Orbit3'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='TimerMoon' toField='set_fraction' toNode='RotatorMoon'/>
+    <ROUTE fromField='value_changed' fromNode='RotatorMoon' toField='set_rotation' toNode='MoonOrbit'/>
+  </Scene>
+</X3D>

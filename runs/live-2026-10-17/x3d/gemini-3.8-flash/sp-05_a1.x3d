@@ -1,0 +1,173 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='desk_lamp.x3d' name='title'/>
+    <meta content='An articulated desk lamp illuminating a wooden desk surface with animated swaying upper arm.' name='description'/>
+    <meta content='X3D-Edit 4.0, https://savage.nps.edu/X3D-Edit' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Articulated Desk Lamp'/>
+
+    <Viewpoint description='Desk Lamp View' position='0.0 0.5 0.85' orientation='1 0 0 -0.38'/>
+    <Viewpoint description='Close-up Shade' position='0.05 0.3 0.4' orientation='1 0 0 -0.2'/>
+
+    <!-- Ambient / Room fill light -->
+    <DirectionalLight direction='0.3 -0.8 -0.5' intensity='0.35' color='0.85 0.9 1.0'/>
+    <PointLight location='0.0 0.8 0.5' intensity='0.25' color='1 0.95 0.9' radius='3.0'/>
+
+    <!-- Wooden Desk Surface -->
+    <Transform translation='0.0 -0.02 0.0'>
+      <!-- Desktop Slab -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.28 0.14' specularColor='0.2 0.15 0.1' shininess='0.25'/>
+        </Appearance>
+        <Box size='0.9 0.04 0.6'/>
+      </Shape>
+      <!-- Desk Legs -->
+      <Transform translation='-0.4 -0.28 -0.25'>
+        <Shape DEF='DeskLeg'>
+          <Appearance>
+            <Material diffuseColor='0.15 0.12 0.1' specularColor='0.1 0.1 0.1' shininess='0.1'/>
+          </Appearance>
+          <Cylinder height='0.56' radius='0.02'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.4 -0.28 -0.25'>
+        <Shape USE='DeskLeg'/>
+      </Transform>
+      <Transform translation='-0.4 -0.28 0.25'>
+        <Shape USE='DeskLeg'/>
+      </Transform>
+      <Transform translation='0.4 -0.28 0.25'>
+        <Shape USE='DeskLeg'/>
+      </Transform>
+    </Transform>
+
+    <!-- Desk Blotter / Notepad on surface under lamp light -->
+    <Transform translation='0.05 0.002 0.04'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.92 0.9 0.84' specularColor='0.05 0.05 0.05' shininess='0.05'/>
+        </Appearance>
+        <Box size='0.28 0.004 0.2'/>
+      </Shape>
+      <!-- Pen resting beside pad -->
+      <Transform translation='0.16 0.004 0.0' rotation='0 1 0 0.15'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.1 0.12 0.4' specularColor='0.5 0.5 0.7' shininess='0.8'/>
+          </Appearance>
+          <Cylinder height='0.15' radius='0.004'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Articulated Desk Lamp -->
+    <Transform translation='-0.22 0.0 -0.12'>
+      <!-- Heavy Round Base -->
+      <Transform translation='0.0 0.012 0.0'>
+        <Shape>
+          <Appearance DEF='LampMetal'>
+            <Material diffuseColor='0.15 0.16 0.18' specularColor='0.5 0.52 0.55' shininess='0.6'/>
+          </Appearance>
+          <Cylinder height='0.024' radius='0.085'/>
+        </Shape>
+        <!-- Switch Button on base -->
+        <Transform translation='0.04 0.013 0.04'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.8 0.1 0.1' specularColor='0.4 0.4 0.4' shininess='0.5'/>
+            </Appearance>
+            <Cylinder height='0.008' radius='0.008'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Base Pivot Joint -->
+      <Transform translation='0.0 0.03 0.0'>
+        <Shape DEF='JointSphere'>
+          <Appearance DEF='BrassAccent'>
+            <Material diffuseColor='0.72 0.55 0.2' specularColor='0.85 0.75 0.4' shininess='0.7'/>
+          </Appearance>
+          <Sphere radius='0.016'/>
+        </Shape>
+
+        <!-- Lower Arm: inclined upward and forward -->
+        <Transform rotation='0 0 1 -0.55'>
+          <!-- Lower Arm Rod -->
+          <Transform translation='0.0 0.14 0.0'>
+            <Shape>
+              <Appearance USE='LampMetal'/>
+              <Cylinder height='0.28' radius='0.007'/>
+            </Shape>
+          </Transform>
+
+          <!-- Elbow Joint with Animated Upper Arm -->
+          <Transform translation='0.0 0.28 0.0'>
+            <Shape USE='JointSphere'/>
+
+            <!-- Animated Upper Arm Joint -->
+            <Transform DEF='UpperArmJoint' rotation='0 0 1 1.05'>
+              <!-- Upper Arm Rod -->
+              <Transform translation='0.0 0.13 0.0'>
+                <Shape>
+                  <Appearance USE='LampMetal'/>
+                  <Cylinder height='0.26' radius='0.007'/>
+                </Shape>
+              </Transform>
+
+              <!-- Head Pivot Joint -->
+              <Transform translation='0.0 0.26 0.0'>
+                <Shape USE='JointSphere'/>
+
+                <!-- Lamp Head & Shade (angled downward toward desk) -->
+                <Transform rotation='0 0 1 -0.85'>
+                  <!-- Shade Socket Cap -->
+                  <Transform translation='0.0 0.02 0.0'>
+                    <Shape>
+                      <Appearance USE='BrassAccent'/>
+                      <Cylinder height='0.03' radius='0.02'/>
+                    </Shape>
+                  </Transform>
+
+                  <!-- Cone Shade -->
+                  <Transform translation='0.0 -0.04 0.0'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.08 0.22 0.16' specularColor='0.3 0.4 0.35' shininess='0.5'/>
+                      </Appearance>
+                      <Cone bottomRadius='0.075' height='0.11' bottom='false'/>
+                    </Shape>
+                  </Transform>
+
+                  <!-- Light Bulb -->
+                  <Transform translation='0.0 -0.035 0.0'>
+                    <Shape>
+                      <Appearance>
+                        <Material emissiveColor='1.0 0.96 0.82' diffuseColor='1.0 0.98 0.88'/>
+                      </Appearance>
+                      <Sphere radius='0.018'/>
+                    </Shape>
+                  </Transform>
+
+                  <!-- SpotLight inside shade pointing down onto desk surface -->
+                  <SpotLight location='0.0 -0.04 0.0' direction='0.0 -1.0 0.0' color='1.0 0.94 0.78' intensity='3.5' beamWidth='0.55' cutOffAngle='0.85' radius='1.5'/>
+                </Transform>
+              </Transform>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Animation: Upper arm slowly sways back and forth -->
+    <TimeSensor DEF='SwayTimer' cycleInterval='5.0' loop='true'/>
+
+    <OrientationInterpolator DEF='UpperArmInterpolator'
+      key='0.0 0.25 0.5 0.75 1.0'
+      keyValue='0 0 1 0.75,  0.2 0 0.98 1.0,  0 0 1 1.25,  -0.2 0 0.98 1.0,  0 0 1 0.75'/>
+
+    <ROUTE fromNode='SwayTimer' fromField='fraction_changed' toNode='UpperArmInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='UpperArmInterpolator' fromField='value_changed' toNode='UpperArmJoint' toField='rotation'/>
+  </Scene>
+</X3D>

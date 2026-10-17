@@ -1,0 +1,36 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Main View' position='0 0 6'/>
+    
+    <Transform translation='-1.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.2 0.2'/>
+        </Appearance>
+        <Box size='1 1 1'/>
+      </Shape>
+      <TouchSensor DEF='ButtonTouch' description='Touch to start spinning'/>
+    </Transform>
+    
+    <Transform DEF='SpinningCylinder' translation='1.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.5 0.8'/>
+        </Appearance>
+        <Cylinder height='2' radius='0.8'/>
+      </Shape>
+    </Transform>
+    
+    <!-- stopTime='1' prevents the TimeSensor from running at load, as 'now' will be greater than stopTime.
+         When the TouchSensor sends a touchTime > stopTime to startTime, it loops forever. -->
+    <TimeSensor DEF='SpinTimer' cycleInterval='2' loop='true' stopTime='1'/>
+    
+    <OrientationInterpolator DEF='Spinner' 
+      key='0 0.5 1' 
+      keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+      
+    <ROUTE fromNode='ButtonTouch' fromField='touchTime' toNode='SpinTimer' toField='startTime'/>
+    <ROUTE fromNode='SpinTimer' fromField='fraction_changed' toNode='Spinner' toField='set_fraction'/>
+    <ROUTE fromNode='Spinner' fromField='value_changed' toNode='SpinningCylinder' toField='rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,26 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Six-Second Colour Cycle'/>
+    <Background skyColor='0.05 0.05 0.08'/>
+    <Viewpoint description='Colour-cycling sphere' position='0 0 4'/>
+    <Transform DEF='SphereTransform'>
+      <Shape>
+        <Appearance>
+          <Material DEF='SphereMaterial' diffuseColor='1 0 0'/>
+        </Appearance>
+        <Sphere radius='1'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='CycleClock' cycleInterval='6' loop='true'/>
+    <ColorInterpolator DEF='ColourCycle'
+                       key='0 0.333333 0.666667 1'
+                       keyValue='1 0 0, 0 1 0, 0 0 1, 1 0 0'/>
+    <OrientationInterpolator DEF='SphereRotation'
+                             key='0 0.5 1'
+                             keyValue='0 1 0 0, 0 1 0 3.141593, 0 1 0 6.283185'/>
+    <ROUTE fromNode='CycleClock' fromField='fraction_changed' toNode='ColourCycle' toField='set_fraction'/>
+    <ROUTE fromNode='ColourCycle' fromField='value_changed' toNode='SphereMaterial' toField='set_diffuseColor'/>
+    <ROUTE fromNode='CycleClock' fromField='fraction_changed' toNode='SphereRotation' toField='set_fraction'/>
+    <ROUTE fromNode='SphereRotation' fromField='value_changed' toNode='SphereTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

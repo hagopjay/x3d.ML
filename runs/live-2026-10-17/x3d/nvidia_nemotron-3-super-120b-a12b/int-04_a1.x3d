@@ -1,0 +1,29 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Interactive box' position='0 0 5'/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material DEF="boxMat" emissiveColor='0 0 0' diffuseColor='0.8 0.8 0.8' specularColor='0 0 0' shininess='0'/>
+        </Appearance>
+        <Box size='2 2 2'/>
+      </Shape>
+    </Transform>
+    <TouchSensor DEF="touch"/>
+    <Script DEF="highlightScript">
+      <field name='isOver' type='SFBool' accessType='inputOnly'/>
+      <field name='emissive' type='SFColor' accessType='outputOnly'/>
+      <sourceCode><![CDATA[
+        function isOver(value) {
+          if (value) {
+            emissive = new SFColor(1,1,0);
+          } else {
+            emissive = new SFColor(0,0,0);
+          }
+        }
+      ]]></sourceCode>
+    </Script>
+    <ROUTE fromNode='touch' fromField='isOver' toNode='highlightScript' toField='isOver'/>
+    <ROUTE fromNode='highlightScript' fromField='emissive' toNode='boxMat' toField='emissiveColor'/>
+  </Scene>
+</X3D>

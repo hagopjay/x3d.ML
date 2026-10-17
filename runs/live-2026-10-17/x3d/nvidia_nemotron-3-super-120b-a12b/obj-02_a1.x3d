@@ -1,0 +1,43 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+<Group>
+<!-- Table top -->
+<Transform translation='0 0.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Box size='2 0.1 1'/>
+</Shape>
+</Transform>
+
+<!-- Leg definition (centered cylinder) -->
+<DEF name='Leg'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Cylinder radius='0.05' height='0.45'/>
+</Shape>
+</DEF>
+
+<!-- Four legs positioned at corners -->
+<Transform translation='-0.95 0.225 -0.45'>
+<USE DEF='Leg'/>
+</Transform>
+<Transform translation='0.95 0.225 -0.45'>
+<USE DEF='Leg'/>
+</Transform>
+<Transform translation='-0.95 0.225 0.45'>
+<USE DEF='Leg'/>
+</Transform>
+<Transform translation='0.95 0.225 0.45'>
+<USE DEF='Leg'/>
+</Transform>
+
+<!-- Viewpoint -->
+<Viewpoint description='View of wooden table' position='0 1.5 3' orientation='0 1 0 -0.3'/>
+<NavigationInfo type='"EXAMINE" "ANY"'/>
+</Group>
+</Scene>
+</X3D>

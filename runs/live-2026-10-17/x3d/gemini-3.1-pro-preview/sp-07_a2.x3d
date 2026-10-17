@@ -1,0 +1,109 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='4'/>
+    <meta name='title' content='RotatingDNAHelix.x3d'/>
+    <meta name='description' content='A rotating DNA double helix.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='DNA Double Helix'/>
+    <Background skyColor='0.02 0.02 0.05'/>
+    <Viewpoint description='DNA Double Helix' position='0 0 15'/>
+    
+    <DirectionalLight direction='1 -1 -2' intensity='0.8' color='1 1 1'/>
+    <DirectionalLight direction='-1 1 2' intensity='0.4' color='0.8 0.9 1'/>
+
+    <Transform DEF='DNA_Transform'>
+      <Transform translation='0 -4.75 0' rotation='0 1 0 0'>
+        <Group DEF='BasePairGroup'>
+          <Transform translation='1.5 0 0'>
+            <Shape DEF='BlueSphereShape'>
+              <Appearance>
+                <PhysicalMaterial baseColor='0.1 0.4 1' roughness='0.3' metallic='0.1'/>
+              </Appearance>
+              <Sphere radius='0.35'/>
+            </Shape>
+          </Transform>
+          <Transform translation='-1.5 0 0'>
+            <Shape DEF='OrangeSphereShape'>
+              <Appearance>
+                <PhysicalMaterial baseColor='1 0.4 0' roughness='0.3' metallic='0.1'/>
+              </Appearance>
+              <Sphere radius='0.35'/>
+            </Shape>
+          </Transform>
+          <Transform rotation='0 0 1 1.570796'>
+            <Shape DEF='RungShape'>
+              <Appearance>
+                <PhysicalMaterial baseColor='0.8 0.8 0.8' roughness='0.6' metallic='0.0'/>
+              </Appearance>
+              <Cylinder radius='0.08' height='3.0'/>
+            </Shape>
+          </Transform>
+        </Group>
+      </Transform>
+      <Transform translation='0 -4.25 0' rotation='0 1 0 0.6283'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -3.75 0' rotation='0 1 0 1.2566'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -3.25 0' rotation='0 1 0 1.8850'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -2.75 0' rotation='0 1 0 2.5133'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -2.25 0' rotation='0 1 0 3.1416'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -1.75 0' rotation='0 1 0 3.7699'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -1.25 0' rotation='0 1 0 4.3982'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -0.75 0' rotation='0 1 0 5.0265'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 -0.25 0' rotation='0 1 0 5.6549'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 0.25 0' rotation='0 1 0 6.2832'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 0.75 0' rotation='0 1 0 6.9115'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 1.25 0' rotation='0 1 0 7.5398'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 1.75 0' rotation='0 1 0 8.1681'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 2.25 0' rotation='0 1 0 8.7965'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 2.75 0' rotation='0 1 0 9.4248'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 3.25 0' rotation='0 1 0 10.0531'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 3.75 0' rotation='0 1 0 10.6814'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 4.25 0' rotation='0 1 0 11.3097'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+      <Transform translation='0 4.75 0' rotation='0 1 0 11.9381'>
+        <Group USE='BasePairGroup'/>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='Clock' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='Rotator' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Rotator' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator' fromField='value_changed' toNode='DNA_Transform' toField='set_rotation'/>
+  </Scene>
+</X3D>

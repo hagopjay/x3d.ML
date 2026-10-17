@@ -1,0 +1,145 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+  <component name='Shape' level='2'/>
+</head>
+<Scene>
+  <Viewpoint description='Medieval castle view' position='0 20 30'/>
+
+  <!-- Definitions -->
+  <Shape DEF='TowerBase'>
+    <Cylinder radius='2' height='10'></Cylinder>
+    <Appearance>
+      <PhysicalMaterial diffuseColor='0.8 0.8 0.8'></PhysicalMaterial>
+    </Appearance>
+  </Shape>
+
+  <Shape DEF='TowerRoof'>
+    <Cone bottomRadius='2.5' height='5'></Cone>
+    <Appearance>
+      <PhysicalMaterial diffuseColor='0.5 0.25 0.0'></PhysicalMaterial>
+    </Appearance>
+  </Shape>
+
+  <Shape DEF='Wall'>
+    <Box size='20 2 0.5'></Box>
+    <Appearance>
+      <PhysicalMaterial diffuseColor='0.75 0.75 0.75'></PhysicalMaterial>
+    </Appearance>
+  </Shape>
+
+  <Transform DEF='FlagGroup'>
+    <!-- Pole -->
+    <Shape>
+      <Cylinder radius='0.2' height='5'></Cylinder>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0.4 0.4 0.4'></PhysicalMaterial>
+      </Appearance>
+    </Shape>
+    <!-- Flag -->
+    <Transform translation='0 5 0'>
+      <Shape>
+        <Box size='2 1.5 0.1'></Box>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.8 0.0 0.0'></PhysicalMaterial>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Transform>
+
+  <!-- Lawn -->
+  <Transform>
+    <Shape>
+      <Box size='30 0.2 30'></Box>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0.2 0.6 0.2'></PhysicalMaterial>
+      </Appearance>
+    </Shape>
+  </Transform>
+
+  <!-- Towers -->
+  <!-- Southwest -->
+  <Transform translation='-10 0 -10'>
+    <Transform translation='0 5 0'>
+      <USE name='TowerBase'></USE>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <USE name='TowerRoof'></USE>
+    </Transform>
+  </Transform>
+
+  <!-- Southeast -->
+  <Transform translation='10 0 -10'>
+    <Transform translation='0 5 0'>
+      <USE name='TowerBase'></USE>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <USE name='TowerRoof'></USE>
+    </Transform>
+  </Transform>
+
+  <!-- Northeast -->
+  <Transform translation='10 0 10'>
+    <Transform translation='0 5 0'>
+      <USE name='TowerBase'></USE>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <USE name='TowerRoof'></USE>
+    </Transform>
+  </Transform>
+
+  <!-- Northwest -->
+  <Transform translation='-10 0 10'>
+    <Transform translation='0 5 0'>
+      <USE name='TowerBase'></USE>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <USE name='TowerRoof'></USE>
+    </Transform>
+  </Transform>
+
+  <!-- Walls -->
+  <!-- South wall -->
+  <Transform translation='0 1 -10'>
+    <USE name='Wall'></USE>
+  </Transform>
+  <!-- East wall -->
+  <Transform translation='10 1 0'>
+    <Transform rotation='0 1 0 1.57079633'>
+      <USE name='Wall'></USE>
+    </Transform>
+  </Transform>
+  <!-- North wall -->
+  <Transform translation='0 1 10'>
+    <USE name='Wall'></USE>
+  </Transform>
+  <!-- West wall -->
+  <Transform translation='-10 1 0'>
+    <Transform rotation='0 1 0 1.57079633'>
+      <USE name='Wall'></USE>
+    </Transform>
+  </Transform>
+
+  <!-- Gatehouse -->
+  <Transform translation='0 2 -10'>
+    <Shape>
+      <Box size='6 4 0.5'></Box>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0.3 0.3 0.3'></PhysicalMaterial>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <Transform translation='0 2 -9.8'>
+    <Shape>
+      <Box size='4 2 0.1'></Box>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0.0 0.0 0.0'></PhysicalMaterial>
+      </Appearance>
+    </Shape>
+  </Transform>
+
+  <!-- Flag on tallest tower (Northeast) -->
+  <Transform translation='10 15 10'>
+    <USE name='FlagGroup'></USE>
+  </Transform>
+</Scene>
+</X3D>

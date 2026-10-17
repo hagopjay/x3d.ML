@@ -1,0 +1,35 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Lunar Base' position='10 8 35' orientation='1 0 0 -0.15'/>
+    <Background skyColor='0.01 0.01 0.02'/>
+    
+    <DirectionalLight direction='-0.8 -0.6 -0.4' intensity='1.5' color='1 0.98 0.95' ambientIntensity='0.15'/>
+
+    <Transform translation='-40 30 -80'>
+      <Shape>
+        <Sphere radius='15'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.1 0.3 0.8' metallic='0' roughness='0.8' emissiveColor='0.05 0.1 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 -1 0'>
+      <Shape>
+        <Box size='150 2 150'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.3 0.3 0.3' metallic='0.1' roughness='0.9'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Group>
+      <Transform translation='0 0 0'>
+        <Shape DEF='DomeShape'>
+          <Sphere radius='5'/>
+          <Appearance DEF='DomeMat'>
+            <PhysicalMaterial baseColor='0.9 0.9 0.95' metallic='0.2' roughness='0.3'/>
+          </Appearance>
+        </Shape>
+        <Transform translation='0 4.5 0' rotation='1 0 0 -0.4'>
+          <Shape>

@@ -1,0 +1,79 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Illuminated Street Lamp'/>
+    <NavigationInfo type='"EXAMINE" "WALK" "ANY"' headlight='false'/>
+    <Viewpoint description='Street lamp at dusk' position='8 5 11' orientation='-0.276 0.955 0.112 0.646' centerOfRotation='0.5 2.5 0'/>
+    <Background skyColor='0.025 0.04 0.085'/>
+    <DirectionalLight direction='-0.4 -1 -0.5' color='0.55 0.65 0.9' intensity='0.35'/>
+
+    <!-- Pavement -->
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.24 0.25 0.28'/>
+        </Appearance>
+        <Box size='14 0.2 12'/>
+      </Shape>
+    </Transform>
+
+    <!-- Pedestal -->
+    <Transform translation='0 0.15 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.075 0.085 0.095' specularColor='0.25 0.25 0.25' shininess='0.4'/>
+        </Appearance>
+        <Cylinder radius='0.28' height='0.3'/>
+      </Shape>
+    </Transform>
+
+    <!-- Upright pole -->
+    <Transform translation='0 2.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.09 0.11 0.13' specularColor='0.4 0.4 0.4' shininess='0.55'/>
+        </Appearance>
+        <Cylinder radius='0.085' height='4.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Horizontal support arm -->
+    <Transform translation='0.6 4.7 0' rotation='0 0 1 -1.570796'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.09 0.11 0.13' specularColor='0.4 0.4 0.4' shininess='0.55'/>
+        </Appearance>
+        <Cylinder radius='0.065' height='1.2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lamp housing -->
+    <Transform translation='1.2 4.66 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.075 0.085 0.1' specularColor='0.35 0.35 0.35'/>
+        </Appearance>
+        <Cylinder radius='0.38' height='0.16'/>
+      </Shape>
+    </Transform>
+
+    <!-- Glowing diffuser -->
+    <Transform translation='1.2 4.46 0' scale='1 0.65 1'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.86 0.55' emissiveColor='1 0.72 0.32'/>
+        </Appearance>
+        <Sphere radius='0.27'/>
+      </Shape>
+    </Transform>
+
+    <!-- The street lamp is switched on by default. -->
+    <PointLight location='1.2 4.4 0'
+                on='true'
+                global='true'
+                color='1 0.82 0.52'
+                intensity='2'
+                ambientIntensity='0'
+                attenuation='1 0.08 0.025'
+                radius='14'/>
+  </Scene>
+</X3D>

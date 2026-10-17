@@ -1,0 +1,78 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <!-- Background (night sky) -->
+    <Background skyColor='0 0 0.2'/>
+
+    <!-- Viewpoint -->
+    <Viewpoint description='Lighthouse view' position='0 10 25'/>
+
+    <!-- Navigation (optional) -->
+    <NavigationInfo type='"EXAMINE"'></NavigationInfo>
+
+    <!-- Sea plane (dark blue) -->
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0.3'/>
+        </Appearance>
+        <Box size='200 1 200'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lighthouse tower (white, tapered) -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Cone bottomRadius='2' topRadius='0.5' height='10'/>
+      </Shape>
+    </Transform>
+
+    <!-- Red bands -->
+    <Transform translation='0 3 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0 0'/>
+        </Appearance>
+        <Cylinder radius='2.1' height='0.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 7 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0 0'/>
+        </Appearance>
+        <Cylinder radius='2.1' height='0.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lantern room (glass, semi-transparent) -->
+    <Transform translation='0 5.2 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 1' transparency='0.2'/>
+        </Appearance>
+        <Sphere radius='0.8'/>
+      </Shape>
+    </Transform>
+
+    <!-- Beam (pale yellow thin long box) -->
+    <Transform DEF='beamTransform' translation='0 5.2 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 0.8'/>
+        </Appearance>
+        <Box size='0.2 0.2 30'/>
+      </Shape>
+    </Transform>
+
+    <!-- Animation: sweep beam every 6 seconds -->
+    <TimeSensor DEF='timeSensor' interval='6' loop='true'/>
+    <OrientationInterpolator DEF='orientInterpolator'
+        key='0 1'
+        keyValue='0 1 0 0, 0 1 0 6.283185307179586'/>
+    <ROUTE fromNode='timeSensor' fromField='fraction_changed' toNode='orientInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='orientInterpolator' fromField='value_changed' toNode='beamTransform' toField='rotation'/>
+  </Scene>
+</X3D>

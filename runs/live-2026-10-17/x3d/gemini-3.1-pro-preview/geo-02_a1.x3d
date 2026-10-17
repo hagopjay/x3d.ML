@@ -1,0 +1,91 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geospatial' level='2'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Campus Buildings GeoLocations'/>
+    
+    <Viewpoint description='Default View' position='0 0 20'/>
+    <GeoViewpoint description='Campus Aerial View' geoSystem='"GD" "WE"' position='42.3598 -71.0921 200' orientation='1 0 0 -1.57079'/>
+    
+    <TimeSensor DEF='CLOCK' cycleInterval='5' loop='true'/>
+    <OrientationInterpolator DEF='ROTATOR' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.14159 0 1 0 6.28318'/>
+    <ROUTE fromNode='CLOCK' fromField='fraction_changed' toNode='ROTATOR' toField='set_fraction'/>
+    
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='42.3598 -71.0921 10'>
+      <GeoOrigin DEF='GEO_ORIGIN' containerField='geoOrigin' geoSystem='"GD" "WE"' geoCoords='42.36 -71.09 0'/>
+      <Transform DEF='MARKER_1'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Cylinder radius='2' height='10'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 10 0'>
+        <Billboard axisOfRotation='0 0 0'>
+          <Shape>
+            <Appearance>
+              <Material emissiveColor='1 1 1' diffuseColor='0 0 0'/>
+            </Appearance>
+            <Text string='"Library"'>
+              <FontStyle justify='"MIDDLE" "MIDDLE"' size='4'/>
+            </Text>
+          </Shape>
+        </Billboard>
+      </Transform>
+    </GeoLocation>
+
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='42.3589 -71.0947 10'>
+      <GeoOrigin USE='GEO_ORIGIN' containerField='geoOrigin'/>
+      <Transform DEF='MARKER_2'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0 1 0'/>
+          </Appearance>
+          <Cylinder radius='2' height='10'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 10 0'>
+        <Billboard axisOfRotation='0 0 0'>
+          <Shape>
+            <Appearance>
+              <Material emissiveColor='1 1 1' diffuseColor='0 0 0'/>
+            </Appearance>
+            <Text string='"Student Center"'>
+              <FontStyle justify='"MIDDLE" "MIDDLE"' size='4'/>
+            </Text>
+          </Shape>
+        </Billboard>
+      </Transform>
+    </GeoLocation>
+
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='42.3615 -71.0906 10'>
+      <GeoOrigin USE='GEO_ORIGIN' containerField='geoOrigin'/>
+      <Transform DEF='MARKER_3'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0 0.5 1'/>
+          </Appearance>
+          <Cylinder radius='2' height='10'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 10 0'>
+        <Billboard axisOfRotation='0 0 0'>
+          <Shape>
+            <Appearance>
+              <Material emissiveColor='1 1 1' diffuseColor='0 0 0'/>
+            </Appearance>
+            <Text string='"Stata Center"'>
+              <FontStyle justify='"MIDDLE" "MIDDLE"' size='4'/>
+            </Text>
+          </Shape>
+        </Billboard>
+      </Transform>
+    </GeoLocation>
+
+    <ROUTE fromNode='ROTATOR' fromField='value_changed' toNode='MARKER_1' toField='set_rotation'/>
+    <ROUTE fromNode='ROTATOR' fromField='value_changed' toNode='MARKER_2' toField='set_rotation'/>
+    <ROUTE fromNode='ROTATOR' fromField='value_changed' toNode='MARKER_3' toField='set_rotation'/>
+  </Scene>
+</X3D>

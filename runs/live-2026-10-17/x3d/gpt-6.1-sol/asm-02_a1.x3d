@@ -1,0 +1,105 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Sun and Three Planets'/>
+    <meta name='description' content='Three planets orbit the Sun at different distances and speeds. Each planet is positioned by its own child Transform.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Sun and Three Planets'/>
+    <Background skyColor='0.004 0.007 0.022'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Solar system overview' position='0 24 35' orientation='1 0 0 -0.601' centerOfRotation='0 0 0'/>
+
+    <PointLight location='0 0 0' color='1 0.91 0.72' intensity='1' ambientIntensity='0.15' radius='80'/>
+    <DirectionalLight direction='-0.4 -0.7 -1' color='0.48 0.62 1' intensity='0.35'/>
+
+    <!-- Central Sun -->
+    <Shape>
+      <Appearance>
+        <Material diffuseColor='1 0.62 0.05' emissiveColor='1 0.46 0.025'/>
+      </Appearance>
+      <Sphere radius='2'/>
+    </Shape>
+
+    <!-- Shared unit orbit, scaled to each orbital distance. -->
+    <Transform scale='5 1 5'>
+      <Shape DEF='OrbitGuide'>
+        <Appearance>
+          <Material emissiveColor='0.19 0.25 0.36'/>
+          <LineProperties applied='true' linewidthScaleFactor='1'/>
+        </Appearance>
+        <IndexedLineSet coordIndex='0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 0 -1'>
+          <Coordinate point='
+            1 0 0, 0.9808 0 0.1951, 0.9239 0 0.3827, 0.8315 0 0.5556,
+            0.7071 0 0.7071, 0.5556 0 0.8315, 0.3827 0 0.9239, 0.1951 0 0.9808,
+            0 0 1, -0.1951 0 0.9808, -0.3827 0 0.9239, -0.5556 0 0.8315,
+            -0.7071 0 0.7071, -0.8315 0 0.5556, -0.9239 0 0.3827, -0.9808 0 0.1951,
+            -1 0 0, -0.9808 0 -0.1951, -0.9239 0 -0.3827, -0.8315 0 -0.5556,
+            -0.7071 0 -0.7071, -0.5556 0 -0.8315, -0.3827 0 -0.9239, -0.1951 0 -0.9808,
+            0 0 -1, 0.1951 0 -0.9808, 0.3827 0 -0.9239, 0.5556 0 -0.8315,
+            0.7071 0 -0.7071, 0.8315 0 -0.5556, 0.9239 0 -0.3827, 0.9808 0 -0.1951'/>
+        </IndexedLineSet>
+      </Shape>
+    </Transform>
+    <Transform scale='9 1 9'>
+      <Shape USE='OrbitGuide'/>
+    </Transform>
+    <Transform scale='14 1 14'>
+      <Shape USE='OrbitGuide'/>
+    </Transform>
+
+    <!-- Each orbit contains a child Transform positioning its planet. -->
+    <Transform DEF='InnerOrbit'>
+      <Transform translation='5 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.23 0.08' specularColor='0.25 0.15 0.1' shininess='0.2'/>
+          </Appearance>
+          <Sphere radius='0.6'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <Transform DEF='MiddleOrbit' rotation='0 1 0 2.1'>
+      <Transform translation='9 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.055 0.36 0.88' specularColor='0.55 0.72 0.9' shininess='0.5'/>
+          </Appearance>
+          <Sphere radius='0.95'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <Transform DEF='OuterOrbit' rotation='0 1 0 4.2'>
+      <Transform translation='14 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.35 0.78 0.61' specularColor='0.5 0.7 0.62' shininess='0.3'/>
+          </Appearance>
+          <Sphere radius='1.3'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='InnerClock' cycleInterval='12' loop='true'/>
+    <TimeSensor DEF='MiddleClock' cycleInterval='22' loop='true'/>
+    <TimeSensor DEF='OuterClock' cycleInterval='36' loop='true'/>
+
+    <OrientationInterpolator DEF='InnerMotion'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+    <OrientationInterpolator DEF='MiddleMotion'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 2.1, 0 1 0 3.670796, 0 1 0 5.241593, 0 1 0 6.812389, 0 1 0 8.383185'/>
+    <OrientationInterpolator DEF='OuterMotion'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 4.2, 0 1 0 5.770796, 0 1 0 7.341593, 0 1 0 8.912389, 0 1 0 10.483185'/>
+
+    <ROUTE fromNode='InnerClock' fromField='fraction_changed' toNode='InnerMotion' toField='set_fraction'/>
+    <ROUTE fromNode='InnerMotion' fromField='value_changed' toNode='InnerOrbit' toField='set_rotation'/>
+    <ROUTE fromNode='MiddleClock' fromField='fraction_changed' toNode='MiddleMotion' toField='set_fraction'/>
+    <ROUTE fromNode='MiddleMotion' fromField='value_changed' toNode='MiddleOrbit' toField='set_rotation'/>
+    <ROUTE fromNode='OuterClock' fromField='fraction_changed' toNode='OuterMotion' toField='set_fraction'/>
+    <ROUTE fromNode='OuterMotion' fromField='value_changed' toNode='OuterOrbit' toField='set_rotation'/>
+  </Scene>
+</X3D>

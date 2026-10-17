@@ -1,0 +1,48 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Forever Bouncing Ball'/>
+    <Background skyColor='0.08 0.11 0.17'/>
+    <Viewpoint description='Bouncing ball — front view' position='0 1 6' centerOfRotation='0 1 0'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <DirectionalLight direction='-1 -2 -1' intensity='0.9'/>
+
+    <Transform DEF='Ball' translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.28 0.06' specularColor='0.8 0.8 0.8' shininess='0.6'/>
+        </Appearance>
+        <Sphere radius='0.25'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 -0.3 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.3 0.38'/>
+        </Appearance>
+        <Box size='5 0.1 3'/>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='BounceClock' cycleInterval='2' loop='true'/>
+    <PositionInterpolator DEF='BounceMotion'
+      key='0 0.1 0.2 0.3 0.4 0.45 0.475 0.5 0.525 0.55 0.6 0.7 0.8 0.9 1'
+      keyValue='0 0 0,
+                0 0.72 0,
+                0 1.28 0,
+                0 1.68 0,
+                0 1.92 0,
+                0 1.98 0,
+                0 1.995 0,
+                0 2 0,
+                0 1.995 0,
+                0 1.98 0,
+                0 1.92 0,
+                0 1.68 0,
+                0 1.28 0,
+                0 0.72 0,
+                0 0 0'/>
+    <ROUTE fromNode='BounceClock' fromField='fraction_changed' toNode='BounceMotion' toField='set_fraction'/>
+    <ROUTE fromNode='BounceMotion' fromField='value_changed' toNode='Ball' toField='set_translation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,68 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='2' name='HAnim'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Minimal HAnim 2.0 Humanoid'/>
+    <Viewpoint description='Front View' position='0 0.75 2.2'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <HAnimHumanoid name='MinimalHumanoid' version='2.0'>
+      <HAnimJoint DEF='joint_humanoid_root' name='humanoid_root' center='0 0.85 0' containerField='skeleton'>
+        <HAnimSegment DEF='segment_pelvis' name='pelvis'>
+          <Transform translation='0 0.88 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.2 0.6 0.9' roughness='0.3'/>
+              </Appearance>
+              <Box size='0.26 0.08 0.14'/>
+            </Shape>
+          </Transform>
+        </HAnimSegment>
+        <HAnimJoint DEF='joint_sacroiliac' name='sacroiliac' center='0 0.82 0'>
+          <HAnimSegment DEF='segment_sacrum' name='sacrum'>
+            <Transform translation='0 0.81 -0.02'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.3 0.8 0.4' roughness='0.3'/>
+                </Appearance>
+                <Box size='0.12 0.08 0.1'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          <HAnimJoint DEF='joint_l_hip' name='l_hip' center='0.1 0.76 0'>
+            <HAnimSegment DEF='segment_l_thigh' name='l_thigh'>
+              <Transform translation='0.1 0.64 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.9 0.4 0.2' roughness='0.3'/>
+                  </Appearance>
+                  <Box size='0.08 0.2 0.08'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+          <HAnimJoint DEF='joint_r_hip' name='r_hip' center='-0.1 0.76 0'>
+            <HAnimSegment DEF='segment_r_thigh' name='r_thigh'>
+              <Transform translation='-0.1 0.64 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.9 0.4 0.2' roughness='0.3'/>
+                  </Appearance>
+                  <Box size='0.08 0.2 0.08'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+      <HAnimJoint USE='joint_humanoid_root' containerField='joints'/>
+      <HAnimJoint USE='joint_sacroiliac' containerField='joints'/>
+      <HAnimJoint USE='joint_l_hip' containerField='joints'/>
+      <HAnimJoint USE='joint_r_hip' containerField='joints'/>
+      <HAnimSegment USE='segment_pelvis' containerField='segments'/>
+      <HAnimSegment USE='segment_sacrum' containerField='segments'/>
+      <HAnimSegment USE='segment_l_thigh' containerField='segments'/>
+      <HAnimSegment USE='segment_r_thigh' containerField='segments'/>
+    </HAnimHumanoid>
+  </Scene>
+</X3D>

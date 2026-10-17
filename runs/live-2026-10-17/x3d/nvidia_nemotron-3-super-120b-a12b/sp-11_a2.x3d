@@ -1,0 +1,59 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='1'/>
+    <component name='Appearance' level='2'/>
+  </head>
+  <Scene>
+    <Background skyColor='0.2 0.2 0.2'/>
+    <DirectionalLight direction='0 0 -1' intensity='0.8' color='1 1 1'/>
+    <Transform DEF='discTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.2 0.2'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='0.1'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='ringXTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.8 0.2'/>
+        </Appearance>
+        <Cylinder radius='1.8' height='0.05'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='ringYTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.8'/>
+        </Appearance>
+        <Cylinder radius='2.1' height='0.05'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='ringZTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.2'/>
+        </Appearance>
+        <Cylinder radius='2.4' height='0.05'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='discTimer' cycleInterval='5' loop='true'/>
+    <OrientationInterpolator DEF='discInterpolator' key='0 1' keyValue='0 0 1 0 0 0 1 6.283185307179586'/>
+    <TimeSensor DEF='ringXTimer' cycleInterval='7' loop='true'/>
+    <OrientationInterpolator DEF='ringXInterpolator' key='0 1' keyValue='1 0 0 0 1 0 0 6.283185307179586'/>
+    <TimeSensor DEF='ringYTimer' cycleInterval='9' loop='true'/>
+    <OrientationInterpolator DEF='ringYInterpolator' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586'/>
+    <TimeSensor DEF='ringZTimer' cycleInterval='11' loop='true'/>
+    <OrientationInterpolator DEF='ringZInterpolator' key='0 1' keyValue='0 0 1 0 0 0 1 6.283185307179586'/>
+    <ROUTE fromNode='discTimer' fromField='fraction_changed' toNode='discInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='discInterpolator' fromField='value_changed' toNode='discTransform' toField='rotation'/>
+    <ROUTE fromNode='ringXTimer' fromField='fraction_changed' toNode='ringXInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='ringXInterpolator' fromField='value_changed' toNode='ringXTransform' toField='rotation'/>
+    <ROUTE fromNode='ringYTimer' fromField='fraction_changed' toNode='ringYInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='ringYInterpolator' fromField='value_changed' toNode='ringYTransform' toField='rotation'/>
+    <ROUTE fromNode='ringZTimer' fromField='fraction_changed' toNode='ringZInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='ringZInterpolator' fromField='value_changed' toNode='ringZTransform' toField='rotation'/>
+    <Viewpoint position='0 0 5' description='Gyroscope view'/>
+  </Scene>
+</X3D>

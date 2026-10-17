@@ -1,0 +1,83 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Metallic Gold Ring'/>
+    <meta name='description' content='A polished gold ring constructed with an Extrusion along a closed circular spine.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Metallic Gold Ring'/>
+    <Background skyColor='0.035 0.045 0.065'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Gold ring — front three-quarter view' position='0 0 9' fieldOfView='0.65'/>
+
+    <DirectionalLight direction='-0.5 -0.7 -1' color='1 0.94 0.82' intensity='2.5'/>
+    <DirectionalLight direction='0.8 0.2 -0.6' color='0.72 0.83 1' intensity='1.8'/>
+    <DirectionalLight direction='-0.3 0.8 0.5' color='1 0.8 0.5' intensity='2'/>
+
+    <Transform rotation='0 1 0 0.28'>
+      <Transform rotation='1 0 0 1.5707963'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='1 0.766 0.336' metallic='1' roughness='0.2'/>
+          </Appearance>
+          <Extrusion
+            beginCap='false'
+            endCap='false'
+            solid='true'
+            creaseAngle='1.57'
+            crossSection='
+               0.42 0,
+               0.388029 -0.160727,
+               0.296985 -0.296985,
+               0.160727 -0.388029,
+               0 -0.42,
+              -0.160727 -0.388029,
+              -0.296985 -0.296985,
+              -0.388029 -0.160727,
+              -0.42 0,
+              -0.388029 0.160727,
+              -0.296985 0.296985,
+              -0.160727 0.388029,
+               0 0.42,
+               0.160727 0.388029,
+               0.296985 0.296985,
+               0.388029 0.160727,
+               0.42 0'
+            spine='
+               2 0 0,
+               1.961571 0 0.390181,
+               1.847759 0 0.765367,
+               1.662939 0 1.111140,
+               1.414214 0 1.414214,
+               1.111140 0 1.662939,
+               0.765367 0 1.847759,
+               0.390181 0 1.961571,
+               0 0 2,
+              -0.390181 0 1.961571,
+              -0.765367 0 1.847759,
+              -1.111140 0 1.662939,
+              -1.414214 0 1.414214,
+              -1.662939 0 1.111140,
+              -1.847759 0 0.765367,
+              -1.961571 0 0.390181,
+              -2 0 0,
+              -1.961571 0 -0.390181,
+              -1.847759 0 -0.765367,
+              -1.662939 0 -1.111140,
+              -1.414214 0 -1.414214,
+              -1.111140 0 -1.662939,
+              -0.765367 0 -1.847759,
+              -0.390181 0 -1.961571,
+               0 0 -2,
+               0.390181 0 -1.961571,
+               0.765367 0 -1.847759,
+               1.111140 0 -1.662939,
+               1.414214 0 -1.414214,
+               1.662939 0 -1.111140,
+               1.847759 0 -0.765367,
+               1.961571 0 -0.390181,
+               2 0 0'/>
+        </Shape>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>

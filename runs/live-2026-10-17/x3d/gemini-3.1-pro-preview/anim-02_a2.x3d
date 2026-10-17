@@ -1,0 +1,35 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='4'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Bouncing Ball View' position='0 1.5 8' orientation='1 0 0 -0.05'/>
+    
+    <Transform translation='0 -0.55 0'>
+      <Shape>
+        <Box size='10 0.1 10'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.2 0.6 0.2' roughness='0.9' metallic='0.0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform DEF='BallTransform'>
+      <Shape>
+        <Sphere radius='0.5'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.9 0.1 0.1' roughness='0.2' metallic='0.1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='Timer' cycleInterval='1.5' loop='true'/>
+
+    <PositionInterpolator DEF='BounceMover'
+      key='0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0'
+      keyValue='0 0 0, 0 0.72 0, 0 1.28 0, 0 1.68 0, 0 1.92 0, 0 2 0, 0 1.92 0, 0 1.68 0, 0 1.28 0, 0 0.72 0, 0 0 0'/>
+
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='BounceMover' toField='set_fraction'/>
+    <ROUTE fromNode='BounceMover' fromField='value_changed' toNode='BallTransform' toField='translation'/>
+  </Scene>
+</X3D>

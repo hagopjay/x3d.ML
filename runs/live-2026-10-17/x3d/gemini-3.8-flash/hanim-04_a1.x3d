@@ -1,0 +1,29 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='1' name='HAnim'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Two HAnim Humanoids Sharing Joint Hierarchy'/>
+    <Viewpoint description='Front View of Humanoids' position='0 1.2 3.8'/>
+    <DirectionalLight direction='0.4 -0.8 -0.5' intensity='0.9'/>
+    <DirectionalLight direction='-0.4 -0.4 0.8' intensity='0.4'/>
+
+    <!-- Ground Plane -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.22 0.24 0.28' roughness='0.8'/>
+        </Appearance>
+        <Box size='6 0.1 4'/>
+      </Shape>
+    </Transform>
+
+    <!-- First Humanoid (Lighter Skin Tone) defining the Joint Hierarchy -->
+    <HAnimHumanoid name='Humanoid_Light' version='2.0' translation='-0.8 0 0'>
+      <HAnimJoint DEF='Shared_humanoid_root' name='humanoid_root' center='0 0.9 0' containerField='skeleton'>
+        <HAnimJoint name='sacrum' center='0 0.9 0'>
+          <HAnimJoint name='spine_2' center='0 1.15 0'>
+            <HAnimJoint name='neck' center='0 1.45 0'>
+              <HAnimJoint name='skullbase' center='0 1.55 0'/>
+            </HAnimJoint>
+            <HAnimJoint name='l_shoulder' center='-0.28

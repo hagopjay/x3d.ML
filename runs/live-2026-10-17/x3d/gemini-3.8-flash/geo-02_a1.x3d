@@ -1,0 +1,112 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geospatial' level='1'/>
+    <component name='Text' level='1'/>
+  </head>
+  <Scene>
+    <GeoOrigin DEF='CampusOrigin' geoCoords='37.4275 -122.1685 0' geoSystem='"GD" "WE"' rotateYUp='true'/>
+
+    <GeoViewpoint description='Campus Overview' geoSystem='"GD" "WE"' orientation='1 0 0 -0.55' position='37.4230 -122.1685 280'/>
+    <Viewpoint description='Overview Camera' orientation='1 0 0 -0.55' position='0 150 250'/>
+
+    <Background skyColor='0.5 0.7 0.9' groundColor='0.2 0.3 0.2'/>
+    <DirectionalLight direction='-0.6 -0.8 -0.4' intensity='0.9' shadowIntensity='0.5'/>
+    <AmbientLight intensity='0.3'/>
+
+    <GeoLocation geoCoords='37.4275 -122.1702 0' geoSystem='"GD" "WE"'>
+      <GeoOrigin USE='CampusOrigin' containerField='geoOrigin'/>
+      <Transform translation='0 6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.2 0.2' roughness='0.3'/>
+          </Appearance>
+          <Cylinder height='12' radius='1'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 13 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.1 0.1' emissiveColor='0.3 0.05 0.05'/>
+          </Appearance>
+          <Sphere radius='2.2'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 18 0'>
+        <Billboard axisOfRotation='0 1 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1 1 1' emissiveColor='0.9 0.9 0.9'/>
+            </Appearance>
+            <Text string='"Memorial Church"'>
+              <FontStyle family='"SANS"' justify='"MIDDLE" "MIDDLE"' size='3.5' style='BOLD'/>
+            </Text>
+          </Shape>
+        </Billboard>
+      </Transform>
+    </GeoLocation>
+
+    <GeoLocation geoCoords='37.4276 -122.1669 0' geoSystem='"GD" "WE"'>
+      <GeoOrigin USE='CampusOrigin' containerField='geoOrigin'/>
+      <Transform translation='0 6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.65 0.13' roughness='0.3'/>
+          </Appearance>
+          <Cylinder height='12' radius='1'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 13 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0.8 0.2' emissiveColor='0.4 0.3 0.05'/>
+          </Appearance>
+          <Sphere radius='2.2'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 18 0'>
+        <Billboard axisOfRotation='0 1 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1 1 1' emissiveColor='0.9 0.9 0.9'/>
+            </Appearance>
+            <Text string='"Hoover Tower"'>
+              <FontStyle family='"SANS"' justify='"MIDDLE" "MIDDLE"' size='3.5' style='BOLD'/>
+            </Text>
+          </Shape>
+        </Billboard>
+      </Transform>
+    </GeoLocation>
+
+    <GeoLocation geoCoords='37.4268 -122.1678 0' geoSystem='"GD" "WE"'>
+      <GeoOrigin USE='CampusOrigin' containerField='geoOrigin'/>
+      <Transform translation='0 6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.6 0.3' roughness='0.3'/>
+          </Appearance>
+          <Cylinder height='12' radius='1'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 13 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.8 0.35' emissiveColor='0.05 0.3 0.1'/>
+          </Appearance>
+          <Sphere radius='2.2'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 18 0'>
+        <Billboard axisOfRotation='0 1 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1 1 1' emissiveColor='0.9 0.9 0.9'/>
+            </Appearance>
+            <Text string='"Green Library"'>
+              <FontStyle family='"SANS"' justify='"MIDDLE" "MIDDLE"' size='3.5' style='BOLD'/>
+            </Text>
+          </Shape>
+        </Billboard>
+      </Transform>
+    </GeoLocation>
+  </Scene>
+</X3D>

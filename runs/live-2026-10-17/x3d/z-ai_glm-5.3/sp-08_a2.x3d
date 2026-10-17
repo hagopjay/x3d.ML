@@ -1,0 +1,142 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Background skyColor='0.55 0.7 0.95' groundColor='0.35 0.35 0.4'/>
+    <NavigationInfo/>
+    <Viewpoint description='City Block Overview' position='0 60 140' orientation='1 0 0 -0.32'/>
+    <Viewpoint description='Tower Beacon Close-Up' position='0 72 45' orientation='1 0 0 -0.05'/>
+    <DirectionalLight direction='-0.4 -1 -0.6' intensity='0.6'/>
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.45 0.45'/>
+        </Appearance>
+        <Box size='110 0.2 110'/>
+      </Shape>
+    </Transform>
+    <Transform translation='15 0.02 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.9 0.8 0.2'/>
+        </Appearance>
+        <Box size='0.5 0.04 108'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-15 0.02 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.9 0.8 0.2'/>
+        </Appearance>
+        <Box size='0.5 0.04 108'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.02 15'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.9 0.8 0.2'/>
+        </Appearance>
+        <Box size='108 0.04 0.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.02 -15'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.9 0.8 0.2'/>
+        </Appearance>
+        <Box size='108 0.04 0.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-30 8 -30'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.55 0.65 0.85'/>
+        </Appearance>
+        <Box size='18 16 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 11 -30'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.85 0.72 0.55'/>
+        </Appearance>
+        <Box size='18 22 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='30 9 -30'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.78 0.42 0.32'/>
+        </Appearance>
+        <Box size='18 18 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-30 10 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.52 0.68 0.52'/>
+        </Appearance>
+        <Box size='18 20 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 30 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.72 0.78 0.88'/>
+        </Appearance>
+        <Box size='18 60 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='30 13 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.88 0.78 0.42'/>
+        </Appearance>
+        <Box size='18 26 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-30 7 30'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.58 0.5 0.78'/>
+        </Appearance>
+        <Box size='18 14 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 12 30'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.88 0.58 0.5'/>
+        </Appearance>
+        <Box size='18 24 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='30 9.5 30'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.42 0.68 0.78'/>
+        </Appearance>
+        <Box size='18 19 18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 65 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.2'/>
+        </Appearance>
+        <Cylinder radius='0.4' height='10'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 70.5 0'>
+      <Shape>
+        <Appearance>
+          <Material DEF='BeaconMaterial' diffuseColor='1 0 0' emissiveColor='1 0 0'/>
+        </Appearance>
+        <Sphere radius='1.2'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='BlinkClock' cycleInterval='2' loop='true'/>
+    <ColorInterpolator DEF='BeaconColor' key='0 0.5 1' keyValue='1 0 0 0.15 0 0 1 0 0'/>
+    <ROUTE fromNode='BlinkClock' fromField='fraction_changed' toNode='BeaconColor' toField='set_fraction'/>
+    <ROUTE fromNode='BeaconColor' fromField='value_changed' toNode='BeaconMaterial' toField='emissiveColor'/>
+    <ROUTE fromNode='BeaconColor' fromField='value_changed' toNode='BeaconMaterial' toField='diffuseColor'/>
+  </Scene>
+</X3D>

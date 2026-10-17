@@ -10,15 +10,15 @@ import asyncio, base64, glob, io, json, os, re, sys, time
 from playwright.async_api import async_playwright
 from PIL import Image
 EXE=os.environ.get('CHROME')   # unset: Playwright's own Chromium
-G=os.environ.get('GPU_PHASE_DIR','/mnt/project-files/gcp-showcase/gpu-phase-2026-10-11')+'/results/x3d'
+G=os.environ.get('RENDER_DIR') or os.environ.get('GPU_PHASE_DIR','/mnt/project-files/gcp-showcase/gpu-phase-2026-10-11')+'/results/x3d'   # RENDER_DIR=<dir of scenes>; keys are paths relative to it
 URL=os.environ.get('RENDER_URL','http://127.0.0.1:8782/render3.html')   # serve.py serves it
 OUT=sys.argv[1] if len(sys.argv)>1 else 'renders3.json'
 LIMIT=int(os.environ.get('LIMIT','0'))      # smoke test: render only the first N scenes
 WORKERS=int(os.environ.get('WORKERS','3'))
 SETTLE=int(os.environ.get('SETTLE','3500'))
 MAXS=int(os.environ.get('MAXS','20'))        # samples per scene; the extended check on still-animating blank scenes uses SETTLE=12000 MAXS=90
-files=sorted(glob.glob(G+'/*/*/*.x3d'))
-if os.environ.get('ONLY'): keep_keys=set(json.load(open(os.environ['ONLY']))); files=[f for f in files if '/'.join(f.split('/')[-3:]) in keep_keys]   # ONLY=<json list of keys>
+files=sorted(glob.glob(G+'/'+os.environ.get('RENDER_GLOB','*/*/*.x3d')))   # RENDER_GLOB, e.g. '*/*.x3d' for the recorded live run
+if os.environ.get('ONLY'): keep_keys=set(json.load(open(os.environ['ONLY']))); files=[f for f in files if os.path.relpath(f,G) in keep_keys]   # ONLY=<json list of keys>
 files=files[:LIMIT or None]
 NOISE=re.compile(r'font|x_ite\.css|mikktspace|logo\.svg|Content Security|Fetch API|PAGEERR Event|Failed to load resource')
 
@@ -38,7 +38,7 @@ async def worker(b, q, out):
     while True:
         try: f = q.get_nowait()
         except asyncio.QueueEmpty: break
-        key = '/'.join(f.split('/')[-3:]); x = open(f, encoding='utf-8', errors='replace').read(); msgs = []; t = time.time()
+        key = os.path.relpath(f, G); x = open(f, encoding='utf-8', errors='replace').read(); msgs = []; t = time.time()
         pg = await b.new_page(viewport={'width': 400, 'height': 300})
         pg.on('console', lambda m: msgs.append(m.type + ': ' + m.text[:200].replace('\n', ' ')) if m.type in ('error', 'warning') else None)
         r = {}

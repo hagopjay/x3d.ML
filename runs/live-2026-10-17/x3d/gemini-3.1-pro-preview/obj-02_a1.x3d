@@ -1,0 +1,39 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='WoodenTable.x3d'/>
+    <meta name='description' content='A wooden table with a 2 by 1 metre top and four cylindrical legs.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='View of the wooden table' position='0 1.5 4' orientation='1 0 0 -0.2'/>
+    
+    <Transform translation='0 0.825 0'>
+      <Shape>
+        <Appearance>
+          <Material DEF='WoodMaterial' diffuseColor='0.55 0.27 0.07'/>
+        </Appearance>
+        <Box size='2 0.05 1'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0.9 0.4 0.4'>
+      <Shape DEF='TableLeg'>
+        <Appearance>
+          <Material USE='WoodMaterial'/>
+        </Appearance>
+        <Cylinder radius='0.05' height='0.8'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-0.9 0.4 0.4'>
+      <Shape USE='TableLeg'/>
+    </Transform>
+
+    <Transform translation='0.9 0.4 -0.4'>
+      <Shape USE='TableLeg'/>
+    </Transform>
+
+    <Transform translation='-0.9 0.4 -0.4'>
+      <Shape USE='TableLeg'/>
+    </Transform>
+  </Scene>
+</X3D>

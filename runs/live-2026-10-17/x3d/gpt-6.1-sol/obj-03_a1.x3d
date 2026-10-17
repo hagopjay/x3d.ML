@@ -1,0 +1,29 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Traffic Cone — 0.7 Metres Tall'/>
+    <Background skyColor='0.82 0.87 0.92'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='true'/>
+    <Viewpoint description='Traffic cone' position='0 0.95 2' orientation='1 0 0 -0.291' centerOfRotation='0 0.35 0'/>
+    <DirectionalLight direction='-1 -2 -1' intensity='0.8'/>
+
+    <!-- Black square base: 0.05 m tall. -->
+    <Transform translation='0 0.025 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.015 0.015 0.015' roughness='0.9' metallic='0'/>
+        </Appearance>
+        <Box size='0.52 0.05 0.52'/>
+      </Shape>
+    </Transform>
+
+    <!-- Orange cone: from y=0.05 m to y=0.70 m. -->
+    <Transform translation='0 0.375 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='1 0.19 0.005' roughness='0.55' metallic='0'/>
+        </Appearance>
+        <Cone bottomRadius='0.22' height='0.65'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

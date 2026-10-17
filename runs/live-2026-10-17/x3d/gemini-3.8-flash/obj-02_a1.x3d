@@ -1,0 +1,57 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='wooden_table.x3d'/>
+    <meta name='description' content='A wooden table with a 2 by 1 metre top and four cylindrical legs using DEF and USE.'/>
+    <meta name='creator' content='X3D Assistant'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Wooden Table'/>
+    <Background skyColor='0.92 0.94 0.96'/>
+    <Viewpoint description='Table View' position='0 1.3 2.5' orientation='1 0 0 -0.35'/>
+
+    <Transform DEF='Table'>
+      <!-- Table Top: 2m (X) by 1m (Z), 0.08m thick (Y), top surface at Y = 0.76m -->
+      <Transform translation='0 0.72 0'>
+        <Shape>
+          <Appearance DEF='WoodApp'>
+            <Material diffuseColor='0.55 0.33 0.17' specularColor='0.15 0.10 0.05' shininess='0.2'/>
+          </Appearance>
+          <Box size='2 0.08 1'/>
+        </Shape>
+      </Transform>
+
+      <!-- Leg 1 (Front Right) -->
+      <Transform translation='0.85 0.34 0.38'>
+        <Shape DEF='TableLeg'>
+          <Appearance USE='WoodApp'/>
+          <Cylinder height='0.68' radius='0.04'/>
+        </Shape>
+      </Transform>
+
+      <!-- Leg 2 (Front Left) -->
+      <Transform translation='-0.85 0.34 0.38'>
+        <Shape USE='TableLeg'/>
+      </Transform>
+
+      <!-- Leg 3 (Back Right) -->
+      <Transform translation='0.85 0.34 -0.38'>
+        <Shape USE='TableLeg'/>
+      </Transform>
+
+      <!-- Leg 4 (Back Left) -->
+      <Transform translation='-0.85 0.34 -0.38'>
+        <Shape USE='TableLeg'/>
+      </Transform>
+    </Transform>
+
+    <!-- Floor Plane -->
+    <Transform translation='0 -0.005 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+        <Box size='4 0.01 4'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

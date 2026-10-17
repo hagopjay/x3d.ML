@@ -1,0 +1,283 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='3'/>
+    <meta name='title' content='Humanoid Holding a Sphere'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Humanoid Holding a Sphere'/>
+    <Background skyColor='0.08 0.11 0.16'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <Viewpoint description='Eye-level view of humanoid and right-hand sphere'
+               position='0 1.68 4.8' fieldOfView='0.7'/>
+    <DirectionalLight direction='-0.4 -1 -0.6' intensity='0.9'/>
+    <DirectionalLight direction='0.7 -0.3 0.5' intensity='0.45'/>
+
+    <!-- Reusable sphere geometry, hidden until instantiated in the hand site. -->
+    <Switch whichChoice='-1'>
+      <Shape>
+        <Sphere DEF='HeldSphere' radius='0.12'/>
+      </Shape>
+    </Switch>
+
+    <HAnimHumanoid name='SphereHolder' version='2.0'>
+      <HAnimJoint containerField='skeleton' DEF='Root' name='humanoid_root' center='0 0.98 0'>
+        <HAnimJoint DEF='Pelvis' name='sacroiliac' center='0 0.98 0'>
+          <HAnimSegment DEF='PelvisSegment' name='pelvis'>
+            <Transform translation='0 0.98 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.16 0.32 0.48'/>
+                </Appearance>
+                <Box size='0.35 0.22 0.23'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+
+          <HAnimJoint DEF='RightHip' name='r_hip' center='-0.105 0.93 0'>
+            <HAnimSegment DEF='RightThigh' name='r_thigh'>
+              <Transform translation='-0.105 0.73 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.25 0.48 0.65'/>
+                  </Appearance>
+                  <Cylinder radius='0.075' height='0.4'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            <HAnimJoint DEF='RightKnee' name='r_knee' center='-0.105 0.52 0'>
+              <HAnimSegment DEF='RightCalf' name='r_calf'>
+                <Transform translation='-0.105 0.31 0'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.25 0.48 0.65'/>
+                    </Appearance>
+                    <Cylinder radius='0.06' height='0.4'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+              <HAnimJoint DEF='RightAnkle' name='r_ankle' center='-0.105 0.1 0'>
+                <HAnimSegment DEF='RightFoot' name='r_hindfoot'>
+                  <Transform translation='-0.105 0.065 0.065'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.12 0.2 0.29'/>
+                      </Appearance>
+                      <Box size='0.15 0.12 0.3'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+
+          <HAnimJoint DEF='LeftHip' name='l_hip' center='0.105 0.93 0'>
+            <HAnimSegment DEF='LeftThigh' name='l_thigh'>
+              <Transform translation='0.105 0.73 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.25 0.48 0.65'/>
+                  </Appearance>
+                  <Cylinder radius='0.075' height='0.4'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            <HAnimJoint DEF='LeftKnee' name='l_knee' center='0.105 0.52 0'>
+              <HAnimSegment DEF='LeftCalf' name='l_calf'>
+                <Transform translation='0.105 0.31 0'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.25 0.48 0.65'/>
+                    </Appearance>
+                    <Cylinder radius='0.06' height='0.4'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+              <HAnimJoint DEF='LeftAnkle' name='l_ankle' center='0.105 0.1 0'>
+                <HAnimSegment DEF='LeftFoot' name='l_hindfoot'>
+                  <Transform translation='0.105 0.065 0.065'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.12 0.2 0.29'/>
+                      </Appearance>
+                      <Box size='0.15 0.12 0.3'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+
+        <HAnimJoint DEF='Spine' name='vl5' center='0 1.08 0'>
+          <HAnimSegment DEF='Torso' name='l5'>
+            <Transform translation='0 1.3 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.25 0.48 0.65'/>
+                </Appearance>
+                <Box size='0.43 0.43 0.24'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+
+          <HAnimJoint DEF='HeadJoint' name='skullbase' center='0 1.59 0'>
+            <HAnimSegment DEF='Head' name='skull'>
+              <Transform translation='0 1.57 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.7 0.77 0.82'/>
+                  </Appearance>
+                  <Cylinder radius='0.06' height='0.12'/>
+                </Shape>
+              </Transform>
+              <Transform translation='0 1.75 0' scale='0.85 1.1 0.9'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.79 0.84 0.88'/>
+                  </Appearance>
+                  <Sphere radius='0.15'/>
+                </Shape>
+              </Transform>
+              <Transform translation='0 1.76 0.128'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.06 0.13 0.2'/>
+                  </Appearance>
+                  <Box size='0.18 0.045 0.025'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+
+          <HAnimJoint DEF='RightShoulder' name='r_shoulder' center='-0.25 1.47 0'>
+            <HAnimSegment DEF='RightUpperArm' name='r_upperarm'>
+              <Transform translation='-0.385 1.35 0' rotation='0 0 1 2.297'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.25 0.48 0.65'/>
+                  </Appearance>
+                  <Cylinder radius='0.055' height='0.36'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            <HAnimJoint DEF='RightElbow' name='r_elbow' center='-0.52 1.23 0'>
+              <HAnimSegment DEF='RightForearm' name='r_forearm'>
+                <Transform translation='-0.635 1.23 0' rotation='0 0 1 1.570796'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.7 0.77 0.82'/>
+                    </Appearance>
+                    <Cylinder radius='0.045' height='0.23'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+              <HAnimJoint DEF='RightWrist' name='r_wrist' center='-0.75 1.23 0'>
+                <HAnimSegment DEF='RightHand' name='r_hand'>
+                  <Transform translation='-0.82 1.235 0'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.79 0.84 0.88'/>
+                      </Appearance>
+                      <Box size='0.15 0.07 0.13'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+                <HAnimSite DEF='RightHandSite' name='r_hand_tip' translation='-0.83 1.27 0'>
+                  <Transform translation='0 0.12 0'>
+                    <Shape>
+                      <Appearance>
+                        <PhysicalMaterial baseColor='1 0.32 0.045'
+                                          metallic='0.35' roughness='0.23'/>
+                      </Appearance>
+                      <Sphere USE='HeldSphere'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSite>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+
+          <HAnimJoint DEF='LeftShoulder' name='l_shoulder' center='0.25 1.47 0'>
+            <HAnimSegment DEF='LeftUpperArm' name='l_upperarm'>
+              <Transform translation='0.28 1.31 0' rotation='0 0 1 0.18'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.25 0.48 0.65'/>
+                  </Appearance>
+                  <Cylinder radius='0.055' height='0.32'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            <HAnimJoint DEF='LeftElbow' name='l_elbow' center='0.31 1.15 0'>
+              <HAnimSegment DEF='LeftForearm' name='l_forearm'>
+                <Transform translation='0.31 1.025 0'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.7 0.77 0.82'/>
+                    </Appearance>
+                    <Cylinder radius='0.045' height='0.25'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+              <HAnimJoint DEF='LeftWrist' name='l_wrist' center='0.31 0.9 0'>
+                <HAnimSegment DEF='LeftHand' name='l_hand'>
+                  <Transform translation='0.31 0.85 0'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.79 0.84 0.88'/>
+                      </Appearance>
+                      <Box size='0.085 0.12 0.09'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+
+      <HAnimJoint containerField='joints' USE='Root'/>
+      <HAnimJoint containerField='joints' USE='Pelvis'/>
+      <HAnimJoint containerField='joints' USE='RightHip'/>
+      <HAnimJoint containerField='joints' USE='RightKnee'/>
+      <HAnimJoint containerField='joints' USE='RightAnkle'/>
+      <HAnimJoint containerField='joints' USE='LeftHip'/>
+      <HAnimJoint containerField='joints' USE='LeftKnee'/>
+      <HAnimJoint containerField='joints' USE='LeftAnkle'/>
+      <HAnimJoint containerField='joints' USE='Spine'/>
+      <HAnimJoint containerField='joints' USE='HeadJoint'/>
+      <HAnimJoint containerField='joints' USE='RightShoulder'/>
+      <HAnimJoint containerField='joints' USE='RightElbow'/>
+      <HAnimJoint containerField='joints' USE='RightWrist'/>
+      <HAnimJoint containerField='joints' USE='LeftShoulder'/>
+      <HAnimJoint containerField='joints' USE='LeftElbow'/>
+      <HAnimJoint containerField='joints' USE='LeftWrist'/>
+
+      <HAnimSegment containerField='segments' USE='PelvisSegment'/>
+      <HAnimSegment containerField='segments' USE='RightThigh'/>
+      <HAnimSegment containerField='segments' USE='RightCalf'/>
+      <HAnimSegment containerField='segments' USE='RightFoot'/>
+      <HAnimSegment containerField='segments' USE='LeftThigh'/>
+      <HAnimSegment containerField='segments' USE='LeftCalf'/>
+      <HAnimSegment containerField='segments' USE='LeftFoot'/>
+      <HAnimSegment containerField='segments' USE='Torso'/>
+      <HAnimSegment containerField='segments' USE='Head'/>
+      <HAnimSegment containerField='segments' USE='RightUpperArm'/>
+      <HAnimSegment containerField='segments' USE='RightForearm'/>
+      <HAnimSegment containerField='segments' USE='RightHand'/>
+      <HAnimSegment containerField='segments' USE='LeftUpperArm'/>
+      <HAnimSegment containerField='segments' USE='LeftForearm'/>
+      <HAnimSegment containerField='segments' USE='LeftHand'/>
+      <HAnimSite containerField='sites' USE='RightHandSite'/>
+    </HAnimHumanoid>
+
+    <Transform translation='0 -0.025 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.19 0.23 0.29'/>
+        </Appearance>
+        <Box size='5 0.05 5'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

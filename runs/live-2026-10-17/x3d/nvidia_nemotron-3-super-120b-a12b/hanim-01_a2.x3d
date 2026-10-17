@@ -1,0 +1,54 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Minimal HAnim 2.0 humanoid' position='0 1.5 3'/>
+    <HAnimHumanoid version='2.0'>
+      <HAnimJoint containerField='joint'>
+        <Transform/>
+      </HAnimJoint>
+      <HAnimJoint containerField='joint'>
+        <Transform/>
+      </HAnimJoint>
+      <HAnimJoint containerField='joint'>
+        <Transform/>
+      </HAnimJoint>
+      <HAnimJoint containerField='joint'>
+        <Transform/>
+      </HAnimJoint>
+      <HAnimSegment containerField='segment'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.6 0.4'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment containerField='segment'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.6 0.4'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment containerField='segment'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.6 0.4'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment containerField='segment'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.6 0.4'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.2'/>
+        </Shape>
+      </HAnimSegment>
+    </HAnimHumanoid>
+  </Scene>
+</X3D>

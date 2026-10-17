@@ -1,0 +1,179 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Friendly Swinging Robot'/>
+    <Background skyColor='0.78 0.88 0.96'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Meet the friendly robot' position='4 3.3 7.5' orientation='-0.329 0.940 0 0.517' centerOfRotation='0 1.7 0'/>
+    <DirectionalLight direction='-0.5 -1 -1' intensity='0.9'/>
+    <DirectionalLight direction='0.7 -0.3 0.5' intensity='0.45'/>
+
+    <Transform translation='0 -0.06 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.54 0.65 0.71'/>
+        </Appearance>
+        <Box size='12 0.1 12'/>
+      </Shape>
+    </Transform>
+
+    <!-- Box body -->
+    <Transform translation='0 1.75 0'>
+      <Shape>
+        <Appearance DEF='BluePaint'>
+          <Material diffuseColor='0.08 0.46 0.72' specularColor='0.5 0.65 0.75' shininess='0.45'/>
+        </Appearance>
+        <Box size='1.4 1.2 0.75'/>
+      </Shape>
+    </Transform>
+
+    <!-- Chest panel and friendly indicator lights -->
+    <Transform translation='0 1.8 0.39'>
+      <Shape>
+        <Appearance DEF='DarkTrim'>
+          <Material diffuseColor='0.035 0.09 0.14' specularColor='0.25 0.3 0.35'/>
+        </Appearance>
+        <Box size='0.85 0.55 0.06'/>
+      </Shape>
+      <Transform translation='-0.23 0 0.05'>
+        <Shape>
+          <Appearance DEF='YellowGlow'>
+            <Material diffuseColor='1 0.8 0.05' emissiveColor='1 0.65 0'/>
+          </Appearance>
+          <Sphere radius='0.065'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 0.05'>
+        <Shape>
+          <Appearance USE='YellowGlow'/>
+          <Sphere radius='0.065'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.23 0 0.05'>
+        <Shape>
+          <Appearance USE='YellowGlow'/>
+          <Sphere radius='0.065'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Neck -->
+    <Transform translation='0 2.44 0'>
+      <Shape>
+        <Appearance USE='DarkTrim'/>
+        <Cylinder radius='0.19' height='0.23'/>
+      </Shape>
+    </Transform>
+
+    <!-- Spherical head -->
+    <Transform translation='0 2.99 0'>
+      <Shape>
+        <Appearance DEF='Silver'>
+          <Material diffuseColor='0.76 0.84 0.87' specularColor='0.8 0.85 0.9' shininess='0.65'/>
+        </Appearance>
+        <Sphere radius='0.56'/>
+      </Shape>
+
+      <Transform translation='-0.21 0.09 0.49'>
+        <Shape>
+          <Appearance USE='YellowGlow'/>
+          <Sphere radius='0.115'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.21 0.09 0.49'>
+        <Shape>
+          <Appearance USE='YellowGlow'/>
+          <Sphere radius='0.115'/>
+        </Shape>
+      </Transform>
+
+      <!-- Curved smile on the front of the head -->
+      <Shape>
+        <Appearance>
+          <Material emissiveColor='0.025 0.07 0.1'/>
+          <LineProperties applied='true' linewidthScaleFactor='4'/>
+        </Appearance>
+        <IndexedLineSet coordIndex='0 1 2 3 4 5 6 -1'>
+          <Coordinate point='-0.22 -0.12 0.505, -0.16 -0.19 0.511, -0.08 -0.23 0.51, 0 -0.245 0.51, 0.08 -0.23 0.51, 0.16 -0.19 0.511, 0.22 -0.12 0.505'/>
+        </IndexedLineSet>
+      </Shape>
+    </Transform>
+
+    <!-- Arms pivot at the shoulders and swing in opposite phases -->
+    <Transform DEF='LeftArm' translation='-0.91 2.13 0'>
+      <Shape>
+        <Appearance USE='DarkTrim'/>
+        <Sphere radius='0.22'/>
+      </Shape>
+      <Transform translation='0 -0.55 0'>
+        <Shape>
+          <Appearance USE='BluePaint'/>
+          <Cylinder DEF='ArmCylinder' radius='0.16' height='1'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 -1.1 0'>
+        <Shape>
+          <Appearance USE='Silver'/>
+          <Sphere radius='0.22'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <Transform DEF='RightArm' translation='0.91 2.13 0'>
+      <Shape>
+        <Appearance USE='DarkTrim'/>
+        <Sphere radius='0.22'/>
+      </Shape>
+      <Transform translation='0 -0.55 0'>
+        <Shape>
+          <Appearance USE='BluePaint'/>
+          <Cylinder USE='ArmCylinder'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 -1.1 0'>
+        <Shape>
+          <Appearance USE='Silver'/>
+          <Sphere radius='0.22'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Cylindrical legs and broad feet -->
+    <Transform translation='-0.4 0.69 0'>
+      <Shape>
+        <Appearance USE='Silver'/>
+        <Cylinder DEF='LegCylinder' radius='0.18' height='0.92'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.4 0.69 0'>
+      <Shape>
+        <Appearance USE='Silver'/>
+        <Cylinder USE='LegCylinder'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.4 0.13 0.13'>
+      <Shape>
+        <Appearance USE='DarkTrim'/>
+        <Box DEF='FootBox' size='0.54 0.26 0.8'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.4 0.13 0.13'>
+      <Shape>
+        <Appearance USE='DarkTrim'/>
+        <Box USE='FootBox'/>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='SwingClock' cycleInterval='2.8' loop='true'/>
+    <OrientationInterpolator DEF='LeftSwing'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='1 0 0 0.6, 1 0 0 0, 1 0 0 -0.6, 1 0 0 0, 1 0 0 0.6'/>
+    <OrientationInterpolator DEF='RightSwing'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='1 0 0 -0.6, 1 0 0 0, 1 0 0 0.6, 1 0 0 0, 1 0 0 -0.6'/>
+
+    <ROUTE fromNode='SwingClock' fromField='fraction_changed' toNode='LeftSwing' toField='set_fraction'/>
+    <ROUTE fromNode='SwingClock' fromField='fraction_changed' toNode='RightSwing' toField='set_fraction'/>
+    <ROUTE fromNode='LeftSwing' fromField='value_changed' toNode='LeftArm' toField='set_rotation'/>
+    <ROUTE fromNode='RightSwing' fromField='value_changed' toNode='RightArm' toField='set_rotation'/>
+  </Scene>
+</X3D>

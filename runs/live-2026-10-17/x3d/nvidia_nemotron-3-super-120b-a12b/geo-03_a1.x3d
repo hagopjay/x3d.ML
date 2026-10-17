@@ -1,0 +1,12 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+<GeoLocation geoSystem='&quot;GD&quot; &quot;WE&quot;' geoCoords='37.2296 -80.4230 620'/>
+<GeoViewpoint geoSystem='&quot;GD&quot; &quot;WE&quot;' position='37.2296 -80.4230 620'/>
+<Viewpoint description='Drillfield terrain'/>
+<GeoElevationGrid geoSystem='&quot;GD&quot; &quot;WE&quot;' geoOrigin='37.22914955 -80.4235635 620' xDimension='5' zDimension='5' xSpacing='25' zSpacing='25' height='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'>
+<Appearance>
+<Material diffuseColor='0.647 0.165 0.165'/>
+</Appearance>
+</GeoElevationGrid>
+</Scene>
+</X3D>

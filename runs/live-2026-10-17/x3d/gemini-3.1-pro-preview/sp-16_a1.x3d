@@ -1,0 +1,144 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <NavigationInfo type='"WALK" "ANY"'/>
+    <Viewpoint description='Cozy Cabin Interior' position='0 1.5 4.5' orientation='1 0 0 -0.1'/>
+    
+    <Transform translation='0 1.35 0'>
+      <PointLight radius='15' color='1 0.75 0.45' intensity='1.2' ambientIntensity='0.2'/>
+    </Transform>
+
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Box size='10 0.2 10'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.3 0.18 0.1' roughness='0.9'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 2.5 -5'>
+      <Shape>
+        <Box size='10 5 0.2'/>
+        <Appearance>
+          <PhysicalMaterial DEF='WallWood' baseColor='0.55 0.35 0.2' roughness='1.0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='-5 2.5 0'>
+      <Shape>
+        <Box size='0.2 5 10'/>
+        <Appearance><PhysicalMaterial USE='WallWood'/></Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='5 2.5 0'>
+      <Shape>
+        <Box size='0.2 5 10'/>
+        <Appearance><PhysicalMaterial USE='WallWood'/></Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.01 0'>
+      <Shape>
+        <Box size='5 0.02 4'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.6 0.1 0.15' roughness='0.95'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.8 0'>
+      <Shape>
+        <Cylinder radius='1.5' height='0.05'/>
+        <Appearance>
+          <PhysicalMaterial DEF='FurnitureWood' baseColor='0.4 0.22 0.12' roughness='0.7'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.4 0'>
+      <Shape>
+        <Cylinder radius='0.15' height='0.8'/>
+        <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.025 0'>
+      <Shape>
+        <Cylinder radius='0.8' height='0.05'/>
+        <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-2 0 0'>
+      <Transform translation='0 0.45 0'>
+        <Shape>
+          <Box size='0.6 0.05 0.6'/>
+          <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.275 0.9 0'>
+        <Shape>
+          <Box size='0.05 0.9 0.6'/>
+          <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.25 0.225 -0.25'>
+        <Shape DEF='Leg'>
+          <Box size='0.05 0.45 0.05'/>
+          <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0.25 0.225 -0.25'><Shape USE='Leg'/></Transform>
+      <Transform translation='-0.25 0.225 0.25'><Shape USE='Leg'/></Transform>
+      <Transform translation='0.25 0.225 0.25'><Shape USE='Leg'/></Transform>
+    </Transform>
+
+    <Transform translation='2 0 0'>
+      <Transform translation='0 0.45 0'>
+        <Shape>
+          <Box size='0.6 0.05 0.6'/>
+          <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0.275 0.9 0'>
+        <Shape>
+          <Box size='0.05 0.9 0.6'/>
+          <Appearance><PhysicalMaterial USE='FurnitureWood'/></Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.25 0.225 -0.25'><Shape USE='Leg'/></Transform>
+      <Transform translation='0.25 0.225 -0.25'><Shape USE='Leg'/></Transform>
+      <Transform translation='-0.25 0.225 0.25'><Shape USE='Leg'/></Transform>
+      <Transform translation='0.25 0.225 0.25'><Shape USE='Leg'/></Transform>
+    </Transform>
+
+    <Transform translation='0 0.825 0'>
+      <Shape>
+        <Cylinder radius='0.2' height='0.05'/>
+        <Appearance>
+          <PhysicalMaterial DEF='Brass' baseColor='0.8 0.7 0.2' metallic='0.9' roughness='0.3'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0 0.25 0'>
+        <Shape>
+          <Cylinder radius='0.02' height='0.5'/>
+          <Appearance><PhysicalMaterial USE='Brass'/></Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='LampShadeTransform' translation='0 0.5 0'>
+        <TouchSensor DEF='LampTouch' description='Touch to adjust lamp shade'/>
+        <Shape>
+          <Cone bottomRadius='0.3' height='0.3' bottom='false'/>
+          <Appearance>
+            <Material diffuseColor='0.9 0.8 0.6' emissiveColor='0.4 0.25 0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='LampTimer' cycleInterval='1.5' stopTime='1'/>
+    <OrientationInterpolator DEF='LampSpinner' key='0 0.5 1' keyValue='0 1 0 0  0 1 0 3.14159  0 1 0 6.28318'/>
+
+    <ROUTE fromNode='LampTouch' fromField='touchTime' toNode='LampTimer' toField='startTime'/>
+    <ROUTE fromNode='LampTimer' fromField='fraction_changed' toNode='LampSpinner' toField='set_fraction'/>
+    <ROUTE fromNode='LampSpinner' fromField='value_changed' toNode='LampShadeTransform' toField='rotation'/>
+  </Scene>
+</X3D>

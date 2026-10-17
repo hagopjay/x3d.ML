@@ -1,0 +1,126 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <!-- Ground (streets) -->
+    <Shape>
+      <Appearance>
+        <Material diffuseColor='0.6 0.6 0.6'/>
+      </Appearance>
+      <Box size='30 0.1 30'/>
+      <Transform translation='0 -0.05 0'/>
+    </Shape>
+
+    <!-- Buildings -->
+    <!-- Row y = -10 -->
+    <Group>
+      <Transform translation='-10 2.5 -10'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.2 0.2'/>
+          </Appearance>
+          <Box size='8 5 8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 3.5 -10'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.8 0.2'/>
+          </Appearance>
+          <Box size='8 7 8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='10 4.5 -10'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.8'/>
+          </Appearance>
+          <Box size='8 9 8'/>
+        </Shape>
+      </Transform>
+    </Group>
+    <!-- Row y = 0 -->
+    <Group>
+      <Transform translation='-10 3 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.8 0.2'/>
+          </Appearance>
+          <Box size='8 6 8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 4 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.2 0.8'/>
+          </Appearance>
+          <Box size='8 8 8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='10 5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.8 0.8'/>
+          </Appearance>
+          <Box size='8 10 8'/>
+        </Shape>
+      </Transform>
+    </Group>
+    <!-- Row y = 10 -->
+    <Group>
+      <Transform translation='-10 2.5 10'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.5 0.2'/>
+          </Appearance>
+          <Box size='8 5 8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 3.5 10'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.5 0.2 0.5'/>
+          </Appearance>
+          <Box size='8 7 8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='10 4.5 10'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.5 0.5 0.2'/>
+          </Appearance>
+          <Box size='8 9 8'/>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <!-- Central tower -->
+    <Transform translation='0 15 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.4 0.4 0.4'/>
+        </Appearance>
+        <Box size='2 30 2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Blinking red light on top -->
+    <Transform DEF='LightTransform' translation='0 30.5 0'>
+      <Shape>
+        <Appearance>
+          <Material DEF='LightMat' emissiveColor='1 0 0'/>
+        </Appearance>
+        <Sphere radius='0.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Animation for blinking -->
+    <TimeSensor DEF='BlinkTimer' cycleInterval='2' loop='true'/>
+    <ColorInterpolator DEF='BlinkColor'
+        key='[0 0.5 1]'
+        keyValue='[1 0 0, 0 0 0, 1 0 0]'/>
+    <ROUTE fromNode='BlinkTimer' fromField='fraction_changed' toNode='BlinkColor' toField='set_fraction'/>
+    <ROUTE fromNode='BlinkColor' fromField='value_changed' toNode='LightMat' toField='emissiveColor'/>
+
+    <!-- Viewpoint -->
+    <Viewpoint position='0 25 40' orientation='0 1 0 -0.3' description='City block with blinking tower'/>
+  </Scene>
+</X3D>

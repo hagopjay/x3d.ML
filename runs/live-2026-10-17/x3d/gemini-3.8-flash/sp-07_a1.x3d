@@ -1,0 +1,131 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='dna_helix.x3d' name='title'/>
+    <meta content='Rotating DNA double helix with blue and orange strands and connecting rungs.' name='description'/>
+    <meta content='X3D 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Rotating DNA Double Helix'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='true'/>
+    <Background skyColor='0.02 0.04 0.08 0.06 0.1 0.18' skyAngle='1.5707963'/>
+    <Viewpoint description='DNA Double Helix' position='0 0 10'/>
+
+    <TimeSensor DEF='SpinTimer' cycleInterval='16' loop='true'/>
+    <OrientationInterpolator DEF='SpinInt' key='0 0.5 1' keyValue='0 1 0 0  0 1 0 3.14159265  0 1 0 6.2831853'/>
+    <ROUTE fromNode='SpinTimer' fromField='fraction_changed' toNode='SpinInt' toField='set_fraction'/>
+
+    <Transform DEF='DNAHelix'>
+      <!-- Level 0 (Base template DEF) -->
+      <Transform translation='0 -3.8 0' rotation='0 1 0 0'>
+        <Transform DEF='RungUnit'>
+          <!-- Blue strand bead -->
+          <Transform translation='1.2 0 0'>
+            <Shape DEF='BlueSphere'>
+              <Appearance DEF='BlueApp'>
+                <Material diffuseColor='0.15 0.55 0.95' specularColor='0.5 0.8 1.0' shininess='0.7'/>
+              </Appearance>
+              <Sphere radius='0.22'/>
+            </Shape>
+          </Transform>
+          <!-- Orange strand bead -->
+          <Transform translation='-1.2 0 0'>
+            <Shape DEF='OrangeSphere'>
+              <Appearance DEF='OrangeApp'>
+                <Material diffuseColor='1.0 0.5 0.08' specularColor='1.0 0.8 0.4' shininess='0.7'/>
+              </Appearance>
+              <Sphere radius='0.22'/>
+            </Shape>
+          </Transform>
+          <!-- Base-pair connector rung -->
+          <Transform rotation='0 0 1 1.5707963'>
+            <Shape DEF='RungCylinder'>
+              <Appearance DEF='RungApp'>
+                <Material diffuseColor='0.85 0.88 0.9' specularColor='0.4 0.4 0.4' shininess='0.4'/>
+              </Appearance>
+              <Cylinder height='2.4' radius='0.05'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <!-- Level 1 -->
+      <Transform translation='0 -3.4 0' rotation='0 1 0 0.6283185'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 2 -->
+      <Transform translation='0 -3.0 0' rotation='0 1 0 1.2566371'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 3 -->
+      <Transform translation='0 -2.6 0' rotation='0 1 0 1.8849556'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 4 -->
+      <Transform translation='0 -2.2 0' rotation='0 1 0 2.5132741'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 5 -->
+      <Transform translation='0 -1.8 0' rotation='0 1 0 3.1415927'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 6 -->
+      <Transform translation='0 -1.4 0' rotation='0 1 0 3.7699112'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 7 -->
+      <Transform translation='0 -1.0 0' rotation='0 1 0 4.3982297'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 8 -->
+      <Transform translation='0 -0.6 0' rotation='0 1 0 5.0265482'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 9 -->
+      <Transform translation='0 -0.2 0' rotation='0 1 0 5.6548668'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 10 -->
+      <Transform translation='0 0.2 0' rotation='0 1 0 6.2831853'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 11 -->
+      <Transform translation='0 0.6 0' rotation='0 1 0 6.9115038'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 12 -->
+      <Transform translation='0 1.0 0' rotation='0 1 0 7.5398224'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 13 -->
+      <Transform translation='0 1.4 0' rotation='0 1 0 8.1681409'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 14 -->
+      <Transform translation='0 1.8 0' rotation='0 1 0 8.7964594'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 15 -->
+      <Transform translation='0 2.2 0' rotation='0 1 0 9.4247780'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 16 -->
+      <Transform translation='0 2.6 0' rotation='0 1 0 10.0530965'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 17 -->
+      <Transform translation='0 3.0 0' rotation='0 1 0 10.6814150'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 18 -->
+      <Transform translation='0 3.4 0' rotation='0 1 0 11.3097336'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+      <!-- Level 19 -->
+      <Transform translation='0 3.8 0' rotation='0 1 0 11.9380521'>
+        <Transform USE='RungUnit'/>
+      </Transform>
+    </Transform>
+
+    <ROUTE fromNode='SpinInt' fromField='value_changed' toNode='DNAHelix' toField='set_rotation'/>
+  </Scene>
+</X3D>

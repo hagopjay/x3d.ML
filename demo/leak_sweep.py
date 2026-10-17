@@ -17,7 +17,7 @@ ALLOW = [r'claude:viewport-fit-sides',                    # artifact page contra
          r'cdn\.jsdelivr\.net/npm/x_ite@16\.4\.1']        # pinned renderer
 for a in ALLOW: t = re.sub(a, "<allowed>", t)
 CHECKS = [
- ("closed model / vendor names", r"(?i)\banthropic\b|\bclaude\b|\bopus\b|\bsonnet\b|\bhaiku\b|\bfable\b|gemini|openai|chatgpt|\bgpt-?\d|\bkimi\b|nemotron|vertex ai|deepmind|mistral|\bllama\b|\bgoogle\b"),
+ ("closed model / vendor names", r"(?i)\banthropic\b|\bclaude\b|\bopus\b|\bsonnet\b|\bhaiku\b|\bfable\b|gemini|openai|chatgpt|\bgpt-?\d|\bkimi\b|nemotron|vertex ai|aiplatform|deepmind|mistral|\bllama\b|\bgoogle\b|\bglm\b|z-ai|zhipu|gemma|deepseek"),
  ("open model names", r"(?i)qwen|gpt-oss|alibaba"),
  ("hardware / region strings", r"(?i)g2-standard|NVIDIA|us-central1|us-east1"),
  ("GCP ids and hosts", r"(?i)" + (os.environ["LEAK_IDS"] + "|" if os.environ.get("LEAK_IDS") else "") + r"gserviceaccount|projects/[a-z0-9-]{6,}|\bgs://|\.run\.app|nip\.io|storage\.googleapis"),   # LEAK_IDS='<project id>|<run-as name>|<project number>' (kept out of the repo)

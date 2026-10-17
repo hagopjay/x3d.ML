@@ -1,0 +1,103 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='2' name='Shape'/>
+    <meta content='traffic_cone.x3d' name='title'/>
+    <meta content='An orange traffic cone with reflective white stripes on a black square base, 0.7 metres tall.' name='description'/>
+    <meta content='X3D-Edit 4.0, https://savage.nps.edu/X3D-Edit' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Traffic Cone'/>
+    <Viewpoint description='Traffic Cone Front' orientation='1 0 0 -0.15' position='0 0.5 1.5'/>
+    <Viewpoint description='Traffic Cone Top View' orientation='1 0 0 -0.85' position='0 1.2 0.8'/>
+
+    <!-- Black Square Base: 0.38m x 0.38m x 0.03m tall, resting on ground (y=0 to y=0.03) -->
+    <Transform translation='0 0.015 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial DEF='BaseBlackMat' baseColor='0.06 0.06 0.06' roughness='0.85'/>
+        </Appearance>
+        <Box size='0.38 0.03 0.38'/>
+      </Shape>
+    </Transform>
+
+    <!-- Base collar transition ring -->
+    <Transform translation='0 0.032 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial USE='BaseBlackMat'/>
+        </Appearance>
+        <Cylinder height='0.008' radius='0.17'/>
+      </Shape>
+    </Transform>
+
+    <!-- Conical Body Segments: y = 0.03 to y = 0.70 (total height 0.70m) -->
+    <!-- Lower Orange Cone Section: y = 0.03 to 0.30 -->
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial DEF='ConeOrangeMat' baseColor='1.0 0.22 0.0' roughness='0.4'/>
+      </Appearance>
+      <Extrusion beginCap='false' crossSection='1.000 0.000 0.924 0.383 0.707 0.707 0.383 0.924 0.000 1.000 -0.383 0.924 -0.707 0.707 -0.924 0.383 -1.000 0.000 -0.924 -0.383 -0.707 -0.707 -0.383 -0.924 0.000 -1.000 0.383 -0.924 0.707 -0.707 0.924 -0.383 1.000 0.000' endCap='false' scale='0.165 0.165 0.107 0.107' solid='false' spine='0 0.03 0 0 0.30 0'/>
+    </Shape>
+
+    <!-- Lower Reflective White Stripe: y = 0.30 to 0.40 -->
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial DEF='ReflectiveWhiteMat' baseColor='0.92 0.92 0.92' roughness='0.25'/>
+      </Appearance>
+      <Extrusion beginCap='false' crossSection='1.000 0.000 0.924 0.383 0.707 0.707 0.383 0.924 0.000 1.000 -0.383 0.924 -0.707 0.707 -0.924 0.383 -1.000 0.000 -0.924 -0.383 -0.707 -0.707 -0.383 -0.924 0.000 -1.000 0.383 -0.924 0.707 -0.707 0.924 -0.383 1.000 0.000' endCap='false' scale='0.107 0.107 0.086 0.086' solid='false' spine='0 0.30 0 0 0.40 0'/>
+    </Shape>
+
+    <!-- Middle Orange Cone Section: y = 0.40 to 0.45 -->
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='ConeOrangeMat'/>
+      </Appearance>
+      <Extrusion beginCap='false' crossSection='1.000 0.000 0.924 0.383 0.707 0.707 0.383 0.924 0.000 1.000 -0.383 0.924 -0.707 0.707 -0.924 0.383 -1.000 0.000 -0.924 -0.383 -0.707 -0.707 -0.383 -0.924 0.000 -1.000 0.383 -0.924 0.707 -0.707 0.924 -0.383 1.000 0.000' endCap='false' scale='0.086 0.086 0.075 0.075' solid='false' spine='0 0.40 0 0 0.45 0'/>
+    </Shape>
+
+    <!-- Upper Reflective White Stripe: y = 0.45 to 0.53 -->
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='ReflectiveWhiteMat'/>
+      </Appearance>
+      <Extrusion beginCap='false' crossSection='1.000 0.000 0.924 0.383 0.707 0.707 0.383 0.924 0.000 1.000 -0.383 0.924 -0.707 0.707 -0.924 0.383 -1.000 0.000 -0.924 -0.383 -0.707 -0.707 -0.383 -0.924 0.000 -1.000 0.383 -0.924 0.707 -0.707 0.924 -0.383 1.000 0.000' endCap='false' scale='0.075 0.075 0.058 0.058' solid='false' spine='0 0.45 0 0 0.53 0'/>
+    </Shape>
+
+    <!-- Upper Orange Cone Top: y = 0.53 to 0.70 (truncated top with opening) -->
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='ConeOrangeMat'/>
+      </Appearance>
+      <Extrusion beginCap='false' crossSection='1.000 0.000 0.924 0.383 0.707 0.707 0.383 0.924 0.000 1.000 -0.383 0.924 -0.707 0.707 -0.924 0.383 -1.000 0.000 -0.924 -0.383 -0.707 -0.707 -0.383 -0.924 0.000 -1.000 0.383 -0.924 0.707 -0.707 0.924 -0.383 1.000 0.000' endCap='false' scale='0.058 0.058 0.022 0.022' solid='false' spine='0 0.53 0 0 0.70 0'/>
+    </Shape>
+
+    <!-- Rounded lip around top opening -->
+    <Transform translation='0 0.698 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial USE='ConeOrangeMat'/>
+        </Appearance>
+        <Cylinder height='0.006' radius='0.024'/>
+      </Shape>
+    </Transform>
+
+    <!-- Four rubber anti-slip feet on base underside -->
+    <Transform translation='0.15 0.002 0.15'>
+      <Shape DEF='BaseFoot'>
+        <Appearance>
+          <PhysicalMaterial USE='BaseBlackMat'/>
+        </Appearance>
+        <Box size='0.04 0.004 0.04'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.15 0.002 0.15'>
+      <Shape USE='BaseFoot'/>
+    </Transform>
+    <Transform translation='0.15 0.002 -0.15'>
+      <Shape USE='BaseFoot'/>
+    </Transform>
+    <Transform translation='-0.15 0.002 -0.15'>
+      <Shape USE='BaseFoot'/>
+    </Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,22 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Three rotating cubes' position='0 0 5'/>
+    <!-- Cube 1 -->
+    <Transform translation='-2 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='1 0 0'/>
+        </Appearance>
+        <Box size='1 1 1'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='TS1' cycleInterval='4' loop='true'/>
+    <OrientationInterpolator DEF='OI1' key='0 1' keyValue='0 0 1 0 0 0 1 6.283185307179586'/>
+    <ROUTE fromNode='TS1' fromField='fraction_changed' toNode='OI1' toField='set_fraction'/>
+    <ROUTE fromNode='OI1' fromField='value_changed' toNode='TS1' toField='set_fraction'/> <!-- dummy to satisfy usage? Actually we need to route to Transform -->
+    <!-- Correction: route to Transform -->
+    <!-- We'll replace the dummy with proper route -->
+    <!-- Actually we need to route OI1 to Transform rotation -->
+    <!-- Let's reconstruct correctly -->
+  </Scene>
+</X3D>

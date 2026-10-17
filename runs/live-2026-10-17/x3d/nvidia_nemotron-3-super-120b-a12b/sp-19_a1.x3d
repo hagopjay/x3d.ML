@@ -1,0 +1,111 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Background skyColor='0 0 0'/>
+    <NavigationInfo type='"EXAMINE" "ANY" "WALK"'/>
+    <!-- Viewpoint -->
+    <Viewpoint position='0 20 -50' orientation='0 1 0 0' description='Overview of lunar base'/>
+    <!-- Earth (large blue sphere) -->
+    <Shape>
+      <Appearance>
+        <Material diffuseColor='0 0 1'/>
+      </Appearance>
+      <Sphere radius='50'/>
+    </Shape>
+    <!-- Grey regolith ground -->
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.5 0.5 0.5'/>
+        </Appearance>
+        <Box size='200 0.2 200'/>
+      </Shape>
+    </Transform>
+    <!-- Dome habitats (white spheres) -->
+    <Transform translation='-30 10 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Sphere radius='10'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 10 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Sphere radius='10'/>
+      </Shape>
+    </Transform>
+    <Transform translation='30 10 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Sphere radius='10'/>
+      </Shape>
+    </Transform>
+    <!-- Tubes connecting domes (cylinders) -->
+    <!-- Between left and center -->
+    <Transform translation='-15 10 0' rotation='0 0 1 1.57079632679'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.7 0.7 0.7'/>
+        </Appearance>
+        <Cylinder radius='2' height='30'/>
+      </Shape>
+    </Transform>
+    <!-- Between center and right -->
+    <Transform translation='15 10 0' rotation='0 0 1 1.57079632679'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.7 0.7 0.7'/>
+        </Appearance>
+        <Cylinder radius='2' height='30'/>
+      </Shape>
+    </Transform>
+    <!-- Simple rover (body + four wheels) -->
+    <!-- Rover body -->
+    <Transform translation='0 5 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.2'/>
+        </Appearance>
+        <Box size='6 4 8'/>
+      </Shape>
+    </Transform>
+    <!-- Wheels -->
+    <Transform translation='-3 3 24'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='3 3 24'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-3 3 16'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='3 3 16'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='2'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,93 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Friendly Robot View' position='0 1.5 6'/>
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.8'/>
+    <DirectionalLight direction='0.5 0.5 -0.2' intensity='0.4'/>
+    
+    <Transform>
+      <Transform translation='0 1.5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.5 0.8' shininess='0.5'/>
+          </Appearance>
+          <Box size='1 1.2 0.6'/>
+        </Shape>
+      </Transform>
+      
+      <Transform translation='0 2.4 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='GrayMetal' diffuseColor='0.7 0.7 0.7' shininess='0.8'/>
+          </Appearance>
+          <Sphere radius='0.35'/>
+        </Shape>
+        <Transform translation='-0.15 0.1 0.28'>
+          <Shape>
+            <Appearance>
+              <Material DEF='EyeMat' emissiveColor='1 1 0' diffuseColor='0 0 0'/>
+            </Appearance>
+            <Sphere radius='0.08'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0.15 0.1 0.28'>
+          <Shape>
+            <Appearance>
+              <Material USE='EyeMat'/>
+            </Appearance>
+            <Sphere radius='0.08'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      
+      <Transform DEF='LeftArm' translation='-0.65 1.9 0'>
+        <Transform translation='0 -0.5 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='GrayMetal'/>
+            </Appearance>
+            <Cylinder radius='0.12' height='1'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      
+      <Transform DEF='RightArm' translation='0.65 1.9 0'>
+        <Transform translation='0 -0.5 0'>
+          <Shape>
+            <Appearance>
+              <Material USE='GrayMetal'/>
+            </Appearance>
+            <Cylinder radius='0.12' height='1'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      
+      <Transform translation='-0.25 0.4 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='GrayMetal'/>
+          </Appearance>
+          <Cylinder radius='0.15' height='1'/>
+        </Shape>
+      </Transform>
+      
+      <Transform translation='0.25 0.4 0'>
+        <Shape>
+          <Appearance>
+            <Material USE='GrayMetal'/>
+          </Appearance>
+          <Cylinder radius='0.15' height='1'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    
+    <TimeSensor DEF='Clock' cycleInterval='1.5' loop='true'/>
+    
+    <OrientationInterpolator DEF='LeftArmAnim' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0.8, 1 0 0 0, 1 0 0 -0.8, 1 0 0 0, 1 0 0 0.8'/>
+    <OrientationInterpolator DEF='RightArmAnim' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 -0.8, 1 0 0 0, 1 0 0 0.8, 1 0 0 0, 1 0 0 -0.8'/>
+    
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='LeftArmAnim' toField='set_fraction'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='RightArmAnim' toField='set_fraction'/>
+    <ROUTE fromNode='LeftArmAnim' fromField='value_changed' toNode='LeftArm' toField='set_rotation'/>
+    <ROUTE fromNode='RightArmAnim' fromField='value_changed' toNode='RightArm' toField='set_rotation'/>
+  </Scene>
+</X3D>

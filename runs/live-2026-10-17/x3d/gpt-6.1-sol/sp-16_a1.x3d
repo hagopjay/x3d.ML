@@ -1,0 +1,208 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Warm Woodland Cabin'/>
+    <Background skyColor='0.12 0.085 0.065'/>
+    <NavigationInfo type='"EXAMINE" "WALK" "ANY"' headlight='false'/>
+    <Viewpoint description='Welcome to the cozy cabin' position='0 5.4 11' orientation='1 0 0 -0.32' fieldOfView='0.78'/>
+    <DirectionalLight direction='-0.4 -1 -0.5' color='1 0.85 0.68' intensity='0.65' ambientIntensity='0.3'/>
+
+    <!-- Wooden floor and its long plank seams. -->
+    <Transform translation='0 -0.12 0'>
+      <Shape>
+        <Appearance DEF='FloorFinish'>
+          <Material diffuseColor='0.48 0.27 0.12' specularColor='0.15 0.09 0.04' shininess='0.12'/>
+        </Appearance>
+        <Box size='8 0.24 6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-3 0.003 0'>
+      <Shape DEF='FloorSeam'>
+        <Appearance DEF='DarkWood'>
+          <Material diffuseColor='0.19 0.085 0.035'/>
+        </Appearance>
+        <Box size='0.018 0.008 6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-2 0.003 0'><Shape USE='FloorSeam'/></Transform>
+    <Transform translation='-1 0.003 0'><Shape USE='FloorSeam'/></Transform>
+    <Transform translation='0 0.003 0'><Shape USE='FloorSeam'/></Transform>
+    <Transform translation='1 0.003 0'><Shape USE='FloorSeam'/></Transform>
+    <Transform translation='2 0.003 0'><Shape USE='FloorSeam'/></Transform>
+    <Transform translation='3 0.003 0'><Shape USE='FloorSeam'/></Transform>
+
+    <!-- Three enclosing walls; the front remains open. -->
+    <Transform translation='0 1.8 -3.1'>
+      <Shape>
+        <Appearance DEF='WallFinish'>
+          <Material diffuseColor='0.65 0.43 0.25'/>
+        </Appearance>
+        <Box size='8.2 3.6 0.2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-4.1 1.8 0'>
+      <Shape DEF='SideWall'>
+        <Appearance USE='WallFinish'/>
+        <Box size='0.2 3.6 6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='4.1 1.8 0'><Shape USE='SideWall'/></Transform>
+
+    <!-- Dark timber framing and baseboards. -->
+    <Transform translation='-3.95 1.8 -2.95'>
+      <Shape DEF='TimberPost'>
+        <Appearance USE='DarkWood'/>
+        <Box size='0.18 3.6 0.18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='3.95 1.8 -2.95'><Shape USE='TimberPost'/></Transform>
+    <Transform translation='-3.95 1.8 2.95'><Shape USE='TimberPost'/></Transform>
+    <Transform translation='3.95 1.8 2.95'><Shape USE='TimberPost'/></Transform>
+    <Transform translation='0 3.48 -2.96'>
+      <Shape DEF='BackBeam'>
+        <Appearance USE='DarkWood'/>
+        <Box size='8 0.2 0.18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.12 -2.96'><Shape USE='BackBeam'/></Transform>
+    <Transform translation='-3.96 3.48 0'>
+      <Shape DEF='SideBeam'>
+        <Appearance USE='DarkWood'/>
+        <Box size='0.18 0.2 6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='3.96 3.48 0'><Shape USE='SideBeam'/></Transform>
+    <Transform translation='-3.96 0.12 0'><Shape USE='SideBeam'/></Transform>
+    <Transform translation='3.96 0.12 0'><Shape USE='SideBeam'/></Transform>
+
+    <!-- Flat red box rug with an inset warm-red center. -->
+    <Transform translation='0 0.025 0.25'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.43 0.035 0.035'/>
+        </Appearance>
+        <Box size='6.1 0.04 3.9'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.048 0.25'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.68 0.095 0.065'/>
+        </Appearance>
+        <Box size='5.75 0.008 3.55'/>
+      </Shape>
+    </Transform>
+
+    <!-- Solid wooden dining table. -->
+    <Transform translation='0 1.52 0.15'>
+      <Shape>
+        <Appearance DEF='FurnitureFinish'>
+          <Material diffuseColor='0.40 0.19 0.075' specularColor='0.22 0.13 0.06' shininess='0.22'/>
+        </Appearance>
+        <Box size='2.7 0.18 1.65'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-1.08 0.74 -0.43'>
+      <Shape DEF='TableLeg'>
+        <Appearance USE='FurnitureFinish'/>
+        <Box size='0.17 1.4 0.17'/>
+      </Shape>
+    </Transform>
+    <Transform translation='1.08 0.74 -0.43'><Shape USE='TableLeg'/></Transform>
+    <Transform translation='-1.08 0.74 0.73'><Shape USE='TableLeg'/></Transform>
+    <Transform translation='1.08 0.74 0.73'><Shape USE='TableLeg'/></Transform>
+
+    <!-- Opposing chairs, turned toward the table. -->
+    <Transform translation='-2.05 0 0.15' rotation='0 1 0 -1.5708'>
+      <Group DEF='Chair'>
+        <Transform translation='0 0.84 0'>
+          <Shape>
+            <Appearance USE='FurnitureFinish'/>
+            <Box size='0.95 0.14 0.95'/>
+          </Shape>
+        </Transform>
+        <Transform translation='-0.35 0.42 -0.34'>
+          <Shape DEF='ChairLeg'>
+            <Appearance USE='FurnitureFinish'/>
+            <Box size='0.12 0.76 0.12'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0.35 0.42 -0.34'><Shape USE='ChairLeg'/></Transform>
+        <Transform translation='-0.35 0.92 0.36'>
+          <Shape DEF='ChairBackPost'>
+            <Appearance USE='FurnitureFinish'/>
+            <Box size='0.12 1.76 0.12'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0.35 0.92 0.36'><Shape USE='ChairBackPost'/></Transform>
+        <Transform translation='0 1.63 0.36'>
+          <Shape>
+            <Appearance USE='FurnitureFinish'/>
+            <Box size='0.84 0.32 0.13'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 0.935 -0.015'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.78 0.49 0.23'/>
+            </Appearance>
+            <Box size='0.77 0.07 0.73'/>
+          </Shape>
+        </Transform>
+      </Group>
+    </Transform>
+    <Transform translation='2.05 0 0.15' rotation='0 1 0 1.5708'>
+      <Group USE='Chair'/>
+    </Transform>
+
+    <!-- Warm brass floor lamp with a glowing fabric shade. -->
+    <Transform translation='-2.85 0 -1.95'>
+      <Transform translation='0 0.08 0'>
+        <Shape>
+          <Appearance DEF='BrassFinish'>
+            <Material diffuseColor='0.43 0.29 0.095' specularColor='0.65 0.46 0.19' shininess='0.55'/>
+          </Appearance>
+          <Cylinder radius='0.38' height='0.14'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 1.2 0'>
+        <Shape>
+          <Appearance USE='BrassFinish'/>
+          <Cylinder radius='0.045' height='2.25'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.42 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.98 0.73 0.39' emissiveColor='0.35 0.18 0.045' transparency='0.08'/>
+          </Appearance>
+          <Cone bottomRadius='0.58' height='0.65' bottom='false'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.28 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0.88 0.58' emissiveColor='1 0.68 0.28'/>
+          </Appearance>
+          <Sphere radius='0.11'/>
+        </Shape>
+      </Transform>
+      <PointLight location='0 2.25 0' color='1 0.69 0.36' intensity='1.8' radius='9' attenuation='1 0.12 0.035'/>
+    </Transform>
+
+    <!-- A small ceramic bowl on the table. -->
+    <Transform translation='0 1.69 0.15'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.78 0.66 0.45' specularColor='0.22 0.18 0.12' shininess='0.3'/>
+        </Appearance>
+        <Cylinder radius='0.25' height='0.16'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 1.775 0.15'>
+      <Shape>
+        <Appearance USE='DarkWood'/>
+        <Cylinder radius='0.205' height='0.008'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

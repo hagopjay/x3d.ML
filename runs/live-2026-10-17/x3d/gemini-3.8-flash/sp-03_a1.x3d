@@ -1,0 +1,176 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='NewtonsCradle.x3d' name='title'/>
+    <meta content='A realistic Newton&apos;s cradle with five polished steel balls and eased swinging animation.' name='description'/>
+    <meta content='X3D-Edit 4.0, https://savage.nps.edu/X3D-Edit' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title="Newton's Cradle"/>
+    <Background skyColor='0.08 0.09 0.11'/>
+    <Viewpoint description="Newton's Cradle" orientation='1 0 0 -0.2' position='0 1.5 3.0'/>
+    <Viewpoint description='Side Perspective' orientation='-0.2 0.98 0.05 0.85' position='2.6 1.7 2.0'/>
+    <Viewpoint description='Close-up Balls' orientation='1 0 0 -0.05' position='0 0.5 1.5'/>
+
+    <DirectionalLight color='1 0.98 0.95' direction='-0.4 -0.8 -0.5' intensity='1.4'/>
+    <DirectionalLight color='0.7 0.8 1.0' direction='0.5 -0.6 0.6' intensity='0.8'/>
+    <PointLight color='1 1 1' intensity='0.6' location='0 2.2 0.8'/>
+
+    <!-- Base Slab -->
+    <Transform translation='0 0.04 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.12 0.08 0.06' metallic='0.05' roughness='0.4'/>
+        </Appearance>
+        <Box size='2.5 0.08 1.2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Base Inset Mirror Plaque -->
+    <Transform translation='0 0.082 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.85 0.85 0.9' metallic='0.95' roughness='0.1'/>
+        </Appearance>
+        <Box size='2.1 0.005 0.55'/>
+      </Shape>
+    </Transform>
+
+    <!-- Thin Black Frame Structure -->
+    <Group DEF='Frame'>
+      <!-- Vertical Corner Posts -->
+      <Transform translation='-1.05 1.04 -0.4'>
+        <Shape DEF='FramePillar'>
+          <Appearance DEF='BlackFrameApp'>
+            <PhysicalMaterial baseColor='0.03 0.03 0.035' metallic='0.85' roughness='0.25'/>
+          </Appearance>
+          <Cylinder height='1.92' radius='0.025'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-1.05 1.04 0.4'>
+        <Shape USE='FramePillar'/>
+      </Transform>
+      <Transform translation='1.05 1.04 -0.4'>
+        <Shape USE='FramePillar'/>
+      </Transform>
+      <Transform translation='1.05 1.04 0.4'>
+        <Shape USE='FramePillar'/>
+      </Transform>
+
+      <!-- Horizontal Suspension Rails (X-axis) -->
+      <Transform rotation='0 0 1 1.5708' translation='0 2.0 -0.4'>
+        <Shape DEF='FrameLongBar'>
+          <Appearance USE='BlackFrameApp'/>
+          <Cylinder height='2.15' radius='0.025'/>
+        </Shape>
+      </Transform>
+      <Transform rotation='0 0 1 1.5708' translation='0 2.0 0.4'>
+        <Shape USE='FrameLongBar'/>
+      </Transform>
+
+      <!-- Crossbars (Z-axis) -->
+      <Transform rotation='1 0 0 1.5708' translation='-1.05 2.0 0'>
+        <Shape DEF='FrameCrossBar'>
+          <Appearance USE='BlackFrameApp'/>
+          <Cylinder height='0.8' radius='0.025'/>
+        </Shape>
+      </Transform>
+      <Transform rotation='1 0 0 1.5708' translation='1.05 2.0 0'>
+        <Shape USE='FrameCrossBar'/>
+      </Transform>
+    </Group>
+
+    <!-- Shared Pendulum Definition (2 Wires + 1 Steel Sphere) -->
+    <Transform DEF='PendulumAssembly'>
+      <!-- Wire 1 (Rear) -->
+      <Transform rotation='1 0 0 -0.245' translation='0 -0.8 -0.2'>
+        <Shape DEF='Wire'>
+          <Appearance DEF='WireApp'>
+            <PhysicalMaterial baseColor='0.7 0.7 0.75' metallic='0.9' roughness='0.3'/>
+          </Appearance>
+          <Cylinder height='1.649' radius='0.004'/>
+        </Shape>
+      </Transform>
+      <!-- Wire 2 (Front) -->
+      <Transform rotation='1 0 0 0.245' translation='0 -0.8 0.2'>
+        <Shape USE='Wire'/>
+      </Transform>
+      <!-- Polished Steel Ball -->
+      <Transform translation='0 -1.6 0'>
+        <Shape DEF='SteelBall'>
+          <Appearance DEF='SteelApp'>
+            <PhysicalMaterial baseColor='0.92 0.93 0.95' metallic='0.98' roughness='0.08'/>
+          </Appearance>
+          <Sphere radius='0.2'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Ball 1: Leftmost (Swings) -->
+    <Transform DEF='Ball1Pivot' translation='-0.8 2.0 0'>
+      <Transform USE='PendulumAssembly'/>
+    </Transform>
+
+    <!-- Ball 2: Stationary -->
+    <Transform translation='-0.4 2.0 0'>
+      <Transform USE='PendulumAssembly'/>
+    </Transform>
+
+    <!-- Ball 3: Center Stationary -->
+    <Transform translation='0.0 2.0 0'>
+      <Transform USE='PendulumAssembly'/>
+    </Transform>
+
+    <!-- Ball 4: Stationary -->
+    <Transform translation='0.4 2.0 0'>
+      <Transform USE='PendulumAssembly'/>
+    </Transform>
+
+    <!-- Ball 5: Rightmost (Swings) -->
+    <Transform DEF='Ball5Pivot' translation='0.8 2.0 0'>
+      <Transform USE='PendulumAssembly'/>
+    </Transform>
+
+    <!-- Animation Clocks and Interpolators -->
+    <TimeSensor DEF='CradleTimer' cycleInterval='1.6' loop='true'/>
+
+    <!-- Left Ball Swing Interpolator (eased out and in) -->
+    <OrientationInterpolator DEF='LeftSwingInterp'
+      key='0.0 0.05 0.10 0.15 0.20 0.25 0.75 0.80 0.85 0.90 0.95 1.0'
+      keyValue='
+        0 0 1 0.700,
+        0 0 1 0.665,
+        0 0 1 0.566,
+        0 0 1 0.411,
+        0 0 1 0.216,
+        0 0 1 0.000,
+        0 0 1 0.000,
+        0 0 1 0.216,
+        0 0 1 0.411,
+        0 0 1 0.566,
+        0 0 1 0.665,
+        0 0 1 0.700'/>
+
+    <!-- Right Ball Swing Interpolator (eased out and in) -->
+    <OrientationInterpolator DEF='RightSwingInterp'
+      key='0.0 0.25 0.30 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70 0.75 1.0'
+      keyValue='
+        0 0 1 0.000,
+        0 0 1 0.000,
+        0 0 1 -0.216,
+        0 0 1 -0.411,
+        0 0 1 -0.566,
+        0 0 1 -0.665,
+        0 0 1 -0.700,
+        0 0 1 -0.665,
+        0 0 1 -0.566,
+        0 0 1 -0.411,
+        0 0 1 -0.216,
+        0 0 1 0.000,
+        0 0 1 0.000'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='CradleTimer' toField='set_fraction' toNode='LeftSwingInterp'/>
+    <ROUTE fromField='value_changed' fromNode='LeftSwingInterp' toField='set_rotation' toNode='Ball1Pivot'/>
+    <ROUTE fromField='fraction_changed' fromNode='CradleTimer' toField='set_fraction' toNode='RightSwingInterp'/>
+    <ROUTE fromField='value_changed' fromNode='RightSwingInterp' toField='set_rotation' toNode='Ball5Pivot'/>
+  </Scene>
+</X3D>

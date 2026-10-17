@@ -1,0 +1,26 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='2' name='Geospatial'/>
+    <meta content='GeoLODStatue.x3d' name='title'/>
+    <meta content='GeoLOD switching between a detailed statue within 200m and a simplified box beyond 200m.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='GeoLOD Statue'/>
+    <Background groundColor='0.15 0.25 0.35' skyColor='0.4 0.65 0.95'/>
+    <DirectionalLight ambientIntensity='0.3' direction='-0.6 -0.8 -0.4'/>
+    <DirectionalLight ambientIntensity='0.1' direction='0.7 0.3 0.6' intensity='0.4'/>
+
+    <Viewpoint description='Close View (Statue)' position='0 25 70'/>
+    <Viewpoint description='Distant View (Box LOD)' position='0 60 300'/>
+    <GeoViewpoint description='Geo Viewpoint' geoSystem='"GD" "WE"' position='40.689247 -74.044502 250'/>
+
+    <GeoLocation geoCoords='40.689247 -74.044502 0' geoSystem='"GD" "WE"'>
+      <!-- Base plinth -->
+      <Transform translation='0 5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.5 0.48 0.45'/>
+          </Appearance>
+          <Box size='18 10 18'/>
+        </Shape>
+      </Transform>

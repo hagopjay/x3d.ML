@@ -1,0 +1,47 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='DraggableCone.x3d'/>
+    <meta name='description' content='A cone that can be dragged along the ground plane using a PlaneSensor.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Overview' position='0 6 12' orientation='1 0 0 -0.4'/>
+    <Background skyColor='0.6 0.8 1.0'/>
+    <DirectionalLight direction='-0.8 -1.0 -0.3' intensity='0.9' color='1 0.95 0.9'/>
+
+    <!-- Ground Plane Representation -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Box size='20 0.1 20'/>
+        <Appearance>
+          <Material diffuseColor='0.3 0.6 0.3' shininess='0.1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <!-- 
+      The PlaneSensor operates in the local Z=0 plane (XY plane).
+      To drag along the ground (global XZ plane), we rotate the coordinate system by -90 degrees around the X-axis.
+    -->
+    <Transform rotation='1 0 0 -1.570796'>
+      <PlaneSensor DEF='GroundDragSensor' description='Click and drag to move the cone'/>
+      
+      <Transform DEF='DraggableTransform'>
+        <!-- 
+          The local translation moves in the local XY plane, which is the global XZ plane.
+          We now rotate the cone back 90 degrees so it stands upright relative to the global Y-axis,
+          and translate it by half its height so the base sits perfectly on the ground.
+        -->
+        <Transform rotation='1 0 0 1.570796' translation='0 1 0'>
+          <Shape>
+            <Cone bottomRadius='1' height='2'/>
+            <Appearance>
+              <Material diffuseColor='0.9 0.2 0.1' specularColor='0.6 0.6 0.6' shininess='0.8'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <ROUTE fromNode='GroundDragSensor' fromField='translation_changed' toNode='DraggableTransform' toField='translation'/>
+  </Scene>
+</X3D>

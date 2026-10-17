@@ -1,0 +1,197 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Vermilion Torii in Shallow Water'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Vermilion Torii in Shallow Water'/>
+    <Background skyAngle='1.3 1.57' skyColor='0.19 0.30 0.43 0.66 0.62 0.57 0.94 0.72 0.48' groundColor='0.24 0.30 0.32'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Torii and stone lanterns at sunset' position='11 7.2 18' orientation='-0.315 0.941 0.123 0.566' fieldOfView='0.72'/>
+    <DirectionalLight direction='-0.85 -0.18 -0.42' color='1 0.74 0.46' intensity='1' ambientIntensity='0.24'/>
+    <DirectionalLight direction='0.3 -0.7 0.6' color='0.55 0.71 1' intensity='0.35'/>
+
+    <!-- A sandy bed visible through the shallow blue water. -->
+    <Transform translation='0 -0.25 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.42 0.33' roughness='0.9'/>
+        </Appearance>
+        <Box size='180 0.12 180'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 -0.015 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.14 0.46 0.62' specularColor='0.85 0.9 1' shininess='0.85' transparency='0.48'/>
+        </Appearance>
+        <Box size='180 0.03 180'/>
+      </Shape>
+    </Transform>
+
+    <!-- Main vermilion pillars. -->
+    <Transform translation='-2.35 2.8 0'>
+      <Shape>
+        <Appearance DEF='Vermilion'>
+          <Material diffuseColor='0.8 0.105 0.035' specularColor='0.38 0.16 0.09' shininess='0.38'/>
+        </Appearance>
+        <Cylinder radius='0.245' height='5.6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='2.35 2.8 0'>
+      <Shape>
+        <Appearance USE='Vermilion'/>
+        <Cylinder radius='0.245' height='5.6'/>
+      </Shape>
+    </Transform>
+
+    <!-- Dark protective sleeves at the waterline. -->
+    <Transform translation='-2.35 0.32 0'>
+      <Shape>
+        <Appearance DEF='Charcoal'>
+          <Material diffuseColor='0.055 0.065 0.063' specularColor='0.2 0.2 0.18' shininess='0.28'/>
+        </Appearance>
+        <Cylinder radius='0.27' height='0.72'/>
+      </Shape>
+    </Transform>
+    <Transform translation='2.35 0.32 0'>
+      <Shape>
+        <Appearance USE='Charcoal'/>
+        <Cylinder radius='0.27' height='0.72'/>
+      </Shape>
+    </Transform>
+
+    <!-- Crossbeam, upper beam, and central support. -->
+    <Transform translation='0 4.48 0'>
+      <Shape>
+        <Appearance USE='Vermilion'/>
+        <Box size='6.25 0.28 0.34'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 5.57 0'>
+      <Shape>
+        <Appearance USE='Vermilion'/>
+        <Box size='6.35 0.38 0.52'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 5.02 0'>
+      <Shape>
+        <Appearance USE='Vermilion'/>
+        <Box size='0.24 0.9 0.3'/>
+      </Shape>
+    </Transform>
+
+    <!-- Swept, upturned crown, with a dark protective cap. -->
+    <Shape>
+      <Appearance USE='Vermilion'/>
+      <IndexedFaceSet solid='false' creaseAngle='0.7' coordIndex='0 1 6 5 -1 1 2 7 6 -1 2 3 8 7 -1 3 4 9 8 -1 10 15 16 11 -1 11 16 17 12 -1 12 17 18 13 -1 13 18 19 14 -1 0 10 11 1 -1 1 11 12 2 -1 2 12 13 3 -1 3 13 14 4 -1 5 6 16 15 -1 6 7 17 16 -1 7 8 18 17 -1 8 9 19 18 -1 0 5 15 10 -1 4 14 19 9 -1'>
+        <Coordinate point='-3.6 6.15 0.32, -2.7 5.95 0.32, 0 5.84 0.32, 2.7 5.95 0.32, 3.6 6.15 0.32,
+                           -3.6 5.91 0.32, -2.7 5.71 0.32, 0 5.60 0.32, 2.7 5.71 0.32, 3.6 5.91 0.32,
+                           -3.6 6.15 -0.32, -2.7 5.95 -0.32, 0 5.84 -0.32, 2.7 5.95 -0.32, 3.6 6.15 -0.32,
+                           -3.6 5.91 -0.32, -2.7 5.71 -0.32, 0 5.60 -0.32, 2.7 5.71 -0.32, 3.6 5.91 -0.32'/>
+      </IndexedFaceSet>
+    </Shape>
+    <Shape>
+      <Appearance USE='Charcoal'/>
+      <IndexedFaceSet solid='false' creaseAngle='0.7' coordIndex='0 1 6 5 -1 1 2 7 6 -1 2 3 8 7 -1 3 4 9 8 -1 10 15 16 11 -1 11 16 17 12 -1 12 17 18 13 -1 13 18 19 14 -1 0 10 11 1 -1 1 11 12 2 -1 2 12 13 3 -1 3 13 14 4 -1 5 6 16 15 -1 6 7 17 16 -1 7 8 18 17 -1 8 9 19 18 -1 0 5 15 10 -1 4 14 19 9 -1'>
+        <Coordinate point='-3.7 6.26 0.39, -2.7 6.04 0.39, 0 5.93 0.39, 2.7 6.04 0.39, 3.7 6.26 0.39,
+                           -3.7 6.14 0.39, -2.7 5.92 0.39, 0 5.81 0.39, 2.7 5.92 0.39, 3.7 6.14 0.39,
+                           -3.7 6.26 -0.39, -2.7 6.04 -0.39, 0 5.93 -0.39, 2.7 6.04 -0.39, 3.7 6.26 -0.39,
+                           -3.7 6.14 -0.39, -2.7 5.92 -0.39, 0 5.81 -0.39, 2.7 5.92 -0.39, 3.7 6.14 -0.39'/>
+      </IndexedFaceSet>
+    </Shape>
+
+    <!-- Small framed dedication plaque. -->
+    <Transform translation='0 5.02 0.235'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.65 0.43 0.13' specularColor='0.6 0.4 0.15' shininess='0.6'/>
+        </Appearance>
+        <Box size='0.56 0.76 0.08'/>
+      </Shape>
+      <Transform translation='0 0 0.048'>
+        <Shape>
+          <Appearance USE='Charcoal'/>
+          <Box size='0.44 0.64 0.025'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Matching stone lanterns standing in the shallows. -->
+    <Transform translation='-4.35 0 0.5'>
+      <Group DEF='StoneLantern'>
+        <Transform translation='0 0.09 0'>
+          <Shape>
+            <Appearance DEF='Stone'>
+              <Material diffuseColor='0.43 0.46 0.43' specularColor='0.12 0.13 0.12' shininess='0.08'/>
+            </Appearance>
+            <Box size='1.15 0.24 1.15'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 0.31 0'>
+          <Shape>
+            <Appearance USE='Stone'/>
+            <Cylinder radius='0.43' height='0.22'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 0.85 0'>
+          <Shape>
+            <Appearance USE='Stone'/>
+            <Cylinder radius='0.19' height='0.9'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 1.34 0'>
+          <Shape>
+            <Appearance USE='Stone'/>
+            <Box size='0.82 0.18 0.82'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 1.72 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.92 0.61 0.23' emissiveColor='0.55 0.25 0.055' transparency='0.2'/>
+            </Appearance>
+            <Box size='0.39 0.46 0.39'/>
+          </Shape>
+        </Transform>
+        <Transform translation='-0.27 1.72 -0.27'>
+          <Shape DEF='LanternPost'>
+            <Appearance USE='Stone'/>
+            <Box size='0.12 0.62 0.12'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0.27 1.72 -0.27'>
+          <Shape USE='LanternPost'/>
+        </Transform>
+        <Transform translation='-0.27 1.72 0.27'>
+          <Shape USE='LanternPost'/>
+        </Transform>
+        <Transform translation='0.27 1.72 0.27'>
+          <Shape USE='LanternPost'/>
+        </Transform>
+        <Transform translation='0 2.04 0'>
+          <Shape>
+            <Appearance USE='Stone'/>
+            <Box size='1.04 0.14 1.04'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 2.23 0'>
+          <Shape>
+            <Appearance USE='Stone'/>
+            <IndexedFaceSet coordIndex='0 3 2 1 -1 0 1 4 -1 1 2 4 -1 2 3 4 -1 3 0 4 -1'>
+              <Coordinate point='-0.57 -0.13 0.57, 0.57 -0.13 0.57, 0.57 -0.13 -0.57, -0.57 -0.13 -0.57, 0 0.22 0'/>
+            </IndexedFaceSet>
+          </Shape>
+        </Transform>
+        <Transform translation='0 2.5 0'>
+          <Shape>
+            <Appearance USE='Stone'/>
+            <Sphere radius='0.115'/>
+          </Shape>
+        </Transform>
+      </Group>
+    </Transform>
+    <Transform translation='4.35 0 0.5'>
+      <Group USE='StoneLantern'/>
+    </Transform>
+  </Scene>
+</X3D>

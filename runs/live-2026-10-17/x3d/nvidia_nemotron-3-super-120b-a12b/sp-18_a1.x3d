@@ -1,0 +1,123 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+  <Background skyColor='0.6 0.8 1.0' groundColor='0.2 0.2 0.2'/>
+  <!-- Tank -->
+  <Transform>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial transparency='0.2' diffuseColor='0.8 0.9 1.0'/>
+      </Appearance>
+      <Box size='20 20 20'/>
+    </Shape>
+  </Transform>
+  <!-- Sand floor -->
+  <Transform translation='0 -9.5 0'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0.8 0.7 0.5'/>
+      </Appearance>
+      <Box size='20 0.5 20'/>
+    </Shape>
+  </Transform>
+  <!-- Fish 1 -->
+  <Transform DEF='Fish1' translation='4 -5 0'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='1 0.5 0'/>
+      </Appearance>
+      <Cone bottomRadius='0.2' height='1'/>
+    </Shape>
+  </Transform>
+  <TimeSensor DEF='Fish1_Timer' cycleInterval='6' loop='true'/>
+  <OrientationInterpolator DEF='Fish1_Ori' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586'/>
+  <ROUTE fromField='f_changed' fromNode='Fish1_Timer' toField='set_fraction' toNode='Fish1_Ori'/>
+  <ROUTE fromField='value_changed' fromNode='Fish1_Ori' toField='rotation' toNode='Fish1'/>
+  <!-- Fish 2 -->
+  <Transform DEF='Fish2' translation='5 0 0'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='1 0.5 0'/>
+      </Appearance>
+      <Cone bottomRadius='0.2' height='1'/>
+    </Shape>
+  </Transform>
+  <TimeSensor DEF='Fish2_Timer' cycleInterval='8' loop='true'/>
+  <OrientationInterpolator DEF='Fish2_Ori' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586'/>
+  <ROUTE fromField='f_changed' fromNode='Fish2_Timer' toField='set_fraction' toNode='Fish2_Ori'/>
+  <ROUTE fromField='value_changed' fromNode='Fish2_Ori' toField='rotation' toNode='Fish2'/>
+  <!-- Fish 3 -->
+  <Transform DEF='Fish3' translation='3 -2 0'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='1 0.5 0'/>
+      </Appearance>
+      <Cone bottomRadius='0.2' height='1'/>
+    </Shape>
+  </Transform>
+  <TimeSensor DEF='Fish3_Timer' cycleInterval='5' loop='true'/>
+  <OrientationInterpolator DEF='Fish3_Ori' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586'/>
+  <ROUTE fromField='f_changed' fromNode='Fish3_Timer' toField='set_fraction' toNode='Fish3_Ori'/>
+  <ROUTE fromField='value_changed' fromNode='Fish3_Ori' toField='rotation' toNode='Fish3'/>
+  <!-- Fish 4 -->
+  <Transform DEF='Fish4' translation='6 1 0'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='1 0.5 0'/>
+      </Appearance>
+      <Cone bottomRadius='0.2' height='1'/>
+    </Shape>
+  </Transform>
+  <TimeSensor DEF='Fish4_Timer' cycleInterval='7' loop='true'/>
+  <OrientationInterpolator DEF='Fish4_Ori' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586'/>
+  <ROUTE fromField='f_changed' fromNode='Fish4_Timer' toField='set_fraction' toNode='Fish4_Ori'/>
+  <ROUTE fromField='value_changed' fromNode='Fish4_Ori' toField='rotation' toNode='Fish4'/>
+  <!-- Fish 5 -->
+  <Transform DEF='Fish5' translation='4.5 -1 0'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='1 0.5 0'/>
+      </Appearance>
+      <Cone bottomRadius='0.2' height='1'/>
+    </Shape>
+  </Transform>
+  <TimeSensor DEF='Fish5_Timer' cycleInterval='9' loop='true'/>
+  <OrientationInterpolator DEF='Fish5_Ori' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586'/>
+  <ROUTE fromField='f_changed' fromNode='Fish5_Timer' toField='set_fraction' toNode='Fish5_Ori'/>
+  <ROUTE fromField='value_changed' fromNode='Fish5_Ori' toField='rotation' toNode='Fish5'/>
+  <!-- Plants -->
+  <Transform translation='-8 -9.25 -8'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0 0.8 0'/>
+      </Appearance>
+      <Cylinder radius='0.2' height='2'/>
+    </Shape>
+  </Transform>
+  <Transform translation='8 -9.25 -8'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0 0.8 0'/>
+      </Appearance>
+      <Cylinder radius='0.2' height='2'/>
+    </Shape>
+  </Transform>
+  <Transform translation='-8 -9.25 8'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0 0.8 0'/>
+      </Appearance>
+      <Cylinder radius='0.2' height='2'/>
+    </Shape>
+  </Transform>
+  <Transform translation='8 -9.25 8'>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0 0.8 0'/>
+      </Appearance>
+      <Cylinder radius='0.2' height='2'/>
+    </Shape>
+  </Transform>
+  <!-- Viewpoint -->
+  <Viewpoint description='Aquarium view' position='0 5 15'/>
+</Scene>
+</X3D>

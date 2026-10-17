@@ -1,0 +1,68 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='SolarSystem.x3d'/>
+    <meta name='description' content='A solar system with the Sun and three planets at different distances.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Solar System View' position='0 12 30' orientation='1 0 0 -0.35'/>
+    <Background skyColor='0.02 0.02 0.05'/>
+    <PointLight location='0 0 0' intensity='1.5' radius='100'/>
+    
+    <Transform>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial emissiveColor='1 0.85 0.1'/>
+        </Appearance>
+        <Sphere radius='2.5'/>
+      </Shape>
+    </Transform>
+    
+    <Transform DEF='Planet1Orbit'>
+      <Transform translation='5 0 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.6 0.5 0.5' metallic='0.1' roughness='0.9'/>
+          </Appearance>
+          <Sphere radius='0.4'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    
+    <Transform DEF='Planet2Orbit'>
+      <Transform translation='8 0 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.2 0.5 0.8' metallic='0.3' roughness='0.6'/>
+          </Appearance>
+          <Sphere radius='0.7'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    
+    <Transform DEF='Planet3Orbit'>
+      <Transform translation='11.5 0 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.9 0.4 0.2' metallic='0.5' roughness='0.8'/>
+          </Appearance>
+          <Sphere radius='0.5'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    
+    <TimeSensor DEF='Timer1' cycleInterval='2.5' loop='true'/>
+    <OrientationInterpolator DEF='Rot1' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <ROUTE fromNode='Timer1' fromField='fraction_changed' toNode='Rot1' toField='set_fraction'/>
+    <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Planet1Orbit' toField='rotation'/>
+    
+    <TimeSensor DEF='Timer2' cycleInterval='6' loop='true'/>
+    <OrientationInterpolator DEF='Rot2' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <ROUTE fromNode='Timer2' fromField='fraction_changed' toNode='Rot2' toField='set_fraction'/>
+    <ROUTE fromNode='Rot2' fromField='value_changed' toNode='Planet2Orbit' toField='rotation'/>
+    
+    <TimeSensor DEF='Timer3' cycleInterval='11' loop='true'/>
+    <OrientationInterpolator DEF='Rot3' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <ROUTE fromNode='Timer3' fromField='fraction_changed' toNode='Rot3' toField='set_fraction'/>
+    <ROUTE fromNode='Rot3' fromField='value_changed' toNode='Planet3Orbit' toField='rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,283 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='carousel.x3d'/>
+    <meta name='description' content='A classic rotating carousel with conical canopy and eight alternating horses.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Carousel'/>
+    
+    <Viewpoint description='Carousel Overview' position='0 3.5 12.5' orientation='1 0 0 -0.08'/>
+    <Viewpoint description='Rider View' position='0 2 6' orientation='1 0 0 0'/>
+    <Viewpoint description='High Angle' position='0 8 11' orientation='1 0 0 -0.55'/>
+
+    <Background skyColor='0.08 0.1 0.18 0.15 0.2 0.35 0.35 0.45 0.6' groundColor='0.15 0.15 0.15 0.2 0.22 0.25' groundAngle='1.57' skyAngle='1.2 1.57'/>
+
+    <DirectionalLight direction='-0.6 -0.8 -0.4' intensity='0.8' color='1 0.95 0.85'/>
+    <DirectionalLight direction='0.6 0.4 0.5' intensity='0.3' color='0.5 0.6 0.8'/>
+    <PointLight location='0 2.5 0' intensity='1.2' color='1 0.85 0.5' radius='8'/>
+
+    <!-- Ground Pavings -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.25 0.28'/>
+        </Appearance>
+        <Cylinder radius='7.5' height='0.1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Rotating Carousel Assembly -->
+    <Transform DEF='Carousel'>
+      <!-- Stationary Carousel Base Rim -->
+      <Transform translation='0 0.075 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.6 0.5 0.2' specularColor='0.5 0.4 0.2' shininess='0.5'/>
+          </Appearance>
+          <Cylinder radius='4.8' height='0.15'/>
+        </Shape>
+      </Transform>
+
+      <!-- Main Deck Platform -->
+      <Transform translation='0 0.225 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.45 0.12 0.15'/>
+          </Appearance>
+          <Cylinder radius='4.5' height='0.15'/>
+        </Shape>
+      </Transform>
+
+      <!-- Central Column -->
+      <Transform translation='0 1.75 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.75 0.3' specularColor='0.7 0.6 0.2' shininess='0.6'/>
+          </Appearance>
+          <Cylinder radius='0.8' height='2.9'/>
+        </Shape>
+        <!-- Center Mirror / Decorative Rings -->
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.2 0.25'/>
+          </Appearance>
+          <Cylinder radius='0.85' height='0.3'/>
+        </Shape>
+      </Transform>
+
+      <!-- Canopy Roof Support Eaves -->
+      <Transform translation='0 3.2 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.7 0.2' specularColor='0.6 0.5 0.2' shininess='0.5'/>
+          </Appearance>
+          <Cylinder radius='4.8' height='0.2'/>
+        </Shape>
+      </Transform>
+
+      <!-- Conical Roof -->
+      <Transform translation='0 4.1 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.15 0.2' specularColor='0.3 0.3 0.3' shininess='0.4'/>
+          </Appearance>
+          <Cone bottomRadius='4.8' height='1.6'/>
+        </Shape>
+      </Transform>
+
+      <!-- Center Spire &amp; Ball Ornament -->
+      <Transform translation='0 5.15 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.95 0.8 0.2' specularColor='0.9 0.8 0.3' shininess='0.8'/>
+          </Appearance>
+          <Sphere radius='0.35'/>
+        </Shape>
+        <Transform translation='0 0.5 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.95 0.8 0.2' specularColor='0.9 0.8 0.3' shininess='0.8'/>
+            </Appearance>
+            <Cone bottomRadius='0.15' height='0.7'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Prototype Brass Pole -->
+      <Transform DEF='PoleTemplate' translation='0 1.75 0'>
+        <Shape DEF='PoleShape'>
+          <Appearance>
+            <Material diffuseColor='0.9 0.75 0.25' specularColor='0.9 0.8 0.3' shininess='0.8'/>
+          </Appearance>
+          <Cylinder radius='0.045' height='2.9'/>
+        </Shape>
+      </Transform>
+
+      <!-- Prototype Horse -->
+      <Transform DEF='HorseModel'>
+        <!-- Main Torso -->
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.92 0.9 0.88'/>
+          </Appearance>
+          <Box size='0.36 0.36 0.85'/>
+        </Shape>
+        <!-- Saddle -->
+        <Transform translation='0 0.12 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.85 0.15 0.2'/>
+            </Appearance>
+            <Box size='0.38 0.18 0.38'/>
+          </Shape>
+          <Transform translation='0 0.05 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.95 0.8 0.2' specularColor='0.8 0.7 0.2' shininess='0.6'/>
+              </Appearance>
+              <Box size='0.4 0.06 0.2'/>
+            </Shape>
+          </Transform>
+        </Transform>
+        <!-- Neck and Head -->
+        <Transform translation='0 0.3 0.32' rotation='1 0 0 0.35'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.92 0.9 0.88'/>
+            </Appearance>
+            <Box size='0.22 0.42 0.25'/>
+          </Shape>
+          <!-- Head / Muzzle -->
+          <Transform translation='0 0.22 0.12' rotation='1 0 0 -0.5'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.92 0.9 0.88'/>
+              </Appearance>
+              <Box size='0.22 0.2 0.36'/>
+            </Shape>
+            <!-- Mane Detail -->
+            <Transform translation='0 0.1 -0.15'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.85 0.65 0.2'/>
+                </Appearance>
+                <Box size='0.08 0.2 0.25'/>
+              </Shape>
+            </Transform>
+          </Transform>
+        </Transform>
+        <!-- Legs (Cylinders) -->
+        <Transform translation='0.12 -0.32 0.28' rotation='1 0 0 0.2'>
+          <Shape DEF='HorseLeg'>
+            <Appearance>
+              <Material diffuseColor='0.92 0.9 0.88'/>
+            </Appearance>
+            <Cylinder radius='0.04' height='0.4'/>
+          </Shape>
+        </Transform>
+        <Transform translation='-0.12 -0.32 0.28' rotation='1 0 0 0.2'>
+          <Shape USE='HorseLeg'/>
+        </Transform>
+        <Transform translation='0.12 -0.32 -0.28' rotation='1 0 0 -0.2'>
+          <Shape USE='HorseLeg'/>
+        </Transform>
+        <Transform translation='-0.12 -0.32 -0.28' rotation='1 0 0 -0.2'>
+          <Shape USE='HorseLeg'/>
+        </Transform>
+      </Transform>
+
+      <!-- 8 Horse Positions Around Carousel Circle (Radius = 3.1) -->
+      <!-- Horse 0: 0 deg -->
+      <Transform translation='0 0 3.1' rotation='0 1 0 1.5708'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove0'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 1: 45 deg -->
+      <Transform translation='2.192 0 2.192' rotation='0 1 0 2.3562'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove1'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 2: 90 deg -->
+      <Transform translation='3.1 0 0' rotation='0 1 0 3.1416'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove2'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 3: 135 deg -->
+      <Transform translation='2.192 0 -2.192' rotation='0 1 0 3.9270'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove3'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 4: 180 deg -->
+      <Transform translation='0 0 -3.1' rotation='0 1 0 4.7124'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove4'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 5: 225 deg -->
+      <Transform translation='-2.192 0 -2.192' rotation='0 1 0 5.4978'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove5'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 6: 270 deg -->
+      <Transform translation='-3.1 0 0' rotation='0 1 0 0'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove6'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+
+      <!-- Horse 7: 315 deg -->
+      <Transform translation='-2.192 0 2.192' rotation='0 1 0 0.7854'>
+        <Transform USE='PoleTemplate'/>
+        <Transform DEF='HorseMove7'>
+          <Transform USE='HorseModel'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Animation Timers and Interpolators -->
+    <!-- Carousel Full Rotation (10 seconds) -->
+    <TimeSensor DEF='RotationTimer' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='CarouselRotator' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+
+    <!-- Alternating Horse Vertical Bobbing (2.5 second period) -->
+    <TimeSensor DEF='BobTimer' cycleInterval='2.5' loop='true'/>
+    <PositionInterpolator DEF='BobInterpA' key='0 0.25 0.5 0.75 1' keyValue='0 1.05 0, 0 1.35 0, 0 1.65 0, 0 1.35 0, 0 1.05 0'/>
+    <PositionInterpolator DEF='BobInterpB' key='0 0.25 0.5 0.75 1' keyValue='0 1.65 0, 0 1.35 0, 0 1.05 0, 0 1.35 0, 0 1.65 0'/>
+
+    <!-- Routing Rotation -->
+    <ROUTE fromNode='RotationTimer' fromField='fraction_changed' toNode='CarouselRotator' toField='set_fraction'/>
+    <ROUTE fromNode='CarouselRotator' fromField='value_changed' toNode='Carousel' toField='set_rotation'/>
+
+    <!-- Routing Bobbing to Even Horses (Group A) -->
+    <ROUTE fromNode='BobTimer' fromField='fraction_changed' toNode='BobInterpA' toField='set_fraction'/>
+    <ROUTE fromNode='BobInterpA' fromField='value_changed' toNode='HorseMove0' toField='set_translation'/>
+    <ROUTE fromNode='BobInterpA' fromField='value_changed' toNode='HorseMove2' toField='set_translation'/>
+    <ROUTE fromNode='BobInterpA' fromField='value_changed' toNode='HorseMove4' toField='set_translation'/>
+    <ROUTE fromNode='BobInterpA' fromField='value_changed' toNode='HorseMove6' toField='set_translation'/>
+
+    <!-- Routing Bobbing to Odd Horses (Group B) -->
+    <ROUTE fromNode='BobTimer' fromField='fraction_changed' toNode='BobInterpB' toField='set_fraction'/>
+    <ROUTE fromNode='BobInterpB' fromField='value_changed' toNode='HorseMove1' toField='set_translation'/>
+    <ROUTE fromNode='BobInterpB' fromField='value_changed' toNode='HorseMove3' toField='set_translation'/>
+    <ROUTE fromNode='BobInterpB' fromField='value_changed' toNode='HorseMove5' toField='set_translation'/>
+    <ROUTE fromNode='BobInterpB' fromField='value_changed' toNode='HorseMove7' toField='set_translation'/>
+  </Scene>
+</X3D>

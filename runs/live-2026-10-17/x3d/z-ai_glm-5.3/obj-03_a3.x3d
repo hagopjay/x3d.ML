@@ -1,0 +1,42 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Traffic Cone'/>
+    <meta name='description' content='An orange traffic cone, 0.7 metres tall, on a black square base with a white band.'/>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Traffic cone' position='0 0.45 1.6' centerOfRotation='0 0.35 0'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <DirectionalLight direction='-0.4 -1 -0.6' intensity='0.9'/>
+    <!-- Black square base: 0.35 m square, 0.05 m thick -->
+    <Transform translation='0 0.025 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.05 0.05 0.05' roughness='0.9'/>
+        </Appearance>
+        <Box size='0.35 0.05 0.35'/>
+      </Shape>
+    </Transform>
+    <!-- Orange cone body: 0.65 m tall, sits on the base, apex at 0.70 m -->
+    <Transform translation='0 0.375 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='1 0.42 0.02' roughness='0.55'/>
+        </Appearance>
+        <Cone bottomRadius='0.14' height='0.65'/>
+      </Shape>
+    </Transform>
+    <!-- White reflective band following the cone slope -->
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial baseColor='0.95 0.95 0.95' roughness='0.35'/>
+      </Appearance>
+      <Extrusion
+        crossSection='1 0 0.9239 0.3827 0.7071 0.7071 0.3827 0.9239 0 1 -0.3827 0.9239 -0.7071 0.7071 -0.9239 0.3827 -1 0 -0.9239 -0.3827 -0.7071 -0.7071 -0.3827 -0.9239 0 -1 0.3827 -0.9239 0.7071 -0.7071 0.9239 -0.3827'
+        spine='0 0.315 0 0 0.435 0'
+        scale='0.086 0.086 0.06 0.06'
+        creaseAngle='1.57'
+        solid='false'/>
+    </Shape>
+  </Scene>
+</X3D>

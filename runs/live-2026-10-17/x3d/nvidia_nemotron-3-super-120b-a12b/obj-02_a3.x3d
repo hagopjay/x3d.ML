@@ -1,0 +1,69 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+<component name='Shape' level='2'/>
+</head>
+<Scene>
+<Group>
+<!-- Table top -->
+<Transform translation='0 0.5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Box size='2 0.1 1'/>
+</Shape>
+</Transform>
+
+<!-- Leg definitions (each unique DEF) -->
+<DEF name='Leg1'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Cylinder radius='0.05' height='0.45'/>
+</Shape>
+</DEF>
+<DEF name='Leg2'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Cylinder radius='0.05' height='0.45'/>
+</Shape>
+</DEF>
+<DEF name='Leg3'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Cylinder radius='0.05' height='0.45'/>
+</Shape>
+</DEF>
+<DEF name='Leg4'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.4 0.2'/>
+</Appearance>
+<Cylinder radius='0.05' height='0.45'/>
+</Shape>
+</DEF>
+
+<!-- Four legs positioned at corners -->
+<Transform translation='-0.95 0.225 -0.45'>
+<USE DEF='Leg1'/>
+</Transform>
+<Transform translation='0.95 0.225 -0.45'>
+<USE DEF='Leg2'/>
+</Transform>
+<Transform translation='-0.95 0.225 0.45'>
+<USE DEF='Leg3'/>
+</Transform>
+<Transform translation='0.95 0.225 0.45'>
+<USE DEF='Leg4'/>
+</Transform>
+
+<Viewpoint description='View of wooden table' position='0 1.5 3' orientation='0 1 0 -0.3'/>
+<NavigationInfo type='"EXAMINE" "ANY"'/>
+</Group>
+</Scene>
+</X3D>

@@ -1,0 +1,47 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Draggable Cone'/>
+    <meta name='description' content='Drag the cone to move it across the ground plane.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Draggable Cone'/>
+    <Background skyColor='0.12 0.17 0.24'/>
+    <Viewpoint description='Drag the cone along the ground' position='8 7 11' orientation='-0.632 0.746 0.209 0.797'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='true'/>
+    <DirectionalLight direction='-1 -2 -1' intensity='0.85'/>
+
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.28 0.36 0.32'/>
+        </Appearance>
+        <Box size='12 0.2 12'/>
+      </Shape>
+    </Transform>
+
+    <!-- Rotate the sensor's local XY plane onto the world's XZ ground plane. -->
+    <Transform rotation='1 0 0 -1.570796327'>
+      <PlaneSensor DEF='GroundDrag'
+                   description='Drag the cone across the ground'
+                   minPosition='-5 -5'
+                   maxPosition='5 5'
+                   autoOffset='true'/>
+      <Transform DEF='ConePosition'>
+        <!-- Keep the cone upright and its base resting on the ground. -->
+        <Transform translation='0 0 1' rotation='1 0 0 1.570796327'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.95 0.35 0.08'
+                        specularColor='0.5 0.5 0.5'
+                        shininess='0.45'/>
+            </Appearance>
+            <Cone bottomRadius='0.75' height='2'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <ROUTE fromNode='GroundDrag' fromField='translation_changed'
+           toNode='ConePosition' toField='set_translation'/>
+  </Scene>
+</X3D>
