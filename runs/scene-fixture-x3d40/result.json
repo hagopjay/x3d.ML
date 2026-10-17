@@ -1,0 +1,92 @@
+{
+ "input": "scene-fixture-x3d40.x3d",
+ "final_verify": {
+  "ok": true,
+  "status": "verified",
+  "steps": 6,
+  "problems": []
+ },
+ "steps": [
+  {
+   "agent": "hand-or-cached",
+   "input_sha256": "052212d90beb1d3ce83ff62e82423df2f63c1f0fd03055080bec28670c3251b2",
+   "op": "ingest",
+   "origin": "scene-fixture-x3d40.x3d",
+   "output_sha256": "052212d90beb1d3ce83ff62e82423df2f63c1f0fd03055080bec28670c3251b2",
+   "prev": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "input_sha256": "052212d90beb1d3ce83ff62e82423df2f63c1f0fd03055080bec28670c3251b2",
+   "ms": 1853,
+   "op": "validate",
+   "output_sha256": "052212d90beb1d3ce83ff62e82423df2f63c1f0fd03055080bec28670c3251b2",
+   "prev": "3ae9d528e301651654040e53bb9921ac1c03d42dcf7853559bf2fca3d2482205",
+   "semantic_error_codes": [
+    "profile-component"
+   ],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "invalid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  },
+  {
+   "agent": "autofix:add-missing-component-lines",
+   "fixes": [
+    "profile-component"
+   ],
+   "input_sha256": "052212d90beb1d3ce83ff62e82423df2f63c1f0fd03055080bec28670c3251b2",
+   "kind": "deterministic",
+   "model": null,
+   "op": "repair",
+   "output_sha256": "c43ca99f30c5a7bf7bdab312bf4c43d9aa18decfe789238a75ff23c5f9612679",
+   "prev": "67813d7aeb3c987f0cc9f2ee4dcc4780c32f8860f91f13db12fb986b6e7c2af6",
+   "report_shown": true
+  },
+  {
+   "input_sha256": "c43ca99f30c5a7bf7bdab312bf4c43d9aa18decfe789238a75ff23c5f9612679",
+   "ms": 6,
+   "op": "validate",
+   "output_sha256": "c43ca99f30c5a7bf7bdab312bf4c43d9aa18decfe789238a75ff23c5f9612679",
+   "prev": "e3686e2c8c7c46ef75a60395741c62c1596b312f1e3aba98673fc9297399ee91",
+   "semantic_error_codes": [],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "valid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  },
+  {
+   "agent": "x3d-blender-io",
+   "agent_ref": "206f139",
+   "detail": "import_scene.x3d -> export_scene.x3d X3D40",
+   "input_sha256": "c43ca99f30c5a7bf7bdab312bf4c43d9aa18decfe789238a75ff23c5f9612679",
+   "op": "transform",
+   "output_sha256": "de57f83dbf27a259e9bf18438958e7753185181100f190abee0f791437a88569",
+   "prev": "4de5224bbcb943e26552971482a06f2b2c69b58c44cfaf0791e947bef5e7faf8",
+   "record_survived_in_tool_output": 4,
+   "tool": "blender 5.2.2 (bpy wheel)"
+  },
+  {
+   "input_sha256": "de57f83dbf27a259e9bf18438958e7753185181100f190abee0f791437a88569",
+   "ms": 6,
+   "op": "validate",
+   "output_sha256": "de57f83dbf27a259e9bf18438958e7753185181100f190abee0f791437a88569",
+   "prev": "af8d137356dca565266998c72500125cb6efb494898b8f1cc9cc1f2750183895",
+   "semantic_error_codes": [],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "valid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  }
+ ],
+ "blender_kept_meta_steps": 4,
+ "tamper": {
+  "content edited after last step": "stale",
+  "step 2 deleted": "broken-chain",
+  "interior step verdict flipped": "broken-chain",
+  "LAST step verdict flipped (no successor, unsigned)": "verified",
+  "pristine": "verified"
+ }
+}

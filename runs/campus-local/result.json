@@ -1,0 +1,66 @@
+{
+ "bytes_in": 16778886,
+ "bytes_out": 52595392,
+ "input": "campus-local.x3d",
+ "final_verify": {
+  "ok": true,
+  "status": "verified",
+  "steps": 4,
+  "problems": []
+ },
+ "steps": [
+  {
+   "agent": "hand-or-cached",
+   "input_sha256": "d4852e2831ddf0e3d8c50650f96564028bdcbc30bbb314e4e528f0e67b6d235a",
+   "op": "ingest",
+   "origin": "campus-local.x3d",
+   "output_sha256": "d4852e2831ddf0e3d8c50650f96564028bdcbc30bbb314e4e528f0e67b6d235a",
+   "prev": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "input_sha256": "d4852e2831ddf0e3d8c50650f96564028bdcbc30bbb314e4e528f0e67b6d235a",
+   "ms": 2751,
+   "op": "validate",
+   "output_sha256": "d4852e2831ddf0e3d8c50650f96564028bdcbc30bbb314e4e528f0e67b6d235a",
+   "prev": "4d0a24f56b949132fe00a4afc534f2c1bbac1a0381721c1856dca32b6f778121",
+   "semantic_error_codes": [],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "valid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  },
+  {
+   "agent": "x3d-blender-io",
+   "agent_ref": "206f139",
+   "detail": "import_scene.x3d -> export_scene.x3d X3D40",
+   "input_sha256": "d4852e2831ddf0e3d8c50650f96564028bdcbc30bbb314e4e528f0e67b6d235a",
+   "op": "transform",
+   "output_sha256": "c8b7858fd07f0f8fd025d91289356914072af8e74318cd888fb32cdaed1d5acd",
+   "prev": "44a3de5473fdfe6f7af858d31a8935494a825ea197a98368050dc1d003ad37c1",
+   "record_survived_in_tool_output": 2,
+   "tool": "blender 5.2.2 (bpy wheel)"
+  },
+  {
+   "input_sha256": "c8b7858fd07f0f8fd025d91289356914072af8e74318cd888fb32cdaed1d5acd",
+   "ms": 4681,
+   "op": "validate",
+   "output_sha256": "c8b7858fd07f0f8fd025d91289356914072af8e74318cd888fb32cdaed1d5acd",
+   "prev": "c6fb9684eb58a9c2f0ba59e537a2d2b59197058c14121893fe837da364c77738",
+   "semantic_error_codes": [],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "valid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  }
+ ],
+ "blender_kept_meta_steps": 2,
+ "tamper": {
+  "content edited after last step": "stale",
+  "step 2 deleted": "broken-chain",
+  "interior step verdict flipped": "broken-chain",
+  "LAST step verdict flipped (no successor, unsigned)": "verified",
+  "pristine": "verified"
+ }
+}
