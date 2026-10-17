@@ -1,0 +1,401 @@
+<title>Tether Firehose</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* layout concept: one instrument wall. KPI strip on top, firehose + chain inspector in the middle, four small-multiples below. Dark-first, single accent per meaning. */
+:root{
+  color-scheme:dark;
+  --bg:#0a0e13; --panel:#111821; --panel2:#0d131a; --line:#212d3b; --fg:#d5e1ee; --mute:#7a8ea3; --dim:#4c5d70;
+  --ok:#52d38a; --warn:#f0b84a; --bad:#ff5c75; --info:#8f86ff; --acc:#38c8d4;
+  --okbg:#52d38a1f; --warnbg:#f0b84a22; --badbg:#ff5c7524; --infobg:#8f86ff22; --accbg:#38c8d41f;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace; --sans:'IBM Plex Sans',system-ui,sans-serif; --disp:'Barlow Condensed','Arial Narrow',sans-serif;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  color-scheme:light; --bg:#eef2f6; --panel:#fff; --panel2:#f5f8fb; --line:#d3dce6; --fg:#15202b; --mute:#566a7e; --dim:#8a9bad;
+  --ok:#0f8a4b; --warn:#a56a00; --bad:#c4223c; --info:#5a4fd6; --acc:#0a7f89;
+  --okbg:#0f8a4b16; --warnbg:#a56a0018; --badbg:#c4223c16; --infobg:#5a4fd616; --accbg:#0a7f8916}}
+:root[data-theme="light"]{
+  color-scheme:light; --bg:#eef2f6; --panel:#fff; --panel2:#f5f8fb; --line:#d3dce6; --fg:#15202b; --mute:#566a7e; --dim:#8a9bad;
+  --ok:#0f8a4b; --warn:#a56a00; --bad:#c4223c; --info:#5a4fd6; --acc:#0a7f89;
+  --okbg:#0f8a4b16; --warnbg:#a56a0018; --badbg:#c4223c16; --infobg:#5a4fd616; --accbg:#0a7f8916}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:13px/1.45 var(--sans);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;font-family:var(--disp);letter-spacing:.04em;text-transform:uppercase}
+h2{font-size:15px;color:var(--mute);font-weight:600}
+code,.m{font-family:var(--mono)}
+.wrap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+header{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.title h1{font-size:34px;line-height:1;font-weight:700}
+.title p{margin:2px 0 0;color:var(--mute);max-width:70ch}
+.sim{font:600 11px var(--mono);color:var(--warn);background:var(--warnbg);border:1px solid var(--warn);padding:3px 8px;border-radius:3px;letter-spacing:.06em}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+button,select{font:500 12px var(--sans);background:var(--panel);color:var(--fg);border:1px solid var(--line);padding:6px 10px;border-radius:4px;cursor:pointer}
+button:hover{border-color:var(--acc)} button:focus-visible,select:focus-visible,input:focus-visible,tr:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+button.on{background:var(--accbg);border-color:var(--acc);color:var(--acc)}
+button.bad{border-color:var(--bad);color:var(--bad)} button.bad:hover{background:var(--badbg)}
+button.warn{border-color:var(--warn);color:var(--warn)} button.warn:hover{background:var(--warnbg)}
+label{color:var(--mute);font-size:12px;display:flex;gap:6px;align-items:center}
+input[type=range]{accent-color:var(--acc);width:110px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:8px 10px;min-width:0}
+.kpi .l{font:600 10px var(--mono);color:var(--mute);letter-spacing:.07em;text-transform:uppercase}
+.kpi .v{font:600 22px/1.15 var(--mono);overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap}
+.kpi .s{font:400 10.5px var(--mono);color:var(--dim);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi.ok .v{color:var(--ok)} .kpi.warn .v{color:var(--warn)} .kpi.bad .v{color:var(--bad)} .kpi.acc .v{color:var(--acc)}
+.mid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:10px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.card header{align-items:baseline}
+.card .sub{color:var(--dim);font:400 10.5px var(--mono)}
+.scroll{overflow:auto;max-height:430px;border:1px solid var(--line);border-radius:3px;background:var(--panel2)}
+table{border-collapse:collapse;width:100%;font:11.5px var(--mono);font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;background:var(--panel);color:var(--mute);font-weight:500;text-align:left;padding:4px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:2.5px 7px;border-bottom:1px solid #0000;white-space:nowrap}
+tbody tr{cursor:pointer} tbody tr:hover{background:var(--accbg)} tr.sel{background:var(--accbg);outline:1px solid var(--acc)}
+.pill{display:inline-block;padding:0 6px;border-radius:2px;font:600 10px/16px var(--mono);letter-spacing:.04em}
+.p-ok{color:var(--ok);background:var(--okbg)} .p-warn{color:var(--warn);background:var(--warnbg)} .p-bad{color:var(--bad);background:var(--badbg)} .p-info{color:var(--info);background:var(--infobg)} .p-mute{color:var(--mute);background:var(--line)}
+.chain{display:flex;flex-direction:column;gap:0}
+.step{display:grid;grid-template-columns:76px 1fr;gap:8px;position:relative;padding:5px 0 5px 0}
+.step:not(:last-child)::after{content:"";position:absolute;left:37px;top:30px;bottom:-4px;width:1px;background:var(--acc)}
+.step .op{font:600 10px var(--mono);text-align:center;padding:3px 0;border-radius:2px;height:20px}
+.step .b{font:11px/1.5 var(--mono);color:var(--fg);min-width:0;overflow-wrap:anywhere}
+.step .b i{font-style:normal;color:var(--mute)} .step .b em{font-style:normal;color:var(--acc)}
+pre{margin:0;font:10.5px/1.45 var(--mono);color:var(--mute);background:var(--panel2);border:1px solid var(--line);border-radius:3px;padding:7px;overflow:auto;max-height:180px;white-space:pre-wrap;overflow-wrap:anywhere}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font:10.5px var(--mono);color:var(--mute)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;margin-right:4px;border-radius:1px;background:var(--c)}
+svg{display:block;width:100%;height:auto} svg text{font:9.5px var(--mono);fill:var(--mute)}
+.alerts{max-height:170px;overflow:auto;font:11px/1.55 var(--mono);border:1px solid var(--line);border-radius:3px;background:var(--panel2);padding:5px 8px}
+.alerts div{display:flex;gap:8px} .alerts time{color:var(--dim)}
+.measured{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px}
+.measured div{border-left:2px solid var(--ok);padding:2px 8px;font:11px/1.45 var(--mono);color:var(--mute)} .measured b{color:var(--fg);font-weight:600}
+.note{color:var(--mute);font-size:11.5px;max-width:110ch}
+@media (max-width:900px){.mid{grid-template-columns:minmax(0,1fr)} .title h1{font-size:28px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="title">
+    <h1>Tether Firehose</h1>
+    <p>A simulated production stream of AI-written X3D scenes. Every record below is built by the same hash-chain logic as the real prototype, and every verdict is computed live in this page. Scene content, model draws and money are synthetic.</p>
+  </div>
+  <div class="ctl">
+    <span class="sim">SIMULATION · SYNTHETIC DATA</span>
+    <label>rate <input id="rate" type="range" min="1" max="60" value="14" aria-label="scenes per second"><span class="m" id="rateV">14/s</span></label>
+    <button id="bPause">Pause</button>
+    <button id="bSeal" title="HMAC stands in for an Ed25519 signature over the chain head">Signing: off</button>
+    <button id="bReset">Reset</button>
+  </div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="ctl" style="padding:2px 0">
+  <b class="m" style="color:var(--mute);font-size:11px">FAULT INJECTION</b>
+  <button class="bad" data-f="edit">Edit a scene after the fact</button>
+  <button class="bad" data-f="del">Delete a step</button>
+  <button class="bad" data-f="flipmid">Flip an old verdict</button>
+  <button class="bad" data-f="fliplast">Flip the LAST verdict</button>
+  <b class="m" style="color:var(--mute);font-size:11px;margin-left:10px">VALIDATOR</b>
+  <button class="warn" id="bUpgrade">Ship stricter validator</button>
+  <button id="bRevalidate" disabled>Re-validate stale corpus</button>
+</div>
+
+<div class="mid">
+  <section class="card">
+    <header><h2>Firehose</h2><span class="sub" id="fhSub"></span></header>
+    <div class="scroll"><table><thead><tr><th>t</th><th>scene</th><th>model</th><th>mode</th><th>steps</th><th>last validator</th><th>verdict</th><th>chain</th></tr></thead><tbody id="fh"></tbody></table></div>
+  </section>
+  <section class="card">
+    <header><h2>Chain inspector</h2><span class="sub" id="insSub">click a row</span></header>
+    <div class="tabs" id="tabs"><button data-t="chain" class="on">Chain</button><button data-t="xml">Head XML</button><button data-t="prov">PROV-JSON</button><button data-t="ol">OpenLineage</button></div>
+    <div id="insBody" class="scroll" style="padding:8px;max-height:430px"></div>
+    <div class="ctl" id="insCtl"></div>
+  </section>
+</div>
+
+<div class="grid4">
+  <section class="card"><header><h2>Pipeline</h2><span class="sub">stage pass / fail</span></header><svg id="svgFlow" viewBox="0 0 400 210" role="img" aria-label="pipeline stage counts"></svg></section>
+  <section class="card"><header><h2>Models</h2><span class="sub">first try vs after repair</span></header><svg id="svgModels" viewBox="0 0 400 210" role="img" aria-label="per model valid rates"></svg><div class="legend"><span style="--c:var(--info)">first try</span><span style="--c:var(--ok)">after report-shown repair</span></div></section>
+  <section class="card"><header><h2>Validator drift</h2><span class="sub" id="driftSub"></span></header><svg id="svgDrift" viewBox="0 0 400 210" role="img" aria-label="scenes by last validator reference"></svg><div class="legend" id="driftLeg"></div></section>
+  <section class="card"><header><h2>Integrity scrubber</h2><span class="sub" id="scrSub"></span></header><svg id="svgScr" viewBox="0 0 400 120" role="img" aria-label="detections over time"></svg><div class="alerts" id="alerts"></div></section>
+</div>
+
+<section class="card">
+  <header><h2>What is real, what is simulated</h2><span class="sub">measured numbers come from runs in the x3d.ML repo</span></header>
+  <div class="measured">
+    <div><b>MEASURED</b> 6 of 6 scenes (5 KB to 62 MB) verify after ingest, validate, repair, Blender round trip. Fork eb4b4b4, bpy 5.2.2, bridge 206f139.</div>
+    <div><b>MEASURED</b> about 611 bytes per step in the file head, independent of scene size.</div>
+    <div><b>MEASURED</b> 174 cached open-model scenes stamped, all verify. 37 were valid on the 11 Oct service and invalid on the fork; 36 already on 8c0a457.</div>
+    <div><b>MEASURED</b> edit after last step: stale. Delete a step or flip an interior verdict: broken chain. Flip the last verdict: <b>not detected</b> while unsigned.</div>
+    <div><b>SIMULATED</b> arrival rate, scene bodies, model draws (rates anchored to measured one-shot and repair rates), tokens, cost, latent defects, faults you inject.</div>
+    <div><b>SIMULATED</b> signing: an HMAC stands in for the planned Ed25519 seal. The real signing step is not built yet.</div>
+  </div>
+</section>
+</div>
+
+<script>
+"use strict";
+/* ---------- SHA-256 + HMAC (sync, UTF-8) ---------- */
+const K256=new Uint32Array([0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2]);
+const enc=new TextEncoder();
+function sha256b(m){
+  const l=m.length,nb=((l+9+63)>>6)<<6,b=new Uint8Array(nb);b.set(m);b[l]=0x80;
+  const dv=new DataView(b.buffer);dv.setUint32(nb-4,(l*8)>>>0);dv.setUint32(nb-8,Math.floor(l/0x20000000));
+  let h0=0x6a09e667,h1=0xbb67ae85,h2=0x3c6ef372,h3=0xa54ff53a,h4=0x510e527f,h5=0x9b05688c,h6=0x1f83d9ab,h7=0x5be0cd19;const w=new Uint32Array(64);
+  for(let o=0;o<nb;o+=64){
+    for(let i=0;i<16;i++)w[i]=dv.getUint32(o+i*4);
+    for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=(w[i-16]+(((a>>>7)|(a<<25))^((a>>>18)|(a<<14))^(a>>>3))+w[i-7]+(((c>>>17)|(c<<15))^((c>>>19)|(c<<13))^(c>>>10)))>>>0}
+    let a=h0,b2=h1,c=h2,d=h3,e=h4,f=h5,g=h6,h=h7;
+    for(let i=0;i<64;i++){
+      const t1=(h+(((e>>>6)|(e<<26))^((e>>>11)|(e<<21))^((e>>>25)|(e<<7)))+((e&f)^(~e&g))+K256[i]+w[i])>>>0;
+      const t2=((((a>>>2)|(a<<30))^((a>>>13)|(a<<19))^((a>>>22)|(a<<10)))+((a&b2)^(a&c)^(b2&c)))>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b2;b2=a;a=(t1+t2)>>>0}
+    h0=(h0+a)>>>0;h1=(h1+b2)>>>0;h2=(h2+c)>>>0;h3=(h3+d)>>>0;h4=(h4+e)>>>0;h5=(h5+f)>>>0;h6=(h6+g)>>>0;h7=(h7+h)>>>0}
+  return [h0,h1,h2,h3,h4,h5,h6,h7].map(x=>x.toString(16).padStart(8,"0")).join("")
+}
+const sha=s=>sha256b(enc.encode(s));
+const hex2b=h=>{const o=new Uint8Array(h.length/2);for(let i=0;i<o.length;i++)o[i]=parseInt(h.substr(i*2,2),16);return o};
+function hmac(key,msg){const kb=enc.encode(key),k=new Uint8Array(64);k.set(kb);const ip=k.map(x=>x^0x36),op=k.map(x=>x^0x5c),mb=enc.encode(msg);
+  const i1=new Uint8Array(64+mb.length);i1.set(ip);i1.set(mb,64);const ih=hex2b(sha256b(i1));const o1=new Uint8Array(96);o1.set(op);o1.set(ih,64);return sha256b(o1)}
+
+/* ---------- x3dprov (JS port of the prototype's logic; text-normalised hash instead of C14N) ---------- */
+const ZERO="0".repeat(64),SECRET="pipeline-sim-key";
+const META_RE=/\s*<meta name="x3dprov\.[^"]*" content="[^"]*"\/>/g;
+const STEP_RE=/<meta name="x3dprov\.step\.(\d+)" content="([^"]*)"\/>/g;
+const unesc=s=>s.replace(/&quot;/g,'"').replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&");
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const contentHash=x=>sha(x.replace(META_RE,"").replace(/>\s+</g,"><").trim());
+function readSteps(x){const o=[];STEP_RE.lastIndex=0;let m;while((m=STEP_RE.exec(x)))o.push([+m[1],unesc(m[2])]);return o.sort((a,b)=>a[0]-b[0])}
+function readSeal(x){const m=/<meta name="x3dprov\.seal" content="([^"]*)"\/>/.exec(x);return m?m[1]:null}
+const dumps=o=>JSON.stringify(o,Object.keys(o).sort());
+function addStep(before,step,after,seal){
+  const steps=readSteps(before),out=after??before,prev=steps.length?steps[steps.length-1][1]:null,rec={...step};
+  rec.input_sha256=rec.input_sha256||(prev?JSON.parse(prev).output_sha256:contentHash(before));
+  rec.output_sha256=contentHash(out);rec.prev=prev?sha(prev):ZERO;
+  const all=steps.concat([[steps.length+1,dumps(rec)]]);
+  let metas='<meta name="x3dprov.version" content="x3dprov/0.1"/>'+all.map(([n,c])=>`<meta name="x3dprov.step.${n}" content="${esc(c)}"/>`).join("");
+  if(seal)metas+=`<meta name="x3dprov.seal" content="${hmac(SECRET,sha(all[all.length-1][1])+":"+all.length)}"/>`;
+  return out.replace(META_RE,"").replace("</head>",metas+"</head>")
+}
+function verify(x){
+  const steps=readSteps(x),seal=readSeal(x);if(!steps.length)return{ok:false,status:"no-record",problems:["no record"]};
+  const pr=[];let pj=null,po=null;
+  steps.forEach(([n,c],i)=>{let r;try{r=JSON.parse(c)}catch(e){pr.push(`step ${n}: not JSON`);return}
+    if(n!==i+1)pr.push(`gap before step ${n}`);
+    if(r.prev!==(pj?sha(pj):ZERO))pr.push(`step ${n}: prev hash mismatch (step ${n-1} removed or edited)`);
+    if(po!==null&&r.input_sha256!==po)pr.push(`step ${n}: input differs from step ${n-1} output`);
+    pj=c;po=r.output_sha256});
+  if(pr.length)return{ok:false,status:"broken",problems:pr};
+  if(seal){const want=hmac(SECRET,sha(pj)+":"+steps.length);if(seal!==want)return{ok:false,status:"seal-fail",problems:["seal does not match chain head (last step or step count altered)"]}}
+  if(contentHash(x)!==po)return{ok:false,status:"stale",problems:["content differs from last recorded output (untracked edit)"]};
+  return{ok:true,status:"verified",problems:[],sealed:!!seal}
+}
+
+/* ---------- simulation world ---------- */
+const MODELS=[ /* p1 = first-try valid, pr = repair-success per round when the report is shown; anchored on measured fork one-shot / grounded rates, rounded */
+ {id:"qwen3-8b",p1:.07,pr:.35,pin:.0,price:.20,tok:[900,2600],lat:[9,22]},
+ {id:"qwen2.5-coder-14b",p1:.40,pr:.55,price:.35,tok:[700,2200],lat:[7,18]},
+ {id:"gpt-oss-20b",p1:.33,pr:.60,price:.45,tok:[800,2800],lat:[6,16]},
+ {id:"frontier-A",p1:.57,pr:.82,price:3.0,tok:[600,2000],lat:[3,9]},
+ {id:"frontier-B",p1:.46,pr:.78,price:1.2,tok:[600,2200],lat:[2,7]}];
+const VAL={svc:{ref:"svc@11Oct",name:"x3d-mcp-svc",strict:0},f1:{ref:"fork@8c0a457",name:"fork",strict:1},f2:{ref:"fork@eb4b4b4",name:"fork",strict:2}};
+const MEASURE_NOTE="";
+let S;function fresh(){S={seq:0,scenes:[],byId:new Map(),val:VAL.svc,upgraded:false,sealOn:false,paused:false,rate:14,
+  stage:{gen:0,v1p:0,v1f:0,rep:0,v2p:0,v2f:0,ren:0,tr:0,ok:0,drop:0},mod:{},cost:0,provBytes:0,alerts:[],det:[],inj:0,detected:0,ttd:[],sel:null,scr:0,flips:0,revals:0,tick:0,thr:[]};
+  MODELS.forEach(m=>S.mod[m.id]={n:0,first:0,rep:0,repOk:0,cost:0,valid:0});}
+const R=Math.random,pick=a=>a[(R()*a.length)|0],rr=(a,b)=>a+R()*(b-a);
+function synthXml(def){
+  const n=2+((R()*4)|0),shapes=[];
+  for(let i=0;i<n;i++){const k=pick(["Box","Sphere","Cone","Cylinder"]),c=[R().toFixed(2),R().toFixed(2),R().toFixed(2)].join(" "),t=[(rr(-4,4)).toFixed(2),(rr(0,3)).toFixed(2),(rr(-4,4)).toFixed(2)].join(" ");
+    shapes.push(`<Transform DEF="T${i}" translation="${t}"><Shape DEF="S${i}"><Appearance><Material diffuseColor="${c}"/></Appearance><${k}/></Shape></Transform>`)}
+  const route=def.latent?`<ROUTE fromNode="T0" fromField="translation_chg" toNode="T1" toField="translation"/>`:"";
+  const hanim=def.noComp?`<HAnimHumanoid DEF="H0" name="figure"/>`:"";
+  return `<X3D profile="Immersive" version="4.0"><head></head><Scene>${hanim}${shapes.join("")}${route}</Scene></X3D>`
+}
+function validate(sc,V){ // truth lives in sc.truth; strictness decides what the validator can see
+  const codes=[];
+  if(sc.truth.noComp&&!sc.truth.compFixed)codes.push("profile-component");
+  if(sc.truth.latent&&V.strict>=1)codes.push("route-invalid-from-field");
+  if(sc.truth.hard&&!sc.truth.hardFixed)codes.push("containerfield-type-mismatch");
+  return{verdict:codes.length?"invalid":"valid",codes}
+}
+function vStep(sc,V){const r=validate(sc,V);return{rec:{op:"validate",validator:V.name,validator_ref:V.ref,verdict:r.verdict,codes:r.codes},verdict:r.verdict}}
+function genScene(){
+  const m=pick(MODELS),id="S-"+String(++S.seq).padStart(6,"0"),rep=R()<.6; // 60% run report-shown repair
+  const truth={noComp:false,latent:false,hard:false,compFixed:false,hardFixed:false};
+  const firstTry=R()<m.p1;
+  if(!firstTry){const d=R();if(d<.55)truth.noComp=true;else if(d<.8)truth.hard=true;else truth.noComp=truth.hard=true}
+  truth.latent=R()<.4&&(firstTry||true)&&R()<.55; // hidden to the weak service
+  const sc={id,model:m.id,mode:rep?"repair":"oneshot",born:S.tick,truth,sealed:S.sealOn,status:"?",nsteps:0,vref:"",verdict:"",xml:""};
+  let x=synthXml({latent:truth.latent,noComp:truth.noComp});
+  const tin=Math.round(rr(m.tok[0],m.tok[1])*.35),tout=Math.round(rr(m.tok[0],m.tok[1])),cost=(tin*.3+tout)*m.price/1e6*1.0;
+  const hist=[],M=S.mod[m.id];M.n++;M.cost+=cost;S.cost+=cost;S.stage.gen++;
+  x=addStep(x,{op:"generate",model:m.id,provider:"sim",condition:rep?"report_repair":"oneshot",temperature:.4,prompt_sha256:sha("p"+id).slice(0,16),tokens_in:tin,tokens_out:tout,latency_ms:Math.round(rr(m.lat[0],m.lat[1])*1000),cost_usd_est:+cost.toFixed(5),input_sha256:"none"},x,sc.sealed);
+  let v=vStep(sc,S.val);x=addStep(x,v.rec,x,sc.sealed);
+  if(v.verdict==="valid"){M.first++;S.stage.v1p++}else{S.stage.v1f++}
+  if(v.verdict==="invalid"&&rep){
+    for(let round=1;round<=3&&v.verdict==="invalid";round++){
+      M.rep++;S.stage.rep++;const ok=R()<m.pr,c2=(tin*.4+tout*.5)*m.price/1e6;M.cost+=c2;S.cost+=c2;
+      let nx=x;
+      if(ok){if(truth.noComp){truth.compFixed=true;nx=x.replace("<head>",`<head><component name='HAnim' level='1'/>`)}if(truth.hard){truth.hardFixed=true;nx=nx.replace("<Scene>","<Scene><!--fixed-->")}
+        if(truth.latent&&S.val.strict>=1){truth.latent=false;nx=nx.replace("translation_chg","translation_changed")}}
+      x=addStep(x,{op:"repair",kind:"model",model:m.id,round,report_shown:true,fixes:validate(sc,S.val).codes,cost_usd_est:+c2.toFixed(5)},nx.replace(META_RE,"")===x.replace(META_RE,"")?x:nx,sc.sealed);
+      v=vStep(sc,S.val);x=addStep(x,v.rec,x,sc.sealed);
+      if(v.verdict==="valid"){M.repOk++;S.stage.v2p++;break}
+    }
+    if(v.verdict==="invalid")S.stage.v2f++;
+  }
+  if(v.verdict==="valid"){M.valid++;
+    const nb=Math.max(.02,Math.min(.98,rr(.25,.7)));S.stage.ren++;
+    x=addStep(x,{op:"render",renderer:"x_ite@16.5.0 headless",load_ok:true,nonblank_ratio:+nb.toFixed(3)},x,sc.sealed);
+    if(R()<.3){const tx=x.replace(/<Scene>/,'<Scene><!--rt-->').replace(/<Shape /,'<Shape ');S.stage.tr++;
+      x=addStep(x,{op:"transform",agent:"x3d-blender-io",agent_ref:"206f139",tool:"blender 5.2.2",detail:"import->export X3D40"},tx,sc.sealed);
+      v=vStep(sc,S.val);x=addStep(x,v.rec,x,sc.sealed)}
+    S.stage.ok++
+  }else S.stage.drop++;
+  sc.xml=x;sc.nsteps=readSteps(x).length;sc.vref=S.val.ref;sc.verdict=v.verdict;sc.lastValRef=S.val.ref;
+  const vr=verify(x);sc.status=vr.status;S.provBytes+=x.length-x.replace(META_RE,"").length;
+  S.scenes.push(sc);S.byId.set(sc.id,sc);
+  if(S.scenes.length>600){const o=S.scenes.shift();S.byId.delete(o.id);if(S.sel===o.id)S.sel=null}
+  return sc
+}
+function lastValRef(sc){const st=readSteps(sc.xml).map(s=>JSON.parse(s[1])).filter(s=>s.op==="validate");return st.length?st[st.length-1].validator_ref:"?"}
+
+/* ---------- fault injection + scrubber ---------- */
+function alert(kind,msg){S.alerts.unshift({t:S.tick,kind,msg});if(S.alerts.length>60)S.alerts.pop()}
+function inject(type){
+  const pool=S.scenes.filter(s=>s.status==="verified"&&!s.injured&&s.nsteps>=3);if(!pool.length)return;const sc=pick(pool);let x=sc.xml;
+  if(type==="edit"){const m=/translation="([^"]*)"/.exec(x);if(!m)return;x=x.replace(m[0],'translation="9.00 9.00 9.00"')}
+  else if(type==="del"){x=x.replace(/<meta name="x3dprov\.step\.2" content="[^"]*"\/>/,"")}
+  else if(type==="flipmid"){const st=readSteps(x).find(([n,c])=>n>=2&&n<readSteps(x).length-1&&JSON.parse(c).op==="validate")||readSteps(x)[1];const j=JSON.parse(st[1]);j.verdict=j.verdict==="valid"?"invalid":"valid";x=x.replace(new RegExp(`<meta name="x3dprov\\.step\\.${st[0]}" content="[^"]*"/>`),`<meta name="x3dprov.step.${st[0]}" content="${esc(dumps(j))}"/>`)}
+  else if(type==="fliplast"){const all=readSteps(x),st=all[all.length-1],j=JSON.parse(st[1]);if(j.verdict){j.verdict=j.verdict==="valid"?"invalid":"valid"}else j.model=(j.model||"x")+"-x";
+    x=x.replace(new RegExp(`<meta name="x3dprov\\.step\\.${st[0]}" content="[^"]*"/>`),`<meta name="x3dprov.step.${st[0]}" content="${esc(dumps(j))}"/>`)}
+  sc.xml=x;sc.injured={t:performance.now(),type,tick:S.tick};S.inj++;alert("inj",`${sc.id}: injected ${LABEL[type]} (${sc.sealed?"sealed":"unsealed"} chain)`);
+  if(S.sel===sc.id)renderInspector()
+}
+const LABEL={edit:"coordinate edit",del:"step deletion",flipmid:"interior verdict flip",fliplast:"last-step verdict flip"};
+function scrub(n){ // continuous sweep: re-verify n stored scenes per tick
+  for(let i=0;i<n&&S.scenes.length;i++){
+    S.scr=(S.scr+1)%S.scenes.length;const sc=S.scenes[S.scr],vr=verify(sc.xml);
+    if(sc.status!==vr.status){sc.status=vr.status;
+      if(!vr.ok&&sc.injured&&!sc.detected){sc.detected=true;S.detected++;const ttd=(performance.now()-sc.injured.t)/1000;S.ttd.push(ttd);S.det.push({t:S.tick,ok:1});alert("det",`${sc.id}: ${vr.status.toUpperCase()} after ${ttd.toFixed(2)}s · ${vr.problems[0]}`)}}
+  }
+}
+
+/* ---------- UI ---------- */
+const $=id=>document.getElementById(id);const pc=(a,b)=>b?(100*a/b).toFixed(1)+"%":"-";
+const CH={verified:["p-ok","VERIFIED"],stale:["p-warn","STALE"],broken:["p-bad","BROKEN"],"seal-fail":["p-bad","SEAL FAIL"],"no-record":["p-mute","NO RECORD"],"?":["p-mute","?"]};
+function kpis(){
+  const tot=S.scenes.length,cnt=s=>S.scenes.filter(x=>x.status===s).length,unsealedLast=S.scenes.filter(x=>!x.sealed).length;
+  const stale=S.scenes.filter(x=>readSteps(x.xml).length&&lastValRef(x)!==S.val.ref).length;
+  const K=[
+   ["scenes ingested",S.seq.toLocaleString(),"window "+tot+" · "+(S.thr.length?S.thr[S.thr.length-1]:0)+"/s","acc"],
+   ["chains verified",pc(cnt("verified"),tot),cnt("verified")+" of "+tot,"ok"],
+   ["stale / broken",cnt("stale")+" / "+(cnt("broken")+cnt("seal-fail")),"tamper evidence","bad"],
+   ["injected / caught",S.inj+" / "+S.detected,S.inj-S.detected?`${S.inj-S.detected} undetected`:"none missed",S.inj-S.detected?"warn":"ok"],
+   ["time to detect",S.ttd.length?(S.ttd.reduce((a,b)=>a+b,0)/S.ttd.length).toFixed(2)+"s":"-","mean, scrubber sweep","acc"],
+   ["validator now",S.val.ref.replace("fork@","f@").replace("svc@","svc@"),S.upgraded?"stricter ruleset":"weak service","warn"],
+   ["need re-validation",stale,"last verdict on older ref",stale?"warn":"ok"],
+   ["provenance bytes",tot?Math.round(S.provBytes/S.seq)+" B":"-","mean per scene, "+(S.scenes.length?Math.round(S.scenes.reduce((a,s)=>a+s.nsteps,0)/tot*10)/10:0)+" steps","acc"],
+   ["sim spend","$"+S.cost.toFixed(2),"$"+(S.stage.ok?(S.cost/S.stage.ok).toFixed(4):"-")+" per valid scene","acc"]];
+  $("kpis").innerHTML=K.map(k=>`<div class="kpi ${k[3]}"><div class="l">${k[0]}</div><div class="v">${k[1]}</div><div class="s">${k[2]}</div></div>`).join("")
+}
+function fh(){
+  const rows=S.scenes.slice(-70).reverse();
+  $("fh").innerHTML=rows.map(s=>{const c=CH[s.status]||CH["?"],vd=s.verdict==="valid"?"p-ok":"p-bad";
+    return`<tr tabindex="0" data-id="${s.id}" class="${S.sel===s.id?"sel":""}"><td>${(s.born/10).toFixed(1)}</td><td>${s.id}${s.injured?'<span class="pill p-bad" style="margin-left:4px">INJ</span>':""}</td><td>${s.model}</td><td>${s.mode}</td><td>${s.nsteps}${s.sealed?" 🔒":""}</td><td>${lastValRef(s)}</td><td><span class="pill ${vd}">${s.verdict}</span></td><td><span class="pill ${c[0]}">${c[1]}</span></td></tr>`}).join("");
+  $("fhSub").textContent=`newest first · ${S.scenes.length} in window · 600 retained`
+}
+let tab="chain";
+function renderInspector(){
+  const sc=S.byId.get(S.sel);if(!sc){$("insBody").innerHTML='<span class="sub">Select a scene in the firehose to see its chain, verify it, and tamper with it.</span>';$("insCtl").innerHTML="";return}
+  const vr=verify(sc.xml),c=CH[vr.status]||CH["?"];
+  $("insSub").innerHTML=`${sc.id} · <span class="pill ${c[0]}">${c[1]}</span>${sc.sealed?' <span class="pill p-info">SEALED</span>':' <span class="pill p-mute">UNSEALED</span>'}`;
+  const steps=readSteps(sc.xml);let h="";
+  if(tab==="chain"){
+    const col={generate:"p-info",validate:"p-ok",repair:"p-warn",render:"p-mute",transform:"p-info"};
+    h='<div class="chain">'+steps.map(([n,cx])=>{const r=JSON.parse(cx);let d="";
+      if(r.op==="generate")d=`<em>${r.model}</em> ${r.condition} · ${r.tokens_in}→${r.tokens_out} tok · ${r.latency_ms} ms · $${r.cost_usd_est} · prompt ${r.prompt_sha256}`;
+      else if(r.op==="validate")d=`<em>${r.validator}</em> <i>@</i> ${r.validator_ref} → <b style="color:var(--${r.verdict==="valid"?"ok":"bad"})">${r.verdict}</b> ${r.codes&&r.codes.length?"· "+r.codes.join(", "):""}`;
+      else if(r.op==="repair")d=`<em>${r.model}</em> round ${r.round} · report shown · fixes ${(r.fixes||[]).join(", ")||"none named"} · $${r.cost_usd_est}`;
+      else if(r.op==="render")d=`${r.renderer} · load ok · nonblank ${r.nonblank_ratio}`;
+      else d=`<em>${r.agent}</em>@${r.agent_ref} · ${r.tool} · ${r.detail}`;
+      return`<div class="step"><div class="op pill ${col[r.op]}">${n} ${r.op.toUpperCase()}</div><div class="b">${d}<br><i>in</i> ${r.input_sha256.slice(0,12)} <i>→ out</i> ${r.output_sha256.slice(0,12)} <i>prev</i> ${r.prev.slice(0,12)}</div></div>`}).join("")+'</div>';
+    h+=`<div style="margin-top:8px" class="m">${vr.ok?`<span style="color:var(--ok)">verify(): chain intact, head output hash equals current content hash ${contentHash(sc.xml).slice(0,16)}</span>`:`<span style="color:var(--bad)">verify(): ${vr.problems.join(" · ")}</span>`}</div>`;
+  } else if(tab==="xml"){
+    h="<pre>"+esc(sc.xml.replace(/(<meta )/g,"\n  $1").replace("<Scene>","\n<Scene>")).replace(/&amp;quot;/g,"&quot;")+"</pre>"
+  } else if(tab==="prov"){
+    const ents={},act={},used={},gen={},der={};steps.forEach(([n,cx],i)=>{const r=JSON.parse(cx),a=`step/${n}-${r.op}`,ei="scene/"+r.input_sha256.slice(0,8),eo="scene/"+r.output_sha256.slice(0,8);
+      ents[ei]={"x3d:sha256":r.input_sha256.slice(0,16)+"…"};ents[eo]={"x3d:sha256":r.output_sha256.slice(0,16)+"…"};act[a]={"x3d:op":r.op,"x3d:ref":r.validator_ref||r.agent_ref||r.model||""};
+      used["_:u"+n]={activity:a,entity:ei};gen["_:g"+n]={entity:eo,activity:a};if(ei!==eo)der["_:d"+n]={generatedEntity:eo,usedEntity:ei,activity:a}});
+    h="<pre>"+esc(JSON.stringify({prefix:{x3d:"urn:x3dprov#"},entity:ents,activity:act,used,wasGeneratedBy:gen,wasDerivedFrom:der},null,1))+"</pre>"
+  } else {
+    h="<pre>"+esc(JSON.stringify(steps.map(([n,cx])=>{const r=JSON.parse(cx);return{eventType:"COMPLETE",producer:"x3dprov/0.1",run:{runId:sha(sc.id+n).slice(0,32),facets:{x3dprov_step:{op:r.op,ref:r.validator_ref||r.agent_ref||r.model||null}}},job:{namespace:"x3d.pipeline",name:r.op},inputs:[{namespace:"x3d.pipeline",name:r.input_sha256.slice(0,12)}],outputs:[{namespace:"x3d.pipeline",name:r.output_sha256.slice(0,12)}]}}),null,1))+"</pre>"
+  }
+  $("insBody").innerHTML=h;
+  $("insCtl").innerHTML=`<b class="m" style="color:var(--mute);font-size:11px">TAMPER THIS SCENE</b>`+Object.keys(LABEL).map(k=>`<button class="bad" data-t="${k}">${LABEL[k]}</button>`).join("");
+}
+function svgFlow(){
+  const g=S.stage,rows=[["generated",g.gen,g.gen,"var(--info)"],["valid first try",g.v1p,g.gen,"var(--ok)"],["invalid first try",g.v1f,g.gen,"var(--bad)"],["repair rounds",g.rep,g.v1f*1.8||1,"var(--warn)"],["valid after repair",g.v2p,g.v1f||1,"var(--ok)"],["gave up",g.drop,g.gen,"var(--bad)"],["rendered ok",g.ren,g.gen,"var(--acc)"],["via Blender",g.tr,g.ren||1,"var(--info)"]];
+  const mx=Math.max(1,g.gen);let s="";
+  rows.forEach((r,i)=>{const y=6+i*25,w=Math.min(250,250*r[1]/mx*(r[0]==="generated"?1:1));
+    s+=`<text x="2" y="${y+11}">${r[0]}</text><rect x="118" y="${y}" width="${Math.max(1,w).toFixed(1)}" height="15" fill="${r[3]}" opacity=".85"/><text x="${122+Math.max(1,w)}" y="${y+11}" style="fill:var(--fg)">${r[1]} · ${pc(r[1],r[2])}</text>`});
+  $("svgFlow").innerHTML=s
+}
+function svgModels(){
+  let s="";MODELS.forEach((m,i)=>{const M=S.mod[m.id],y=8+i*40,f=M.n?M.first/M.n:0,a=M.n?M.valid/M.n:0;
+    s+=`<text x="2" y="${y+10}" style="fill:var(--fg)">${m.id}</text><text x="2" y="${y+22}">n=${M.n} · $${M.valid?(M.cost/M.valid).toFixed(4):"-"}/valid</text>`+
+      `<rect x="140" y="${y}" width="${(250*f).toFixed(1)}" height="12" fill="var(--info)"/><text x="${144+250*f}" y="${y+10}" style="fill:var(--fg)">${(100*f).toFixed(0)}%</text>`+
+      `<rect x="140" y="${y+15}" width="${(250*a).toFixed(1)}" height="12" fill="var(--ok)"/><text x="${144+250*a}" y="${y+25}" style="fill:var(--fg)">${(100*a).toFixed(0)}%</text>`});
+  $("svgModels").innerHTML=s
+}
+function svgDrift(){
+  const refs={};S.scenes.forEach(sc=>{const r=lastValRef(sc);refs[r]=(refs[r]||0)+1});const keys=Object.keys(refs).sort(),mx=Math.max(1,...Object.values(refs));
+  const cols={"svc@11Oct":"var(--warn)","fork@8c0a457":"var(--acc)","fork@eb4b4b4":"var(--ok)"};let s="";
+  keys.forEach((k,i)=>{const y=14+i*44,w=330*refs[k]/mx;s+=`<text x="2" y="${y+4}" style="fill:var(--fg)">${k}</text><rect x="2" y="${y+10}" width="${w.toFixed(1)}" height="16" fill="${cols[k]||"var(--info)"}"/><text x="${8+w}" y="${y+22}" style="fill:var(--fg)">${refs[k]}</text>`});
+  if(S.flips)s+=`<text x="2" y="200" style="fill:var(--bad)">${S.flips} scenes flipped valid→invalid (${S.revals} re-validated)</text>`;
+  $("svgDrift").innerHTML=s;$("driftSub").textContent=S.upgraded?"stricter validator shipped":"one validator, weak ruleset";
+  $("driftLeg").innerHTML=`<span style="--c:var(--warn)">weak service</span><span style="--c:var(--acc)">fork 8c0a457</span><span style="--c:var(--ok)">fork eb4b4b4</span>`
+}
+function svgScr(){
+  const n=60,bins=new Array(n).fill(0);S.det.forEach(d=>{const i=n-1-(S.tick-d.t);if(i>=0&&i<n)bins[i]++});
+  const mx=Math.max(1,...bins);let s=`<line x1="0" y1="100" x2="400" y2="100" stroke="var(--line)"/>`;
+  bins.forEach((b,i)=>{if(b)s+=`<rect x="${i*6.6}" y="${100-90*b/mx}" width="5" height="${90*b/mx}" fill="var(--bad)"/>`});
+  s+=`<text x="2" y="114">last 60 ticks (100 ms each) · detections</text>`;$("svgScr").innerHTML=s;
+  $("scrSub").textContent=`sweeping ${Math.min(S.scenes.length,600)} scenes`;
+  $("alerts").innerHTML=S.alerts.slice(0,30).map(a=>`<div><time>${(a.t/10).toFixed(1)}s</time><span style="color:var(--${a.kind==="det"?"bad":a.kind==="sys"?"warn":"mute"})">${esc(a.msg)}</span></div>`).join("")||'<span class="sub">no events yet</span>'
+}
+function frame(){kpis();fh();svgFlow();svgModels();svgDrift();svgScr();if(S.sel&&tab==="chain")renderInspector()}
+
+/* ---------- loop + controls ---------- */
+let carry=0,last=performance.now(),secCount=0,secT=performance.now();
+function step(){
+  const now=performance.now(),dt=now-last;last=now;
+  if(!S.paused){carry+=S.rate*dt/1000;let n=Math.floor(carry);carry-=n;n=Math.min(n,8);for(let i=0;i<n;i++){genScene();secCount++}
+    scrub(3+Math.round(S.rate/6));}
+  if(now-secT>=1000){S.thr.push(secCount);secCount=0;secT=now;if(S.thr.length>5)S.thr.shift()}
+}
+setInterval(step,50);
+setInterval(()=>{if(!S.paused)S.tick++;frame()},100);
+$("rate").oninput=e=>{S.rate=+e.target.value;$("rateV").textContent=S.rate+"/s"};
+$("bPause").onclick=e=>{S.paused=!S.paused;e.target.textContent=S.paused?"Resume":"Pause";e.target.classList.toggle("on",S.paused)};
+$("bSeal").onclick=e=>{S.sealOn=!S.sealOn;e.target.textContent="Signing: "+(S.sealOn?"on (new scenes)":"off");e.target.classList.toggle("on",S.sealOn);alert("sys","signing "+(S.sealOn?"enabled: new chains sealed with HMAC stand-in":"disabled"))};
+$("bReset").onclick=()=>{fresh();$("bUpgrade").disabled=false;$("bRevalidate").disabled=true;$("bSeal").textContent="Signing: off";$("bSeal").classList.remove("on");alert("sys","reset");renderInspector()};
+document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>inject(b.dataset.f));
+$("bUpgrade").onclick=e=>{S.val=VAL.f2;S.upgraded=true;e.target.disabled=true;$("bRevalidate").disabled=false;alert("sys",`validator upgraded to ${VAL.f2.ref}; ${S.scenes.length} scenes carry an older ref`)};
+$("bRevalidate").onclick=()=>{
+  let n=0,fl=0;S.scenes.forEach(sc=>{if(lastValRef(sc)===S.val.ref||sc.injured)return;const v=vStep(sc,S.val),prev=sc.verdict;
+    sc.xml=addStep(sc.xml,v.rec,sc.xml,sc.sealed);sc.nsteps=readSteps(sc.xml).length;sc.verdict=v.verdict;sc.status=verify(sc.xml).status;n++;if(prev==="valid"&&v.verdict==="invalid")fl++});
+  S.revals+=n;S.flips+=fl;alert("sys",`re-validated ${n} scenes on ${S.val.ref}: ${fl} flipped valid → invalid. Answered from the files alone.`)};
+$("fh").onclick=e=>{const tr=e.target.closest("tr");if(tr){S.sel=tr.dataset.id;renderInspector()}};
+$("fh").onkeydown=e=>{if(e.key==="Enter"){const tr=e.target.closest("tr");if(tr){S.sel=tr.dataset.id;renderInspector()}}};
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;tab=b.dataset.t;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x===b));renderInspector()};
+$("insCtl").onclick=e=>{const b=e.target.closest("button");if(!b||!S.sel)return;const sc=S.byId.get(S.sel);if(!sc)return;
+  const x0=sc.xml,t=b.dataset.t;sc.injured=null;sc.detected=false;
+  const keep=S.scenes.filter(s=>s!==sc);// inject on the selected scene specifically
+  const orig=S.scenes;S.scenes=[sc];sc.status="verified";inject(t);S.scenes=orig;if(!sc.injured){sc.xml=x0}renderInspector()};
+fresh();for(let i=0;i<40;i++)genScene();S.tick=0;S.scenes.forEach(s=>s.born=0);frame();
+</script>

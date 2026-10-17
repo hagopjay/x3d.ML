@@ -1,0 +1,750 @@
+<meta charset="utf-8">
+<title>Tether Firehose 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* layout concept: one instrument wall. KPI strip, integrity wall, firehose + inspector, contact sheet, small multiples, under-the-hood. Dark-first; one hue per meaning (ok, warn, bad, info, acc). */
+:root{
+  color-scheme:dark;
+  --bg:#0a0e13; --panel:#111821; --panel2:#0d131a; --line:#212d3b; --fg:#d5e1ee; --mute:#7a8ea3; --dim:#4c5d70;
+  --ok:#52d38a; --warn:#f0b84a; --bad:#ff5c75; --info:#8f86ff; --acc:#38c8d4;
+  --okbg:#52d38a1f; --warnbg:#f0b84a22; --badbg:#ff5c7524; --infobg:#8f86ff22; --accbg:#38c8d41f;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace; --sans:'IBM Plex Sans',system-ui,sans-serif; --disp:'Barlow Condensed','Arial Narrow',sans-serif;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  color-scheme:light; --bg:#eef2f6; --panel:#fff; --panel2:#f5f8fb; --line:#d3dce6; --fg:#15202b; --mute:#566a7e; --dim:#8a9bad;
+  --ok:#0f8a4b; --warn:#a56a00; --bad:#c4223c; --info:#5a4fd6; --acc:#0a7f89;
+  --okbg:#0f8a4b16; --warnbg:#a56a0018; --badbg:#c4223c16; --infobg:#5a4fd616; --accbg:#0a7f8916}}
+:root[data-theme="light"]{
+  color-scheme:light; --bg:#eef2f6; --panel:#fff; --panel2:#f5f8fb; --line:#d3dce6; --fg:#15202b; --mute:#566a7e; --dim:#8a9bad;
+  --ok:#0f8a4b; --warn:#a56a00; --bad:#c4223c; --info:#5a4fd6; --acc:#0a7f89;
+  --okbg:#0f8a4b16; --warnbg:#a56a0018; --badbg:#c4223c16; --infobg:#5a4fd616; --accbg:#0a7f8916}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:13px/1.45 var(--sans);padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;font-family:var(--disp);letter-spacing:.04em;text-transform:uppercase}
+h2{font-size:15px;color:var(--mute);font-weight:600}
+code,.m{font-family:var(--mono)}
+a{color:var(--acc)}
+.wrap{max-width:1560px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+header{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.title h1{font-size:34px;line-height:1;font-weight:700}
+.title p{margin:3px 0 0;color:var(--mute);max-width:78ch}
+.vers{font:11px var(--mono);color:var(--dim);margin-top:3px}
+.sim{font:600 11px var(--mono);color:var(--warn);background:var(--warnbg);border:1px solid var(--warn);padding:3px 8px;border-radius:3px;letter-spacing:.06em}
+.real{color:var(--ok);background:var(--okbg);border-color:var(--ok)}
+.ctl{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+button,select{font:500 12px var(--sans);background:var(--panel);color:var(--fg);border:1px solid var(--line);padding:6px 10px;border-radius:4px;cursor:pointer}
+button:hover:not(:disabled){border-color:var(--acc)} button:disabled{opacity:.45;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible,tr:focus-visible,canvas:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+button.on{background:var(--accbg);border-color:var(--acc);color:var(--acc)}
+button.bad{border-color:var(--bad);color:var(--bad)} button.bad:hover:not(:disabled){background:var(--badbg)}
+button.warn{border-color:var(--warn);color:var(--warn)} button.warn:hover:not(:disabled){background:var(--warnbg)}
+.seg{display:inline-flex} .seg button{border-radius:0} .seg button:first-child{border-radius:4px 0 0 4px} .seg button:last-child{border-radius:0 4px 4px 0;border-left:0}
+label{color:var(--mute);font-size:12px;display:flex;gap:6px;align-items:center}
+input[type=range]{accent-color:var(--acc);width:110px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:8px 10px;min-width:0}
+.kpi .l{font:600 10px/1.25 var(--mono);color:var(--mute);letter-spacing:.07em;text-transform:uppercase;min-height:2.5em}
+.kpi .v.long{font-size:15px;line-height:1.55}
+.kpi .v{font:600 22px/1.15 var(--mono);font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .s{font:400 10.5px var(--mono);color:var(--dim);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi.ok .v{color:var(--ok)} .kpi.warn .v{color:var(--warn)} .kpi.bad .v{color:var(--bad)} .kpi.acc .v{color:var(--acc)}
+.mid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:10px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(430px,100%),1fr));gap:10px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:10px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.card header{align-items:baseline}
+.card .sub{color:var(--dim);font:400 10.5px var(--mono)}
+.scroll{overflow:auto;max-height:470px;border:1px solid var(--line);border-radius:3px;background:var(--panel2)}
+table{border-collapse:collapse;width:100%;font:11.5px var(--mono);font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;background:var(--panel);color:var(--mute);font-weight:500;text-align:left;padding:4px 5px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:2.5px 5px;white-space:nowrap}
+tbody tr{cursor:pointer} tbody tr:hover{background:var(--accbg)} tr.sel{background:var(--accbg);outline:1px solid var(--acc)}
+.pill{display:inline-block;padding:0 6px;border-radius:2px;font:600 10px/16px var(--mono);letter-spacing:.04em;white-space:nowrap}
+.p-ok{color:var(--ok);background:var(--okbg)} .p-warn{color:var(--warn);background:var(--warnbg)} .p-bad{color:var(--bad);background:var(--badbg)} .p-info{color:var(--info);background:var(--infobg)} .p-mute{color:var(--mute);background:var(--line)}
+.chain{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:84px 1fr;gap:8px;position:relative;padding:5px 0}
+.step:not(:last-child)::after{content:"";position:absolute;left:41px;top:30px;bottom:-4px;width:1px;background:var(--acc)}
+.step .op{font:600 10px var(--mono);text-align:center;padding:3px 0;border-radius:2px;height:20px}
+.step .b{font:11px/1.5 var(--mono);min-width:0;overflow-wrap:anywhere}
+.step .b i{font-style:normal;color:var(--mute)} .step .b em{font-style:normal;color:var(--acc)}
+pre{margin:0;font:10.5px/1.45 var(--mono);color:var(--mute);background:var(--panel2);border:1px solid var(--line);border-radius:3px;padding:7px;overflow:auto;max-height:330px;white-space:pre-wrap;overflow-wrap:anywhere}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font:10.5px var(--mono);color:var(--mute)}
+.legend span::before{content:"";display:inline-block;width:8px;height:8px;margin-right:4px;border-radius:1px;background:var(--c)}
+svg{display:block;width:100%;height:auto} svg text{font:9.5px var(--mono);fill:var(--mute)}
+canvas#wall{display:block;width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:3px;cursor:pointer}
+.alerts{max-height:170px;overflow:auto;font:11px/1.55 var(--mono);border:1px solid var(--line);border-radius:3px;background:var(--panel2);padding:5px 8px}
+.alerts div{display:flex;gap:8px} .alerts time{color:var(--dim);flex:none}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:6px}
+.th{position:relative;border:2px solid var(--line);border-radius:3px;overflow:hidden;background:var(--panel2);cursor:pointer;aspect-ratio:4/3;padding:0}
+.th img{display:block;width:100%;height:100%;object-fit:cover}
+.th.sel{outline:2px solid var(--acc)} .th.v{border-color:var(--ok)} .th.i{border-color:var(--bad)} .th.x{border-color:var(--warn)}
+.th .tg{position:absolute;left:2px;bottom:2px;display:flex;gap:2px;flex-wrap:wrap}
+.th .tg b{font:600 8.5px/12px var(--mono);padding:0 3px;border-radius:2px;color:#fff;background:#000a}
+.th .tg b.bl{background:var(--warn);color:#000}
+#view3d{position:relative;width:100%;height:330px;background:#05080c;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+#view3d x3d-canvas{display:block;width:100%;height:100%}
+#v3msg{position:absolute;z-index:10;left:8px;top:6px;right:8px;font:11px/1.4 var(--mono);color:#cfe;background:#05080cd0;padding:3px 6px;border-radius:3px;pointer-events:none}
+#v3none{position:absolute;z-index:5;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:56px 18px 18px;text-align:center;background:repeating-linear-gradient(135deg,#0b0f14 0 10px,#101820 10px 20px);color:#f0b84a;font:600 12px/1.5 var(--mono)}
+#v3none[hidden]{display:none}
+#v3none b{font:700 28px/1 var(--disp);letter-spacing:.06em}
+#v3none i{font-style:normal;color:#9fb3c7;font-weight:400;max-width:62ch}
+.measured{columns:260px;column-gap:14px}
+.measured div{break-inside:avoid;margin:0 0 9px;border-left:2px solid var(--ok);padding:2px 8px;font:11px/1.45 var(--mono);color:var(--mute)} .measured div.s{border-color:var(--warn)} .measured div.r{border-color:var(--info)} .measured b{color:var(--fg);font-weight:600}
+.under{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:10px}
+.eq{font:11.5px/1.7 var(--mono);color:var(--fg);background:var(--panel2);border:1px solid var(--line);border-radius:3px;padding:8px 10px;overflow-wrap:anywhere}
+.eq i{font-style:normal;color:var(--acc)} .eq u{text-decoration:none;color:var(--mute)}
+.note{color:var(--mute);font-size:11.5px}
+#tour{position:fixed;z-index:50;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));width:min(920px,calc(100% - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)));background:var(--panel);border:1px solid var(--acc);border-radius:6px;padding:10px 12px 12px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 10px 34px #000a;overflow:hidden}
+#tour[hidden]{display:none}
+#tour .tn{font:700 22px/1 var(--disp);color:var(--acc);letter-spacing:.05em;white-space:nowrap;padding-top:2px}
+#tour .tb{flex:1;min-width:0} #tour .tb b{display:block;font:700 16px/1.2 var(--disp);letter-spacing:.05em;text-transform:uppercase;margin-bottom:2px}
+#tour .tb span{color:var(--fg);font-size:12.5px;line-height:1.5}
+#tour .tc{display:flex;gap:6px;flex:none}
+#tour #tbar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--acc)}
+@media (max-width:700px){#tour{flex-wrap:wrap}}
+@media (max-width:980px){.mid{grid-template-columns:minmax(0,1fr)} .title h1{font-size:28px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<script>
+/* X_ITE rejects a promise with the load-error Event when a page policy blocks its stylesheet or wasm fetch; the 3D view works without them */
+addEventListener("unhandledrejection",e=>{const r=e.reason,m=String(r&&r.message||r);if(r instanceof Event||/Failed to fetch|mikktspace/i.test(m))e.preventDefault()});
+</script>
+<script src="xite/x_ite.min.js"></script>
+
+<div class="wrap">
+<header>
+  <div class="title">
+    <h1>Tether Firehose 2</h1>
+    <p>A production stream of AI-written X3D scenes, each carrying its own hash-chained provenance record. Every hash, chain check, seal and verdict below is computed live in this page. <b>Synthetic</b> mode simulates the stream; <b>Replay</b> mode streams 174 real model-written scenes from our own runs.</p>
+    <div class="vers">versions: <a href="https://claude.ai/artifact/BqBVTHDK32xA32EZQEfvni" target="_blank" rel="noopener">v1 synthetic only</a> · <b>v2 current</b> (adds replay of real runs, 3D view, trace and OTLP views, verify trace, integrity wall, contact sheet, share-safe)</div>
+  </div>
+  <div class="ctl">
+    <span class="sim" id="modeTag">SIMULATION · SYNTHETIC DATA</span>
+    <div class="seg" id="seg"><button data-m="syn" class="on">Synthetic</button><button data-m="real">Replay real runs</button></div>
+    <label>rate <input id="rate" type="range" min="1" max="60" value="14" aria-label="scenes per second"><span class="m" id="rateV">14/s</span></label>
+    <button id="bPause">Pause</button>
+    <button id="bSeal" title="HMAC stands in for an Ed25519 signature over the chain head">Signing: off</button>
+    <button id="bSafe" title="Replaces model names with size classes and hides cost and hardware strings">Share-safe: off</button>
+    <button id="bReset">Restart</button>
+    <button id="bTour" class="warn" title="A 90-second narrated run through the whole story; it drives the same buttons you can press">Guided tour</button>
+  </div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<section class="card">
+  <header><h2>Integrity wall</h2><span class="sub" id="wallSub"></span></header>
+  <canvas id="wall" tabindex="0" aria-label="integrity wall: one cell per stored scene"></canvas>
+  <div class="legend"><span style="--c:var(--ok)">chain verified</span><span style="--c:var(--warn)">stale</span><span style="--c:var(--bad)">broken or seal fail</span><span style="--c:var(--info)">bottom bar: verdict invalid</span><span style="--c:#fff">white dot: blank render</span><span style="--c:var(--acc)">cyan frame: scrubber head</span></div>
+</section>
+
+<div class="ctl" style="padding:2px 0">
+  <b class="m" style="color:var(--mute);font-size:11px">FAULT INJECTION</b>
+  <button class="bad" data-f="edit">Edit a scene after the fact</button>
+  <button class="bad" data-f="del">Delete a step</button>
+  <button class="bad" data-f="flipmid">Flip an old verdict</button>
+  <button class="bad" data-f="fliplast">Flip the LAST verdict</button>
+  <b class="m" style="color:var(--mute);font-size:11px;margin-left:10px">VALIDATOR</b>
+  <button class="warn" id="bUpgrade">Ship next validator</button>
+  <button id="bRevalidate" disabled>Re-validate stale corpus</button>
+</div>
+
+<div class="mid">
+  <section class="card">
+    <header><h2>Firehose</h2><span class="sub" id="fhSub"></span></header>
+    <div class="scroll" id="fhScroll"><table><thead><tr><th>t</th><th>scene</th><th>model</th><th>mode</th><th>steps</th><th>validator</th><th>verdict</th><th>render</th><th>chain</th></tr></thead><tbody id="fh"></tbody></table></div>
+  </section>
+  <section class="card">
+    <header><h2>Inspector</h2><span class="sub" id="insSub">click a row, a thumbnail or a wall cell</span></header>
+    <div class="tabs" id="tabs"><button data-t="chain" class="on">Chain</button><button data-t="trace">Trace</button><button data-t="verify">Verify</button><button data-t="v3d">3D</button><button data-t="xml">Head XML</button><button data-t="prov">PROV</button><button data-t="ol">OpenLineage</button><button data-t="otlp">OTLP</button></div>
+    <div id="insBody" class="scroll" style="padding:8px;max-height:470px"></div>
+    <div id="view3d" hidden><div id="v3msg"></div><div id="v3none" hidden></div></div>
+    <div class="ctl" id="insCtl"></div>
+  </section>
+</div>
+
+<section class="card">
+  <header><h2>Contact sheet</h2><span class="sub" id="galSub"></span></header>
+  <div class="gal" id="gal"></div>
+</section>
+
+<div class="grid4">
+  <section class="card"><header><h2>Pipeline</h2><span class="sub" id="pipeSub"></span></header><svg id="svgFlow" viewBox="0 0 400 210" role="img" aria-label="pipeline stage counts"></svg></section>
+  <section class="card"><header><h2>Models</h2><span class="sub">first try vs after repair</span></header><svg id="svgModels" viewBox="0 0 400 210" role="img" aria-label="per model valid rates"></svg><div class="legend"><span style="--c:var(--info)">first try</span><span style="--c:var(--ok)">valid at end</span></div></section>
+  <section class="card"><header><h2>Validator drift</h2><span class="sub" id="driftSub"></span></header><svg id="svgDrift" viewBox="0 0 400 210" role="img" aria-label="scenes by last validator reference"></svg><div class="legend"><span style="--c:var(--warn)">weak service</span><span style="--c:var(--acc)">fork 8c0a457</span><span style="--c:var(--ok)">fork eb4b4b4</span></div></section>
+  <section class="card"><header><h2>Throughput and verdicts</h2><span class="sub">last 60 s · markers = events</span></header><svg id="svgTp" viewBox="0 0 400 210" role="img" aria-label="throughput by verdict over time"></svg><div class="legend"><span style="--c:var(--ok)">valid</span><span style="--c:var(--bad)">invalid</span><span style="--c:var(--warn)">U validator · I inject · D detect · S signing</span></div></section>
+  <section class="card"><header><h2>Integrity scrubber</h2><span class="sub" id="scrSub"></span></header><div class="alerts" id="alerts" style="max-height:215px"></div></section>
+  <section class="card"><header><h2>Valid is not visible</h2><span class="sub" id="vvSub"></span></header><svg id="svgVV" viewBox="0 0 400 210" role="img" aria-label="valid scenes split by visible and blank"></svg><div class="legend"><span style="--c:var(--ok)">valid and visible</span><span style="--c:var(--warn)">valid but blank</span><span style="--c:var(--bad)">invalid</span></div></section>
+</div>
+
+<section class="card">
+  <header><h2>Under the hood</h2><span class="sub">the whole algorithm, with the selected scene's actual values</span></header>
+  <div class="under">
+    <div><div class="eq" id="eq"></div></div>
+    <div><div class="eq" id="bench"></div><p class="note" style="margin:6px 0 0">One meta line per step, about 600 bytes. A step is a span: <code>prev</code> is the parent span id and the hash of the first step is the trace id, so the same record exports as OpenTelemetry, PROV or OpenLineage and stays with the file after any trace store has expired it.</p></div>
+  </div>
+</section>
+
+<section class="card">
+  <header><h2>What is real, what is simulated</h2><span class="sub">measured numbers come from runs in the x3d.ML repo</span></header>
+  <div class="measured" id="provenance"></div>
+</section>
+</div>
+<div id="tour" hidden role="status" aria-live="polite"><div class="tn" id="tn"></div><div class="tb"><b id="th"></b><span id="tt"></span></div><div class="tc"><button id="tNext">Next</button><button id="tStop">Stop</button></div><div id="tbar"></div></div>
+
+<script>
+"use strict";
+const REAL=/*__REAL__*/[];
+const XCSS=/*__XCSS__*/""; /* X_ITE 16.5.0 stylesheet text (MIT licence, Holger Seelig), also injected into the canvas shadow root so the canvas does not depend on a stylesheet request; the X_ITE files are published beside this page (xite/) because a viewer policy blocks the components, fonts and wasm X_ITE fetches at run time when only the script comes from a CDN */
+/* facts about the replay corpus, computed from the data embedded above (nothing typed in by hand) */
+const DRAWS=i=>!i.r.err&&(i.r.nb||0)>=.005;
+const DROP_RE=/Unknown node type|Unknown named or imported node|Container field|insufficient component/,dropped=i=>(i.r.unknown||0)>0||(i.r.msgs||[]).some(m=>DROP_RE.test(m)),
+  kindOf=i=>i.r.err?"unparseable":(i.r.nb||0)>=.005?"draws":(i.r.nf||dropped(i))?"nothing drawable":"blank frame";
+const REALSTATS=(()=>{
+  const f=[["svc@11Oct",i=>i.x&&i.s],["fork@8c0a457",i=>i.f1[0]],["fork@eb4b4b4",i=>i.f2[0]]].map(([n,fn])=>{const v=REAL.filter(fn),d=v.filter(DRAWS).length;return{n,valid:v.length,draws:d,nodraw:v.length-d}});
+  const kinds={draws:0,"blank frame":0,"nothing drawable":0,unparseable:0};REAL.forEach(i=>{kinds[kindOf(i)]++});
+  const flip=REAL.filter(i=>i.x&&i.s&&!i.f1[0]),both=REAL.filter(i=>!i.r.err&&i.r.cb!=null&&i.r.shot!=null),agree=both.filter(i=>(i.r.cb<.005)===(i.r.shot<.005)).length,
+    blankMax=Math.max(0,...REAL.filter(i=>!i.r.err&&(i.r.nb||0)<.005).map(i=>i.r.nb||0)),
+    med=a=>{a=a.filter(v=>v!=null).sort((x,y)=>x-y);return a.length?a[a.length>>1]:null},
+    bl=REAL.filter(i=>!i.r.err&&(i.r.nb||0)<.005),dr=REAL.filter(DRAWS);
+  return{blankMax,n:REAL.length,f,kinds,draws:dr.length,flip:flip.length,flipNoDraw:flip.filter(i=>!DRAWS(i)).length,wf:REAL.filter(i=>i.wf).length,
+    agree,both:both.length,blankFrames:med(bl.map(i=>i.r.frames)),blankLast:med(bl.map(i=>i.r.last)),drawFrames:med(dr.map(i=>i.r.frames)),drawLast:med(dr.map(i=>i.r.last)),
+    dropDraw:dr.filter(dropped).length,extN:REAL.filter(i=>i.r.ext!==undefined).length,extBlank:REAL.filter(i=>i.r.ext!==undefined&&i.r.ext<.005).length,
+    v164n:REAL.filter(i=>i.r.nb164!==undefined).length,v164a:REAL.filter(i=>i.r.nb164!==undefined&&(i.r.err164?"u":i.r.nb164<.005?"b":"d")===(i.r.err?"u":(i.r.nb||0)<.005?"b":"d")).length}})();
+/* ---------- SHA-256 + HMAC (sync, UTF-8) ---------- */
+const K256=new Uint32Array([0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2]);
+const enc=new TextEncoder();
+function sha256b(m){
+  const l=m.length,nb=((l+9+63)>>6)<<6,b=new Uint8Array(nb);b.set(m);b[l]=0x80;
+  const dv=new DataView(b.buffer);dv.setUint32(nb-4,(l*8)>>>0);dv.setUint32(nb-8,Math.floor(l/0x20000000));
+  let h0=0x6a09e667,h1=0xbb67ae85,h2=0x3c6ef372,h3=0xa54ff53a,h4=0x510e527f,h5=0x9b05688c,h6=0x1f83d9ab,h7=0x5be0cd19;const w=new Uint32Array(64);
+  for(let o=0;o<nb;o+=64){
+    for(let i=0;i<16;i++)w[i]=dv.getUint32(o+i*4);
+    for(let i=16;i<64;i++){const a=w[i-15],c=w[i-2];w[i]=(w[i-16]+(((a>>>7)|(a<<25))^((a>>>18)|(a<<14))^(a>>>3))+w[i-7]+(((c>>>17)|(c<<15))^((c>>>19)|(c<<13))^(c>>>10)))>>>0}
+    let a=h0,b2=h1,c=h2,d=h3,e=h4,f=h5,g=h6,h=h7;
+    for(let i=0;i<64;i++){
+      const t1=(h+(((e>>>6)|(e<<26))^((e>>>11)|(e<<21))^((e>>>25)|(e<<7)))+((e&f)^(~e&g))+K256[i]+w[i])>>>0;
+      const t2=((((a>>>2)|(a<<30))^((a>>>13)|(a<<19))^((a>>>22)|(a<<10)))+((a&b2)^(a&c)^(b2&c)))>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b2;b2=a;a=(t1+t2)>>>0}
+    h0=(h0+a)>>>0;h1=(h1+b2)>>>0;h2=(h2+c)>>>0;h3=(h3+d)>>>0;h4=(h4+e)>>>0;h5=(h5+f)>>>0;h6=(h6+g)>>>0;h7=(h7+h)>>>0}
+  return [h0,h1,h2,h3,h4,h5,h6,h7].map(x=>x.toString(16).padStart(8,"0")).join("")
+}
+const sha=s=>sha256b(enc.encode(s));
+const hex2b=h=>{const o=new Uint8Array(h.length/2);for(let i=0;i<o.length;i++)o[i]=parseInt(h.substr(i*2,2),16);return o};
+function hmac(key,msg){const kb=enc.encode(key),k=new Uint8Array(64);k.set(kb);const ip=k.map(x=>x^0x36),op=k.map(x=>x^0x5c),mb=enc.encode(msg);
+  const i1=new Uint8Array(64+mb.length);i1.set(ip);i1.set(mb,64);const ih=hex2b(sha256b(i1));const o1=new Uint8Array(96);o1.set(op);o1.set(ih,64);return sha256b(o1)}
+
+/* ---------- x3dprov (JS port of the prototype; text-normalised hash instead of lxml C14N) ---------- */
+const ZERO="0".repeat(64),SECRET="pipeline-sim-key";
+const META_RE=/\s*<meta name="x3dprov\.[^"]*" content="[^"]*"\/>/g;
+const STEP_RE=/<meta name="x3dprov\.step\.(\d+)" content="([^"]*)"\/>/g;
+const unesc=s=>s.replace(/&quot;/g,'"').replace(/&lt;/g,"<").replace(/&gt;/g,">").replace(/&amp;/g,"&");
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const stripProv=x=>x.replace(META_RE,"");
+const contentHash=x=>sha(stripProv(x).replace(/>\s+</g,"><").trim());
+function readSteps(x){const o=[];STEP_RE.lastIndex=0;let m;while((m=STEP_RE.exec(x)))o.push([+m[1],unesc(m[2])]);return o.sort((a,b)=>a[0]-b[0])}
+function readSeal(x){const m=/<meta name="x3dprov\.seal" content="([^"]*)"\/>/.exec(x);return m?m[1]:null}
+const dumps=o=>JSON.stringify(o,Object.keys(o).sort());
+function injectMeta(x,metas){
+  if(x.indexOf("</head>")>=0)return x.replace("</head>",metas+"</head>");
+  let m=/<head\b[^>]*\/>/.exec(x);if(m)return x.slice(0,m.index)+"<head>"+metas+"</head>"+x.slice(m.index+m[0].length);
+  m=/<X3D\b[^>]*>/.exec(x);if(m)return x.slice(0,m.index+m[0].length)+"<head>"+metas+"</head>"+x.slice(m.index+m[0].length);
+  return "<head>"+metas+"</head>\n"+x}
+function addStep(before,step,after,seal){
+  const steps=readSteps(before),out=after??before,prev=steps.length?steps[steps.length-1][1]:null,rec={...step};
+  rec.input_sha256=rec.input_sha256||(prev?JSON.parse(prev).output_sha256:contentHash(before));
+  rec.output_sha256=contentHash(out);rec.prev=prev?sha(prev):ZERO;
+  const all=steps.concat([[steps.length+1,dumps(rec)]]);
+  let metas='<meta name="x3dprov.version" content="x3dprov/0.1"/>'+all.map(([n,c])=>`<meta name="x3dprov.step.${n}" content="${esc(c)}"/>`).join("");
+  if(seal)metas+=`<meta name="x3dprov.seal" content="${hmac(SECRET,sha(all[all.length-1][1])+":"+all.length)}"/>`;
+  return injectMeta(stripProv(out),metas)
+}
+function verify(x,trace){
+  const steps=readSteps(x),seal=readSeal(x),rows=trace?[]:null,pr=[];
+  if(!steps.length)return{ok:false,status:"no-record",problems:["no record"],rows};
+  let pj=null,po=null;
+  steps.forEach(([n,c],i)=>{let r;try{r=JSON.parse(c)}catch(e){pr.push(`step ${n}: not JSON`);rows&&rows.push({n,chk:"parse step JSON",exp:"JSON",got:"error",ok:false});return}
+    if(n!==i+1){pr.push(`gap before step ${n}`);rows&&rows.push({n,chk:"step numbering",exp:String(i+1),got:String(n),ok:false})}
+    const want=pj?sha(pj):ZERO,okp=r.prev===want;if(!okp)pr.push(`step ${n}: prev hash mismatch (step ${n-1} removed or edited)`);
+    rows&&rows.push({n,chk:"prev = SHA-256( step n-1 )",exp:want,got:r.prev,ok:okp});
+    if(po!==null){const oki=r.input_sha256===po;if(!oki)pr.push(`step ${n}: input differs from step ${n-1} output`);rows&&rows.push({n,chk:"input = step n-1 output",exp:po,got:r.input_sha256,ok:oki})}
+    pj=c;po=r.output_sha256});
+  if(pr.length)return{ok:false,status:"broken",problems:pr,rows};
+  if(seal){const want=hmac(SECRET,sha(pj)+":"+steps.length),oks=seal===want;rows&&rows.push({n:steps.length,chk:"seal = HMAC( key, SHA-256(head) : n )",exp:want,got:seal,ok:oks});
+    if(!oks)return{ok:false,status:"seal-fail",problems:["seal does not match chain head (last step or step count altered)"],rows}}
+  const cur=contentHash(x),okc=cur===po;rows&&rows.push({n:steps.length,chk:"content hash = head output",exp:po,got:cur,ok:okc});
+  if(!okc)return{ok:false,status:"stale",problems:["content differs from last recorded output (untracked edit)"],rows};
+  return{ok:true,status:"verified",problems:[],sealed:!!seal,rows}
+}
+
+/* ---------- simulation world ---------- */
+const MODELS_SYN=[ /* p1 = measured one-shot valid rate on fork eb4b4b4 for the three open models (7%, 40%, 33% of 30 prompts each, rounded); pr, price, tokens, latency and both frontier rows are illustrative */
+ {id:"qwen3-8b",p1:.07,pr:.35,price:.20,tok:[900,2600],lat:[9,22]},
+ {id:"qwen2.5-coder-14b-awq",p1:.40,pr:.55,price:.35,tok:[700,2200],lat:[7,18]},
+ {id:"gpt-oss-20b",p1:.33,pr:.60,price:.45,tok:[800,2800],lat:[6,16]},
+ {id:"frontier-A",p1:.57,pr:.82,price:3.0,tok:[600,2000],lat:[3,9]},
+ {id:"frontier-B",p1:.46,pr:.78,price:1.2,tok:[600,2200],lat:[2,7]}];
+const MODELS_REAL=["qwen3-8b","qwen2.5-coder-14b-awq","gpt-oss-20b"];
+const VALS=[{id:"svc",ref:"svc@11Oct",name:"x3d-mcp-svc",strict:0},{id:"f1",ref:"fork@8c0a457",name:"fork",strict:1},{id:"f2",ref:"fork@eb4b4b4",name:"fork",strict:2}];
+const SAFEMAP={"qwen3-8b":"open-8B","qwen2.5-coder-14b-awq":"open-14B","qwen2.5-coder-14b":"open-14B","gpt-oss-20b":"open-20B"};
+let S=null;
+const disp=m=>S&&S.safe?(SAFEMAP[m]||m):m;
+const safeText=t=>{if(!S.safe)return t;let o=t;for(const k in SAFEMAP)o=o.split(k).join(SAFEMAP[k]);
+  return o.replace(/"(cost[a-z_]*)":\s*[0-9.eE+-]+/g,'"$1":"hidden"').replace(/g2-standard-8[^"]*?us-central1/g,"1x 24 GB GPU, vLLM 0.11").replace(/"run":"[0-9a-f]{8}"/g,'"run":"hidden"').replace(/ChatGPT|OpenAI|Anthropic|Claude|Gemini/gi,"a model")};
+const money=v=>S.safe?"hidden":"$"+v;
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function fresh(mode){
+  const prev=S;S={mode:mode||(prev?prev.mode:"syn"),safe:prev?prev.safe:false,seq:0,scenes:[],byId:new Map(),vi:0,sealOn:false,paused:false,rate:(mode||(prev&&prev.mode))==="real"?6:14,
+    stage:{gen:0,v1p:0,v1f:0,rep:0,v2p:0,v2f:0,ren:0,tr:0,ok:0,drop:0},mod:{},cost:0,provBytes:0,alerts:[],det:[],inj:0,detected:0,ttd:[],sel:null,scr:0,flips:0,revals:0,tick:0,thr:[],series:[],events:[],
+    ri:0,order:[],done:false,sec:{v:0,i:0,d:0}};
+  const names=S.mode==="real"?MODELS_REAL:MODELS_SYN.map(m=>m.id);names.forEach(id=>S.mod[id]={n:0,first:0,rep:0,repOk:0,cost:0,valid:0});
+  if(S.mode==="real"){const rnd=mulberry(1017),o=REAL.map((_,i)=>i);for(let i=o.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[o[i],o[j]]=[o[j],o[i]]}S.order=o}
+}
+const curV=()=>VALS[S.vi];
+const R=Math.random,pick=a=>a[(R()*a.length)|0],rr=(a,b)=>a+R()*(b-a);
+const modelMs=(op,V)=>Math.round(op==="validate"?(V&&V.strict?rr(300,900):rr(120,360)):op==="render"?rr(900,2600):op==="transform"?rr(1500,4200):rr(500,2000));
+/* Synthetic world. Its defect classes mirror the measured ones: the service that was live on 11 Oct only caught schema-level
+   problems (xsd). A missing component statement (profile-component) or a misplaced node (containerfield) was invisible to it, and
+   X_ITE drops such nodes silently, so those scenes pass the service and draw nothing. The 3D tab shows what X_ITE really does. */
+function synthXml(t){
+  const sh=t.shp.map((s,i)=>{const tr=`translation="${s.x} ${s.y} ${s.z}"`,geo=t.noComp?(i%2?`<Circle2D radius="0.8"/>`:`<Rectangle2D size="1.4 1"/>`):`<${s.k}/>`;
+    return t.hard&&!t.hardFixed?`<Transform DEF="T${i}" ${tr}><Group><${s.k}/></Group></Transform>`
+      :`<Transform DEF="T${i}" ${tr}><Shape DEF="S${i}"><Appearance><Material diffuseColor="${s.c}"/></Appearance>${geo}</Shape></Transform>`}).join("");
+  const route=t.latent&&!t.latentFixed?`<ROUTE fromNode="T0" fromField="translation_chg" toNode="T1" toField="translation"/>`:"";
+  const anim=t.late2?`<TimeSensor DEF="TS" loop="true" cycleInterval="4"/><OrientationInterpolator DEF="OI" key="${t.late2Fixed?"0 1":"0 0.5 1"}" keyValue="0 1 0 0 0 1 0 3.14"/><ROUTE fromNode="TS" fromField="fraction_changed" toNode="OI" toField="set_fraction"/><ROUTE fromNode="OI" fromField="value_changed" toNode="T0" toField="rotation"/>`:"";
+  return `<X3D profile="Interchange" version="4.0"><head>${t.compFixed?"<component name='Geometry2D' level='1'/>":""}</head><Scene><Viewpoint position="0 0 9"${t.xsd&&!t.xsdFixed?' fieldOfView="wide"':""}/>${sh}${route}${anim}</Scene></X3D>`
+}
+const DEFECT_FIX={"xsd-invalid":"xsdFixed","profile-component":"compFixed","containerfield-type-mismatch":"hardFixed","route-invalid-from-field":"latentFixed","interpolator-key-length":"late2Fixed"};
+const drawsNothing=t=>(t.noComp&&!t.compFixed)||(t.hard&&!t.hardFixed);
+function judge(sc,V){
+  if(sc.src==="real"){const it=sc.item;
+    if(V.id==="svc"){const ok=it.x&&it.s;return{verdict:ok?"valid":"invalid",codes:ok?[]:[it.x?"recorded:semantic":"recorded:xsd"]}}
+    const f=V.id==="f1"?it.f1:it.f2;return{verdict:f[0]?"valid":"invalid",codes:f[1]}}
+  const t=sc.truth,codes=[];
+  if(t.xsd&&!t.xsdFixed)codes.push("xsd-invalid");
+  if(V.strict>=1){if(t.noComp&&!t.compFixed)codes.push("profile-component");if(t.hard&&!t.hardFixed)codes.push("containerfield-type-mismatch");if(t.latent&&!t.latentFixed)codes.push("route-invalid-from-field")}
+  if(V.strict>=2&&t.late2&&!t.late2Fixed)codes.push("interpolator-key-length");
+  return{verdict:codes.length?"invalid":"valid",codes}
+}
+function vStep(sc,V){const r=judge(sc,V);const rec={op:"validate",validator:V.name,validator_ref:V.ref,verdict:r.verdict,codes:r.codes,ms:modelMs("validate",V),ms_src:"modeled"};
+  if(sc.src==="real"&&V.id==="svc"){rec.recorded=true;rec.xsd_valid=!!sc.item.x;rec.semantic_valid=!!sc.item.s;rec.constraints_ok=!!sc.item.cn}return{rec,verdict:r.verdict}}
+const WIN=360;
+function finish(sc,x,v){
+  sc.xml=x;sc.nsteps=readSteps(x).length;sc.vref=lastRef(x);sc.verdict=v;sc.status=verify(x).status;S.provBytes+=x.length-stripProv(x).length;
+  S.scenes.push(sc);S.byId.set(sc.id,sc);S.sec[v==="valid"?"v":"i"]++;
+  if(S.scenes.length>WIN){let k=0;while(k<S.scenes.length-1&&S.scenes[k].injured&&!S.scenes[k].detected&&!verify(S.scenes[k].xml).ok)k++;  /* a detectable tamper stays in the window until the scrubber has named it; an undetectable one (the stated gap) may age out and counts as missed */
+    const o=S.scenes.splice(k,1)[0];S.byId.delete(o.id);if(S.sel===o.id)S.sel=null}
+}
+function lastRef(x){const st=readSteps(x);for(let i=st.length-1;i>=0;i--){const j=JSON.parse(st[i][1]);if(j.op==="validate")return j.validator_ref}return"?"}
+function genSyn(){
+  const m=pick(MODELS_SYN),id="S-"+String(++S.seq).padStart(6,"0"),rep=R()<.6,V=curV(),clean=R()<m.p1,n=2+((R()*4)|0);
+  const t={xsd:false,noComp:false,hard:false,latent:false,late2:false,xsdFixed:false,compFixed:false,hardFixed:false,latentFixed:false,late2Fixed:false,shp:[]};
+  for(let i=0;i<n;i++)t.shp.push({k:pick(["Box","Sphere","Cone","Cylinder"]),c:[R().toFixed(2),R().toFixed(2),R().toFixed(2)].join(" "),x:+rr(-3,3).toFixed(2),y:+rr(-1.5,1.5).toFixed(2),z:+rr(-2,2).toFixed(2)});
+  if(!clean){const d=R(),blind=()=>{if(R()<.7)t.noComp=true;else t.hard=true};  /* blind = a defect the old service cannot see */
+    if(d<.5)t.xsd=true;else if(d<.6)blind();else{t.xsd=true;blind()}
+    t.latent=R()<.25;t.late2=R()<.05}
+  const sc={id,src:"syn",model:m.id,mode:rep?"repair":"oneshot",born:S.tick,truth:t,sealed:S.sealOn,status:"?",nsteps:0,vref:"",verdict:"",xml:"",nb:null,blank:false};
+  let x=synthXml(t);
+  const tin=Math.round(rr(m.tok[0],m.tok[1])*.35),tout=Math.round(rr(m.tok[0],m.tok[1])),cost=(tin*.3+tout)*m.price/1e6,M=S.mod[m.id];
+  M.n++;M.cost+=cost;S.cost+=cost;S.stage.gen++;const lat=Math.round(rr(m.lat[0],m.lat[1])*1000);
+  x=addStep(x,{op:"generate",model:m.id,provider:"sim",condition:rep?"report_repair":"oneshot",temperature:.4,prompt_sha256:sha("p"+id).slice(0,16),tokens_in:tin,tokens_out:tout,latency_ms:lat,cost_usd_est:+cost.toFixed(5),ms:lat,ms_src:"simulated",input_sha256:"none"},x,sc.sealed);
+  let v=vStep(sc,V);x=addStep(x,v.rec,x,sc.sealed);
+  if(v.verdict==="valid"){M.first++;S.stage.v1p++}else S.stage.v1f++;
+  if(v.verdict==="invalid"&&rep){
+    for(let round=1;round<=3&&v.verdict==="invalid";round++){
+      M.rep++;S.stage.rep++;const shown=judge(sc,V).codes,ok=R()<m.pr,c2=(tin*.4+tout*.5)*m.price/1e6;M.cost+=c2;S.cost+=c2;
+      if(ok)shown.forEach(c=>{if(DEFECT_FIX[c])t[DEFECT_FIX[c]]=true});   /* a repair can only fix what the validator showed it */
+      x=addStep(x,{op:"repair",kind:"model",model:m.id,round,report_shown:true,fixes:ok?shown:[],cost_usd_est:+c2.toFixed(5),ms:Math.round(lat*.5),ms_src:"simulated"},synthXml(t),sc.sealed);
+      v=vStep(sc,V);x=addStep(x,v.rec,x,sc.sealed);
+      if(v.verdict==="valid"){M.repOk++;S.stage.v2p++;break}
+    }
+    if(v.verdict==="invalid")S.stage.v2f++;
+  }
+  if(v.verdict==="valid"){M.valid++;
+    const blank=drawsNothing(t),nb=blank?0:+rr(.08,.6).toFixed(3);sc.nb=nb;sc.blank=blank;sc.drawKind=blank?"nothing drawable":"draws";if(!blank)S.stage.ren++;
+    x=addStep(x,{op:"render",renderer:"x_ite headless (modeled from the scene's defects)",load_ok:true,nodes:t.shp.length,nonblank_ratio:nb,no_frame:blank?1:0,unknown_nodes:blank?t.shp.length:0,ms:modelMs("render"),ms_src:"modeled"},x,sc.sealed);
+    if(R()<.3){S.stage.tr++;x=addStep(x,{op:"transform",agent:"x3d-blender-io",agent_ref:"206f139",tool:"blender 5.2.2",detail:"import->export X3D40",ms:modelMs("transform"),ms_src:"modeled"},stripProv(x).replace("<Scene>","<Scene><!--rt-->"),sc.sealed);
+      v=vStep(sc,V);x=addStep(x,v.rec,x,sc.sealed)}
+    S.stage.ok++
+  }else S.stage.drop++;
+  finish(sc,x,v.verdict);return sc
+}
+function genReal(){
+  if(S.ri>=S.order.length){if(!S.done){S.done=true;S.paused=true;$("bPause").textContent="Resume";logEv("sys",`replay complete: ${S.order.length} real scenes streamed. Press Restart to run it again.`)}return null}
+  const it=REAL[S.order[S.ri++]],id="R-"+String(S.ri).padStart(3,"0"),V=curV(),sealed=S.sealOn;S.seq=S.ri;
+  const sc={id,src:"real",item:it,model:it.m,mode:it.mo,born:S.tick,sealed,status:"?",nsteps:0,vref:"",verdict:"",xml:"",nb:null,blank:false};
+  const M=S.mod[it.m],costEst=+(it.rc/it.nrun).toFixed(5);M.n++;M.cost+=costEst;S.cost+=costEst;S.stage.gen++;
+  let x=it.b;
+  x=addStep(x,{op:"generate",model:it.m,provider:"vllm_l4",run:it.rid,hardware:it.hw,condition:it.mo==="grounded"?"report_repair":"oneshot",temperature:.4,max_tokens:8000,prompt_id:it.p,prompt_sha256:it.psha.slice(0,16),
+    attempts_total:it.at,earlier_attempts:it.earlier.map((e,i)=>({attempt:i+1,xsd_valid:!!e[0],semantic_valid:!!e[1]})),tokens_in:it.ti,tokens_out:it.to,latency_ms:it.lat,cost_apportioned_usd:costEst,ms:it.lat,ms_src:"recorded",input_sha256:"none"},x,sealed);
+  const svcOk=it.x&&it.s;if(it.at===1&&svcOk){M.first++;S.stage.v1p++}else S.stage.v1f++;
+  if(it.at>1){S.stage.rep+=it.at-1;M.rep+=it.at-1;if(svcOk){S.stage.v2p++;M.repOk++}}
+  // replay always starts at the validator that was live on 11 Oct; a later one is applied by re-validation
+  const v0=vStep(sc,VALS[0]);x=addStep(x,v0.rec,x,sealed);let v=v0;
+  {const nb=it.r.nb??0;sc.nb=nb;sc.blank=nb<.005;sc.drawKind=kindOf(it);
+    x=addStep(x,{op:"render",renderer:"x_ite@16.5.0 headless swiftshader (offline, today)",load_ok:!it.r.err,nodes:it.r.nodes??0,nonblank_ratio:nb,frames_watched:it.r.frames||0,no_frame:it.r.nf?1:0,parser_msgs:it.r.nmsg||0,unknown_nodes:it.r.unknown||0,ms:it.r.ms||0,ms_src:"measured"},x,sealed);
+    if(!sc.blank)S.stage.ren++}
+  if(svcOk){M.valid++;S.stage.ok++}else S.stage.drop++;
+  finish(sc,x,v.verdict);sc.vref=VALS[0].ref;
+  if(S.vi>0)revalidateOne(sc);
+  return sc
+}
+function revalidateOne(sc){const V=curV(),prev=sc.verdict,v=vStep(sc,V);sc.xml=addStep(sc.xml,v.rec,sc.xml,sc.sealed);sc.nsteps=readSteps(sc.xml).length;sc.verdict=v.verdict;sc.vref=V.ref;sc.status=verify(sc.xml).status;return prev==="valid"&&v.verdict==="invalid"}
+
+/* ---------- fault injection + scrubber ---------- */
+function logEv(kind,msg){S.alerts.unshift({t:S.tick,kind,msg});if(S.alerts.length>60)S.alerts.pop()}
+function ev(k,label){S.events.push({s:S.series.length+(S.sec.v+S.sec.i?1:0),k,label})}
+const LABEL={edit:"coordinate edit",del:"step deletion",flipmid:"interior verdict flip",fliplast:"last-step verdict flip"};
+function setStepJson(x,n,j){return x.replace(new RegExp(`<meta name="x3dprov\\.step\\.${n}" content="[^"]*"/>`),`<meta name="x3dprov.step.${n}" content="${esc(dumps(j))}"/>`)}
+function inject(type,target){
+  let sc=target;if(!sc){const pool=S.scenes.filter(s=>s.status==="verified"&&!s.injured&&s.nsteps>=3);if(!pool.length)return;sc=pick(pool)}
+  let x=sc.xml;const all=readSteps(x);
+  if(type==="edit"){const m=/(translation|size|radius|height|diffuseColor|point)="([^"]*)"/.exec(stripProv(x));
+    if(m)x=x.replace(m[0],`${m[1]}="${m[2]} 9"`);else x=x.replace(/<Scene\b[^>]*>/,"$&<!--edited-->")}
+  else if(type==="del"){const n=all.length>2?2:1;x=x.replace(new RegExp(`<meta name="x3dprov\\.step\\.${n}" content="[^"]*"/>`),"")}
+  else if(type==="flipmid"){const st=all.find(([n,c])=>n>=2&&n<all.length&&JSON.parse(c).verdict)||all[1];const j=JSON.parse(st[1]);if(j.verdict)j.verdict=j.verdict==="valid"?"invalid":"valid";else j.note="edited";x=setStepJson(x,st[0],j)}
+  else if(type==="fliplast"){const st=all[all.length-1],j=JSON.parse(st[1]);if(j.verdict)j.verdict=j.verdict==="valid"?"invalid":"valid";else if(j.model)j.model=j.model+"-x";else j.note="edited";x=setStepJson(x,st[0],j)}
+  sc.xml=x;sc.injured={t:performance.now(),type};sc.detected=false;sc.status="verified";S.inj++;S.sec.i+=0;
+  logEv("inj",`${sc.id}: injected ${LABEL[type]} (${sc.sealed?"sealed":"unsealed"} chain)`);ev("I","inject");if(S.sel===sc.id)renderInspector()
+}
+function scrub(n){
+  for(let i=0;i<n&&S.scenes.length;i++){
+    S.scr=(S.scr+1)%S.scenes.length;const sc=S.scenes[S.scr],vr=verify(sc.xml);
+    if(sc.status!==vr.status){sc.status=vr.status;
+      if(!vr.ok&&sc.injured&&!sc.detected){sc.detected=true;S.detected++;const ttd=(performance.now()-sc.injured.t)/1000;S.ttd.push(ttd);S.det.push({t:S.tick});S.sec.d++;ev("D","detected");
+        logEv("det",`${sc.id}: ${vr.status.toUpperCase()} after ${ttd.toFixed(2)}s · ${vr.problems[0]}`)}}}
+}
+
+/* ---------- UI helpers ---------- */
+const $=id=>document.getElementById(id);const pc=(a,b)=>b?(100*a/b).toFixed(1)+"%":"-";
+const CH={verified:["p-ok","VERIFIED"],stale:["p-warn","STALE"],broken:["p-bad","BROKEN"],"seal-fail":["p-bad","SEAL FAIL"],"no-record":["p-mute","NO RECORD"],"?":["p-mute","?"]};
+let bench={sha:0,ver:0};
+function runBench(){
+  const buf=enc.encode("x".repeat(262144));let t=performance.now(),k=0;while(performance.now()-t<80){sha256b(buf);k++}bench.sha=+(k*262144/1048576/((performance.now()-t)/1000)).toFixed(1);
+  const xs=S.scenes.slice(-40).map(s=>s.xml);if(xs.length){t=performance.now();let c=0;for(let r=0;r<4;r++)xs.forEach(x=>{verify(x);c++});bench.ver=Math.round((performance.now()-t)*1000/c)}
+}
+const blankValid=()=>S.scenes.filter(s=>s.verdict==="valid"&&s.blank).length;
+function kpis(){
+  const tot=S.scenes.length,cnt=s=>S.scenes.filter(x=>x.status===s).length,V=curV();
+  const stale=S.scenes.filter(x=>x.vref!==V.ref).length,valid=S.scenes.filter(x=>x.verdict==="valid").length,bv=blankValid();
+  const costTxt=S.safe?"hidden":"$"+S.cost.toFixed(2),perValid=S.safe?"":("$"+(S.stage.ok?(S.cost/S.stage.ok).toFixed(4):"-")+" per valid scene");
+  const K=[
+   ["scenes ingested",S.seq.toLocaleString(),`window ${tot} · ${S.thr.length?S.thr[S.thr.length-1]:0}/s`,"acc"],
+   ["chains verified",pc(cnt("verified"),tot),cnt("verified")+" of "+tot,"ok"],
+   ["stale / broken",cnt("stale")+" / "+(cnt("broken")+cnt("seal-fail")),"tamper evidence","bad"],
+   ["injected / caught",S.inj+" / "+S.detected,S.inj-S.detected?`${S.inj-S.detected} undetected`:"none missed",S.inj-S.detected?"warn":"ok"],
+   ["time to detect",S.ttd.length?(S.ttd.reduce((a,b)=>a+b,0)/S.ttd.length).toFixed(2)+"s":"-","mean, scrubber sweep","acc"],
+   ["validator now",V.ref.replace("fork@","f@"),["weak service","fork, first ruleset","fork, current"][S.vi],"warn"],
+   ["need re-validation",stale,"last verdict on older ref",stale?"warn":"ok"],
+   ["valid, draws nothing",bv,valid?pc(bv,valid)+" of valid scenes":"-",bv?"warn":"ok"],
+   ["provenance bytes",tot?Math.round(S.provBytes/Math.max(1,S.seq))+" B":"-","mean per scene, "+(tot?Math.round(S.scenes.reduce((a,s)=>a+s.nsteps,0)/tot*10)/10:0)+" steps","acc"],
+   [S.mode==="real"?"run cost (apportioned)":"sim spend",costTxt,perValid,"acc"],
+   ["verify cost",bench.ver?bench.ver+" µs":"-",`${bench.sha||"-"} MB/s SHA-256, this browser`,"acc"]];
+  $("kpis").innerHTML=K.map(k=>`<div class="kpi ${k[3]}" title="${esc(k[0]+": "+k[1]+" · "+k[2])}"><div class="l">${k[0]}</div><div class="v${String(k[1]).length>8?" long":""}">${k[1]}</div><div class="s">${k[2]}</div></div>`).join("")
+}
+function renderBadge(s){if(s.nb===null)return'<span class="pill p-mute">-</span>';if(s.drawKind==="unparseable")return'<span class="pill p-bad">UNPARSEABLE</span>';if(s.drawKind==="nothing drawable")return'<span class="pill p-warn">NO DRAW</span>';if(s.blank)return'<span class="pill p-warn">BLANK</span>';return`<span class="pill p-ok">${(s.nb*100).toFixed(0)}%</span>`}
+const DRAWTXT={"unparseable":"X_ITE could not parse the file","nothing drawable":"X_ITE accepted the file, dropped what it could not read and was left with nothing to draw: a few blank frames, then idle","blank frame":"frames were drawn but under 0.5% of pixels ever differ from the background","draws":"draws"};
+let fhSig="";
+function fh(){
+  const rows=S.scenes.slice(-80).reverse(),sig=rows.map(s=>s.id+s.status+s.verdict+s.nsteps+(s.injured?1:0)).join()+S.sel+S.safe;if(sig===fhSig)return;fhSig=sig;
+  const ae=document.activeElement,fid=ae&&ae.closest&&ae.closest("#fh")&&ae.dataset?ae.dataset.id:null;
+  $("fh").innerHTML=rows.map(s=>{const c=CH[s.status]||CH["?"],vd=s.verdict==="valid"?"p-ok":"p-bad";
+    return`<tr tabindex="0" data-id="${s.id}" class="${S.sel===s.id?"sel":""}"><td>${(s.born/10).toFixed(1)}</td><td>${s.id}${s.injured?'<span class="pill p-bad" style="margin-left:4px">INJ</span>':""}</td><td>${esc(disp(s.model).replace("-awq",""))}</td><td>${s.mode}</td><td>${s.nsteps}${s.sealed?" 🔒":""}</td><td>${s.vref}</td><td><span class="pill ${vd}">${s.verdict}</span></td><td>${renderBadge(s)}</td><td><span class="pill ${c[0]}">${c[1]}</span></td></tr>`}).join("");
+  if(fid){const el=$("fh").querySelector(`tr[data-id="${fid}"]`);if(el)el.focus({preventScroll:true})}
+  $("fhSub").textContent=`newest first · ${S.scenes.length} in window · ${WIN} retained`
+}
+/* integrity wall */
+const wall=$("wall"),wctx=wall.getContext("2d");let wallGeom={cols:1,cell:12};
+function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function drawWall(){
+  const dpr=window.devicePixelRatio||1,cw=wall.clientWidth||600,cap=S.mode==="real"?174:WIN,gap=2,cols=cw>=1000?58:cw>=600?40:29,cell=Math.max(6,Math.floor((cw-gap*(cols+1))/cols)),rows=Math.ceil(cap/cols),h=rows*(cell+gap)+gap;
+  if(wall.width!==Math.round(cw*dpr)||wall.height!==Math.round(h*dpr)){wall.width=Math.round(cw*dpr);wall.height=Math.round(h*dpr);wall.style.height=h+"px"}
+  wctx.setTransform(dpr,0,0,dpr,0,0);wctx.clearRect(0,0,cw,h);wallGeom={cols,cell,gap};
+  const col={verified:cssv("--ok"),stale:cssv("--warn"),broken:cssv("--bad"),"seal-fail":cssv("--bad"),"?":cssv("--dim"),"no-record":cssv("--dim")},info=cssv("--info"),acc=cssv("--acc");
+  const n=S.scenes.length;
+  for(let i=0;i<cap;i++){const x=gap+(i%cols)*(cell+gap),y=gap+Math.floor(i/cols)*(cell+gap),s=S.scenes[i];
+    if(!s){wctx.fillStyle=cssv("--line");wctx.globalAlpha=.35;wctx.fillRect(x,y,cell,cell);wctx.globalAlpha=1;continue}
+    wctx.fillStyle=col[s.status]||col["?"];wctx.fillRect(x,y,cell,cell);
+    if(s.verdict==="invalid"){const bar=Math.max(3,Math.round(cell/6));wctx.fillStyle=info;wctx.fillRect(x,y+cell-bar,cell,bar)}
+    if(s.blank&&s.verdict==="valid"){const d=Math.max(3,Math.round(cell/4));wctx.fillStyle="#fff";wctx.fillRect(x+cell-d-1,y+1,d,d)}
+    if(S.sel===s.id){wctx.strokeStyle="#fff";wctx.lineWidth=1.5;wctx.strokeRect(x-1,y-1,cell+2,cell+2)}}
+  if(n){const i=S.scr%n,x=gap+(i%cols)*(cell+gap),y=gap+Math.floor(i/cols)*(cell+gap);wctx.strokeStyle=acc;wctx.lineWidth=2;wctx.strokeRect(x-1.5,y-1.5,cell+3,cell+3)}
+  $("wallSub").textContent=`${n} stored · ${S.scenes.filter(s=>s.status!=="verified").length} not verified · scrubber at cell ${n?S.scr%n:0}`
+}
+wall.onclick=e=>{const r=wall.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,{cols,cell,gap}=wallGeom,i=Math.floor((y-gap)/(cell+gap))*cols+Math.floor((x-gap)/(cell+gap));if(S.scenes[i]){S.sel=S.scenes[i].id;renderInspector()}};
+/* contact sheet */
+function schematic(sc){
+  if(sc.truth&&drawsNothing(sc.truth))return placeholder("nothing drawable");
+  const c=document.createElement("canvas");c.width=104;c.height=78;const g=c.getContext("2d");g.fillStyle="#0b0f14";g.fillRect(0,0,104,78);
+  (sc.truth?sc.truth.shp:[]).forEach(s=>{const x=52+s.x*10,y=39-s.y*10,col=s.c.split(" ").map(v=>Math.round(v*255));g.fillStyle=`rgb(${col})`;
+    if(s.k==="Sphere"){g.beginPath();g.arc(x,y,8,0,7);g.fill()}else if(s.k==="Cone"){g.beginPath();g.moveTo(x,y-9);g.lineTo(x+8,y+7);g.lineTo(x-8,y+7);g.fill()}else if(s.k==="Cylinder"){g.fillRect(x-6,y-8,12,16)}else g.fillRect(x-8,y-8,16,16)});
+  return c.toDataURL("image/png")
+}
+function placeholder(kind){const c=document.createElement("canvas");c.width=104;c.height=78;const g=c.getContext("2d");g.fillStyle="#0b0f14";g.fillRect(0,0,104,78);g.strokeStyle="#334355";g.lineWidth=1;
+  for(let i=-78;i<104;i+=9){g.beginPath();g.moveTo(i,78);g.lineTo(i+78,0);g.stroke()}
+  g.fillStyle="#f0b84a";g.font="600 10px monospace";g.textAlign="center";g.fillText(kind==="unparseable"?"PARSE FAIL":"NOTHING TO DRAW",52,43);return c.toDataURL("image/png")}
+function thumbOf(sc){if(sc.thumb)return sc.thumb;sc.thumb=sc.src==="real"?(sc.item.r.jpg&&!sc.blank?"data:image/jpeg;base64,"+sc.item.r.jpg:placeholder(sc.drawKind)):schematic(sc);return sc.thumb}
+const BADTXT={"unparseable":"NO PARSE","nothing drawable":"NO DRAW","blank frame":"BLANK"};
+let galSig="";
+function gallery(){
+  const list=S.scenes.slice(-36).reverse(),sig=list.map(s=>s.id+s.verdict+s.status).join()+S.sel+S.mode;if(sig===galSig)return;galSig=sig;
+  $("gal").innerHTML=list.map(s=>{const cls=s.status!=="verified"?"x":s.verdict==="valid"?"v":"i";
+    return`<button class="th ${cls} ${S.sel===s.id?"sel":""}" data-id="${s.id}" aria-label="${s.id} ${s.verdict}${s.blank?", draws nothing":""}"><img alt="" src="${thumbOf(s)}"><span class="tg"><b>${s.verdict==="valid"?"VALID":"INVALID"}</b>${s.blank?`<b class="bl">${BADTXT[s.drawKind]||"BLANK"}</b>`:""}${s.status!=="verified"?`<b class="bl">${(CH[s.status]||CH["?"])[1]}</b>`:""}</span></button>`}).join("");
+  $("galSub").textContent=S.mode==="real"?"real X_ITE 16.5.0 renders (headless, software GL, made offline today) of the newest scenes · green frame valid, red invalid, amber chain not verified":"schematic previews of synthetic scenes · green valid, red invalid, amber chain not verified"
+}
+$("gal").onclick=e=>{const b=e.target.closest("button");if(b){S.sel=b.dataset.id;renderInspector()}};
+/* inspector */
+let tab="chain",v3Token=0;
+const OPCOL={generate:"p-info",validate:"p-ok",repair:"p-warn",render:"p-mute",transform:"p-info",ingest:"p-mute"};
+function stepDesc(r){
+  if(r.op==="generate")return`<em>${esc(disp(r.model))}</em> ${r.condition} · ${r.tokens_in}→${r.tokens_out} tok · ${r.latency_ms} ms · ${r.cost_usd_est!==undefined?money(r.cost_usd_est):money(r.cost_apportioned_usd)}${r.attempts_total>1?` · ${r.attempts_total} attempts`:""} · prompt ${r.prompt_sha256}`;
+  if(r.op==="validate")return`<em>${r.validator}</em> <i>@</i> ${r.validator_ref} → <b style="color:var(--${r.verdict==="valid"?"ok":"bad"})">${r.verdict}</b> ${r.codes&&r.codes.length?"· "+r.codes.join(", "):""}${r.recorded?" · <i>recorded 11 Oct</i>":""}`;
+  if(r.op==="repair")return`<em>${esc(disp(r.model))}</em> round ${r.round} · report shown · fixes ${(r.fixes||[]).join(", ")||"none named"} · ${money(r.cost_usd_est)}`;
+  if(r.op==="render")return`${r.renderer} · ${r.load_ok?"parsed":"<b style='color:var(--bad)'>NOT PARSED</b>"}${r.nodes!==undefined&&r.load_ok?" · "+r.nodes+" root nodes":""}${r.unknown_nodes?` · <b style="color:var(--warn)">${r.unknown_nodes} unknown nodes dropped</b>`:""} · nonblank <b style="color:var(--${r.nonblank_ratio<.005?"warn":"ok"})">${(r.nonblank_ratio*100).toFixed(1)}%</b>${r.no_frame?` · <b style="color:var(--warn)">no frame: nothing drawable</b>`:""}`;
+  return`<em>${r.agent}</em>@${r.agent_ref} · ${r.tool} · ${r.detail}`}
+function spansOf(sc){let t=0;return readSteps(sc.xml).map(([n,c])=>{const r=JSON.parse(c),ms=r.ms||modelMs(r.op,null),sp={n,r,t0:t,ms,src:r.ms?r.ms_src||"recorded":"modeled",sid:sha(c).slice(0,16)};t+=ms;return sp})}
+function realExtra(sc){
+  if(sc.src!=="real")return"";const it=sc.item;
+  return`<div class="note" style="margin-top:8px"><b>prompt</b> ${esc(it.p)} · ${esc(it.c)}: ${esc(it.pt)}<br><b>X_ITE said</b> in the offline pass: ${it.r.msgs&&it.r.msgs.length?it.r.msgs.map(esc).join(" · "):"nothing"}<br><b>draw outcome</b> ${esc(DRAWTXT[sc.drawKind]||"-")}${!it.r.err&&it.r.frames?` · ${it.r.frames} frame${it.r.frames===1?"":"s"} watched, the last at ${it.r.last} ms; best frame ${((it.r.cb||0)*100).toFixed(1)}%, screenshot ${((it.r.shot||0)*100).toFixed(1)}%`:""}${sc.drawKind==="unparseable"&&!it.wf?" · the file is not well-formed XML":""}</div>`}
+function tabChain(sc,steps,vr){
+  const h='<div class="chain">'+steps.map(([n,cx])=>{const r=JSON.parse(cx);
+    return`<div class="step"><div class="op pill ${OPCOL[r.op]||"p-mute"}">${n} ${r.op.toUpperCase()}</div><div class="b">${stepDesc(r)}<br><i>in</i> ${r.input_sha256.slice(0,12)} <i>→ out</i> ${r.output_sha256.slice(0,12)} <i>prev</i> ${r.prev.slice(0,12)}</div></div>`}).join("")+"</div>";
+  return h+realExtra(sc)+`<div style="margin-top:8px" class="m">${vr.ok?`<span style="color:var(--ok)">verify(): chain intact, head output hash equals current content hash ${contentHash(sc.xml).slice(0,16)}</span>`:`<span style="color:var(--bad)">verify(): ${esc(vr.problems.join(" · "))}</span>`}</div>`}
+function tabTrace(sc){
+  const sp=spansOf(sc),tot=sp.reduce((a,s)=>a+s.ms,0)||1,W=620,L=150,bw=W-L-70,rowH=24;let s=`<svg viewBox="0 0 ${W} ${sp.length*rowH+34}" style="min-width:560px">`;
+  const colr={generate:"var(--info)",validate:"var(--ok)",repair:"var(--warn)",render:"var(--acc)",transform:"var(--info)"};
+  sp.forEach((p,i)=>{const y=8+i*rowH,x=L+bw*p.t0/tot,w=Math.max(2,bw*p.ms/tot),hatch=p.src==="modeled"||p.src==="simulated";
+    s+=`<text x="2" y="${y+13}" style="fill:var(--fg)">${p.n} ${p.r.op}</text><text x="62" y="${y+13}">${esc((p.r.validator_ref||p.r.agent_ref||disp(p.r.model||"")||"").slice(0,13))}</text>`+
+       `<rect x="${x.toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="15" fill="${colr[p.r.op]||"var(--dim)"}" opacity="${hatch?.45:.9}"${hatch?' stroke="var(--fg)" stroke-dasharray="3 2" stroke-width=".6"':""}/>`+
+       `<text x="${Math.min(x+w+4,W-62).toFixed(1)}" y="${y+12}" style="fill:var(--fg)">${p.ms>=1000?(p.ms/1000).toFixed(2)+" s":p.ms+" ms"}</text>`});
+  s+=`<text x="${L}" y="${sp.length*rowH+24}">0</text><text x="${L+bw-30}" y="${sp.length*rowH+24}">${(tot/1000).toFixed(1)} s total</text></svg>`;
+  return s+`<div class="legend" style="margin-top:6px"><span style="--c:var(--info)">solid: recorded or measured</span><span style="--c:var(--dim)">dashed: modeled or simulated duration</span></div><p class="note" style="margin:6px 0 0">Spans are the chain steps in order. In replay mode the generate durations are the recorded model latencies and the render durations were measured offline; validator durations are modeled because the 11 Oct service did not log them.</p>`}
+function tabVerify(sc){
+  const vr=verify(sc.xml,true),t0=performance.now();for(let i=0;i<20;i++)verify(sc.xml);const us=Math.round((performance.now()-t0)*1000/20);
+  let h=`<div class="m" style="margin-bottom:6px">verify() on ${sc.id}: <span class="pill ${(CH[vr.status]||CH["?"])[0]}">${(CH[vr.status]||CH["?"])[1]}</span> in ${us} µs · ${vr.rows.length} checks</div><table><thead><tr><th>step</th><th>check</th><th>expected</th><th>found</th><th></th></tr></thead><tbody>`;
+  h+=vr.rows.map(r=>`<tr style="cursor:default"><td>${r.n}</td><td>${esc(r.chk)}</td><td>${esc(String(r.exp).slice(0,14))}</td><td style="color:var(--${r.ok?"mute":"bad"})">${esc(String(r.got).slice(0,14))}</td><td><span class="pill ${r.ok?"p-ok":"p-bad"}">${r.ok?"OK":"FAIL"}</span></td></tr>`).join("")+"</tbody></table>";
+  return h+`<p class="note" style="margin:6px 0 0">The checks stop at the first broken link, so a deleted or edited step is named before the content hash is compared. Without a seal the last step's own text is not checked against anything: that is the open gap the Signing switch closes.</p>`}
+function provJson(sc,steps){const ents={},act={},used={},gen={},der={};steps.forEach(([n,cx])=>{const r=JSON.parse(cx),a=`step/${n}-${r.op}`,ei="scene/"+r.input_sha256.slice(0,8),eo="scene/"+r.output_sha256.slice(0,8);
+  ents[ei]={"x3d:sha256":r.input_sha256.slice(0,16)+"…"};ents[eo]={"x3d:sha256":r.output_sha256.slice(0,16)+"…"};act[a]={"x3d:op":r.op,"x3d:ref":r.validator_ref||r.agent_ref||r.model||""};
+  used["_:u"+n]={activity:a,entity:ei};gen["_:g"+n]={entity:eo,activity:a};if(ei!==eo)der["_:d"+n]={generatedEntity:eo,usedEntity:ei,activity:a}});
+  return{prefix:{x3d:"urn:x3dprov#"},entity:ents,activity:act,used,wasGeneratedBy:gen,wasDerivedFrom:der}}
+function olJson(sc,steps){return steps.map(([n,cx])=>{const r=JSON.parse(cx);return{eventType:"COMPLETE",producer:"x3dprov/0.1",run:{runId:sha(sc.id+n).slice(0,32),facets:{x3dprov_step:{op:r.op,ref:r.validator_ref||r.agent_ref||r.model||null}}},job:{namespace:"x3d.pipeline",name:r.op},inputs:[{namespace:"x3d.pipeline",name:r.input_sha256.slice(0,12)}],outputs:[{namespace:"x3d.pipeline",name:r.output_sha256.slice(0,12)}]}})}
+function otlpJson(sc){
+  const sp=spansOf(sc),trace=sha(readSteps(sc.xml)[0][1]).slice(0,32),base=1760720000e9+Number(sc.id.replace(/\D/g,""))*1e9,at=(k,v)=>({key:k,value:typeof v==="number"?{doubleValue:v}:typeof v==="boolean"?{boolValue:v}:{stringValue:String(v)}});
+  const spans=sp.map((p,i)=>({traceId:trace,spanId:p.sid,parentSpanId:i?sp[i-1].sid:"",name:p.r.op,kind:"SPAN_KIND_INTERNAL",startTimeUnixNano:String(Math.round(base+p.t0*1e6)),endTimeUnixNano:String(Math.round(base+(p.t0+p.ms)*1e6)),
+    attributes:[at("x3dprov.step",p.n),at("x3dprov.input_sha256",p.r.input_sha256.slice(0,16)),at("x3dprov.output_sha256",p.r.output_sha256.slice(0,16)),at("x3dprov.duration_source",p.src)].concat(Object.entries(p.r).filter(([k,v])=>["model","validator_ref","verdict","agent_ref","nonblank_ratio","tokens_out","attempts_total"].includes(k)&&v!==null).map(([k,v])=>at("x3dprov."+k,v)))}));
+  return{resourceSpans:[{resource:{attributes:[at("service.name","x3d-pipeline-sim"),at("telemetry.sdk.name","x3dprov-view")]},scopeSpans:[{scope:{name:"x3dprov",version:"0.1"},spans}]}]}}
+async function show3d(sc){
+  const msg=$("v3msg"),none=$("v3none"),tk=++v3Token,vs=VALS.map(V=>`${V.ref.replace("fork@","f@")}: ${judge(sc,V).verdict}`).join(" · ");
+  if(!window.X3D){msg.textContent="The 3D view needs the X_ITE files published beside this page (xite/x_ite.min.js), which did not load here. Every other panel still works.";return}
+  msg.textContent="starting X_ITE 16.5.0…";await init3d();if(tk!==v3Token)return;
+  if(!S3.ready){msg.textContent="X_ITE could not start in this viewer"+(S3.err?": "+S3.err.slice(0,100):"")+". Every other panel still works.";return}
+  none.hidden=true;msg.textContent="loading "+sc.id+"…";const B=S3.c.browser,t0=performance.now(),said=[],oe=console.error,ow=console.warn,w=watchFrames(B,S3.pixels);
+  const tap=f=>(...a)=>{const t=a.map(String).join(" ").replace(/\s+/g," ");if(said.length<4&&!/font|stylesheet|mikktspace|Content Security|Fetch API/i.test(t))said.push(t.slice(0,260));f.apply(console,a)};
+  console.error=tap(oe);console.warn=tap(ow);
+  try{await clearView(B);if(tk!==v3Token)return;const scn=await B.createX3DFromString(stripProv(sc.xml));if(tk!==v3Token)return;w.start();await B.replaceWorld(scn);try{B.getActiveLayer().viewAll(0)}catch(e){}
+    await new Promise(r=>setTimeout(r,650));if(tk!==v3Token)return;let px=await sampleFrame(w);const drop=said.some(t=>/Unknown node type|Unknown named or imported node|Container field|insufficient component/i.test(t)),expectNone=sc.drawKind==="nothing drawable";let nf=px.err==="no frame",slow=false;
+    /* no frame is only read as "nothing drawable" when something says so (X_ITE dropped nodes, or the offline record); otherwise the renderer may just be slow here, so wait longer */
+    if(nf&&!expectNone&&!drop){msg.textContent="waiting for X_ITE's first frame…";px=await sampleFrame(w,10000);if(tk!==v3Token)return;nf=px.err==="no frame";slow=nf}
+    const ms=Math.round(performance.now()-t0);
+    const sayTxt=said.map(t=>t.replace(/^XML Parser:\s*/,"").replace(/\.?\s*You probably have insufficient.*$/,"")),hint=said.some(t=>/insufficient component/.test(t));
+    if(nf&&slow){none.hidden=false;none.innerHTML=`<b>NO FRAME YET</b><i>X_ITE gave no frame in 12 s on this device and printed nothing about dropped content. This scene is ${sc.src==="real"?"recorded":"modeled"} as <b>${esc(sc.drawKind)}</b> in the offline pass, so a slow or software renderer is the likeliest cause.</i>`}
+    else if(nf||(px.nonblank<.005&&drop)){none.hidden=false;none.innerHTML=`<b>NOTHING TO DRAW</b><i>X_ITE accepted the file, dropped what it could not read, and ${nf?"had nothing left to render, so it never scheduled a frame":"drew only blank frames"}.${sayTxt.length?"<br>It said: "+sayTxt.map(esc).join(" · ")+(hint?"<br>and hinted at insufficient component or profile statements.":""):""}</i>`}
+    msg.innerHTML=`X_ITE loaded ${B.currentScene.rootNodes.length} root nodes in ${ms} ms · `+(nf?`<b style='color:#fc6'>no frame in ${slow?12:2.5} s</b>`:px.nonblank!==undefined?`${px.frames} frame${px.frames===1?"":"s"} watched · pixels differing from background: <b>${(px.nonblank*100).toFixed(1)}%</b> (best frame)${px.nonblank<.005?" · <b style='color:#fc6'>BLANK</b>":""}`:"sampling failed")+
+      (said.length&&!nf?`<br>X_ITE said: ${sayTxt.map(esc).join(" · ")}`:"")+(!nf&&expectNone&&px.nonblank>=.005?"<br>the offline pass recorded nothing drawn for this scene":"")+`<br>validators: ${vs}`}
+  catch(e){none.hidden=false;none.innerHTML=`<b>COULD NOT PARSE</b><i>X_ITE refused this file: ${esc(String(e).replace(/'http[^']*'/,"the string").slice(0,150))}</i>`;msg.innerHTML=`X_ITE refused this scene: <b style="color:#f88">${esc(String(e).replace(/'http[^']*'/,"the string").slice(0,150))}</b><br>validators: ${vs}`;try{await B.replaceWorld(await B.createX3DFromString("<X3D profile='Interchange' version='4.0'><Scene/></X3D>"))}catch(_){}}
+  finally{w.stop();console.error=oe;console.warn=ow}
+}
+let insSig="";
+function renderInspector(force=true){
+  const sc0=S.byId.get(S.sel),sig=sc0?[sc0.id,tab,sc0.status,sc0.nsteps,sc0.xml.length,S.safe,S.vi].join("|"):"none|"+tab;if(!force&&sig===insSig)return;insSig=sig;
+  const sc=S.byId.get(S.sel),body=$("insBody"),v3=$("view3d");
+  if(!sc){body.hidden=false;v3.hidden=true;body.innerHTML='<span class="sub">Select a scene in the firehose, the wall or the contact sheet to see its chain, verify it, render it, and tamper with it.</span>';$("insCtl").innerHTML="";$("insSub").textContent="click a row, a thumbnail or a wall cell";fillUnder();return}
+  const vr=verify(sc.xml),c=CH[vr.status]||CH["?"],steps=readSteps(sc.xml);
+  $("insSub").innerHTML=`${sc.id} · <span class="pill ${c[0]}">${c[1]}</span>${sc.sealed?' <span class="pill p-info">SEALED</span>':' <span class="pill p-mute">UNSEALED</span>'} · ${esc(disp(sc.model))}`;
+  const is3d=tab==="v3d";body.hidden=is3d;v3.hidden=!is3d;
+  if(S3.c){try{is3d?S3.c.browser.beginUpdate():S3.c.browser.endUpdate()}catch(e){}}
+  let h="";
+  if(tab==="chain")h=tabChain(sc,steps,vr);
+  else if(tab==="trace")h=tabTrace(sc);
+  else if(tab==="verify")h=tabVerify(sc);
+  else if(tab==="xml")h="<pre>"+esc(safeText(sc.xml.replace(/(<meta )/g,"\n  $1").slice(0,6000))).replace(/&amp;quot;/g,"&quot;")+(sc.xml.length>6000?"\n… ("+sc.xml.length+" bytes total)":"")+"</pre>";
+  else if(tab==="prov")h="<pre>"+esc(safeText(JSON.stringify(provJson(sc,steps),null,1)))+"</pre>";
+  else if(tab==="ol")h="<pre>"+esc(safeText(JSON.stringify(olJson(sc,steps),null,1)))+"</pre>";
+  else if(tab==="otlp")h="<pre>"+esc(safeText(JSON.stringify(otlpJson(sc),null,1)))+"</pre>";
+  if(!is3d)body.innerHTML=h;else show3d(sc);
+  $("insCtl").innerHTML=`<b class="m" style="color:var(--mute);font-size:11px">TAMPER THIS SCENE</b>`+Object.keys(LABEL).map(k=>`<button class="bad" data-t="${k}">${LABEL[k]}</button>`).join("");
+  fillUnder()
+}
+/* under the hood */
+function fillUnder(){
+  const sc=S.byId.get(S.sel),steps=sc?readSteps(sc.xml):[],head=steps.length?steps[steps.length-1][1]:"",seal=sc&&readSeal(sc.xml);
+  const hs=s=>s?s.slice(0,16)+"…":"(select a scene)";
+  $("eq").innerHTML=`<u>content hash</u>  <i>h</i> = SHA-256( normalise( x − {x3dprov.*} ) ) = ${hs(sc&&contentHash(sc.xml))}<br>`+
+   `<u>step n</u>  { op, …facts, <i>input</i>, <i>output</i> = h(x after), <i>prev</i> = SHA-256( step n−1 ) }<br>`+
+   `<u>chain head</u>  SHA-256( step ${steps.length||"n"} ) = ${hs(head&&sha(head))}<br>`+
+   `<u>seal (optional)</u>  HMAC( key, head : n ) = ${seal?hs(seal):"none on this scene"}   <u>(Ed25519 in the real design)</u><br>`+
+   `<u>verify(x)</u>  every prev link ✓ ∧ every input = prior output ✓ ∧ seal ✓ ∧ <i>h</i>(x) = head.output ✓<br>`+
+   `<u>OTLP view</u>  traceId = SHA-256(step 1)[0:32]; spanId = SHA-256(step)[0:16]; parentSpanId = previous spanId`;
+  const N=S.scenes.length,avg=N?Math.round(S.scenes.reduce((a,s)=>a+s.xml.length,0)/N/1024*10)/10:0;
+  $("bench").innerHTML=`<u>measured live in this browser</u><br>SHA-256 throughput  <i>${bench.sha||"…"} MB/s</i> (pure JS, no WebCrypto)<br>verify() per scene  <i>${bench.ver||"…"} µs</i> over the last 40 stored scenes<br>stored scenes  <i>${N}</i> · mean file ${avg} KB · retained chains re-verified by the scrubber continuously<br><u>repo measurements (Python, lxml C14N hash)</u>: 611 bytes per step; 6 of 6 scenes up to 62 MB verify after a Blender round trip`
+}
+/* small multiples */
+function svgFlow(){
+  const g=S.stage,real=S.mode==="real",rows=[["generated",g.gen,g.gen,"var(--info)"],["valid first try",g.v1p,g.gen,"var(--ok)"],["invalid first try",g.v1f,g.gen,"var(--bad)"],["repair attempts",g.rep,Math.max(1,g.v1f),"var(--warn)"],["valid after repair",g.v2p,Math.max(1,g.v1f),"var(--ok)"],["gave up",g.drop,g.gen,"var(--bad)"],[real?"draws something":"rendered visible",g.ren,real?g.gen:(g.ok||1),"var(--acc)"]];
+  if(!real)rows.push(["via Blender",g.tr,g.ren||1,"var(--info)"]);
+  const mx=Math.max(1,g.gen);let s="";
+  rows.forEach((r,i)=>{const y=6+i*25,w=Math.min(240,240*r[1]/mx);s+=`<text x="2" y="${y+11}">${r[0]}</text><rect x="118" y="${y}" width="${Math.max(1,w).toFixed(1)}" height="15" fill="${r[3]}" opacity=".85"/><text x="${122+Math.max(1,w)}" y="${y+11}" style="fill:var(--fg)">${r[1]} · ${pc(r[1],r[2])}</text>`});
+  $("svgFlow").innerHTML=s;$("pipeSub").textContent=real?"recorded attempts; render = offline X_ITE":"stage pass / fail"
+}
+function svgModels(){
+  const ids=Object.keys(S.mod);let s="";const step=ids.length>3?40:60;
+  ids.forEach((id,i)=>{const M=S.mod[id],y=8+i*step,vv=S.mode==="real"?S.scenes.filter(q=>q.model===id&&q.verdict==="valid").length:M.valid,f=M.n?M.first/M.n:0,a=M.n?vv/M.n:0,cs=S.safe?"cost hidden":"$"+(vv?(M.cost/vv).toFixed(4):"-")+"/valid";
+    s+=`<text x="2" y="${y+10}" style="fill:var(--fg)">${esc(disp(id))}</text><text x="2" y="${y+22}">n=${M.n} · ${cs}</text>`+
+      `<rect x="150" y="${y}" width="${(230*f).toFixed(1)}" height="12" fill="var(--info)"/><text x="${154+230*f}" y="${y+10}" style="fill:var(--fg)">${(100*f).toFixed(0)}%</text>`+
+      `<rect x="150" y="${y+15}" width="${(230*a).toFixed(1)}" height="12" fill="var(--ok)"/><text x="${154+230*a}" y="${y+25}" style="fill:var(--fg)">${(100*a).toFixed(0)}%</text>`});
+  $("svgModels").innerHTML=s
+}
+function svgDrift(){
+  const refs={};S.scenes.forEach(sc=>{refs[sc.vref]=(refs[sc.vref]||0)+1});const keys=VALS.map(v=>v.ref).filter(k=>refs[k]),mx=Math.max(1,...Object.values(refs));
+  const cols={"svc@11Oct":"var(--warn)","fork@8c0a457":"var(--acc)","fork@eb4b4b4":"var(--ok)"};let s="";
+  keys.forEach((k,i)=>{const y=12+i*40,w=320*refs[k]/mx;s+=`<text x="2" y="${y+4}" style="fill:var(--fg)">${k}</text><rect x="2" y="${y+10}" width="${w.toFixed(1)}" height="16" fill="${cols[k]}"/><text x="${8+w}" y="${y+22}" style="fill:var(--fg)">${refs[k]}</text>`});
+  if(S.flips)s+=`<text x="2" y="190" style="fill:var(--bad)">${S.flips} scenes flipped valid→invalid across ${S.revals} re-validations</text>`;
+  $("svgDrift").innerHTML=s;$("driftSub").textContent=S.mode==="real"?"real verdicts re-run on each fork commit":"simulated rulesets"
+}
+function svgTp(){
+  const n=60,ser=S.series.slice(-n),W=400,H=170,bw=W/n;let mx=1;ser.forEach(s=>mx=Math.max(mx,s.v+s.i));let s=`<line x1="0" y1="${H}" x2="${W}" y2="${H}" stroke="var(--line)"/>`;
+  const off=S.series.length-ser.length;
+  ser.forEach((q,i)=>{const x=(n-ser.length+i)*bw,hv=(H-14)*q.v/mx,hi=(H-14)*q.i/mx;s+=`<rect x="${x+.5}" y="${H-hv}" width="${bw-1}" height="${hv}" fill="var(--ok)"/><rect x="${x+.5}" y="${H-hv-hi}" width="${bw-1}" height="${hi}" fill="var(--bad)"/>`});
+  S.events.forEach(e=>{const i=e.s-off;if(i<0||i>=n+1)return;const x=(n-ser.length+i)*bw;s+=`<line x1="${x}" y1="14" x2="${x}" y2="${H}" stroke="var(--${e.k==="U"?"warn":e.k==="D"?"bad":e.k==="S"?"info":"fg"})" stroke-dasharray="2 2" stroke-width=".8"/><text x="${x+2}" y="11" style="fill:var(--fg)">${e.k}</text>`});
+  s+=`<text x="2" y="${H+14}">−60 s</text><text x="${W-30}" y="${H+14}">now</text><text x="${W-90}" y="22" style="fill:var(--fg)">peak ${mx}/s</text>`;$("svgTp").innerHTML=s
+}
+function svgVV(){
+  const sc=S.scenes,valid=sc.filter(s=>s.verdict==="valid"),vis=valid.filter(s=>!s.blank).length,bl=valid.filter(s=>s.blank).length,inv=sc.length-valid.length,tot=Math.max(1,sc.length);
+  const bars=[["valid and visible",vis,"var(--ok)"],["valid but blank",bl,"var(--warn)"],["invalid",inv,"var(--bad)"]];let s="";
+  bars.forEach((b,i)=>{const y=14+i*34,w=300*b[1]/tot;s+=`<text x="2" y="${y+10}" style="fill:var(--fg)">${b[0]}</text><rect x="2" y="${y+14}" width="${Math.max(1,w).toFixed(1)}" height="14" fill="${b[2]}"/><text x="${8+w}" y="${y+25}" style="fill:var(--fg)">${b[1]} · ${pc(b[1],tot)}</text>`});
+  s+=`<text x="2" y="128" style="fill:var(--fg)">streamed so far: ${valid.length?(100*bl/valid.length).toFixed(1):"0"}% of valid scenes draw nothing</text>`;
+  if(S.mode==="real"){REALSTATS.f.forEach((q,i)=>{s+=`<text x="2" y="${145+i*15}" style="fill:var(--${q.nodraw?"warn":"ok"})">all ${REALSTATS.n}: ${q.n} valid ${q.valid}, draw nothing ${q.nodraw} (${q.valid?(100*q.nodraw/q.valid).toFixed(1):"0"}%)</text>`});
+    s+=`<text x="2" y="${145+3*15}">blank = under 0.5% of pixels differ · X_ITE 16.5.0 headless</text>`}
+  else s+=`<text x="2" y="148">repo measurement: 203 of 1,058 valid spine scenes draw nothing (19.2%)</text><text x="2" y="163">synthetic: blank follows from defects the old service cannot see</text>`;
+  $("svgVV").innerHTML=s;$("vvSub").textContent=S.mode==="real"?"real renders":"simulated renders"
+}
+function svgScr(){$("scrSub").textContent=`sweeping ${S.scenes.length} scenes`;$("alerts").innerHTML=S.alerts.slice(0,40).map(a=>`<div><time>${(a.t/10).toFixed(1)}s</time><span style="color:var(--${a.kind==="det"?"bad":a.kind==="sys"?"warn":"mute"})">${esc(a.msg)}</span></div>`).join("")||'<span class="sub">no events yet</span>'}
+function provenancePanel(){
+  const real=S.mode==="real",Q=REALSTATS,K=Q.kinds,sv=Q.f[0],f1=Q.f[1],f2=Q.f[2],m=[
+   ["","<b>MEASURED</b> 6 of 6 scenes (5 KB to 62 MB) verify after ingest, validate, repair, Blender round trip. Fork eb4b4b4, bpy 5.2.2, bridge 206f139."],
+   ["","<b>MEASURED</b> about 611 bytes per step in the file head, independent of scene size."],
+   ["","<b>MEASURED</b> 174 cached open-model scenes stamped, all verify. 37 were valid on the 11 Oct service and invalid on the fork; 36 already on 8c0a457 (the service was weaker, not the fork stricter later)."],
+   ["","<b>MEASURED</b> edit after last step: stale. Delete a step or flip an interior verdict: broken chain. Flip the last verdict while unsigned: <b>not detected</b>."],
+   ["","<b>MEASURED</b> render pass over all "+Q.n+" replay scenes: X_ITE 16.5.0 headless on software GL, one fresh page each. A watcher on X_ITE's end-of-frame event is registered before the scene loads and samples the canvas inside every frame it reports, then a screenshot is taken 3.5 s later. "+K.draws+" draw; "+K["nothing drawable"]+" drew only blank frames after X_ITE dropped what it could not read; "+K["blank frame"]+" more drew only blank frames; "+K.unparseable+" are unparseable (all "+(Q.n-Q.wf)+" files that are not well-formed XML). The sampled frames and the screenshot agree on "+Q.agree+" of "+Q.both+" scenes, the miss being a scene that is visible only mid-animation; every blank scene is "+(Q.blankMax===0?"exactly zero":"at most "+(Q.blankMax*100).toFixed(2)+"%")+", none near the 0.5% line."+(Q.extN?" The "+Q.extN+" blank scenes still animating when the window ended were watched for 12 s (90 samples each): "+Q.extBlank+" stayed blank.":"")+(Q.v164n?" Repeated on X_ITE 16.4.1 as own files: the same draw, blank or unparseable answer for "+Q.v164a+" of "+Q.v164n+" scenes.":"")],
+   ["","<b>MEASURED</b> X_ITE renders on demand and starts every scene with blank frames. A scene with nothing drawable gets a median of "+Q.blankFrames+" frames, the last at "+Q.blankLast+" ms, then X_ITE is idle; a drawing scene keeps rendering until a median "+Q.drawLast+" ms ("+Q.drawFrames+" frames), then idles. Sampling once after a fixed delay misreads in both directions: this exhibit's first pass did that, 700 ms after load, and called 31 of the blank scenes \"no frame\" (they had drawn blank frames) and one scene blank that draws mid-animation. Every other answer held; the page now watches from before the load."],
+   ["","<b>MEASURED</b> of "+sv.valid+" scenes the 11 Oct service called valid, "+sv.nodraw+" draw nothing; of "+f1.valid+" valid on fork 8c0a457 and "+f2.valid+" on eb4b4b4, "+f1.nodraw+" and "+f2.nodraw+". Of the "+Q.flip+" the fork turned from valid to invalid, "+Q.flipNoDraw+" draw nothing. The converse does not hold: only "+f2.valid+" of the "+Q.draws+" scenes that draw pass the fork, because X_ITE silently draws the rest of a scene it partly cannot read. One sample of "+Q.n+" scenes from three small open models, so Suspected as a rate, Confirmed as a counterexample to valid means visible."],
+   [real?"r":"s",real?"<b>REAL DATA</b> model outputs, tokens, latencies and 11 Oct service verdicts from the GPU-phase runs; fork verdicts re-run on 8c0a457 and eb4b4b4; renders made offline today. Chains are rebuilt in this page with its own text-normalised hash, not the repo's lxml C14N hashes, so hashes here differ from the repo's stamped files. Render durations are measured, generate durations recorded, validator durations modeled.":"<b>SIMULATED</b> arrival rate, scene bodies, repair success, tokens, cost, the two frontier rows and every fault you inject. The defect mechanics copy the measured ones: the old service sees only schema errors, so scenes with a missing component or a misplaced node pass it and X_ITE draws nothing for them (open the 3D tab). First-try rates of the three open models are the measured one-shot rates on fork eb4b4b4; render outcomes are modeled from the defects."],
+   ["s","<b>SIMULATED</b> signing: an HMAC stands in for the planned Ed25519 seal; the real signing step is not built. <b>MODELED</b> validator and Blender durations."]];
+  $("provenance").innerHTML=m.map(x=>`<div class="${x[0]}">${x[1]}</div>`).join("")
+}
+let fcount=0;
+function frame(){fcount++;if(!S.sel&&S.scenes.length>=3){S.sel=S.scenes[S.scenes.length-1].id;insSig=""}kpis();fh();drawWall();gallery();if(fcount%3===0){svgFlow();svgModels();svgDrift();svgTp();svgVV();svgScr()}renderInspector(false);if(fcount%10===0)fillUnder()}
+
+/* ---------- 3D (X_ITE 16.5.0 published as this page's own files) ---------- */
+const S3={ready:false,c:null,pixels:null,p:null,err:""};
+/* Frame watcher: registered on X_ITE's end-of-frame field BEFORE the scene is loaded, sampling the WebGL canvas inside that callback (the drawing buffer is cleared once a
+   frame is shown). Nothing waits for a frame to arrive, so it reads the same on a slow or a fast machine. Same sampling as the offline pass: the first 8 frames, then at most
+   one per 150 ms, 20 samples, best frame wins. */
+function watchFrames(B,grab){const F=typeof B.finishEvents==="function"?B.finishEvents():B.endEvents(),key=Symbol(),w={on:true,t0:null,n:0,first:null,last:null,best:null,series:[],ns:0,lastS:-1e9};
+  F.addFieldCallback(key,()=>{if(!w.on||w.t0===null)return;const t=Math.round(performance.now()-w.t0);w.n++;if(w.first===null)w.first=t;w.last=t;
+    if(w.ns<20&&(w.ns<8||t-w.lastS>=150)){w.ns++;w.lastS=t;try{const g=grab();w.series.push(g.nonblank);if(!w.best||g.nonblank>w.best.nonblank)w.best=g}catch(e){}}});
+  w.start=()=>{w.t0=performance.now()};w.stop=()=>{w.on=false;try{F.removeFieldCallback(key)}catch(e){}};return w}
+/* X_ITE keeps showing the previous scene's last frame while a new world is being swapped in, so a sample taken then would be stale: swap in an empty world first and let it clear */
+async function clearView(B){const e=await B.createX3DFromString("<X3D profile='Interchange' version='4.0'><Scene/></X3D>"),w0=watchFrames(B,()=>({nonblank:0}));w0.start();await B.replaceWorld(e);
+  const t=performance.now();while(w0.n<2&&performance.now()-t<400)await new Promise(r=>setTimeout(r,20));w0.stop()}
+/* resolves once the watcher has a sample (plus 350 ms for more frames), or "no frame" after ms; tests replace this to simulate a slow renderer */
+window.sampleFrame=(w,ms=2500)=>new Promise(resolve=>{if(!w){resolve({err:"no frame"});return}const t0=performance.now(),out=()=>({nonblank:w.best.nonblank,frames:w.n,series:w.series.slice()});let seen=null;
+  const iv=setInterval(()=>{const now=performance.now();if(w.best&&seen===null)seen=now;
+    if(seen!==null&&now-seen>=350){clearInterval(iv);resolve(out())}else if(now-t0>=ms){clearInterval(iv);resolve(w.best?out():{err:"no frame"})}},40)});
+function init3d(){return S3.p||(S3.p=init3dNow())}
+async function init3dNow(){
+  if(!window.X3D)return;
+  try{const c=document.createElement("x3d-canvas");["splashScreen","contextMenu","notifications","timings"].forEach(a=>c.setAttribute(a,"false"));$("view3d").appendChild(c);
+    for(let i=0;i<100&&!c.browser;i++)await new Promise(r=>setTimeout(r,50));if(!c.browser)return;
+    const st=document.createElement("style");st.textContent=XCSS;c.shadowRoot.appendChild(st);const br=c.shadowRoot.querySelector(".x_ite-private-browser");if(br)br.style.display="block";
+    S3.c=c;S3.pixels=()=>{const B=c.browser,cv=B.getCanvas(),w=cv.width,h=cv.height,t2=document.createElement("canvas");t2.width=w;t2.height=h;const cx=t2.getContext("2d",{willReadFrequently:true});cx.drawImage(cv,0,0);const d=cx.getImageData(0,0,w,h).data;
+      const cnt=new Map();for(let i=0;i<d.length;i+=16){const k=(d[i]>>3)<<10|(d[i+1]>>3)<<5|(d[i+2]>>3);cnt.set(k,(cnt.get(k)||0)+1)}let bg=0,best=-1;for(const[k,v]of cnt)if(v>best){best=v;bg=k}
+      const r0=(bg>>10&31)<<3,g0=(bg>>5&31)<<3,b0=(bg&31)<<3;let diff=0,n=0;for(let i=0;i<d.length;i+=4){n++;if(Math.abs(d[i]-r0)+Math.abs(d[i+1]-g0)+Math.abs(d[i+2]-b0)>48)diff++}return{nonblank:+(diff/n).toFixed(4)}};
+    S3.ready=true}catch(e){S3.err=String(e);console.warn("x_ite init failed",e)}
+}
+
+/* ---------- loop + controls ---------- */
+let carry=0,last=performance.now(),secCount=0,secT=performance.now(),secTick=0;
+function step(){
+  const now=performance.now(),dt=now-last;last=now;
+  if(!S.paused){carry+=S.rate*dt/1000;let n=Math.floor(carry);carry-=n;n=Math.min(n,8);for(let i=0;i<n;i++){const sc=S.mode==="real"?genReal():genSyn();if(sc)secCount++}scrub(3+Math.round(S.rate/6))}
+  if(now-secT>=1000){S.thr.push(secCount);if(S.thr.length>5)S.thr.shift();secCount=0;secT=now;S.series.push({v:S.sec.v,i:S.sec.i});S.sec={v:0,i:0,d:0};if(S.series.length>240)S.series.shift();if(++secTick%5===0)runBench()}
+}
+setInterval(step,50);
+setInterval(()=>{if(!S.paused)S.tick++;frame()},100);
+function syncButtons(){
+  const V=curV(),next=VALS[S.vi+1];$("bUpgrade").disabled=!next;$("bUpgrade").textContent=next?"Ship next validator → "+next.ref.replace("fork@","fork "):"Latest validator shipped";
+  $("bRevalidate").disabled=!S.scenes.some(s=>s.vref!==V.ref);
+  $("rate").value=S.rate;$("rateV").textContent=S.rate+"/s";$("bPause").textContent=S.paused?"Resume":"Pause";$("bSeal").textContent="Signing: "+(S.sealOn?"on (new scenes)":"off");$("bSeal").classList.toggle("on",S.sealOn);
+  $("bSafe").textContent="Share-safe: "+(S.safe?"on":"off");$("bSafe").classList.toggle("on",S.safe);
+  const real=S.mode==="real";$("modeTag").textContent=real?"REAL RUNS REPLAYED · 174 SCENES":"SIMULATION · SYNTHETIC DATA";$("modeTag").className="sim"+(real?" real":"");
+  [...$("seg").children].forEach(b=>b.classList.toggle("on",b.dataset.m===S.mode));provenancePanel()
+}
+setInterval(()=>{const V=curV();$("bRevalidate").disabled=!S.scenes.some(s=>s.vref!==V.ref)},400);
+$("rate").oninput=e=>{S.rate=+e.target.value;$("rateV").textContent=S.rate+"/s"};
+$("bPause").onclick=()=>{S.paused=!S.paused;if(S.done&&!S.paused){fresh();}syncButtons()};
+$("bSeal").onclick=()=>{S.sealOn=!S.sealOn;logEv("sys","signing "+(S.sealOn?"enabled: new chains sealed with the HMAC stand-in":"disabled"));ev("S","signing");syncButtons()};
+$("bSafe").onclick=()=>{S.safe=!S.safe;syncButtons();renderInspector()};
+$("bReset").onclick=()=>{fresh();logEv("sys","restarted ("+S.mode+")");syncButtons();renderInspector()};
+$("seg").onclick=e=>{const b=e.target.closest("button");if(!b||b.dataset.m===S.mode)return;fresh(b.dataset.m);logEv("sys","mode: "+b.dataset.m);syncButtons();renderInspector()};
+document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>inject(b.dataset.f));
+$("bUpgrade").onclick=()=>{if(S.vi>=VALS.length-1)return;S.vi++;logEv("sys",`validator now ${curV().ref}; ${S.scenes.filter(s=>s.vref!==curV().ref).length} stored scenes carry an older ref`);ev("U","validator");syncButtons()};
+$("bRevalidate").onclick=()=>{let n=0,fl=0;const V=curV();S.scenes.forEach(sc=>{if(sc.vref===V.ref||sc.injured)return;if(revalidateOne(sc))fl++;n++});S.revals+=n;S.flips+=fl;logEv("sys",`re-validated ${n} scenes on ${V.ref}: ${fl} flipped valid → invalid. Answered from the files alone.`);syncButtons()};
+$("fh").onclick=e=>{const tr=e.target.closest("tr");if(tr){S.sel=tr.dataset.id;renderInspector()}};
+$("fh").onkeydown=e=>{if(e.key==="Enter"){const tr=e.target.closest("tr");if(tr){S.sel=tr.dataset.id;renderInspector()}}};
+function setTab(t){tab=t;[...$("tabs").children].forEach(x=>x.classList.toggle("on",x.dataset.t===t));renderInspector()}
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(b)setTab(b.dataset.t)};
+$("insCtl").onclick=e=>{const b=e.target.closest("button");if(!b||!S.sel)return;const sc=S.byId.get(S.sel);if(sc)inject(b.dataset.t,sc)};
+/* ---------- guided tour: drives the same controls a visitor can press ---------- */
+let tourTk=0,tourI=-1,tourTimer=0;
+const clk=s=>{const e=document.querySelector(s);if(e&&!e.disabled)e.click()};
+const setRate=n=>{const r=$("rate");r.value=n;r.dispatchEvent(new Event("input"))};
+const pickScene=f=>{const sc=S.scenes.slice().reverse().find(f);if(sc){S.sel=sc.id;renderInspector(true)}return sc};
+const later=(f,ms)=>{const tk=tourTk;setTimeout(()=>{if(tk===tourTk)f()},ms)};
+const TOUR=[
+ {ms:8000,h:"A firehose of AI-written scenes",t:()=>"Scenes arrive at about 14 a second. Every file carries its own record in the file head: each step that touched it, and a hash that chains the steps together. The wall re-verifies every stored scene, all the time.",
+  run(){if(S.mode!=="syn")clk('#seg [data-m=syn]');else clk("#bReset");setRate(14);later(()=>{pickScene(s=>s.nsteps>=5);setTab("chain")},2500)}},
+ {ms:9000,h:"One record, three standard views",t:()=>"The chain is a trace of five to eight spans. The same meta lines project to W3C PROV, OpenLineage and OpenTelemetry. The file is the carrier, so no trace store has to survive for the record to.",
+  run(){setTab("trace");later(()=>setTab("otlp"),4500)}},
+ {ms:10000,h:"Tamper with it",t:()=>"Edit a scene after the fact. Delete a step. Flip an old verdict. The scrubber names each one within seconds: stale content, broken chain. Watch the wall and the log.",
+  run(){setTab("verify");clk("[data-f=edit]");later(()=>clk("[data-f=del]"),600);later(()=>clk("[data-f=flipmid]"),1200)}},
+ {ms:10000,h:"The honest gap",t:()=>"Flip the last verdict on an unsigned chain and nothing notices: no later step vouches for it. That is the stated limit of the unsigned record, so the injected count runs ahead of the caught count.",
+  run(){clk("[data-f=fliplast]")}},
+ {ms:11000,h:"Signing closes the gap",t:()=>"Turn signing on (an HMAC stands in for Ed25519 here). New chains are sealed over the chain head, and the same attack on a sealed chain now fails the seal check.",
+  run(){if(!S.sealOn)clk("#bSeal");later(()=>{const sc=S.scenes.slice().reverse().find(s=>s.sealed&&s.status==="verified"&&!s.injured);if(sc){inject("fliplast",sc);S.sel=sc.id;setTab("verify")}},2500)}},
+ {ms:9000,h:"Now real data",t:()=>`Next, ${REALSTATS.n} scenes written by three small open models, with the verdicts the validation service gave on 11 Oct. Every thumbnail is a real X_ITE 16.5.0 render, made offline today.`,
+  run(){if(S.sealOn)clk("#bSeal");clk('#seg [data-m=real]');setRate(30);setTab("chain")}},
+ {ms:11000,h:"Ship a stricter validator",t:()=>`Every record names the validator behind its verdict. Ship the fork's checks and re-validate: ${REALSTATS.flip} of the ${REALSTATS.f[0].valid} scenes the old service passed flip to invalid on the first fork build, one more on the current build, ${REALSTATS.f[2].valid} left. Answered from the stored files, no model call.`,
+  run(){later(()=>{clk("#bUpgrade");later(()=>clk("#bRevalidate"),700);later(()=>clk("#bUpgrade"),1800);later(()=>clk("#bRevalidate"),2500)},4000)}},
+ {ms:13000,h:"Valid is not visible",t:()=>`${REALSTATS.f[0].nodraw} of the ${REALSTATS.f[0].valid} the old service passed draw nothing. X_ITE parsed them, dropped the nodes it could not read, and had nothing left to draw. ${REALSTATS.f[2].nodraw} of the ${REALSTATS.f[2].valid} that pass the strict validator are blank.`,
+  run(){pickScene(s=>s.drawKind==="nothing drawable"&&/geo|hanim/.test(s.item.k));setTab("v3d")}},
+ {ms:9000,h:"Take it with you",t:()=>"The record is plain meta lines in the file head, about 600 bytes a step whatever the scene size. It survives a Blender round trip and exports as PROV, OpenLineage or OpenTelemetry. Press Guided tour again any time, or click anything.",
+  run(){setTab("prov")}}
+];
+function tourShow(i){
+  clearTimeout(tourTimer);const tk=++tourTk;
+  if(i>=TOUR.length){tourStop();return}
+  tourI=i;const st=TOUR[i];$("tour").hidden=false;$("tn").textContent=`${i+1}/${TOUR.length}`;$("th").textContent=st.h;$("tt").textContent=st.t();
+  const bar=$("tbar");bar.style.transition="none";bar.style.width="0%";void bar.offsetWidth;bar.style.transition=`width ${st.ms}ms linear`;bar.style.width="100%";
+  try{st.run()}catch(e){console.warn("tour step",i,e)}
+  tourTimer=setTimeout(()=>{if(tk===tourTk)tourShow(i+1)},st.ms)
+}
+function tourStop(){tourTk++;clearTimeout(tourTimer);$("tour").hidden=true;tourI=-1;$("bTour").classList.remove("on")}
+$("bTour").onclick=()=>{if(tourI>=0){tourStop();return}$("bTour").classList.add("on");tourShow(0)};
+$("tNext").onclick=()=>tourShow(tourI+1);$("tStop").onclick=tourStop;
+fresh("syn");for(let i=0;i<40;i++)genSyn();S.tick=0;S.scenes.forEach(s=>s.born=0);S.sec={v:0,i:0,d:0};runBench();syncButtons();frame();
+</script>

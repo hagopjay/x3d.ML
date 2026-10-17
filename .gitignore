@@ -1,0 +1,5 @@
+demo/build/*
+!demo/build/.gitkeep
+demo/node_modules/
+demo/shots/
+__pycache__/
