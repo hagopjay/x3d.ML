@@ -1,0 +1,173 @@
+{
+ "prefix": {
+  "x3d": "https://example.invalid/x3dprov#"
+ },
+ "entity": {
+  "x3d:scene/dae39426f434": {
+   "x3d:sha256": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6"
+  },
+  "x3d:scene/fcc61d6bbc12": {
+   "x3d:sha256": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068"
+  },
+  "x3d:scene/405ea725dbe1": {
+   "x3d:sha256": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082"
+  }
+ },
+ "activity": {
+  "x3d:step/1-ingest": {
+   "op": "ingest",
+   "origin": "cube-x3d40-sample.x3d"
+  },
+  "x3d:step/2-validate": {
+   "ms": 1901,
+   "op": "validate",
+   "semantic_error_codes": [
+    "profile-component"
+   ],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "invalid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  },
+  "x3d:step/3-repair": {
+   "fixes": [
+    "profile-component"
+   ],
+   "kind": "deterministic",
+   "model": null,
+   "op": "repair",
+   "report_shown": true
+  },
+  "x3d:step/4-validate": {
+   "ms": 0,
+   "op": "validate",
+   "semantic_error_codes": [],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "valid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  },
+  "x3d:step/5-transform": {
+   "detail": "import_scene.x3d -> export_scene.x3d X3D40",
+   "op": "transform",
+   "record_survived_in_tool_output": 4,
+   "tool": "blender 5.2.2 (bpy wheel)"
+  },
+  "x3d:step/6-validate": {
+   "ms": 1,
+   "op": "validate",
+   "semantic_error_codes": [],
+   "validator": "x3d_mcp fork",
+   "validator_ref": "eb4b4b4",
+   "verdict": "valid",
+   "xsd": "4.0",
+   "xsd_valid": true
+  }
+ },
+ "agent": {
+  "x3d:agent/hand-or-cached@": {
+   "prov:type": "prov:SoftwareAgent"
+  },
+  "x3d:agent/x3d_mcp fork@eb4b4b4": {
+   "prov:type": "prov:SoftwareAgent"
+  },
+  "x3d:agent/autofix:add-missing-component-lines@": {
+   "prov:type": "prov:SoftwareAgent"
+  },
+  "x3d:agent/x3d-blender-io@206f139": {
+   "prov:type": "prov:SoftwareAgent"
+  }
+ },
+ "wasGeneratedBy": {
+  "_:g1": {
+   "prov:entity": "x3d:scene/dae39426f434",
+   "prov:activity": "x3d:step/1-ingest"
+  },
+  "_:g2": {
+   "prov:entity": "x3d:scene/dae39426f434",
+   "prov:activity": "x3d:step/2-validate"
+  },
+  "_:g3": {
+   "prov:entity": "x3d:scene/fcc61d6bbc12",
+   "prov:activity": "x3d:step/3-repair"
+  },
+  "_:g4": {
+   "prov:entity": "x3d:scene/fcc61d6bbc12",
+   "prov:activity": "x3d:step/4-validate"
+  },
+  "_:g5": {
+   "prov:entity": "x3d:scene/405ea725dbe1",
+   "prov:activity": "x3d:step/5-transform"
+  },
+  "_:g6": {
+   "prov:entity": "x3d:scene/405ea725dbe1",
+   "prov:activity": "x3d:step/6-validate"
+  }
+ },
+ "used": {
+  "_:u1": {
+   "prov:activity": "x3d:step/1-ingest",
+   "prov:entity": "x3d:scene/dae39426f434"
+  },
+  "_:u2": {
+   "prov:activity": "x3d:step/2-validate",
+   "prov:entity": "x3d:scene/dae39426f434"
+  },
+  "_:u3": {
+   "prov:activity": "x3d:step/3-repair",
+   "prov:entity": "x3d:scene/dae39426f434"
+  },
+  "_:u4": {
+   "prov:activity": "x3d:step/4-validate",
+   "prov:entity": "x3d:scene/fcc61d6bbc12"
+  },
+  "_:u5": {
+   "prov:activity": "x3d:step/5-transform",
+   "prov:entity": "x3d:scene/fcc61d6bbc12"
+  },
+  "_:u6": {
+   "prov:activity": "x3d:step/6-validate",
+   "prov:entity": "x3d:scene/405ea725dbe1"
+  }
+ },
+ "wasDerivedFrom": {
+  "_:d3": {
+   "prov:generatedEntity": "x3d:scene/fcc61d6bbc12",
+   "prov:usedEntity": "x3d:scene/dae39426f434",
+   "prov:activity": "x3d:step/3-repair"
+  },
+  "_:d5": {
+   "prov:generatedEntity": "x3d:scene/405ea725dbe1",
+   "prov:usedEntity": "x3d:scene/fcc61d6bbc12",
+   "prov:activity": "x3d:step/5-transform"
+  }
+ },
+ "wasAssociatedWith": {
+  "_:w1": {
+   "prov:activity": "x3d:step/1-ingest",
+   "prov:agent": "x3d:agent/hand-or-cached@"
+  },
+  "_:w2": {
+   "prov:activity": "x3d:step/2-validate",
+   "prov:agent": "x3d:agent/x3d_mcp fork@eb4b4b4"
+  },
+  "_:w3": {
+   "prov:activity": "x3d:step/3-repair",
+   "prov:agent": "x3d:agent/autofix:add-missing-component-lines@"
+  },
+  "_:w4": {
+   "prov:activity": "x3d:step/4-validate",
+   "prov:agent": "x3d:agent/x3d_mcp fork@eb4b4b4"
+  },
+  "_:w5": {
+   "prov:activity": "x3d:step/5-transform",
+   "prov:agent": "x3d:agent/x3d-blender-io@206f139"
+  },
+  "_:w6": {
+   "prov:activity": "x3d:step/6-validate",
+   "prov:agent": "x3d:agent/x3d_mcp fork@eb4b4b4"
+  }
+ }
+}

@@ -1,0 +1,261 @@
+[
+ {
+  "eventType": "COMPLETE",
+  "eventTime": "1970-01-01T00:00:00Z",
+  "producer": "x3dprov/0.1",
+  "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunEvent",
+  "run": {
+   "runId": "04189189-2309-5714-af8c-6edb703ad3e8",
+   "facets": {
+    "x3dprov_step": {
+     "_producer": "x3dprov/0.1",
+     "_schemaURL": "x3dprov/0.1#step",
+     "agent": "hand-or-cached",
+     "input_sha256": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+     "op": "ingest",
+     "origin": "cube-x3d40-sample.x3d",
+     "output_sha256": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+     "prev": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+   }
+  },
+  "job": {
+   "namespace": "x3d.pipeline",
+   "name": "ingest"
+  },
+  "inputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+    "facets": {}
+   }
+  ],
+  "outputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+    "facets": {}
+   }
+  ]
+ },
+ {
+  "eventType": "COMPLETE",
+  "eventTime": "1970-01-01T00:00:00Z",
+  "producer": "x3dprov/0.1",
+  "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunEvent",
+  "run": {
+   "runId": "aebdf9a6-d883-5818-a643-023598fb01fd",
+   "facets": {
+    "x3dprov_step": {
+     "_producer": "x3dprov/0.1",
+     "_schemaURL": "x3dprov/0.1#step",
+     "input_sha256": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+     "ms": 1901,
+     "op": "validate",
+     "output_sha256": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+     "prev": "ef5733e8502b171844e1557304e79a5c5af16fe575e12f42bc6827e7a54cf612",
+     "semantic_error_codes": [
+      "profile-component"
+     ],
+     "validator": "x3d_mcp fork",
+     "validator_ref": "eb4b4b4",
+     "verdict": "invalid",
+     "xsd": "4.0",
+     "xsd_valid": true
+    }
+   }
+  },
+  "job": {
+   "namespace": "x3d.pipeline",
+   "name": "validate"
+  },
+  "inputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+    "facets": {}
+   }
+  ],
+  "outputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+    "facets": {}
+   }
+  ]
+ },
+ {
+  "eventType": "COMPLETE",
+  "eventTime": "1970-01-01T00:00:00Z",
+  "producer": "x3dprov/0.1",
+  "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunEvent",
+  "run": {
+   "runId": "beed4e6c-b058-5e33-834b-407a9c61f298",
+   "facets": {
+    "x3dprov_step": {
+     "_producer": "x3dprov/0.1",
+     "_schemaURL": "x3dprov/0.1#step",
+     "agent": "autofix:add-missing-component-lines",
+     "fixes": [
+      "profile-component"
+     ],
+     "input_sha256": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+     "kind": "deterministic",
+     "model": null,
+     "op": "repair",
+     "output_sha256": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+     "prev": "bc93a2938911e55a01fe1dd39948f66301a4bf93611f68c3b7bbb1e9ceb70154",
+     "report_shown": true
+    }
+   }
+  },
+  "job": {
+   "namespace": "x3d.pipeline",
+   "name": "repair"
+  },
+  "inputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "dae39426f43407fe8503142217a5459c19a3d40c518c60551ae815b3eb6614a6",
+    "facets": {}
+   }
+  ],
+  "outputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+    "facets": {}
+   }
+  ]
+ },
+ {
+  "eventType": "COMPLETE",
+  "eventTime": "1970-01-01T00:00:00Z",
+  "producer": "x3dprov/0.1",
+  "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunEvent",
+  "run": {
+   "runId": "14eb8024-6767-50c2-80a7-86bbe78fafaa",
+   "facets": {
+    "x3dprov_step": {
+     "_producer": "x3dprov/0.1",
+     "_schemaURL": "x3dprov/0.1#step",
+     "input_sha256": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+     "ms": 0,
+     "op": "validate",
+     "output_sha256": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+     "prev": "aedeeac6d5c9260f93af495c6b225bd3b14a8a62ef0864cec5b06ee3493294ba",
+     "semantic_error_codes": [],
+     "validator": "x3d_mcp fork",
+     "validator_ref": "eb4b4b4",
+     "verdict": "valid",
+     "xsd": "4.0",
+     "xsd_valid": true
+    }
+   }
+  },
+  "job": {
+   "namespace": "x3d.pipeline",
+   "name": "validate"
+  },
+  "inputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+    "facets": {}
+   }
+  ],
+  "outputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+    "facets": {}
+   }
+  ]
+ },
+ {
+  "eventType": "COMPLETE",
+  "eventTime": "1970-01-01T00:00:00Z",
+  "producer": "x3dprov/0.1",
+  "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunEvent",
+  "run": {
+   "runId": "62d1c2a8-657d-5c62-9ed5-ba773c596d38",
+   "facets": {
+    "x3dprov_step": {
+     "_producer": "x3dprov/0.1",
+     "_schemaURL": "x3dprov/0.1#step",
+     "agent": "x3d-blender-io",
+     "agent_ref": "206f139",
+     "detail": "import_scene.x3d -> export_scene.x3d X3D40",
+     "input_sha256": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+     "op": "transform",
+     "output_sha256": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082",
+     "prev": "48f6643fb06442d7ef5a00d102b8c9bb96bfe38542a74d251db42de5d07be794",
+     "record_survived_in_tool_output": 4,
+     "tool": "blender 5.2.2 (bpy wheel)"
+    }
+   }
+  },
+  "job": {
+   "namespace": "x3d.pipeline",
+   "name": "transform"
+  },
+  "inputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "fcc61d6bbc129f24e2e7e143bd81f07a656e7a32f51e1b61cce3191913690068",
+    "facets": {}
+   }
+  ],
+  "outputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082",
+    "facets": {}
+   }
+  ]
+ },
+ {
+  "eventType": "COMPLETE",
+  "eventTime": "1970-01-01T00:00:00Z",
+  "producer": "x3dprov/0.1",
+  "schemaURL": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunEvent",
+  "run": {
+   "runId": "86588d4f-4c58-5594-a1de-bf85e5113dc6",
+   "facets": {
+    "x3dprov_step": {
+     "_producer": "x3dprov/0.1",
+     "_schemaURL": "x3dprov/0.1#step",
+     "input_sha256": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082",
+     "ms": 1,
+     "op": "validate",
+     "output_sha256": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082",
+     "prev": "7405cf2a3c37f98534243cdfbec5065941094a7aa283aeecc390b6d6a730d5a9",
+     "semantic_error_codes": [],
+     "validator": "x3d_mcp fork",
+     "validator_ref": "eb4b4b4",
+     "verdict": "valid",
+     "xsd": "4.0",
+     "xsd_valid": true
+    }
+   }
+  },
+  "job": {
+   "namespace": "x3d.pipeline",
+   "name": "validate"
+  },
+  "inputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082",
+    "facets": {}
+   }
+  ],
+  "outputs": [
+   {
+    "namespace": "x3d.pipeline",
+    "name": "405ea725dbe1fed30f9b8e5f6bf2d84c85fed9313fdd4f7bb214a14e8bd03082",
+    "facets": {}
+   }
+  ]
+ }
+]
