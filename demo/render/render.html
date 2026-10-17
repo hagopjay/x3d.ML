@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#0b0f14}#box{width:384px;height:288px}x3d-canvas{display:block;width:100%;height:100%}</style>
+<script>
+/* sample the WebGL canvas in the same task as X_ITE's frame callback, before the drawing buffer is cleared */
+window.__want=null;const __raf=window.requestAnimationFrame.bind(window);
+window.requestAnimationFrame=cb=>__raf(t=>{cb(t);if(window.__want){const w=window.__want;window.__want=null;try{w.resolve(w.fn())}catch(e){w.resolve({err:String(e)})}}});
+window.sampleFrame=fn=>new Promise(resolve=>{window.__want={resolve,fn}});
+</script>
+<script src="xite/x_ite.min.js"></script></head><body><div id="box"></div>
+<script>
+const c=document.createElement('x3d-canvas');['splashScreen','contextMenu','notifications','timings'].forEach(a=>c.setAttribute(a,'false'));document.getElementById('box').appendChild(c);
+window.initCss=async()=>{const t=await (await fetch('xite/x_ite.css')).text();const st=document.createElement('style');st.textContent=t;c.shadowRoot.appendChild(st);c.shadowRoot.querySelector('.x_ite-private-browser').style.display='block'};
+window.pixels=()=>{const B=c.browser,cv=B.getCanvas(),w=cv.width,h=cv.height,t2=document.createElement('canvas');t2.width=w;t2.height=h;const cx=t2.getContext('2d',{willReadFrequently:true});cx.drawImage(cv,0,0);const d=cx.getImageData(0,0,w,h).data;
+  const cnt=new Map();for(let i=0;i<d.length;i+=16){const k=(d[i]>>3)<<10|(d[i+1]>>3)<<5|(d[i+2]>>3);cnt.set(k,(cnt.get(k)||0)+1)}let bg=0,best=-1;for(const[k,v]of cnt)if(v>best){best=v;bg=k}
+  const br=(bg>>10&31)<<3,bgc=(bg>>5&31)<<3,bb=(bg&31)<<3;let diff=0,n=0;for(let i=0;i<d.length;i+=4){n++;if(Math.abs(d[i]-br)+Math.abs(d[i+1]-bgc)+Math.abs(d[i+2]-bb)>48)diff++}
+  return{w,h,nonblank:+(diff/n).toFixed(4),url:cv.width&&t2.toDataURL('image/png')}};
+window.run=async(x)=>{const B=c.browser,out={};try{const sc=await B.createX3DFromString(x);await B.replaceWorld(sc);out.nodes=B.currentScene.rootNodes.length;
+  try{B.getActiveLayer().viewAll(0)}catch(e){out.viewAllErr=String(e).slice(0,60)}
+  await new Promise(r=>setTimeout(r,700));const s=await sampleFrame(pixels);out.nonblank=s.nonblank;out.png=s.url}catch(e){out.err=String(e).slice(0,240)}return out};
+</script></body></html>
