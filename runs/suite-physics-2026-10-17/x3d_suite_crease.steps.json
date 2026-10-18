@@ -1,0 +1,139 @@
+[
+ {
+  "agent": "x3d-blender-io",
+  "agent_ref": "78212bc",
+  "bytes": 4911814,
+  "bytes_match_manifest": true,
+  "cases_in_manifest": 194,
+  "export": {
+   "use_animation": false,
+   "use_hierarchy": false,
+   "use_mesh_modifiers": false,
+   "use_normals": false,
+   "use_selection": false,
+   "use_triangulate": true,
+   "x3d_version": "X3D40"
+  },
+  "export_result": [
+   "FINISHED"
+  ],
+  "export_seconds": 14.87,
+  "exporter": "X3D Blender I/O v2.6.1",
+  "file_sha256": "d3763a1b95ddd8f20e29b7fbed696569e38721cb74bfb6c8ad9852929bcd24e8",
+  "input_sha256": "3cd6799a95bccb8730e66829a0d22c7592211bb0c95085ee122fcd4443e19ab7",
+  "kind": "suite-export",
+  "manifest_sha256": "d81660981452f136b8590bf5620bf3074f56306d47572cc84c5fe2928be8fb44",
+  "op": "ingest",
+  "origin": "suite-run-merged/out/x3d_suite_crease.x3d",
+  "output_sha256": "3cd6799a95bccb8730e66829a0d22c7592211bb0c95085ee122fcd4443e19ab7",
+  "prev": "0000000000000000000000000000000000000000000000000000000000000000",
+  "profile": "crease",
+  "repo": {
+   "branch": "feat/export-suite-conformance",
+   "commit_date": "2026-10-17T18:25:03-07:00",
+   "dirty_tracked": 0,
+   "name": "x3d-blender-io",
+   "predates_run": false,
+   "sha": "78212bc",
+   "suite_script_sha256": "d5686f6e9a7e74a35dcb0daba1d62a6f64014038c53ce27cbdd654a489455bff",
+   "validator_sha256": "a5ca89f054b45425cccd5477c9ddcb3d5eb298f0b96371613f5e0c96037decd8"
+  },
+  "run_created": "2026-10-17T18:23:00",
+  "suite_version": "2.0.0",
+  "tool": "Blender 5.1.0"
+ },
+ {
+  "agent_ref": "78212bc",
+  "artifacts": {
+   "report.html": "766b6bf4705ef3079f5a5b7a7222e070f4b8be3554cd3291f04ddcfb559c11fa",
+   "validate.log": "7736093511fc22a54ecb939c06616abe0d1815c5e5a61f1a961b6c0446052dd1"
+  },
+  "cases": [
+   [
+    "Z01.ngon12.triangulated",
+    "PASS"
+   ],
+   [
+    "Z01.concave.triangulated",
+    "PASS"
+   ],
+   [
+    "Z02.crease.flat",
+    "PASS"
+   ],
+   [
+    "Z02.crease.smooth",
+    "PASS"
+   ],
+   [
+    "Z02.crease.mixed",
+    "WARN"
+   ],
+   [
+    "Z08.chain.flat",
+    "PASS"
+   ],
+   [
+    "Z08.shear.flat",
+    "WARN"
+   ],
+   [
+    "Z10.subsurf.base",
+    "PASS"
+   ],
+   [
+    "Z10.array.base",
+    "PASS"
+   ],
+   [
+    "Z10.mirror.base",
+    "PASS"
+   ],
+   [
+    "Z10.solidify.base",
+    "PASS"
+   ],
+   [
+    "Z10.bevel.base",
+    "PASS"
+   ],
+   [
+    "Z10.triangulate.base",
+    "PASS"
+   ],
+   [
+    "Z10.disabled.base",
+    "PASS"
+   ],
+   [
+    "Z10.boolean.base",
+    "PASS"
+   ]
+  ],
+  "counts": {
+   "CORE:PASS": 13,
+   "FIDELITY:WARN": 2
+  },
+  "failed_cases": {},
+  "input_sha256": "3cd6799a95bccb8730e66829a0d22c7592211bb0c95085ee122fcd4443e19ab7",
+  "op": "validate",
+  "output_sha256": "3cd6799a95bccb8730e66829a0d22c7592211bb0c95085ee122fcd4443e19ab7",
+  "prev": "2cb18de424e1c094693039c6f276a4cdfe591d6ef13da8f914532de2fa290573",
+  "profile": "crease",
+  "results_sha256": "7753deacdac92616e355098b1034b1167b942f3246016cc62dd7114b71866044",
+  "validator": "validate_x3d_export.py",
+  "validator_ref": "2.0.0",
+  "verdict": "valid"
+ },
+ {
+  "agent": "ingest_runs.py",
+  "cases": 15,
+  "input_sha256": "3cd6799a95bccb8730e66829a0d22c7592211bb0c95085ee122fcd4443e19ab7",
+  "note": "redundant roll-up so the validate step has a successor (DESIGN.md section 3, limit 1)",
+  "op": "summary",
+  "output_sha256": "3cd6799a95bccb8730e66829a0d22c7592211bb0c95085ee122fcd4443e19ab7",
+  "prev": "d9e60a8638cbe8456dd4445b7f8f3c9029f061e20d54eb4178a4ee2e8e006304",
+  "profile": "crease",
+  "verdict": "valid"
+ }
+]

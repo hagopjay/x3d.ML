@@ -10,3 +10,8 @@ the measured results, and `docs/LOG.md` for the running log.
 ## Demo
 
 `demo/` holds "Tether Firehose 2" and "Tether Firehose 3" (v3 adds a recorded live run of 358 real model calls on five models, 17 Oct 2026; see `docs/LIVE-RUN-FINDINGS.md` and `docs/COST-LEDGER.md`): a live page that streams AI-written scenes with their provenance chains, replays 174 real runs, re-validates them on three validators, renders each in X_ITE and tampers with them on cue. See `demo/README.md`. Headline (Confirmed for the sample, Suspected as a rate): of 91 scenes the 11 Oct service called valid, 17 draw nothing; of 54 valid on fork eb4b4b4, none.
+
+## Test runs as evidence
+
+`src/ingest_runs.py` turns an X3D export-suite run and the physics-stress metrics into `x3dprov` chains, and `audit()` checks a chain against the files it came from. Plan and caveats: `docs/INTEGRATION-SUITE-PHYSICS.md`; a run over the local data: `runs/suite-physics-2026-10-17/`; tests: `tests/` (needs lxml).
+
