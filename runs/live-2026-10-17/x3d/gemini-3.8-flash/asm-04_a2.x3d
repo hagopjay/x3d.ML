@@ -1,0 +1,159 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='street_lamp.x3d' name='title'/>
+    <meta content='A classic street lamp with an active PointLight illuminating the ground.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Street Lamp Scene'/>
+    <NavigationInfo headlight='false' type='"EXAMINE" "ANY"'/>
+    <Viewpoint description='Street Lamp Overview' position='0 2.5 7.5' orientation='1 0 0 -0.1'/>
+    <Viewpoint description='Lantern Close-up' position='0 3.8 2.2'/>
+
+    <!-- Ambient night light -->
+    <DirectionalLight direction='0.2 -1 -0.4' intensity='0.08' color='0.4 0.5 0.7'/>
+
+    <!-- PointLight at the lantern position -->
+    <PointLight DEF='StreetLampLight' location='0 3.8 0' radius='18' intensity='1.5' color='1.0 0.88 0.6' ambientIntensity='0.1' on='true'/>
+
+    <!-- Ground Pavement -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.25 0.27' shininess='0.1'/>
+        </Appearance>
+        <Box size='18 0.1 18'/>
+      </Shape>
+    </Transform>
+
+    <!-- Cobblestone curb ring around lamp -->
+    <Transform translation='0 0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.35 0.33 0.3' shininess='0.1'/>
+        </Appearance>
+        <Cylinder radius='1.1' height='0.1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lamp Post Base -->
+    <Transform translation='0 0.2 0'>
+      <Shape>
+        <Appearance DEF='CastIron'>
+          <Material diffuseColor='0.12 0.14 0.15' specularColor='0.3 0.3 0.3' shininess='0.2'/>
+        </Appearance>
+        <Cylinder radius='0.4' height='0.2'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.55 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cone bottomRadius='0.35' height='0.5'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.85 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cylinder radius='0.22' height='0.15'/>
+      </Shape>
+    </Transform>
+
+    <!-- Main Pole Shaft -->
+    <Transform translation='0 2.1 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cylinder radius='0.1' height='2.4'/>
+      </Shape>
+    </Transform>
+
+    <!-- Capital / Collar -->
+    <Transform translation='0 3.35 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cylinder radius='0.16' height='0.1'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 3.45 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cone bottomRadius='0.12' height='0.12'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lantern Base Platform -->
+    <Transform translation='0 3.52 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cylinder radius='0.25' height='0.04'/>
+      </Shape>
+    </Transform>
+
+    <!-- Glowing Bulb inside Lantern -->
+    <Transform translation='0 3.8 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.95 0.8' emissiveColor='1 0.9 0.65'/>
+        </Appearance>
+        <Sphere radius='0.12'/>
+      </Shape>
+    </Transform>
+
+    <!-- Semi-transparent Lantern Glass -->
+    <Transform translation='0 3.8 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.9 0.9 0.85' transparency='0.65' specularColor='0.8 0.8 0.8' shininess='0.9'/>
+        </Appearance>
+        <Cylinder radius='0.22' height='0.5' top='false' bottom='false'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lantern Struts (4 corner posts) -->
+    <Transform translation='0.16 3.8 0.16'>
+      <Shape DEF='LanternStrut'>
+        <Appearance USE='CastIron'/>
+        <Cylinder radius='0.015' height='0.52'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.16 3.8 0.16'>
+      <Shape USE='LanternStrut'/>
+    </Transform>
+    <Transform translation='0.16 3.8 -0.16'>
+      <Shape USE='LanternStrut'/>
+    </Transform>
+    <Transform translation='-0.16 3.8 -0.16'>
+      <Shape USE='LanternStrut'/>
+    </Transform>
+
+    <!-- Lantern Top Cap -->
+    <Transform translation='0 4.1 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cylinder radius='0.26' height='0.04'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 4.25 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cone bottomRadius='0.28' height='0.26'/>
+      </Shape>
+    </Transform>
+
+    <!-- Finial Spike at very top -->
+    <Transform translation='0 4.43 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Sphere radius='0.05'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 4.52 0'>
+      <Shape>
+        <Appearance USE='CastIron'/>
+        <Cone bottomRadius='0.03' height='0.12'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

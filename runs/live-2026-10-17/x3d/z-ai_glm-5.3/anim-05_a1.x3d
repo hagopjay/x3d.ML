@@ -1,0 +1,59 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Background skyColor='0.1 0.1 0.15'/>
+    <Viewpoint description='Three cubes rotating at different speeds' position='0 0 12'/>
+    <NavigationInfo/>
+
+    <!-- Clocks: one TimeSensor per cube, different cycle intervals -->
+    <TimeSensor DEF='ClockSlow' cycleInterval='12' loop='true'/>
+    <TimeSensor DEF='ClockMedium' cycleInterval='6' loop='true'/>
+    <TimeSensor DEF='ClockFast' cycleInterval='3' loop='true'/>
+
+    <!-- One full turn per cycle for each interpolator -->
+    <OrientationInterpolator DEF='SpinSlow' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+    <OrientationInterpolator DEF='SpinMedium' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+    <OrientationInterpolator DEF='SpinFast' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+
+    <!-- Slow red cube -->
+    <Transform DEF='CubeSlow' translation='-6 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.9 0.2 0.2'/>
+        </Appearance>
+        <Box size='2 2 2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Medium green cube -->
+    <Transform DEF='CubeMedium' translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.9 0.2'/>
+        </Appearance>
+        <Box size='2 2 2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Fast blue cube -->
+    <Transform DEF='CubeFast' translation='6 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.4 0.9'/>
+        </Appearance>
+        <Box size='2 2 2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Slow cube wiring -->
+    <ROUTE fromNode='ClockSlow' fromField='fraction_changed' toNode='SpinSlow' toField='set_fraction'/>
+    <ROUTE fromNode='SpinSlow' fromField='value_changed' toNode='CubeSlow' toField='rotation'/>
+
+    <!-- Medium cube wiring -->
+    <ROUTE fromNode='ClockMedium' fromField='fraction_changed' toNode='SpinMedium' toField='set_fraction'/>
+    <ROUTE fromNode='SpinMedium' fromField='value_changed' toNode='CubeMedium' toField='rotation'/>
+
+    <!-- Fast cube wiring -->
+    <ROUTE fromNode='ClockFast' fromField='fraction_changed' toNode='SpinFast' toField='set_fraction'/>
+    <ROUTE fromNode='SpinFast' fromField='value_changed' toNode='CubeFast' toField='rotation'/>
+  </Scene>
+</X3D>

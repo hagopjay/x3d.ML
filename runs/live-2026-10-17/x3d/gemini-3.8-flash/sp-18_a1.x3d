@@ -1,0 +1,263 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='aquarium.x3d' name='title'/>
+    <meta content='An aquarium with a glass tank, sand, swimming cone fish, and cylinder plants.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Aquarium Scene'/>
+
+    <Viewpoint description='Aquarium Front View' position='0 1.3 4.2'/>
+    <Viewpoint description='Aquarium Angled View' position='3.2 2.4 3.0' orientation='-0.45 0.85 0.28 0.75'/>
+    <Viewpoint description='Top Down View' position='0 4.5 0.1' orientation='1 0 0 -1.55'/>
+
+    <Background skyColor='0.05 0.1 0.2'/>
+
+    <DirectionalLight direction='0 -1 -0.3' intensity='0.9' color='0.9 0.95 1.0'/>
+    <PointLight location='0 2.2 0' intensity='0.8' color='0.6 0.85 1.0' radius='6'/>
+
+    <!-- Aquarium Stand & Frame -->
+    <Transform translation='0 -0.06 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.15 0.12 0.1' roughness='0.8'/>
+        </Appearance>
+        <Box size='4.2 0.12 2.7'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.54 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.15 0.12 0.1' roughness='0.8'/>
+        </Appearance>
+        <Box size='4.1 0.08 2.6'/>
+      </Shape>
+    </Transform>
+
+    <!-- Sand Floor -->
+    <Transform translation='0 0.06 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.86 0.76 0.52' roughness='0.95' specularColor='0.05 0.05 0.05'/>
+        </Appearance>
+        <Box size='3.95 0.12 2.45'/>
+      </Shape>
+    </Transform>
+
+    <!-- Water Interior -->
+    <Transform translation='0 1.25 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.55 0.7' transparency='0.82' specularColor='0.3 0.6 0.8' shininess='0.6'/>
+        </Appearance>
+        <Box size='3.96 2.38 2.46'/>
+      </Shape>
+    </Transform>
+
+    <!-- Glass Tank Outer Walls -->
+    <Transform translation='0 1.25 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.85 0.95 1.0' transparency='0.88' specularColor='0.9 0.95 1.0' shininess='0.9'/>
+        </Appearance>
+        <Box size='4.05 2.5 2.55'/>
+      </Shape>
+    </Transform>
+
+    <!-- Cylinder Plants (Seaweed Clusters) -->
+    <!-- Plant cluster 1: Back-Left -->
+    <Transform translation='-1.3 0 -0.6'>
+      <Transform translation='0 0.65 0'>
+        <Shape DEF='PlantStemMedium'>
+          <Appearance DEF='PlantAppDark'>
+            <Material diffuseColor='0.08 0.5 0.18' roughness='0.6'/>
+          </Appearance>
+          <Cylinder height='1.3' radius='0.028'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.08 0.85 0.06' rotation='0 0 1 0.08'>
+        <Shape DEF='PlantStemTall'>
+          <Appearance DEF='PlantAppBright'>
+            <Material diffuseColor='0.12 0.62 0.22' roughness='0.5'/>
+          </Appearance>
+          <Cylinder height='1.7' radius='0.025'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.08 0.5 -0.05' rotation='1 0 0 0.1'>
+        <Shape DEF='PlantStemShort'>
+          <Appearance USE='PlantAppDark'/>
+          <Cylinder height='1.0' radius='0.03'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.12 0.45 -0.08' rotation='0 0 1 -0.12'>
+        <Shape USE='PlantStemShort'/>
+      </Transform>
+    </Transform>
+
+    <!-- Plant cluster 2: Back-Right -->
+    <Transform translation='1.2 0 -0.5'>
+      <Transform translation='0 0.8 0' rotation='0 0 1 -0.06'>
+        <Shape USE='PlantStemTall'/>
+      </Transform>
+      <Transform translation='-0.1 0.6 0.05' rotation='1 0 0 -0.08'>
+        <Shape USE='PlantStemMedium'/>
+      </Transform>
+      <Transform translation='0.1 0.45 -0.06' rotation='0 0 1 0.1'>
+        <Shape USE='PlantStemShort'/>
+      </Transform>
+      <Transform translation='0.05 0.95 0.08' rotation='0.5 0 0.5 0.1'>
+        <Shape>
+          <Appearance USE='PlantAppBright'/>
+          <Cylinder height='1.9' radius='0.022'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Plant cluster 3: Mid-Left -->
+    <Transform translation='-1.5 0 0.4'>
+      <Transform translation='0 0.5 0' rotation='0 0 1 0.09'>
+        <Shape USE='PlantStemShort'/>
+      </Transform>
+      <Transform translation='0.08 0.65 -0.05' rotation='1 0 0 0.08'>
+        <Shape USE='PlantStemMedium'/>
+      </Transform>
+      <Transform translation='-0.06 0.4 0.06'>
+        <Shape USE='PlantStemShort'/>
+      </Transform>
+    </Transform>
+
+    <!-- Plant cluster 4: Center-Back -->
+    <Transform translation='0.1 0 -0.8'>
+      <Transform translation='0 0.9 0' rotation='0 0 1 0.05'>
+        <Shape>
+          <Appearance USE='PlantAppBright'/>
+          <Cylinder height='1.8' radius='0.024'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.09 0.6 0.06' rotation='1 0 0 0.12'>
+        <Shape USE='PlantStemMedium'/>
+      </Transform>
+      <Transform translation='0.1 0.55 -0.04' rotation='0 0 1 -0.09'>
+        <Shape USE='PlantStemMedium'/>
+      </Transform>
+    </Transform>
+
+    <!-- Reusable Fish Definition -->
+    <!-- Fish forward direction is along -Z. Cone points +Y by default, rotated -90 deg around X to point towards -Z -->
+    <Transform DEF='OrangeFishForward' scale='0.85 0.85 0.85'>
+      <!-- Main body cone -->
+      <Transform rotation='1 0 0 -1.5708'>
+        <Shape>
+          <Appearance DEF='FishAppearance'>
+            <Material diffuseColor='1.0 0.42 0.02' specularColor='0.5 0.25 0.1' shininess='0.4'/>
+          </Appearance>
+          <Cone bottomRadius='0.09' height='0.36'/>
+        </Shape>
+      </Transform>
+      <!-- Tail fin -->
+      <Transform translation='0 0 0.24' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='FishAppearance'/>
+          <Cone bottomRadius='0.08' height='0.14'/>
+        </Shape>
+      </Transform>
+      <!-- Dorsal fin -->
+      <Transform translation='0 0.07 0.02' rotation='1 0 0 -0.5'>
+        <Shape>
+          <Appearance USE='FishAppearance'/>
+          <Cone bottomRadius='0.025' height='0.11'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Reverse oriented fish (faces +Z when moving opposite direction) -->
+    <Transform DEF='OrangeFishReverse' scale='0.85 0.85 0.85'>
+      <Transform rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='FishAppearance'/>
+          <Cone bottomRadius='0.09' height='0.36'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 -0.24' rotation='1 0 0 -1.5708'>
+        <Shape USE='FishAppearance'/>
+        <Cone bottomRadius='0.08' height='0.14'/>
+      </Transform>
+      <Transform translation='0 0.07 -0.02' rotation='1 0 0 0.5'>
+        <Shape USE='FishAppearance'/>
+        <Cone bottomRadius='0.025' height='0.11'/>
+      </Transform>
+    </Transform>
+
+    <!-- Five Fish Pivots: Swimming at different heights, radii, and speeds -->
+
+    <!-- Fish 1: Low-Mid height, large radius, clockwise (CW) -->
+    <Transform DEF='FishPivot1' translation='0 0.65 0'>
+      <Transform translation='1.4 0 0'>
+        <Transform USE='OrangeFishForward'/>
+      </Transform>
+    </Transform>
+
+    <!-- Fish 2: Mid-High height, medium-large radius, counter-clockwise (CCW) -->
+    <Transform DEF='FishPivot2' translation='-0.1 1.45 0'>
+      <Transform translation='1.2 0 0'>
+        <Transform USE='OrangeFishReverse'/>
+      </Transform>
+    </Transform>
+
+    <!-- Fish 3: High height, tight radius, fast CW -->
+    <Transform DEF='FishPivot3' translation='0.2 1.95 0'>
+      <Transform translation='0.75 0 0'>
+        <Transform USE='OrangeFishForward'/>
+      </Transform>
+    </Transform>
+
+    <!-- Fish 4: Low height, medium radius, slow CW -->
+    <Transform DEF='FishPivot4' translation='-0.15 0.4 0'>
+      <Transform translation='1.05 0 0'>
+        <Transform USE='OrangeFishForward'/>
+      </Transform>
+    </Transform>
+
+    <!-- Fish 5: Mid height, moderate radius, CCW -->
+    <Transform DEF='FishPivot5' translation='0.1 1.1 0'>
+      <Transform translation='0.9 0 0'>
+        <Transform USE='OrangeFishReverse'/>
+      </Transform>
+    </Transform>
+
+    <!-- Animation Clocks and Interpolators -->
+
+    <!-- Clockwise Rotation Interpolator (0 to -2pi around Y) -->
+    <OrientationInterpolator DEF='RotatorCW'
+      key='0 0.25 0.5 0.75 1.0'
+      keyValue='0 1 0 0, 0 1 0 -1.5708, 0 1 0 -3.14159, 0 1 0 -4.71239, 0 1 0 -6.28318'/>
+
+    <!-- Counter-Clockwise Rotation Interpolator (0 to +2pi around Y) -->
+    <OrientationInterpolator DEF='RotatorCCW'
+      key='0 0.25 0.5 0.75 1.0'
+      keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.14159, 0 1 0 4.71239, 0 1 0 6.28318'/>
+
+    <!-- Time Sensors with different cycle intervals (speeds) -->
+    <TimeSensor DEF='TimerFish1' cycleInterval='8.0' loop='true'/>
+    <TimeSensor DEF='TimerFish2' cycleInterval='6.5' loop='true'/>
+    <TimeSensor DEF='TimerFish3' cycleInterval='4.2' loop='true'/>
+    <TimeSensor DEF='TimerFish4' cycleInterval='11.0' loop='true'/>
+    <TimeSensor DEF='TimerFish5' cycleInterval='5.5' loop='true'/>
+
+    <!-- Routing Animations to Pivots -->
+    <ROUTE fromNode='TimerFish1' fromField='fraction_changed' toNode='RotatorCW' toField='set_fraction'/>
+    <ROUTE fromNode='RotatorCW' fromField='value_changed' toNode='FishPivot1' toField='set_rotation'/>
+
+    <ROUTE fromNode='TimerFish2' fromField='fraction_changed' toNode='RotatorCCW' toField='set_fraction'/>
+    <ROUTE fromNode='RotatorCCW' fromField='value_changed' toNode='FishPivot2' toField='set_rotation'/>
+
+    <ROUTE fromNode='TimerFish3' fromField='fraction_changed' toNode='RotatorCW' toField='set_fraction'/>
+    <ROUTE fromNode='RotatorCW' fromField='value_changed' toNode='FishPivot3' toField='set_rotation'/>
+
+    <ROUTE fromNode='TimerFish4' fromField='fraction_changed' toNode='RotatorCW' toField='set_fraction'/>
+    <ROUTE fromNode='RotatorCW' fromField='value_changed' toNode='FishPivot4' toField='set_rotation'/>
+
+    <ROUTE fromNode='TimerFish5' fromField='fraction_changed' toNode='RotatorCCW' toField='set_fraction'/>
+    <ROUTE fromNode='RotatorCCW' fromField='value_changed' toNode='FishPivot5' toField='set_rotation'/>
+
+  </Scene>
+</X3D>

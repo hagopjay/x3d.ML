@@ -1,0 +1,219 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Articulated Desk Lamp'/>
+    <meta name='description' content='A metal desk lamp with a slowly swaying upper arm and a downward-facing spotlight. Touch the base to restart the motion.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Articulated Desk Lamp'/>
+    <Background skyColor='0.045 0.065 0.095'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Desk lamp — three-quarter view' position='3.1 2.7 4.6' orientation='-0.375 0.915 0.147 0.637' centerOfRotation='0 1.05 0'/>
+    <DirectionalLight direction='-0.5 -1 -0.4' color='0.83 0.9 1' intensity='0.75' ambientIntensity='0.2'/>
+    <PointLight location='-2 3 2' color='1 0.87 0.7' intensity='0.45' radius='8'/>
+
+    <!-- Ground and compact wooden desk. -->
+    <Transform translation='0 -0.035 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.11 0.14 0.18' specularColor='0.08 0.08 0.08' shininess='0.1'/>
+        </Appearance>
+        <Box size='12 0.06 12'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.78 0'>
+      <Shape>
+        <Appearance DEF='Wood'>
+          <Material diffuseColor='0.48 0.255 0.105' specularColor='0.22 0.15 0.08' shininess='0.22'/>
+        </Appearance>
+        <Box size='2.1 0.12 1.25'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.843 -0.43'>
+      <Shape>
+        <Appearance DEF='WoodGrain'>
+          <Material diffuseColor='0.34 0.16 0.065'/>
+        </Appearance>
+        <Box size='2.04 0.002 0.008'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.843 -0.19'>
+      <Shape>
+        <Appearance USE='WoodGrain'/>
+        <Box size='2.04 0.002 0.005'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.843 0.12'>
+      <Shape>
+        <Appearance USE='WoodGrain'/>
+        <Box size='2.04 0.002 0.007'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.843 0.39'>
+      <Shape>
+        <Appearance USE='WoodGrain'/>
+        <Box size='2.04 0.002 0.004'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.88 0.365 -0.46'>
+      <Shape>
+        <Appearance USE='Wood'/>
+        <Box size='0.09 0.73 0.09'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.88 0.365 -0.46'>
+      <Shape>
+        <Appearance USE='Wood'/>
+        <Box size='0.09 0.73 0.09'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.88 0.365 0.46'>
+      <Shape>
+        <Appearance USE='Wood'/>
+        <Box size='0.09 0.73 0.09'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.88 0.365 0.46'>
+      <Shape>
+        <Appearance USE='Wood'/>
+        <Box size='0.09 0.73 0.09'/>
+      </Shape>
+    </Transform>
+
+    <!-- Round weighted base; touching it restarts the sway. -->
+    <Transform translation='-0.55 0.882 0'>
+      <TouchSensor DEF='BaseTouch' description='Restart the upper-arm sway'/>
+      <Shape>
+        <Appearance DEF='DarkMetal'>
+          <PhysicalMaterial baseColor='0.045 0.085 0.105' metallic='0.75' roughness='0.27'/>
+        </Appearance>
+        <Cylinder radius='0.25' height='0.075'/>
+      </Shape>
+      <Transform translation='0 -0.028 0'>
+        <Shape>
+          <Appearance DEF='Rubber'>
+            <Material diffuseColor='0.025 0.028 0.032'/>
+          </Appearance>
+          <Cylinder radius='0.258' height='0.018'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0.046 0'>
+        <Shape>
+          <Appearance USE='DarkMetal'/>
+          <Cylinder radius='0.15' height='0.022'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.13 0.047 0.09'>
+        <Shape>
+          <Appearance USE='Rubber'/>
+          <Cylinder radius='0.025' height='0.02'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Lower articulated arm, angled toward the desk center. -->
+    <Transform translation='-0.55 0.95 0' rotation='0 0 1 -0.4'>
+      <Transform rotation='1 0 0 1.570796'>
+        <Shape>
+          <Appearance USE='DarkMetal'/>
+          <Cylinder radius='0.064' height='0.13'/>
+        </Shape>
+        <Transform translation='0 0.074 0'>
+          <Shape>
+            <Appearance DEF='Brass'>
+              <PhysicalMaterial baseColor='0.68 0.44 0.17' metallic='0.85' roughness='0.25'/>
+            </Appearance>
+            <Cylinder radius='0.032' height='0.025'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform translation='0 0.32 0'>
+        <Shape>
+          <Appearance USE='DarkMetal'/>
+          <Box size='0.065 0.64 0.075'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0.32 0.042'>
+        <Shape>
+          <Appearance USE='Brass'/>
+          <Box size='0.018 0.49 0.008'/>
+        </Shape>
+      </Transform>
+
+      <!-- This joint and all of its descendants sway together. -->
+      <Transform translation='0 0.64 0'>
+        <Transform rotation='1 0 0 1.570796'>
+          <Shape>
+            <Appearance USE='DarkMetal'/>
+            <Cylinder radius='0.075' height='0.15'/>
+          </Shape>
+          <Transform translation='0 0.087 0'>
+            <Shape>
+              <Appearance USE='Brass'/>
+              <Cylinder radius='0.039' height='0.028'/>
+            </Shape>
+          </Transform>
+        </Transform>
+        <Transform DEF='UpperArm' rotation='0 0 1 -0.55'>
+          <Transform translation='0 0.28 0'>
+            <Shape>
+              <Appearance USE='DarkMetal'/>
+              <Box size='0.055 0.56 0.065'/>
+            </Shape>
+          </Transform>
+          <Transform translation='0 0.28 0.037'>
+            <Shape>
+              <Appearance USE='Brass'/>
+              <Box size='0.014 0.43 0.008'/>
+            </Shape>
+          </Transform>
+
+          <!-- Counter-angled shade hangs downward at the middle of the sway. -->
+          <Transform translation='0 0.56 0' rotation='0 0 1 0.95'>
+            <Transform rotation='1 0 0 1.570796'>
+              <Shape>
+                <Appearance USE='Brass'/>
+                <Cylinder radius='0.045' height='0.1'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0 -0.055 0'>
+              <Shape>
+                <Appearance USE='DarkMetal'/>
+                <Cylinder radius='0.035' height='0.11'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0 -0.21 0'>
+              <Shape>
+                <Appearance USE='DarkMetal'/>
+                <Cone bottomRadius='0.235' height='0.32' bottom='false' solid='false'/>
+              </Shape>
+              <Transform translation='0 -0.004 0' scale='0.95 0.95 0.95'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.87 0.8 0.6' emissiveColor='0.14 0.1 0.045' specularColor='0.3 0.27 0.19' shininess='0.3'/>
+                  </Appearance>
+                  <Cone bottomRadius='0.235' height='0.32' bottom='false' solid='false'/>
+                </Shape>
+              </Transform>
+              <Transform translation='0 -0.075 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='1 0.9 0.63' emissiveColor='1 0.78 0.38'/>
+                  </Appearance>
+                  <Sphere radius='0.052'/>
+                </Shape>
+              </Transform>
+              <SpotLight location='0 -0.13 0' direction='0 -1 0' color='1 0.84 0.58' intensity='2.4' beamWidth='0.45' cutOffAngle='0.82' radius='4' attenuation='1 0.15 0.08' global='true'/>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='SwayClock' cycleInterval='12' loop='true'/>
+    <OrientationInterpolator DEF='SwayRotation' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 -0.55, 0 0 1 -0.70, 0 0 1 -0.55, 0 0 1 -0.40, 0 0 1 -0.55'/>
+    <ROUTE fromNode='SwayClock' fromField='fraction_changed' toNode='SwayRotation' toField='set_fraction'/>
+    <ROUTE fromNode='SwayRotation' fromField='value_changed' toNode='UpperArm' toField='set_rotation'/>
+    <ROUTE fromNode='BaseTouch' fromField='touchTime' toNode='SwayClock' toField='set_startTime'/>
+  </Scene>
+</X3D>

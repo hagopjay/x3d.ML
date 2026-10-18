@@ -1,0 +1,233 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='city_block.x3d'/>
+    <meta name='description' content='A 3x3 grid city block with buildings of various heights and colours, featuring a central skyscraper with a blinking red beacon light.'/>
+    <meta name='creator' content='X3D AI Generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='City Block with Beacon Tower'/>
+
+    <Viewpoint description='City Overview' position='55 50 65' orientation='-0.49 0.84 0.23 0.69'/>
+    <Viewpoint description='Street Level' position='0 2 34' orientation='0 1 0 3.14159'/>
+    <Viewpoint description='Central Tower Beacon' position='0 62 18' orientation='-1 0 0 0.35'/>
+
+    <Background skyColor='0.08 0.1 0.18, 0.18 0.22 0.32, 0.45 0.5 0.6' skyAngle='1.2 1.57' groundColor='0.1 0.1 0.12, 0.15 0.15 0.18' groundAngle='1.57'/>
+
+    <DirectionalLight direction='-0.6 -0.8 -0.3' intensity='0.9' color='1 0.96 0.88'/>
+    <DirectionalLight direction='0.6 0.4 0.5' intensity='0.3' color='0.5 0.6 0.8'/>
+
+    <!-- Ground / Streets Base -->
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.15 0.15 0.16'/>
+        </Appearance>
+        <Box size='72 0.2 72'/>
+      </Shape>
+    </Transform>
+
+    <!-- Sidewalk Platforms for 3x3 Grid -->
+    <Transform translation='-20 0.1 -20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.1 -20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='20 0.1 -20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-20 0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='20 0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-20 0.1 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.1 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+    <Transform translation='20 0.1 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.62'/>
+        </Appearance>
+        <Box size='14 0.2 14'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 1: North-West (Slate Blue, Mid-height) -->
+    <Transform translation='-20 9 -20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.28 0.38 0.52' specularColor='0.2 0.2 0.25' shininess='0.6'/>
+        </Appearance>
+        <Box size='11 18 11'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 2: North (Terracotta / Brick, Medium-Tall) -->
+    <Transform translation='0 12 -20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.65 0.32 0.24'/>
+        </Appearance>
+        <Box size='10.5 24 10.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 3: North-East (Sandstone Beige, Lower) -->
+    <Transform translation='20 7 -20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.74 0.62'/>
+        </Appearance>
+        <Box size='11.5 14 11.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 4: West (Teal Glass, Tall Office) -->
+    <Transform translation='-20 14 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.52 0.5' specularColor='0.4 0.6 0.6' shininess='0.8'/>
+        </Appearance>
+        <Box size='10 28 10'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 5: Center - Tall Tower with Blinking Beacon -->
+    <Transform translation='0 0 0'>
+      <!-- Tower Main Shaft -->
+      <Transform translation='0 22 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.22 0.26 0.32' specularColor='0.5 0.55 0.6' shininess='0.7'/>
+          </Appearance>
+          <Box size='10 44 10'/>
+        </Shape>
+      </Transform>
+      <!-- Tower Setback Crown -->
+      <Transform translation='0 46 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.35 0.42' specularColor='0.4 0.4 0.5' shininess='0.6'/>
+          </Appearance>
+          <Box size='7 4 7'/>
+        </Shape>
+      </Transform>
+      <!-- Tower Spire -->
+      <Transform translation='0 51 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.7 0.7 0.72' specularColor='0.8 0.8 0.8' shininess='0.8'/>
+          </Appearance>
+          <Cylinder radius='0.2' height='6'/>
+        </Shape>
+      </Transform>
+      <!-- Blinking Beacon Light -->
+      <Transform translation='0 54.3 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='BeaconMat' diffuseColor='1 0 0' emissiveColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.55'/>
+        </Shape>
+        <PointLight color='1 0.1 0.1' intensity='1' radius='20' location='0 0 0'/>
+      </Transform>
+    </Transform>
+
+    <!-- Building 6: East (Cream Modern, Mid-Low) -->
+    <Transform translation='20 9 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.82 0.8 0.75'/>
+        </Appearance>
+        <Box size='11 18 11'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 7: South-West (Moss Green, Mid-height) -->
+    <Transform translation='-20 10.5 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.32 0.44 0.34'/>
+        </Appearance>
+        <Box size='10.5 21 10.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 8: South (Warm Ochre, Low Block) -->
+    <Transform translation='0 7 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.74 0.55 0.3'/>
+        </Appearance>
+        <Box size='11.5 14 11.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Building 9: South-East (Charcoal Bronze, Tall) -->
+    <Transform translation='20 13 20'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.28 0.26 0.28' specularColor='0.3 0.28 0.3' shininess='0.5'/>
+        </Appearance>
+        <Box size='10 26 10'/>
+      </Shape>
+    </Transform>
+
+    <!-- Animation: Blinking Red Beacon on the Central Tower -->
+    <TimeSensor DEF='BeaconTimer' cycleInterval='1.0' loop='true'/>
+    <ColorInterpolator DEF='BeaconColor'
+      key='0.0 0.45 0.5 0.95 1.0'
+      keyValue='1 0.05 0.05, 1 0.05 0.05, 0.1 0 0, 0.1 0 0, 1 0.05 0.05'/>
+
+    <ROUTE fromNode='BeaconTimer' fromField='fraction_changed' toNode='BeaconColor' toField='set_fraction'/>
+    <ROUTE fromNode='BeaconColor' fromField='value_changed' toNode='BeaconMat' toField='emissiveColor'/>
+  </Scene>
+</X3D>

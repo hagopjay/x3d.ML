@@ -1,0 +1,325 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='FerrisWheel.x3d' name='title'/>
+    <meta content='A Ferris wheel with 12 upright gondolas, A-frame supports, and warm evening lighting' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Ferris Wheel at Sunset'/>
+    <Background groundAngle='1.5708' groundColor='0.12 0.09 0.07 0.08 0.06 0.06' skyAngle='1.15 1.42 1.5708' skyColor='0.12 0.1 0.25 0.38 0.18 0.32 0.78 0.38 0.18 0.95 0.65 0.28'/>
+    <Viewpoint description='Front View' position='0 10 24'/>
+    <Viewpoint description='Side View' orientation='0 1 0 1.5708' position='24 10 0'/>
+    <Viewpoint description='Distant Sunset View' position='0 8 38'/>
+    <DirectionalLight ambientIntensity='0.3' color='1 0.75 0.45' direction='-0.6 -0.3 -0.7' intensity='1.2'/>
+    <DirectionalLight color='0.3 0.2 0.4' direction='0.6 0.4 0.7' intensity='0.4'/>
+
+    <!-- Ground Platform -->
+    <Transform translation='0 -0.25 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.18 0.16 0.14'/>
+        </Appearance>
+        <Cylinder height='0.5' radius='14'/>
+      </Shape>
+    </Transform>
+
+    <!-- Support Structure (A-Frames) -->
+    <!-- Front A-Frame (Z = +1.1) -->
+    <Transform translation='-3.2 5 1.1' rotation='0 0 1 -0.33'>
+      <Shape DEF='Leg'>
+        <Appearance DEF='SupportApp'>
+          <Material diffuseColor='0.75 0.78 0.82' shininess='0.5' specularColor='0.4 0.4 0.4'/>
+        </Appearance>
+        <Cylinder height='10.8' radius='0.18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='3.2 5 1.1' rotation='0 0 1 0.33'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='0 3.5 1.1'>
+      <Shape DEF='Brace'>
+        <Appearance USE='SupportApp'/>
+        <Box size='4.8 0.15 0.15'/>
+      </Shape>
+    </Transform>
+
+    <!-- Back A-Frame (Z = -1.1) -->
+    <Transform translation='-3.2 5 -1.1' rotation='0 0 1 -0.33'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='3.2 5 -1.1' rotation='0 0 1 0.33'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='0 3.5 -1.1'>
+      <Shape USE='Brace'/>
+    </Transform>
+
+    <!-- Central Axle -->
+    <Transform translation='0 10 0' rotation='1 0 0 1.5708'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.25 0.28' shininess='0.7' specularColor='0.5 0.5 0.5'/>
+        </Appearance>
+        <Cylinder height='2.8' radius='0.28'/>
+      </Shape>
+    </Transform>
+
+    <!-- Boarding Platform -->
+    <Transform translation='0 1.2 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.35 0.22 0.15'/>
+        </Appearance>
+        <Box size='6 0.3 3.4'/>
+      </Shape>
+    </Transform>
+    <!-- Boarding Railing -->
+    <Transform translation='0 1.9 1.6'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.6 0.2' shininess='0.5' specularColor='0.3 0.3 0.1'/>
+        </Appearance>
+        <Box size='6 1 0.08'/>
+      </Shape>
+    </Transform>
+
+    <!-- Rotating Wheel Assembly -->
+    <Transform DEF='Wheel' translation='0 10 0'>
+      <!-- Hub -->
+      <Transform rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance DEF='WheelWhite'>
+            <Material diffuseColor='0.92 0.92 0.95' shininess='0.4' specularColor='0.3 0.3 0.3'/>
+          </Appearance>
+          <Cylinder height='1.6' radius='0.7'/>
+        </Shape>
+      </Transform>
+
+      <!-- Spokes (6 continuous diametrical cylinders each side = 12 radial spokes) -->
+      <!-- Front Spokes (Z = +0.55) -->
+      <Transform translation='0 0 0.55'>
+        <Shape DEF='SpokeSpanned'>
+          <Appearance USE='WheelWhite'/>
+          <Cylinder height='14' radius='0.06'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 0.55' rotation='0 0 1 0.5236'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 0.55' rotation='0 0 1 1.0472'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 0.55' rotation='0 0 1 1.5708'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 0.55' rotation='0 0 1 2.0944'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 0.55' rotation='0 0 1 2.6180'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+
+      <!-- Back Spokes (Z = -0.55) -->
+      <Transform translation='0 0 -0.55'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 -0.55' rotation='0 0 1 0.5236'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 -0.55' rotation='0 0 1 1.0472'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 -0.55' rotation='0 0 1 1.5708'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 -0.55' rotation='0 0 1 2.0944'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+      <Transform translation='0 0 -0.55' rotation='0 0 1 2.6180'>
+        <Shape USE='SpokeSpanned'/>
+      </Transform>
+
+      <!-- Outer Rims (Front and Back) -->
+      <Transform translation='0 0 0.55'>
+        <Shape DEF='Rim'>
+          <Appearance USE='WheelWhite'/>
+          <Extrusion beginCap='true' endCap='true' crossSection='0.08 0 0.057 -0.057 0 -0.08 -0.057 -0.057 -0.08 0 -0.057 0.057 0 0.08 0.057 0.057 0.08 0' spine='7 0 0 6.062 3.5 0 3.5 6.062 0 0 7 0 -3.5 6.062 0 -6.062 3.5 0 -7 0 0 -6.062 -3.5 0 -3.5 -6.062 0 0 -7 0 3.5 -6.062 0 6.062 -3.5 0 7 0 0'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 -0.55'>
+        <Shape USE='Rim'/>
+      </Transform>
+
+      <!-- Inner Support Rims (Radius = 4.2) -->
+      <Transform translation='0 0 0.55'>
+        <Shape DEF='InnerRim'>
+          <Appearance USE='WheelWhite'/>
+          <Extrusion beginCap='true' endCap='true' crossSection='0.05 0 0.035 -0.035 0 -0.05 -0.035 -0.035 -0.05 0 -0.035 0.035 0 0.05 0.035 0.035 0.05 0' spine='4.2 0 0 3.637 2.1 0 2.1 3.637 0 0 4.2 0 -2.1 3.637 0 -3.637 2.1 0 -4.2 0 0 -3.637 -2.1 0 -2.1 -3.637 0 0 -4.2 0 2.1 -3.637 0 3.637 -2.1 0 4.2 0 0'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0 -0.55'>
+        <Shape USE='InnerRim'/>
+      </Transform>
+
+      <!-- Gondolas at 12 positions around R=7 circle -->
+      <!-- 0 deg -->
+      <Transform translation='7 0 0'>
+        <Transform DEF='G0'>
+          <Group DEF='Gondola'>
+            <!-- Hanger axle/bar -->
+            <Transform rotation='1 0 0 1.5708'>
+              <Shape>
+                <Appearance DEF='MetalRodApp'>
+                  <Material diffuseColor='0.6 0.6 0.65' shininess='0.8' specularColor='0.6 0.6 0.7'/>
+                </Appearance>
+                <Cylinder height='1.3' radius='0.05'/>
+              </Shape>
+            </Transform>
+            <!-- Hanger vertical struts -->
+            <Transform translation='0 -0.55 0.5'>
+              <Shape DEF='HangerStrut'>
+                <Appearance USE='MetalRodApp'/>
+                <Cylinder height='1.1' radius='0.03'/>
+              </Shape>
+            </Transform>
+            <Transform translation='0 -0.55 -0.5'>
+              <Shape USE='HangerStrut'/>
+            </Transform>
+            <!-- Gondola Roof -->
+            <Transform translation='0 -1.1 0'>
+              <Shape>
+                <Appearance DEF='RoofApp'>
+                  <Material diffuseColor='0.85 0.25 0.2' shininess='0.3'/>
+                </Appearance>
+                <Cylinder height='0.12' radius='0.75'/>
+              </Shape>
+            </Transform>
+            <!-- Cabin Body -->
+            <Transform translation='0 -1.6 0'>
+              <Shape>
+                <Appearance DEF='CabinApp'>
+                  <Material diffuseColor='0.95 0.85 0.3' shininess='0.3'/>
+                </Appearance>
+                <Cylinder height='0.85' radius='0.65'/>
+              </Shape>
+            </Transform>
+            <!-- Cabin Windows (dark cylinder inner) -->
+            <Transform translation='0 -1.5 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.1 0.15 0.25' shininess='0.9' specularColor='0.8 0.8 0.9' transparency='0.3'/>
+                </Appearance>
+                <Cylinder height='0.45' radius='0.67'/>
+              </Shape>
+            </Transform>
+          </Group>
+        </Transform>
+      </Transform>
+
+      <!-- 30 deg -->
+      <Transform translation='6.062 3.5 0'>
+        <Transform DEF='G1'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 60 deg -->
+      <Transform translation='3.5 6.062 0'>
+        <Transform DEF='G2'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 90 deg -->
+      <Transform translation='0 7 0'>
+        <Transform DEF='G3'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 120 deg -->
+      <Transform translation='-3.5 6.062 0'>
+        <Transform DEF='G4'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 150 deg -->
+      <Transform translation='-6.062 3.5 0'>
+        <Transform DEF='G5'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 180 deg -->
+      <Transform translation='-7 0 0'>
+        <Transform DEF='G6'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 210 deg -->
+      <Transform translation='-6.062 -3.5 0'>
+        <Transform DEF='G7'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 240 deg -->
+      <Transform translation='-3.5 -6.062 0'>
+        <Transform DEF='G8'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 270 deg -->
+      <Transform translation='0 -7 0'>
+        <Transform DEF='G9'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 300 deg -->
+      <Transform translation='3.5 -6.062 0'>
+        <Transform DEF='G10'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+
+      <!-- 330 deg -->
+      <Transform translation='6.062 -3.5 0'>
+        <Transform DEF='G11'>
+          <Group USE='Gondola'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Animation Clocks and Interpolators -->
+    <TimeSensor DEF='WheelTimer' cycleInterval='24' loop='true'/>
+
+    <!-- Wheel Rotation (around Z axis) -->
+    <OrientationInterpolator DEF='WheelRotator' key='0 0.25 0.5 0.75 1.0' keyValue='0 0 1 0 0 0 1 1.5708 0 0 1 3.14159 0 0 1 4.71239 0 0 1 6.28319'/>
+
+    <!-- Gondola Counter-Rotation (to stay upright) -->
+    <OrientationInterpolator DEF='GondolaRotator' key='0 0.25 0.5 0.75 1.0' keyValue='0 0 1 0 0 0 1 -1.5708 0 0 1 -3.14159 0 0 1 -4.71239 0 0 1 -6.28319'/>
+
+    <!-- Routes for Wheel Rotation -->
+    <ROUTE fromField='fraction_changed' fromNode='WheelTimer' toField='set_fraction' toNode='WheelRotator'/>
+    <ROUTE fromField='value_changed' fromNode='WheelRotator' toField='set_rotation' toNode='Wheel'/>
+
+    <!-- Routes for Upright Gondolas -->
+    <ROUTE fromField='fraction_changed' fromNode='WheelTimer' toField='set_fraction' toNode='GondolaRotator'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G0'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G1'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G2'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G3'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G4'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G5'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G6'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G7'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G8'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G9'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G10'/>
+    <ROUTE fromField='value_changed' fromNode='GondolaRotator' toField='set_rotation' toNode='G11'/>
+  </Scene>
+</X3D>

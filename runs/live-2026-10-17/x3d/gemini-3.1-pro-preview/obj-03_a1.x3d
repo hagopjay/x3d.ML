@@ -1,0 +1,27 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='TrafficCone.x3d'/>
+    <meta name='description' content='A traffic cone: an orange cone on a black square base, 0.7 metres tall.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Traffic Cone' position='0 0.35 1.5' centerOfRotation='0 0.35 0'/>
+    
+    <Transform translation='0 0.025 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.1 0.1 0.1'/>
+        </Appearance>
+        <Box size='0.4 0.05 0.4'/>
+      </Shape>
+    </Transform>
+    
+    <Transform translation='0 0.375 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.45 0'/>
+        </Appearance>
+        <Cone bottomRadius='0.15' height='0.65'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

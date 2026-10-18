@@ -1,0 +1,152 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Front View' position='0 15 45' orientation='1 0 0 -0.15'/>
+    <Viewpoint description='High Angle View' position='0 30 40' orientation='1 0 0 -0.5'/>
+    
+    <Background skyColor='0.4 0.6 0.9'/>
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.8' color='1 0.95 0.9'/>
+    
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Box size='60 0.1 60'/>
+        <Appearance>
+          <Material DEF='LawnMat' diffuseColor='0.2 0.5 0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Group DEF='CastleWall'>
+      <Transform translation='0 4 0'>
+        <Shape>
+          <Box size='16 8 2'/>
+          <Appearance>
+            <Material DEF='StoneMat' diffuseColor='0.55 0.55 0.6'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-7 8.5 0'>
+        <Shape DEF='Crenel'>
+          <Box size='1.5 1 2'/>
+          <Appearance>
+            <Material USE='StoneMat'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-3.5 8.5 0'>
+        <Shape USE='Crenel'/>
+      </Transform>
+      <Transform translation='0 8.5 0'>
+        <Shape USE='Crenel'/>
+      </Transform>
+      <Transform translation='3.5 8.5 0'>
+        <Shape USE='Crenel'/>
+      </Transform>
+      <Transform translation='7 8.5 0'>
+        <Shape USE='Crenel'/>
+      </Transform>
+    </Group>
+
+    <Transform translation='0 0 -10'>
+      <Group USE='CastleWall'/>
+    </Transform>
+    <Transform translation='-10 0 0' rotation='0 1 0 1.5708'>
+      <Group USE='CastleWall'/>
+    </Transform>
+    <Transform translation='10 0 0' rotation='0 1 0 1.5708'>
+      <Group USE='CastleWall'/>
+    </Transform>
+    <Transform translation='0 0 10'>
+      <Group USE='CastleWall'/>
+    </Transform>
+
+    <Transform translation='0 0 10.5'>
+      <Group DEF='GateHouse'>
+        <Transform translation='0 5 0'>
+          <Shape>
+            <Box size='8 10 4'/>
+            <Appearance>
+              <Material USE='StoneMat'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='-3 10.5 0'>
+          <Shape USE='Crenel'/>
+        </Transform>
+        <Transform translation='0 10.5 0'>
+          <Shape USE='Crenel'/>
+        </Transform>
+        <Transform translation='3 10.5 0'>
+          <Shape USE='Crenel'/>
+        </Transform>
+        <Transform translation='0 3.5 1'>
+          <Shape>
+            <Box size='3 7 2.5'/>
+            <Appearance>
+              <Material DEF='DarkMat' diffuseColor='0.05 0.05 0.05'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Group>
+    </Transform>
+
+    <Group DEF='CastleTower'>
+      <Transform translation='0 6 0'>
+        <Shape>
+          <Cylinder radius='2.5' height='12'/>
+          <Appearance>
+            <Material USE='StoneMat'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0 14 0'>
+        <Shape>
+          <Cone bottomRadius='3' height='4'/>
+          <Appearance>
+            <Material DEF='RoofMat' diffuseColor='0.3 0.2 0.15'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <Transform translation='-10 0 10'>
+      <Group USE='CastleTower'/>
+    </Transform>
+    <Transform translation='10 0 10'>
+      <Group USE='CastleTower'/>
+    </Transform>
+    <Transform translation='-10 0 -10'>
+      <Group USE='CastleTower'/>
+    </Transform>
+
+    <Transform translation='10 0 -10' scale='1 1.5 1'>
+      <Group USE='CastleTower'/>
+    </Transform>
+
+    <Transform translation='10 24 -10'>
+      <Transform translation='0 2 0'>
+        <Shape>
+          <Cylinder radius='0.1' height='4'/>
+          <Appearance>
+            <Material diffuseColor='0.8 0.8 0.8'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='FlagHinge' translation='0 3 0'>
+        <Transform translation='1.5 0 0'>
+          <Shape>
+            <Box size='3 2 0.05'/>
+            <Appearance>
+              <Material DEF='RedMat' diffuseColor='0.8 0.1 0.1'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='FlagTimer' cycleInterval='1.2' loop='true'/>
+    <OrientationInterpolator DEF='FlagAnim' key='0 0.5 1' keyValue='0 1 0 -0.3, 0 1 0 0.3, 0 1 0 -0.3'/>
+    
+    <ROUTE fromNode='FlagTimer' fromField='fraction_changed' toNode='FlagAnim' toField='set_fraction'/>
+    <ROUTE fromNode='FlagAnim' fromField='value_changed' toNode='FlagHinge' toField='set_rotation'/>
+  </Scene>
+</X3D>

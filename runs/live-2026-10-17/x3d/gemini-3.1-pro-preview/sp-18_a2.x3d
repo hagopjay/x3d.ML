@@ -1,0 +1,110 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Interactive Aquarium'/>
+    <Background skyColor='0.05 0.1 0.2'/>
+    <Viewpoint description='Aquarium Front View' position='0 0 14'/>
+
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.8' color='1 1 1'/>
+    <PointLight location='0 4 0' intensity='0.7' color='0.8 0.9 1'/>
+    <PointLight DEF='TankLight' location='0 0 0' intensity='1' color='1 0.9 0.5' on='false' radius='15'/>
+
+    <Transform>
+      <TouchSensor DEF='TankTouch' description='Touch to illuminate tank'/>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.9 1.0' transparency='0.8' roughness='0.1' metallic='0.1'/>
+        </Appearance>
+        <Box size='10 6 6' solid='false'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 -2.9 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.7 0.5' roughness='0.9' metallic='0'/>
+        </Appearance>
+        <Box size='9.8 0.2 5.8'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-3.5 -1.4 -1.5'>
+      <Shape DEF='PlantShape'>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.2 0.8 0.2' roughness='0.7' metallic='0'/>
+        </Appearance>
+        <Cylinder radius='0.1' height='3'/>
+      </Shape>
+    </Transform>
+    
+    <Transform translation='3.0 -1.4 2.0'>
+      <Shape USE='PlantShape'/>
+    </Transform>
+    
+    <Transform translation='1.5 -1.9 -2.0'>
+      <Transform scale='1 0.7 1'>
+        <Shape USE='PlantShape'/>
+      </Transform>
+    </Transform>
+
+    <Transform DEF='FishBody' rotation='0 0 1 -1.5708'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='1 0.4 0' roughness='0.4' metallic='0.1'/>
+        </Appearance>
+        <Cone bottomRadius='0.2' height='0.6'/>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='TS1' cycleInterval='5' loop='true'/>
+    <OrientationInterpolator DEF='OI1' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Pivot1' translation='0 0 0'>
+      <Transform translation='0 0 2.5'>
+        <Transform USE='FishBody'/>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='TS1' fromField='fraction_changed' toNode='OI1' toField='set_fraction'/>
+    <ROUTE fromNode='OI1' fromField='value_changed' toNode='Pivot1' toField='set_rotation'/>
+
+    <TimeSensor DEF='TS2' cycleInterval='7' loop='true'/>
+    <OrientationInterpolator DEF='OI2' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Pivot2' translation='0 1.5 0'>
+      <Transform translation='0 0 1.8'>
+        <Transform USE='FishBody'/>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='TS2' fromField='fraction_changed' toNode='OI2' toField='set_fraction'/>
+    <ROUTE fromNode='OI2' fromField='value_changed' toNode='Pivot2' toField='set_rotation'/>
+
+    <TimeSensor DEF='TS3' cycleInterval='4.5' loop='true'/>
+    <OrientationInterpolator DEF='OI3' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Pivot3' translation='0 -1.5 0'>
+      <Transform translation='0 0 2.8'>
+        <Transform USE='FishBody'/>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='TS3' fromField='fraction_changed' toNode='OI3' toField='set_fraction'/>
+    <ROUTE fromNode='OI3' fromField='value_changed' toNode='Pivot3' toField='set_rotation'/>
+
+    <TimeSensor DEF='TS4' cycleInterval='6' loop='true'/>
+    <OrientationInterpolator DEF='OI4' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Pivot4' translation='0 2.0 0'>
+      <Transform translation='0 0 1.2'>
+        <Transform USE='FishBody'/>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='TS4' fromField='fraction_changed' toNode='OI4' toField='set_fraction'/>
+    <ROUTE fromNode='OI4' fromField='value_changed' toNode='Pivot4' toField='set_rotation'/>
+
+    <TimeSensor DEF='TS5' cycleInterval='8' loop='true'/>
+    <OrientationInterpolator DEF='OI5' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Pivot5' translation='0 -1.0 0'>
+      <Transform translation='0 0 2.2'>
+        <Transform USE='FishBody'/>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='TS5' fromField='fraction_changed' toNode='OI5' toField='set_fraction'/>
+    <ROUTE fromNode='OI5' fromField='value_changed' toNode='Pivot5' toField='set_rotation'/>
+
+    <ROUTE fromNode='TankTouch' fromField='isOver' toNode='TankLight' toField='on'/>
+  </Scene>
+</X3D>

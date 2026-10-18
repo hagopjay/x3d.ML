@@ -1,0 +1,43 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='2' name='Geospatial'/>
+    <meta content='GeoLODStatue.x3d' name='title'/>
+    <meta content='A GeoLOD demonstrating transition between a detailed statue within 200m and a simplified box representation beyond 200m.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='GeoLOD Statue Example'/>
+    <Background groundColor='0.1 0.25 0.35' skyColor='0.4 0.65 0.95'/>
+    <DirectionalLight ambientIntensity='0.25' direction='-0.6 -0.8 -0.4'/>
+    <DirectionalLight ambientIntensity='0.1' direction='0.7 0.3 0.6' intensity='0.4'/>
+
+    <Viewpoint description='Close View (80m - Detailed Statue)' position='0 25 80'/>
+    <Viewpoint description='Distant View (320m - Simplified Box)' position='0 60 320'/>
+    <GeoViewpoint description='Geo Viewpoint' geoSystem='"GD" "WE"' position='40.689247 -74.044502 250'/>
+
+    <!-- Ground base platform -->
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.35 0.32' roughness='0.8'/>
+        </Appearance>
+        <Cylinder height='1' radius='60'/>
+      </Shape>
+    </Transform>
+
+    <!--
+      GeoLOD: viewer distance to center <= 200m displays child1Url (detailed statue).
+      Viewer distance > 200m displays the children (coarse box representation).
+    -->
+    <GeoLOD center='40.689247 -74.044502 25' child1Url='"data:model/x3d+xml,%3CX3D%20profile%3D%27Interchange%27%20version%3D%274.0%27%3E%3CScene%3E%3CTransform%20translation%3D%270%2010%200%27%3E%3CShape%3E%3CAppearance%3E%3CMaterial%20diffuseColor%3D%270.6%200.58%200.52%27%2F%3E%3C%2FAppearance%3E%3CBox%20size%3D%2714%2020%2014%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3CTransform%20translation%3D%270%2022%200%27%3E%3CShape%3E%3CAppearance%3E%3CMaterial%20diffuseColor%3D%270.55%200.53%200.48%27%2F%3E%3C%2FAppearance%3E%3CBox%20size%3D%2710%204%2010%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3CTransform%20translation%3D%270%2032%200%27%3E%3CShape%3E%3CAppearance%20DEF%3D%27Patina%27%3E%3CMaterial%20diffuseColor%3D%270.32%200.62%200.52%27%20shininess%3D%270.3%27%20specularColor%3D%270.2%200.3%200.25%27%2F%3E%3C%2FAppearance%3E%3CCylinder%20height%3D%2716%27%20radius%3D%273.2%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3CTransform%20translation%3D%270%2042%200%27%3E%3CShape%3E%3CAppearance%20USE%3D%27Patina%27%2F%3E%3CSphere%20radius%3D%272.2%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3CTransform%20translation%3D%270%2044.5%200%27%3E%3CShape%3E%3CAppearance%20USE%3D%27Patina%27%2F%3E%3CCone%20bottomRadius%3D%272.5%27%20height%3D%271.5%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3CTransform%20rotation%3D%270%200%201%20-0.3%27%20translation%3D%27-3.2%2033%200.5%27%3E%3CShape%3E%3CAppearance%20USE%3D%27Patina%27%2F%3E%3CBox%20size%3D%271.2%204%202.8%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3CTransform%20rotation%3D%270%200%201%20-0.6%27%20translation%3D%272.6%2037%200%27%3E%3CTransform%20translation%3D%270%204%200%27%3E%3CShape%3E%3CAppearance%20USE%3D%27Patina%27%2F%3E%3CCylinder%20height%3D%278%27%20radius%3D%270.6%27%2F%3E%3C%2FShape%3E%3CTransform%20translation%3D%270%204.5%200%27%3E%3CShape%3E%3CAppearance%3E%3CMaterial%20diffuseColor%3D%271%200.85%200.1%27%20emissiveColor%3D%270.8%200.5%200%27%2F%3E%3C%2FAppearance%3E%3CCone%20bottomRadius%3D%270.9%27%20height%3D%272%27%2F%3E%3C%2FShape%3E%3C%2FTransform%3E%3C%2FTransform%3E%3C%2FTransform%3E%3C%2FScene%3E%3C%2FX3D%3E"' geoCoords='40.689247 -74.044502 0' geoSystem='"GD" "WE"' range='200'>
+      <!-- Distant Root Geometry: Simple Box Placeholder (visible beyond 200m) -->
+      <Transform translation='0 25 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.35 0.55 0.48' transparency='0.05'/>
+          </Appearance>
+          <Box size='14 50 14'/>
+        </Shape>
+      </Transform>
+    </GeoLOD>
+  </Scene>
+</X3D>

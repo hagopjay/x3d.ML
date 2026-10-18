@@ -1,0 +1,91 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Door Opening on Load'/>
+    <Background skyColor='0.17 0.21 0.27'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='true'/>
+    <Viewpoint description='View the door swinging open' position='4 3.2 7' orientation='-0.374 0.927 0 0.558' centerOfRotation='0 1.5 0'/>
+    <DirectionalLight direction='-0.5 -1 -0.7' intensity='0.85'/>
+
+    <!-- Floor -->
+    <Transform translation='0 -0.08 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.43 0.47 0.51'/>
+        </Appearance>
+        <Box size='10 0.16 10'/>
+      </Shape>
+    </Transform>
+
+    <!-- Door frame -->
+    <Transform translation='-1.16 1.56 0'>
+      <Shape>
+        <Appearance DEF='FrameFinish'>
+          <Material diffuseColor='0.88 0.87 0.81'/>
+        </Appearance>
+        <Box size='0.22 3.12 0.3'/>
+      </Shape>
+    </Transform>
+    <Transform translation='1.16 1.56 0'>
+      <Shape>
+        <Appearance USE='FrameFinish'/>
+        <Box size='0.22 3.12 0.3'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 3.15 0'>
+      <Shape>
+        <Appearance USE='FrameFinish'/>
+        <Box size='2.54 0.22 0.3'/>
+      </Shape>
+    </Transform>
+
+    <!-- The transform origin lies on the left edge of the door. -->
+    <Transform DEF='DoorHinge' translation='-1.05 0 0'>
+      <Transform translation='1.04 1.51 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.38 0.17 0.065' shininess='0.25'/>
+          </Appearance>
+          <Box size='2.08 3 0.12'/>
+        </Shape>
+      </Transform>
+
+      <!-- Raised inset panel -->
+      <Transform translation='1.04 1.66 0.068'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.49 0.25 0.1'/>
+          </Appearance>
+          <Box size='1.62 2.12 0.025'/>
+        </Shape>
+      </Transform>
+
+      <!-- Brass knob -->
+      <Transform translation='1.84 1.45 0.14'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.75 0.52 0.15' specularColor='0.9 0.8 0.5' shininess='0.8'/>
+          </Appearance>
+          <Sphere radius='0.075'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='OpeningClock' cycleInterval='2' loop='false'/>
+    <OrientationInterpolator DEF='DoorRotation' key='0 1' keyValue='0 1 0 0, 0 1 0 -1.570796327'/>
+
+    <!-- Start once at the current browser time, rather than at epoch zero. -->
+    <Script DEF='LoadStarter'>
+      <field name='startOpening' accessType='outputOnly' type='SFTime'/>
+      <![CDATA[
+ecmascript:
+function initialize() {
+  startOpening = new Date().getTime() / 1000;
+}
+      ]]>
+    </Script>
+
+    <ROUTE fromNode='LoadStarter' fromField='startOpening' toNode='OpeningClock' toField='set_startTime'/>
+    <ROUTE fromNode='OpeningClock' fromField='fraction_changed' toNode='DoorRotation' toField='set_fraction'/>
+    <ROUTE fromNode='DoorRotation' fromField='value_changed' toNode='DoorHinge' toField='set_rotation'/>
+  </Scene>
+</X3D>

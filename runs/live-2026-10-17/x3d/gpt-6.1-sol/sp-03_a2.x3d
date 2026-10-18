@@ -1,0 +1,149 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+    <meta name='title' content="Newton's Cradle"/>
+    <meta name='description' content='Five polished steel pendulums with alternating, eased outer-ball motion. Click the cradle to stop or start.'/>
+  </head>
+  <Scene>
+    <WorldInfo title="Newton's Cradle"/>
+    <Background skyColor='0.055 0.07 0.095'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description="Newton's cradle — front three-quarter view" position='7 4.6 11' orientation='-0.366 0.925 0.105 0.584' centerOfRotation='0 1.7 0'/>
+    <DirectionalLight direction='-0.4 -1 -0.7' intensity='2' color='0.9 0.95 1'/>
+    <DirectionalLight direction='0.8 -0.4 0.3' intensity='1.5' color='1 0.89 0.74'/>
+    <PointLight location='0 5 3' intensity='2' radius='20'/>
+    <PointLight location='-4 2 -3' intensity='1.5' color='0.68 0.8 1' radius='20'/>
+
+    <Transform translation='0 -0.12 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.105 0.125 0.155' roughness='0.8'/>
+        </Appearance>
+        <Box size='200 0.1 200'/>
+      </Shape>
+    </Transform>
+
+    <Group>
+      <TouchSensor DEF='CRADLE_TOUCH' description='Click the cradle to stop or start the swinging balls'/>
+
+      <Transform translation='0 0.08 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.025 0.03 0.04' metallic='0.4' roughness='0.26'/>
+          </Appearance>
+          <Box size='7.3 0.24 2.3'/>
+        </Shape>
+      </Transform>
+
+      <Transform translation='-3.3 1.7 0.57'>
+        <Shape DEF='FRAME_LEG'>
+          <Appearance DEF='BLACK_METAL'>
+            <PhysicalMaterial baseColor='0.009 0.012 0.018' metallic='0.65' roughness='0.24'/>
+          </Appearance>
+          <Cylinder radius='0.045' height='3'/>
+        </Shape>
+      </Transform>
+      <Transform translation='3.3 1.7 0.57'>
+        <Shape USE='FRAME_LEG'/>
+      </Transform>
+      <Transform translation='-3.3 1.7 -0.57'>
+        <Shape USE='FRAME_LEG'/>
+      </Transform>
+      <Transform translation='3.3 1.7 -0.57'>
+        <Shape USE='FRAME_LEG'/>
+      </Transform>
+
+      <Transform translation='0 3.2 0.57' rotation='0 0 1 1.5707963'>
+        <Shape DEF='TOP_RAIL'>
+          <Appearance USE='BLACK_METAL'/>
+          <Cylinder radius='0.045' height='6.69'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 3.2 -0.57' rotation='0 0 1 1.5707963'>
+        <Shape USE='TOP_RAIL'/>
+      </Transform>
+      <Transform translation='-3.3 3.2 0' rotation='1 0 0 1.5707963'>
+        <Shape DEF='CROSS_RAIL'>
+          <Appearance USE='BLACK_METAL'/>
+          <Cylinder radius='0.045' height='1.14'/>
+        </Shape>
+      </Transform>
+      <Transform translation='3.3 3.2 0' rotation='1 0 0 1.5707963'>
+        <Shape USE='CROSS_RAIL'/>
+      </Transform>
+
+      <Transform DEF='LEFT_SWING' translation='-1.6 3.2 0'>
+        <Group DEF='PENDULUM'>
+          <Transform translation='0 -1 0.285' rotation='1 0 0 0.27764'>
+            <Shape DEF='WIRE'>
+              <Appearance>
+                <PhysicalMaterial baseColor='0.2 0.23 0.28' metallic='0.9' roughness='0.24'/>
+              </Appearance>
+              <Cylinder radius='0.009' height='2.07964'/>
+            </Shape>
+          </Transform>
+          <Transform translation='0 -1 -0.285' rotation='1 0 0 -0.27764'>
+            <Shape USE='WIRE'/>
+          </Transform>
+          <Transform translation='0 -2 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.48 0.52 0.58' specularColor='1 1 1' shininess='0.95' ambientIntensity='0.28'/>
+              </Appearance>
+              <Sphere radius='0.4'/>
+            </Shape>
+          </Transform>
+        </Group>
+      </Transform>
+
+      <Transform translation='-0.8 3.2 0'>
+        <Group USE='PENDULUM'/>
+      </Transform>
+      <Transform translation='0 3.2 0'>
+        <Group USE='PENDULUM'/>
+      </Transform>
+      <Transform translation='0.8 3.2 0'>
+        <Group USE='PENDULUM'/>
+      </Transform>
+      <Transform DEF='RIGHT_SWING' translation='1.6 3.2 0'>
+        <Group USE='PENDULUM'/>
+      </Transform>
+    </Group>
+
+    <TimeSensor DEF='SWING_CLOCK' cycleInterval='5.6' loop='true'/>
+    <OrientationInterpolator DEF='LEFT_KEYS'
+      key='0 0.0625 0.125 0.1875 0.25 0.3125 0.375 0.4375 0.5 1'
+      keyValue='
+        0 0 1 0
+        0 0 1 -0.10544
+        0 0 1 -0.36
+        0 0 1 -0.61456
+        0 0 1 -0.72
+        0 0 1 -0.61456
+        0 0 1 -0.36
+        0 0 1 -0.10544
+        0 0 1 0
+        0 0 1 0'/>
+    <OrientationInterpolator DEF='RIGHT_KEYS'
+      key='0 0.5 0.5625 0.625 0.6875 0.75 0.8125 0.875 0.9375 1'
+      keyValue='
+        0 0 1 0
+        0 0 1 0
+        0 0 1 0.10544
+        0 0 1 0.36
+        0 0 1 0.61456
+        0 0 1 0.72
+        0 0 1 0.61456
+        0 0 1 0.36
+        0 0 1 0.10544
+        0 0 1 0'/>
+    <BooleanToggle DEF='RUN_SWITCH' toggle='true'/>
+
+    <ROUTE fromNode='SWING_CLOCK' fromField='fraction_changed' toNode='LEFT_KEYS' toField='set_fraction'/>
+    <ROUTE fromNode='SWING_CLOCK' fromField='fraction_changed' toNode='RIGHT_KEYS' toField='set_fraction'/>
+    <ROUTE fromNode='LEFT_KEYS' fromField='value_changed' toNode='LEFT_SWING' toField='set_rotation'/>
+    <ROUTE fromNode='RIGHT_KEYS' fromField='value_changed' toNode='RIGHT_SWING' toField='set_rotation'/>
+    <ROUTE fromNode='CRADLE_TOUCH' fromField='isActive' toNode='RUN_SWITCH' toField='set_boolean'/>
+    <ROUTE fromNode='RUN_SWITCH' fromField='toggle_changed' toNode='SWING_CLOCK' toField='set_enabled'/>
+  </Scene>
+</X3D>

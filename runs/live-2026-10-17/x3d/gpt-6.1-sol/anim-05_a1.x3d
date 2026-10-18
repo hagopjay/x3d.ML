@@ -1,0 +1,57 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Three Cubes, Three Speeds'/>
+    <Background skyColor='0.035 0.045 0.075'/>
+    <Viewpoint description='Three rotating cubes' position='0 1 12' fieldOfView='0.65'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='true'/>
+    <DirectionalLight direction='-1 -1 -1' intensity='0.8'/>
+
+    <Transform DEF='FastCube' translation='-3.2 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.95 0.25 0.18' specularColor='0.5 0.5 0.5' shininess='0.4'/>
+        </Appearance>
+        <Box size='1.8 1.8 1.8'/>
+      </Shape>
+    </Transform>
+
+    <Transform DEF='MediumCube' translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.15 0.65 0.95' specularColor='0.5 0.5 0.5' shininess='0.4'/>
+        </Appearance>
+        <Box size='1.8 1.8 1.8'/>
+      </Shape>
+    </Transform>
+
+    <Transform DEF='SlowCube' translation='3.2 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.95 0.72 0.12' specularColor='0.5 0.5 0.5' shininess='0.4'/>
+        </Appearance>
+        <Box size='1.8 1.8 1.8'/>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='FastClock' cycleInterval='2' loop='true'/>
+    <TimeSensor DEF='MediumClock' cycleInterval='4' loop='true'/>
+    <TimeSensor DEF='SlowClock' cycleInterval='8' loop='true'/>
+
+    <OrientationInterpolator DEF='FastRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+    <OrientationInterpolator DEF='MediumRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+    <OrientationInterpolator DEF='SlowRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+
+    <ROUTE fromNode='FastClock' fromField='fraction_changed' toNode='FastRotation' toField='set_fraction'/>
+    <ROUTE fromNode='FastRotation' fromField='value_changed' toNode='FastCube' toField='set_rotation'/>
+    <ROUTE fromNode='MediumClock' fromField='fraction_changed' toNode='MediumRotation' toField='set_fraction'/>
+    <ROUTE fromNode='MediumRotation' fromField='value_changed' toNode='MediumCube' toField='set_rotation'/>
+    <ROUTE fromNode='SlowClock' fromField='fraction_changed' toNode='SlowRotation' toField='set_fraction'/>
+    <ROUTE fromNode='SlowRotation' fromField='value_changed' toNode='SlowCube' toField='set_rotation'/>
+  </Scene>
+</X3D>

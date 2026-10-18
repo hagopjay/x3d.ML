@@ -1,0 +1,182 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Nine-Building City Block'/>
+    <meta name='description' content='A colourful three-by-three city block with grey streets, a moving car, and a blinking red beacon. Touch the central tower to restart the beacon.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Nine-Building City Block'/>
+    <Background skyColor='0.65 0.80 0.93'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='City block overview' position='27 25 32' orientation='-0.555 0.806 0.202 0.839' centerOfRotation='0 4 0'/>
+    <DirectionalLight direction='-0.5 -1 -0.4' intensity='0.9'/>
+    <DirectionalLight direction='0.7 -0.6 0.5' intensity='0.35'/>
+
+    <!-- The exposed grey surface forms the streets between the nine plots. -->
+    <Transform translation='0 -0.2 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.27 0.29 0.32'/>
+        </Appearance>
+        <Box size='27 0.4 27'/>
+      </Shape>
+    </Transform>
+
+    <!-- Raised sidewalk plots on a three-by-three grid. -->
+    <Transform translation='-7 0.1 -7'>
+      <Shape DEF='Sidewalk'>
+        <Appearance>
+          <Material diffuseColor='0.68 0.69 0.70'/>
+        </Appearance>
+        <Box size='5.6 0.2 5.6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.1 -7'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='7 0.1 -7'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='-7 0.1 0'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='0 0.1 0'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='7 0.1 0'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='-7 0.1 7'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='0 0.1 7'><Shape USE='Sidewalk'/></Transform>
+    <Transform translation='7 0.1 7'><Shape USE='Sidewalk'/></Transform>
+
+    <!-- Back row. -->
+    <Transform translation='-7 2.2 -7'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.82 0.35 0.25'/></Appearance>
+        <Box size='4.5 4 4.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 3.2 -7'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.25 0.48 0.75'/></Appearance>
+        <Box size='4.5 6 4.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='7 1.95 -7'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.88 0.70 0.27'/></Appearance>
+        <Box size='4.5 3.5 4.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Middle row, including the tallest central tower. -->
+    <Transform translation='-7 2.7 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.36 0.65 0.44'/></Appearance>
+        <Box size='4.5 5 4.5'/>
+      </Shape>
+    </Transform>
+    <Group>
+      <TouchSensor DEF='TowerTouch' description='Touch to restart the red beacon'/>
+      <Transform translation='0 6.2 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.24 0.30 0.43' specularColor='0.5 0.55 0.65' shininess='0.5'/>
+          </Appearance>
+          <Box size='4.5 12 4.5'/>
+        </Shape>
+      </Transform>
+
+      <!-- Bright vertical facade strips emphasize the tower's height. -->
+      <Transform translation='-1.5 6.2 2.26'>
+        <Shape DEF='TowerStrip'>
+          <Appearance><Material diffuseColor='0.55 0.79 0.86' emissiveColor='0.07 0.13 0.16'/></Appearance>
+          <Box size='0.25 11.2 0.035'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 6.2 2.26'><Shape USE='TowerStrip'/></Transform>
+      <Transform translation='1.5 6.2 2.26'><Shape USE='TowerStrip'/></Transform>
+      <Transform translation='2.26 6.2 -1.5' rotation='0 1 0 1.5708'><Shape USE='TowerStrip'/></Transform>
+      <Transform translation='2.26 6.2 0' rotation='0 1 0 1.5708'><Shape USE='TowerStrip'/></Transform>
+      <Transform translation='2.26 6.2 1.5' rotation='0 1 0 1.5708'><Shape USE='TowerStrip'/></Transform>
+
+      <Transform translation='0 12.35 0'>
+        <Shape>
+          <Appearance><Material diffuseColor='0.15 0.18 0.23'/></Appearance>
+          <Box size='4.8 0.3 4.8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 12.9 0'>
+        <Shape>
+          <Appearance><Material diffuseColor='0.4 0.42 0.45'/></Appearance>
+          <Cylinder radius='0.13' height='0.8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 13.5 0'>
+        <Shape>
+          <Appearance>
+            <Material DEF='BeaconMaterial' diffuseColor='1 0 0' emissiveColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.32'/>
+        </Shape>
+        <PointLight DEF='BeaconLight' color='1 0 0' intensity='0.9' radius='5'/>
+      </Transform>
+    </Group>
+    <Transform translation='7 3.7 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.63 0.40 0.72'/></Appearance>
+        <Box size='4.5 7 4.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Front row. -->
+    <Transform translation='-7 1.7 7'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.25 0.68 0.69'/></Appearance>
+        <Box size='4.5 3 4.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.95 7'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.91 0.48 0.23'/></Appearance>
+        <Box size='4.5 5.5 4.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='7 2.35 7'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.72 0.67 0.52'/></Appearance>
+        <Box size='4.5 4.3 4.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- A small car travels along the street between the front two rows. -->
+    <Transform DEF='Car' translation='-12 0 3.5'>
+      <Transform translation='0 0.45 0'>
+        <Shape>
+          <Appearance><Material diffuseColor='0.95 0.83 0.18' specularColor='0.5 0.5 0.5'/></Appearance>
+          <Box size='1.8 0.5 0.85'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.1 0.85 0'>
+        <Shape>
+          <Appearance><Material diffuseColor='0.18 0.32 0.43'/></Appearance>
+          <Box size='0.95 0.4 0.73'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.55 0.25 0.44' rotation='1 0 0 1.5708'>
+        <Shape DEF='Wheel'>
+          <Appearance><Material diffuseColor='0.06 0.06 0.07'/></Appearance>
+          <Cylinder radius='0.23' height='0.12'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.55 0.25 0.44' rotation='1 0 0 1.5708'><Shape USE='Wheel'/></Transform>
+      <Transform translation='-0.55 0.25 -0.44' rotation='1 0 0 1.5708'><Shape USE='Wheel'/></Transform>
+      <Transform translation='0.55 0.25 -0.44' rotation='1 0 0 1.5708'><Shape USE='Wheel'/></Transform>
+    </Transform>
+
+    <TimeSensor DEF='BeaconClock' cycleInterval='1.4' loop='true'/>
+    <ColorInterpolator DEF='BeaconColors'
+      key='0 0.15 0.4 0.55 0.85 1'
+      keyValue='0.06 0 0, 1 0 0, 1 0 0, 0.06 0 0, 0.06 0 0, 0.06 0 0'/>
+    <ROUTE fromNode='BeaconClock' fromField='fraction_changed' toNode='BeaconColors' toField='set_fraction'/>
+    <ROUTE fromNode='BeaconColors' fromField='value_changed' toNode='BeaconMaterial' toField='set_diffuseColor'/>
+    <ROUTE fromNode='BeaconColors' fromField='value_changed' toNode='BeaconMaterial' toField='set_emissiveColor'/>
+    <ROUTE fromNode='BeaconColors' fromField='value_changed' toNode='BeaconLight' toField='set_color'/>
+    <ROUTE fromNode='TowerTouch' fromField='touchTime' toNode='BeaconClock' toField='set_startTime'/>
+
+    <TimeSensor DEF='TrafficClock' cycleInterval='10' loop='true'/>
+    <PositionInterpolator DEF='CarPath' key='0 1' keyValue='-12 0 3.5, 12 0 3.5'/>
+    <ROUTE fromNode='TrafficClock' fromField='fraction_changed' toNode='CarPath' toField='set_fraction'/>
+    <ROUTE fromNode='CarPath' fromField='value_changed' toNode='Car' toField='set_translation'/>
+  </Scene>
+</X3D>

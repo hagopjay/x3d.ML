@@ -2,7 +2,7 @@ import asyncio, re, json, os
 from playwright.async_api import async_playwright
 EXE=os.environ.get('CHROME')   # unset: Playwright's own Chromium
 os.makedirs('shots',exist_ok=True)
-URL=os.environ.get('PAGE','http://127.0.0.1:8782/v2test.html')
+URL=os.environ.get('PAGE','http://127.0.0.1:8782/v3test.html')
 res=[]
 def ok(n,c,d=''):
     res.append(bool(c)); print(('PASS ' if c else 'FAIL ')+n+(' :: '+str(d)[:300] if d!='' else ''),flush=True)
@@ -14,8 +14,10 @@ async def main():
         pg.on('pageerror',lambda e: errs.append(str(e)[:200]) if 'Failed to fetch' not in str(e) else None)
         await pg.goto(URL); await pg.wait_for_timeout(2500)
         await pg.screenshot(path='shots/dark_initial.png')
+        N=await pg.evaluate('TOUR.length'); LIVEBLANK=await pg.evaluate('!!(LIVESTATS&&LIVESTATS.validNoDraw)')
+        ok('tour has the 8 replay steps, 2 live steps, one optional blank-scene step and the closing step',N==(11+(1 if LIVEBLANK else 0)),N)
         await pg.click('#bTour'); await pg.wait_for_timeout(3600)
-        ok('tour opens at step 1/9',(await txt(pg,'#tn')).strip()=='1/9',await txt(pg,'#th'))
+        ok('tour opens at step 1/%d'%N,(await txt(pg,'#tn')).strip()=='1/%d'%N,await txt(pg,'#th'))
         ok('step1 selected a scene',await pg.evaluate('!!S.sel'))
         await pg.screenshot(path='shots/tour1.png')
         await pg.click('#tNext'); await pg.wait_for_timeout(500)
@@ -44,9 +46,18 @@ async def main():
         ok('step 8 shows NOTHING TO DRAW overlay',vis and 'NOTHING TO DRAW' in nt,nt.replace('\n',' | ')[:200])
         await pg.evaluate('window.scrollTo(0,document.querySelector("#insBody").getBoundingClientRect().top+window.scrollY-120)'); await pg.wait_for_timeout(400)
         await pg.screenshot(path='shots/tour8.png')
+        await pg.click('#tNext'); await pg.wait_for_timeout(2500)
+        ok('step 9 switches to the recorded live run',await pg.evaluate('S.mode')=='live' and 'real calls' in (await txt(pg,'#th')).lower(),await pg.evaluate('[S.mode,S.scenes.length]'))
+        await pg.wait_for_timeout(2500); await pg.screenshot(path='shots/tour9.png')
+        await pg.click('#tNext'); await pg.wait_for_function('tab==="tether"&&S.sel&&S.byId.get(S.sel).src==="live"&&S.byId.get(S.sel).item.A.length>1',timeout=20000)
+        ok('step 10 opens a repaired live scene on the Tether tab',await pg.evaluate('tab')=='tether',await pg.evaluate('[tab,S.sel]'))
+        await pg.screenshot(path='shots/tour10.png')
+        if LIVEBLANK:
+            await pg.click('#tNext'); await pg.wait_for_function('tab==="v3d"&&S.sel&&S.byId.get(S.sel).src==="live"&&S.byId.get(S.sel).blank',timeout=20000)
+            ok('step 11 opens a valid-but-blank live scene on the 3D tab',await pg.evaluate('tab')=='v3d',await pg.evaluate('[tab,S.sel]'))
         await pg.click('#tNext'); await pg.wait_for_timeout(500)
-        ok('step 9 prov tab',await pg.evaluate('tab')=='prov')
-        await pg.evaluate('tourShow(9)'); await pg.wait_for_timeout(400)
+        ok('last step prov tab',await pg.evaluate('tab')=='prov' and (await txt(pg,'#tn')).strip()=='%d/%d'%(N,N),await txt(pg,'#tn'))
+        await pg.evaluate('tourShow(TOUR.length)'); await pg.wait_for_timeout(400)
         ok('tour closes after last step',await pg.evaluate('document.getElementById("tour").hidden'))
         ok('no page errors (X_ITE wasm fetch excluded)',not errs,errs[:3])
         print('SUMMARY',sum(res),'pass',len(res)-sum(res),'fail')

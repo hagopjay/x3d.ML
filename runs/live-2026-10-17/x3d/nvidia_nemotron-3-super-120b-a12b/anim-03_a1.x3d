@@ -1,0 +1,19 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Door swings open' position='0 2 5'/>
+    <Transform DEF='DoorTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.6 0.4'/>
+        </Appearance>
+        <Box size='0.1 2 0.8'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='DoorTimer' startTime='0' stopTime='2' loop='false'/>
+    <OrientationInterpolator DEF='DoorInterpolator'
+          key='0 1'
+          keyValue='0 0 1 0  0 1 0 1.57079632679'/>
+    <ROUTE fromNode='DoorTimer' fromField='fraction_changed' toNode='DoorInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='DoorInterpolator' fromField='value_changed' toNode='DoorTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

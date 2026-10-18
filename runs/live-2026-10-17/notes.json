@@ -1,0 +1,6 @@
+{
+  "gemini-3.1-pro-preview": "stopped by the spend cap",
+  "gpt-6.1-sol": "the provider account ran out of credits",
+  "z-ai/glm-5.3": "free tier, slow, run time-boxed",
+  "nvidia/nemotron-3-super-120b-a12b": "free tier, rate limited, run time-boxed"
+}

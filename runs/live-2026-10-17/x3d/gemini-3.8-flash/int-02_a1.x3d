@@ -1,0 +1,46 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Toggle Sphere Color'/>
+    <meta name='description' content='A sphere that toggles between red and green on each click using BooleanToggle, BooleanFilter, and IntegerTrigger nodes without scripts.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Toggle Sphere Color'/>
+
+    <Viewpoint description='Front View' position='0 0 5'/>
+
+    <Background skyColor='0.1 0.12 0.15'/>
+
+    <DirectionalLight direction='-0.5 -1 -0.8' intensity='0.9'/>
+    <DirectionalLight direction='0.5 0.5 0.5' intensity='0.3'/>
+
+    <Group>
+      <TouchSensor DEF='SphereTouch' description='Click to toggle red and green'/>
+      <Switch DEF='ColorSwitch' whichChoice='0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.1 0.1' roughness='0.3'/>
+          </Appearance>
+          <Sphere DEF='SharedSphere' radius='1.2'/>
+        </Shape>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.1 0.85 0.2' roughness='0.3'/>
+          </Appearance>
+          <Sphere USE='SharedSphere'/>
+        </Shape>
+      </Switch>
+    </Group>
+
+    <BooleanToggle DEF='ColorToggle'/>
+    <BooleanFilter DEF='ColorFilter'/>
+    <IntegerTrigger DEF='TriggerRed' integerKey='0'/>
+    <IntegerTrigger DEF='TriggerGreen' integerKey='1'/>
+
+    <ROUTE fromNode='SphereTouch' fromField='isActive' toNode='ColorToggle' toField='set_boolean'/>
+    <ROUTE fromNode='ColorToggle' fromField='toggle_changed' toNode='ColorFilter' toField='set_boolean'/>
+    <ROUTE fromNode='ColorFilter' fromField='inputFalse' toNode='TriggerRed' toField='set_boolean'/>
+    <ROUTE fromNode='ColorFilter' fromField='inputTrue' toNode='TriggerGreen' toField='set_boolean'/>
+    <ROUTE fromNode='TriggerRed' fromField='triggerValue' toNode='ColorSwitch' toField='whichChoice'/>
+    <ROUTE fromNode='TriggerGreen' fromField='triggerValue' toNode='ColorSwitch' toField='whichChoice'/>
+  </Scene>
+</X3D>

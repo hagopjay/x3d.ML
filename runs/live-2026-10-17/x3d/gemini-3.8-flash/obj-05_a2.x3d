@@ -1,0 +1,37 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='2' name='Shape'/>
+    <meta content='gold_ring.x3d' name='title'/>
+    <meta content='A metallic gold ring modeled as an Extrusion torus with physically based material.' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Metallic Gold Ring'/>
+
+    <Viewpoint description='Gold Ring Close-up' orientation='1 0 0 -0.38' position='0 1.6 3.0'/>
+    <Viewpoint description='Top View' orientation='1 0 0 -1.5708' position='0 3.5 0'/>
+
+    <Background skyAngle='1.2 1.57' skyColor='0.03 0.03 0.05 0.08 0.08 0.12 0.15 0.15 0.20'/>
+
+    <DirectionalLight color='1 0.95 0.85' direction='-0.6 -0.8 -0.5' intensity='1.2'/>
+    <DirectionalLight color='0.7 0.8 1.0' direction='0.7 0.5 0.6' intensity='0.6'/>
+    <PointLight color='1.0 0.9 0.7' intensity='0.8' location='0 2 1.5' radius='10'/>
+
+    <Transform rotation='0.577 0.577 0.577 0.8'>
+      <Transform DEF='RingTransform'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='1.0 0.78 0.28' metallic='1.0' roughness='0.18'/>
+          </Appearance>
+          <Extrusion beginCap='false' creaseAngle='3.1416' crossSection='0.1600 0.0000 0.1478 0.0612 0.1131 0.1131 0.0612 0.1478 0.0000 0.1600 -0.0612 0.1478 -0.1131 0.1131 -0.1478 0.0612 -0.1600 0.0000 -0.1478 -0.0612 -0.1131 -0.1131 -0.0612 -0.1478 0.0000 -0.1600 0.0612 -0.1478 0.1131 -0.1131 0.1478 -0.0612 0.1600 0.0000' endCap='false' solid='true' spine='1.000 0 0.000 0.966 0 0.259 0.866 0 0.500 0.707 0 0.707 0.500 0 0.866 0.259 0 0.966 0.000 0 1.000 -0.259 0 0.966 -0.500 0 0.866 -0.707 0 0.707 -0.866 0 0.500 -0.966 0 0.259 -1.000 0 0.000 -0.966 0 -0.259 -0.866 0 -0.500 -0.707 0 -0.707 -0.500 0 -0.866 -0.259 0 -0.966 0.000 0 -1.000 0.259 0 -0.966 0.500 0 -0.866 0.707 0 -0.707 0.866 0 -0.500 0.966 0 -0.259 1.000 0 0.000'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='RingTimer' cycleInterval='8.0' loop='true'/>
+    <OrientationInterpolator DEF='RingRotator' key='0.0 0.25 0.5 0.75 1.0' keyValue='0 1 0 0 0 1 0 1.5708 0 1 0 3.1416 0 1 0 4.7124 0 1 0 6.2832'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='RingTimer' toField='set_fraction' toNode='RingRotator'/>
+    <ROUTE fromField='value_changed' fromNode='RingRotator' toField='rotation' toNode='RingTransform'/>
+  </Scene>
+</X3D>

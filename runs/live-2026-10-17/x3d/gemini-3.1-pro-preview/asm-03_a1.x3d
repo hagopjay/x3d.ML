@@ -1,0 +1,102 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Chess Board View' position='0 8 10' orientation='1 0 0 -0.67'/>
+    <Background skyColor='0.1 0.1 0.15'/>
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.8' color='1 1 0.9'/>
+    <DirectionalLight direction='0.5 -0.5 -0.5' intensity='0.4' color='0.8 0.8 1'/>
+
+    <!-- Row 0 -->
+    <Transform translation='-3.5 0 -3.5'>
+      <Shape DEF='DarkTile'>
+        <Appearance>
+          <Material diffuseColor='0.35 0.16 0.08' shininess='0.2'/>
+        </Appearance>
+        <Box size='1 0.2 1'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-2.5 0 -3.5'>
+      <Shape DEF='LightTile'>
+        <Appearance>
+          <Material diffuseColor='0.85 0.70 0.45' shininess='0.2'/>
+        </Appearance>
+        <Box size='1 0.2 1'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-1.5 0 -3.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-0.5 0 -3.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='0.5 0 -3.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='1.5 0 -3.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='2.5 0 -3.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='3.5 0 -3.5'><Shape USE='LightTile'/></Transform>
+
+    <!-- Row 1 -->
+    <Transform translation='-3.5 0 -2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-2.5 0 -2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-1.5 0 -2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-0.5 0 -2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='0.5 0 -2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='1.5 0 -2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='2.5 0 -2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='3.5 0 -2.5'><Shape USE='DarkTile'/></Transform>
+
+    <!-- Row 2 -->
+    <Transform translation='-3.5 0 -1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-2.5 0 -1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-1.5 0 -1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-0.5 0 -1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='0.5 0 -1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='1.5 0 -1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='2.5 0 -1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='3.5 0 -1.5'><Shape USE='LightTile'/></Transform>
+
+    <!-- Row 3 -->
+    <Transform translation='-3.5 0 -0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-2.5 0 -0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-1.5 0 -0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-0.5 0 -0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='0.5 0 -0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='1.5 0 -0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='2.5 0 -0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='3.5 0 -0.5'><Shape USE='DarkTile'/></Transform>
+
+    <!-- Row 4 -->
+    <Transform translation='-3.5 0 0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-2.5 0 0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-1.5 0 0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-0.5 0 0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='0.5 0 0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='1.5 0 0.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='2.5 0 0.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='3.5 0 0.5'><Shape USE='LightTile'/></Transform>
+
+    <!-- Row 5 -->
+    <Transform translation='-3.5 0 1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-2.5 0 1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-1.5 0 1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-0.5 0 1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='0.5 0 1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='1.5 0 1.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='2.5 0 1.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='3.5 0 1.5'><Shape USE='DarkTile'/></Transform>
+
+    <!-- Row 6 -->
+    <Transform translation='-3.5 0 2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-2.5 0 2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-1.5 0 2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-0.5 0 2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='0.5 0 2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='1.5 0 2.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='2.5 0 2.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='3.5 0 2.5'><Shape USE='LightTile'/></Transform>
+
+    <!-- Row 7 -->
+    <Transform translation='-3.5 0 3.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-2.5 0 3.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='-1.5 0 3.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='-0.5 0 3.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='0.5 0 3.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='1.5 0 3.5'><Shape USE='DarkTile'/></Transform>
+    <Transform translation='2.5 0 3.5'><Shape USE='LightTile'/></Transform>
+    <Transform translation='3.5 0 3.5'><Shape USE='DarkTile'/></Transform>
+  </Scene>
+</X3D>

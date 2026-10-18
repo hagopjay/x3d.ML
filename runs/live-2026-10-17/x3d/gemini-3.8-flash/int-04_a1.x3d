@@ -1,0 +1,43 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='box_hover_highlight.x3d' name='title'/>
+    <meta content='A box that highlights with yellow emissive color while hovered using TouchSensor isOver.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Box Hover Highlight'/>
+    <Viewpoint description='Front View' position='0 0 5'/>
+    
+    <Background skyColor='0.1 0.12 0.15'/>
+
+    <DirectionalLight direction='-0.5 -1 -0.8' intensity='0.8'/>
+    <DirectionalLight direction='0.5 1 0.8' intensity='0.3'/>
+
+    <Transform DEF='BoxTransform'>
+      <TouchSensor DEF='BoxSensor' description='Hover over the box to highlight'/>
+      <Shape>
+        <Appearance>
+          <Material DEF='BoxMaterial' diffuseColor='0.2 0.35 0.55' emissiveColor='0 0 0' roughness='0.4' specularColor='0.3 0.3 0.3'/>
+        </Appearance>
+        <Box size='1.8 1.8 1.8'/>
+      </Shape>
+    </Transform>
+
+    <Script DEF='HighlightScript'>
+      <field accessType='inputOnly' name='set_over' type='SFBool'/>
+      <field accessType='outputOnly' name='emissiveColor_changed' type='SFColor'/>
+      <![CDATA[
+      ecmascript:
+      function set_over(active) {
+        if (active) {
+          emissiveColor_changed = new SFColor(1.0, 0.9, 0.0);
+        } else {
+          emissiveColor_changed = new SFColor(0.0, 0.0, 0.0);
+        }
+      }
+      ]]>
+    </Script>
+
+    <ROUTE fromField='isOver' fromNode='BoxSensor' toField='set_over' toNode='HighlightScript'/>
+    <ROUTE fromField='emissiveColor_changed' fromNode='HighlightScript' toField='set_emissiveColor' toNode='BoxMaterial'/>
+  </Scene>
+</X3D>

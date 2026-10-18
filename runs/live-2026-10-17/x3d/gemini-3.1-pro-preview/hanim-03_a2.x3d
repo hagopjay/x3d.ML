@@ -1,0 +1,108 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Eye Level View' position='0 1.6 2' centerOfRotation='0 1.6 0'/>
+    
+    <HAnimHumanoid name='Humanoid' version='2.0'>
+      <HAnimJoint name='humanoid_root' center='0 0.8 0' containerField='skeleton'>
+        <HAnimSegment name='pelvis'>
+          <Transform translation='0 0.8 0'>
+            <Shape>
+              <Box size='0.2 0.2 0.2'/>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+            </Shape>
+          </Transform>
+        </HAnimSegment>
+        
+        <HAnimJoint name='vl5' center='0 1.0 0'>
+          <HAnimSegment name='l5'>
+            <Transform translation='0 1.2 0'>
+              <Shape>
+                <Box size='0.15 0.3 0.15'/>
+                <Appearance>
+                  <Material diffuseColor='0 1 0'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          
+          <HAnimJoint name='skullbase' center='0 1.5 0'>
+            <HAnimSegment name='skull'>
+              <Transform translation='0 1.6 0'>
+                <Shape>
+                  <Sphere radius='0.1'/>
+                  <Appearance>
+                    <Material diffuseColor='1 0.8 0.6'/>
+                  </Appearance>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+          
+          <HAnimJoint name='r_shoulder' center='0.2 1.4 0'>
+            <HAnimSegment name='r_upperarm'>
+              <Transform translation='0.25 1.25 0'>
+                <Shape>
+                  <Cylinder radius='0.04' height='0.3'/>
+                  <Appearance>
+                    <Material diffuseColor='1 0.8 0.6'/>
+                  </Appearance>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            
+            <HAnimJoint name='r_elbow' center='0.3 1.1 0'>
+              <HAnimSegment name='r_forearm'>
+                <Transform translation='0.35 0.95 0'>
+                  <Shape>
+                    <Cylinder radius='0.035' height='0.3'/>
+                  <Appearance>
+                    <Material diffuseColor='1 0.8 0.6'/>
+                  </Appearance>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            
+              <HAnimJoint name='r_wrist' center='0.4 0.8 0'>
+                <HAnimSegment name='r_hand'>
+                  <Transform translation='0.42 0.75 0'>
+                    <Shape>
+                      <Box size='0.06 0.1 0.05'/>
+                      <Appearance>
+                        <Material diffuseColor='1 0.8 0.6'/>
+                      </Appearance>
+                    </Shape>
+                  </Transform>
+                  
+                  <HAnimSite name='r_hand_tip' translation='0.45 0.7 0'>
+                    <TouchSensor DEF='TouchSphere' description='Touch to rotate sphere'/>
+                    <Transform DEF='SphereTransform'>
+                      <Shape>
+                        <Sphere radius='0.08'/>
+                        <Appearance>
+                          <Material diffuseColor='1 0 0'/>
+                        </Appearance>
+                      </Shape>
+                    </Transform>
+                  </HAnimSite>
+                  
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+    </HAnimHumanoid>
+
+    <TimeSensor DEF='Clock' cycleInterval='2' stopTime='1'/>
+    <OrientationInterpolator DEF='Rotator' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    
+    <ROUTE fromNode='TouchSphere' fromField='touchTime' toNode='Clock' toField='startTime'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Rotator' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator' fromField='value_changed' toNode='SphereTransform' toField='rotation'/>
+  </Scene>
+</X3D>

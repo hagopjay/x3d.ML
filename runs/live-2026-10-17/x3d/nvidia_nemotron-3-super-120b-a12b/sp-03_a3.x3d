@@ -1,0 +1,77 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Newton''s cradle' position='0 2 5'/>
+    <Background skyColor='0.7 0.8 1'/>
+
+    <!-- Shared geometry -->
+    <Shape DEF='WireShape'>
+      <Appearance>
+        <Material emissiveColor='0 0 0'/>
+      </Appearance>
+      <Cylinder radius='0.005' height='0.4'/>
+    </Shape>
+
+    <Shape DEF='BallShape'>
+      <Appearance>
+        <Material emissiveColor='0.7 0.7 0.8'/>
+      </Appearance>
+      <Sphere radius='0.2'/>
+    </Shape>
+
+    <!-- Touch sensor to start/stop -->
+    <TouchSensor DEF='Touch'/>
+
+    <!-- Timer -->
+    <TimeSensor DEF='Timer' cycleInterval='4' loop='true'/>
+
+    <!-- Orientation interpolator for the swinging arm -->
+    <OrientationInterpolator DEF='ArmRot'>
+      <key value='0 0.25 0.5 0.75 1'/>
+      <keyValue value='0 1 0 -0.2 0 1 0 0.2 0 1 0 -0.2 0 1 0 0.2 0 1 0 0'/>
+    </OrientationInterpolator>
+
+    <!-- Rotating arm (pivot at 0,2,0) -->
+    <Transform DEF='Arm' center='0 2 0' rotation='0 1 0 0'>
+      <!-- Outer left ball (will swing) -->
+      <Transform translation='-0.4 0 0'>
+        <Shape USE='WireShape'/>
+        <Transform translation='0 -0.2 0'>
+          <Shape USE='BallShape'/>
+        </Transform>
+      </Transform>
+
+      <!-- Outer right ball (will swing) -->
+      <Transform translation='0.4 0 0'>
+        <Shape USE='WireShape'/>
+        <Transform translation='0 -0.2 0'>
+          <Shape USE='BallShape'/>
+        </Transform>
+      </Transform>
+
+      <!-- Three central balls (static) -->
+      <Transform translation='-0.2 0 0'>
+        <Shape USE='WireShape'/>
+        <Transform translation='0 -0.2 0'>
+          <Shape USE='BallShape'/>
+        </Transform>
+      </Transform>
+      <Transform translation='0 0 0'>
+        <Shape USE='WireShape'/>
+        <Transform translation='0 -0.2 0'>
+          <Shape USE='BallShape'/>
+        </Transform>
+      </Transform>
+      <Transform translation='0.2 0 0'>
+        <Shape USE='WireShape'/>
+        <Transform translation='0 -0.2 0'>
+          <Shape USE='BallShape'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- ROUTES -->
+    <ROUTE fromNode='Touch' fromField='touched' toNode='Timer' toField='set_enabled'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='ArmRot' toField='set_fraction'/>
+    <ROUTE fromNode='ArmRot' fromField='value_changed' toNode='Arm' toField='rotation'/>
+  </Scene>
+</X3D>

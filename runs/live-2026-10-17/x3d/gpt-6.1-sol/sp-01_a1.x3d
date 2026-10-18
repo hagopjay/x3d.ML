@@ -1,0 +1,205 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Island Lighthouse at Night'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Island Lighthouse at Night'/>
+    <Background skyColor='0.008 0.014 0.045'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Lighthouse across the night sea' position='0 13 29' orientation='1 0 0 -0.30' fieldOfView='0.65'/>
+    <DirectionalLight direction='-0.4 -0.8 -0.3' color='0.63 0.73 1' intensity='0.85' ambientIntensity='0.23'/>
+    <PointLight location='-5 8 8' color='0.78 0.85 1' intensity='0.65' radius='35'/>
+
+    <!-- Dark blue sea -->
+    <Transform translation='0 -0.22 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.012 0.045 0.105' specularColor='0.22 0.34 0.5' shininess='0.75'/>
+        </Appearance>
+        <Box size='180 0.18 180'/>
+      </Shape>
+    </Transform>
+
+    <!-- Low, irregular rocky island -->
+    <Transform translation='0 -0.06 0' scale='4.6 1.05 3.5'>
+      <Shape>
+        <Appearance DEF='RockAppearance'>
+          <Material diffuseColor='0.21 0.23 0.27' specularColor='0.08 0.09 0.12' shininess='0.12'/>
+        </Appearance>
+        <Sphere/>
+      </Shape>
+    </Transform>
+    <Transform translation='-3.1 0.12 0.8' rotation='0 0 1 0.35' scale='1.5 0.8 1.2'>
+      <Shape>
+        <Appearance USE='RockAppearance'/>
+        <Sphere/>
+      </Shape>
+    </Transform>
+    <Transform translation='2.9 0.12 -0.7' rotation='0 0 1 -0.3' scale='1.6 0.95 1.3'>
+      <Shape>
+        <Appearance USE='RockAppearance'/>
+        <Sphere/>
+      </Shape>
+    </Transform>
+    <Transform translation='1.9 0.02 2.2' rotation='1 0 0 0.4' scale='1.4 0.65 1.15'>
+      <Shape>
+        <Appearance USE='RockAppearance'/>
+        <Sphere/>
+      </Shape>
+    </Transform>
+    <Transform translation='-1.8 0.05 -2.2' scale='1.5 0.8 1.1'>
+      <Shape>
+        <Appearance USE='RockAppearance'/>
+        <Sphere/>
+      </Shape>
+    </Transform>
+    <Transform translation='-3.7 -0.05 2.3' scale='0.6 0.4 0.65'>
+      <Shape>
+        <Appearance USE='RockAppearance'/>
+        <Sphere/>
+      </Shape>
+    </Transform>
+
+    <!-- Foundation and tapered white tower -->
+    <Transform translation='0 0.86 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.47 0.49'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='0.35'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 1.02 0'>
+      <Shape>
+        <Appearance DEF='WhiteAppearance'>
+          <Material diffuseColor='0.88 0.89 0.85' specularColor='0.18 0.18 0.17' shininess='0.22'/>
+        </Appearance>
+        <Extrusion
+          crossSection='1 0, 0.924 -0.383, 0.707 -0.707, 0.383 -0.924, 0 -1, -0.383 -0.924, -0.707 -0.707, -0.924 -0.383, -1 0, -0.924 0.383, -0.707 0.707, -0.383 0.924, 0 1, 0.383 0.924, 0.707 0.707, 0.924 0.383, 1 0'
+          spine='0 0 0, 0 6.6 0'
+          scale='1.22 1.22, 0.78 0.78'
+          creaseAngle='1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Two red bands follow the tower taper -->
+    <Transform translation='0 3.02 0'>
+      <Shape>
+        <Appearance DEF='RedAppearance'>
+          <Material diffuseColor='0.66 0.035 0.045' specularColor='0.25 0.12 0.12' shininess='0.3'/>
+        </Appearance>
+        <Extrusion
+          crossSection='1 0, 0.924 -0.383, 0.707 -0.707, 0.383 -0.924, 0 -1, -0.383 -0.924, -0.707 -0.707, -0.924 -0.383, -1 0, -0.924 0.383, -0.707 0.707, -0.383 0.924, 0 1, 0.383 0.924, 0.707 0.707, 0.924 0.383, 1 0'
+          spine='0 0 0, 0 0.6 0'
+          scale='1.093 1.093, 1.053 1.053'
+          creaseAngle='1'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 5.32 0'>
+      <Shape>
+        <Appearance USE='RedAppearance'/>
+        <Extrusion
+          crossSection='1 0, 0.924 -0.383, 0.707 -0.707, 0.383 -0.924, 0 -1, -0.383 -0.924, -0.707 -0.707, -0.924 -0.383, -1 0, -0.924 0.383, -0.707 0.707, -0.383 0.924, 0 1, 0.383 0.924, 0.707 0.707, 0.924 0.383, 1 0'
+          spine='0 0 0, 0 0.6 0'
+          scale='0.94 0.94, 0.9 0.9'
+          creaseAngle='1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Door and a small upper window -->
+    <Transform translation='0 1.68 1.175'>
+      <Shape>
+        <Appearance DEF='DarkMetalAppearance'>
+          <Material diffuseColor='0.035 0.045 0.06' specularColor='0.3 0.32 0.35' shininess='0.5'/>
+        </Appearance>
+        <Box size='0.55 1.15 0.13'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 6.65 0.855'>
+      <Shape>
+        <Appearance USE='DarkMetalAppearance'/>
+        <Box size='0.3 0.55 0.08'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lantern platform, glass enclosure, and roof -->
+    <Transform translation='0 7.66 0'>
+      <Shape>
+        <Appearance USE='DarkMetalAppearance'/>
+        <Cylinder radius='1.13' height='0.18'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 8.42 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.44 0.68 0.77' specularColor='0.8 0.9 1' shininess='0.9' transparency='0.78'/>
+        </Appearance>
+        <Cylinder radius='0.91' height='1.35' top='false' bottom='false'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.64 8.42 0.64'>
+      <Shape DEF='LanternPost'>
+        <Appearance USE='DarkMetalAppearance'/>
+        <Cylinder radius='0.045' height='1.4'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.64 8.42 0.64'>
+      <Shape USE='LanternPost'/>
+    </Transform>
+    <Transform translation='-0.64 8.42 -0.64'>
+      <Shape USE='LanternPost'/>
+    </Transform>
+    <Transform translation='0.64 8.42 -0.64'>
+      <Shape USE='LanternPost'/>
+    </Transform>
+    <Transform translation='0 9.12 0'>
+      <Shape>
+        <Appearance USE='DarkMetalAppearance'/>
+        <Cylinder radius='1.08' height='0.13'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 9.49 0'>
+      <Shape>
+        <Appearance USE='RedAppearance'/>
+        <Cone bottomRadius='1.15' height='0.65'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 9.93 0'>
+      <Shape>
+        <Appearance USE='DarkMetalAppearance'/>
+        <Cylinder radius='0.045' height='0.3'/>
+      </Shape>
+    </Transform>
+
+    <!-- Warm lamp inside the lantern -->
+    <Transform translation='0 8.42 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.9 0.45' emissiveColor='1 0.82 0.3'/>
+        </Appearance>
+        <Sphere radius='0.22'/>
+      </Shape>
+      <PointLight color='1 0.87 0.48' intensity='1.3' radius='5'/>
+    </Transform>
+
+    <!-- Thin, long pale-yellow beam rotates about the lantern -->
+    <Transform DEF='BeamSweep' translation='0 8.42 0'>
+      <Transform translation='7.4 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0.94 0.6' emissiveColor='0.9 0.79 0.36' transparency='0.38'/>
+          </Appearance>
+          <Box size='14.4 0.14 0.3'/>
+        </Shape>
+      </Transform>
+      <SpotLight location='0.8 0 0' direction='1 0 0' color='1 0.92 0.6' intensity='2' beamWidth='0.06' cutOffAngle='0.16' radius='30'/>
+    </Transform>
+
+    <TimeSensor DEF='SweepClock' cycleInterval='6' loop='true'/>
+    <OrientationInterpolator DEF='SweepRotation'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 1 0 0, 0 1 0 1.5707963, 0 1 0 3.1415927, 0 1 0 4.712389, 0 1 0 6.2831853'/>
+    <ROUTE fromNode='SweepClock' fromField='fraction_changed' toNode='SweepRotation' toField='set_fraction'/>
+    <ROUTE fromNode='SweepRotation' fromField='value_changed' toNode='BeamSweep' toField='set_rotation'/>
+  </Scene>
+</X3D>

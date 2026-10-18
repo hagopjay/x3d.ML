@@ -1,0 +1,35 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Touch the button to start the cylinder spinning' position='0 0 9'/>
+    <Transform DEF='SpinningCylinder' translation='0 1.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.75 0.25 0.15'/>
+        </Appearance>
+        <Cylinder height='2.5' radius='1'/>
+      </Shape>
+      <Transform translation='1.05 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.95 0.8 0.1'/>
+          </Appearance>
+          <Box size='0.2 0.5 0.5'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Transform translation='0 -1.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.55 0.9'/>
+        </Appearance>
+        <Box size='2.4 0.6 1.2'/>
+      </Shape>
+      <TouchSensor DEF='ButtonTouch' description='Spin start button'/>
+    </Transform>
+    <TimeSensor DEF='SpinClock' cycleInterval='4' loop='true'/>
+    <OrientationInterpolator DEF='SpinAnim' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.14159 0 1 0 6.28318'/>
+    <ROUTE fromNode='ButtonTouch' fromField='touchTime' toNode='SpinClock' toField='startTime'/>
+    <ROUTE fromNode='SpinClock' fromField='fraction_changed' toNode='SpinAnim' toField='set_fraction'/>
+    <ROUTE fromNode='SpinAnim' fromField='value_changed' toNode='SpinningCylinder' toField='set_rotation'/>
+  </Scene>
+</X3D>

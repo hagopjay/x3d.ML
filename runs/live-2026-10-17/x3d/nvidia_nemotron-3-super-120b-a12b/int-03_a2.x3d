@@ -1,0 +1,25 @@
+<X3D profile='Immersive' version='4.0'
+   xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'
+   xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description="Drag cone on ground plane" position='0 5 10'/>
+    <Transform DEF="coneTransform" translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.2 0.2'/>
+        </Appearance>
+        <Cone bottomRadius='1' height='2'/>
+      </Shape>
+    </Transform>
+    <PlaneSensor DEF="groundSensor"
+                 offset='0 0 0'
+                 autoOffset='true'
+                 minPosition='-100 -100'
+                 maxPosition='100 100'
+                 enabled='true'/>
+    <ROUTE fromNode='groundSensor' fromField='translation_changed' toNode='coneTransform' toField='set_translation'/>
+  </Scene>
+</X3D>

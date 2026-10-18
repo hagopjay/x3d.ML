@@ -1,0 +1,14 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geospatial' level='1'/>
+  </head>
+  <Scene>
+    <WorldInfo title='GeoLOD Statue Example'/>
+    <Background skyColor='0.4 0.6 0.9' groundColor='0.2 0.5 0.3'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='0.8'/>
+
+    <GeoViewpoint geoSystem='"GD" "WE"' position='40.6882 -74.0445 5' description='Detailed Statue (Inside 200m)'/>
+    <GeoViewpoint geoSystem='"GD" "WE"' position='40.6850 -74.0445 5' description='Simple Box (Outside 200m)'/>
+
+    <GeoLOD center='40.6892 -74.0445 0' range='200' geoSystem='"GD" "WE"' child1Url='"data:model/x3d+xml,%3CX3D%20profile%3D%27Interchange%27%20version%3D%274.0%27%3E%3CScene%3E%3CTransform%20translation%3D%270%205%200%27%3E%3CShape%3E%3CAppearance%3E%3CMaterial%20diffuseColor%3D%270.4%200.4%200.4%27%2F%3E%3C%2FAppearance%3E%3CBox%20size%

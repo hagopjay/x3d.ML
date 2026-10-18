@@ -1,0 +1,106 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <WorldInfo title="Newton's Cradle"/>
+    <Viewpoint description="Front View" position="0 2 14"/>
+    <Background skyColor="0.05 0.05 0.1, 0.1 0.1 0.2, 0.2 0.2 0.3" skyAngle="1.57, 3.14"/>
+    
+    <DirectionalLight direction="-0.5 -1 -0.5" intensity="1.2" color="1 0.98 0.95"/>
+    <DirectionalLight direction="0.5 -0.5 0.5" intensity="0.5" color="0.8 0.85 1"/>
+    
+    <TimeSensor DEF="Timer" cycleInterval="1.0" loop="true"/>
+    
+    <OrientationInterpolator DEF="LeftAnim" 
+      key="0 0.05 0.1 0.15 0.2 0.25 0.75 0.8 0.85 0.9 0.95 1.0"
+      keyValue="0 0 1 0.8, 0 0 1 0.76, 0 0 1 0.65, 0 0 1 0.47, 0 0 1 0.25, 0 0 1 0, 0 0 1 0, 0 0 1 0.25, 0 0 1 0.47, 0 0 1 0.65, 0 0 1 0.76, 0 0 1 0.8"/>
+      
+    <OrientationInterpolator DEF="RightAnim"
+      key="0 0.25 0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7 0.75 1.0"
+      keyValue="0 0 1 0, 0 0 1 0, 0 0 1 -0.25, 0 0 1 -0.47, 0 0 1 -0.65, 0 0 1 -0.76, 0 0 1 -0.8, 0 0 1 -0.76, 0 0 1 -0.65, 0 0 1 -0.47, 0 0 1 -0.25, 0 0 1 0, 0 0 1 0"/>
+      
+    <Transform translation="0 -1 0">
+      <TouchSensor DEF="Touch" description="Touch to restart animation"/>
+      <Shape>
+        <Box size="8 0.4 4"/>
+        <Appearance DEF="FrameApp">
+          <PhysicalMaterial baseColor="0.05 0.05 0.05" roughness="0.5" metallic="0.8"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <ROUTE fromNode="Touch" fromField="touchTime" toNode="Timer" toField="startTime"/>
+    <ROUTE fromNode="Timer" fromField="fraction_changed" toNode="LeftAnim" toField="set_fraction"/>
+    <ROUTE fromNode="Timer" fromField="fraction_changed" toNode="RightAnim" toField="set_fraction"/>
+    
+    <Transform translation="3.5 2 1.5">
+      <Shape DEF="Pillar">
+        <Cylinder radius="0.1" height="6"/>
+        <Appearance USE="FrameApp"/>
+      </Shape>
+    </Transform>
+    <Transform translation="3.5 2 -1.5">
+      <Shape USE="Pillar"/>
+    </Transform>
+    <Transform translation="-3.5 2 1.5">
+      <Shape USE="Pillar"/>
+    </Transform>
+    <Transform translation="-3.5 2 -1.5">
+      <Shape USE="Pillar"/>
+    </Transform>
+    
+    <Transform translation="0 5 1.5" rotation="0 0 1 1.5708">
+      <Shape DEF="TopBar">
+        <Cylinder radius="0.1" height="7.2"/>
+        <Appearance USE="FrameApp"/>
+      </Shape>
+    </Transform>
+    <Transform translation="0 5 -1.5" rotation="0 0 1 1.5708">
+      <Shape USE="TopBar"/>
+    </Transform>
+
+    <Group DEF="PendulumGroup">
+      <Transform translation="0 -5 0">
+        <Shape>
+          <Sphere radius="0.5"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="0.8 0.8 0.8" metallic="1" roughness="0.1"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Shape>
+        <IndexedLineSet coordIndex="0 1 -1 2 1 -1">
+          <Coordinate point="0 0 1.5, 0 -5 0, 0 0 -1.5"/>
+        </IndexedLineSet>
+        <Appearance>
+          <UnlitMaterial emissiveColor="0.2 0.2 0.2"/>
+        </Appearance>
+      </Shape>
+    </Group>
+
+    <Transform translation="-2 5 0">
+      <Transform DEF="LeftPivot">
+        <Group USE="PendulumGroup"/>
+      </Transform>
+    </Transform>
+    <Transform translation="-1 5 0">
+      <Group USE="PendulumGroup"/>
+    </Transform>
+    <Transform translation="0 5 0">
+      <Group USE="PendulumGroup"/>
+    </Transform>
+    <Transform translation="1 5 0">
+      <Group USE="PendulumGroup"/>
+    </Transform>
+    <Transform translation="2 5 0">
+      <Transform DEF="RightPivot">
+        <Group USE="PendulumGroup"/>
+      </Transform>
+    </Transform>
+    
+    <ROUTE fromNode="LeftAnim" fromField="value_changed" toNode="LeftPivot" toField="set_rotation"/>
+    <ROUTE fromNode="RightAnim" fromField="value_changed" toNode="RightPivot" toField="set_rotation"/>
+
+  </Scene>
+</X3D>

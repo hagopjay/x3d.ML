@@ -1,0 +1,60 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+</head>
+<Scene>
+<Viewpoint description='Two HAnim humanoids sharing skeleton' position='0 0 5'/>
+
+<!-- Shared joint hierarchy -->
+<HAnimJoint DEF="Skeleton" name="Hips" center='0 0 0' rotation='0 0 1 0'>
+    <HAnimJoint name="Spine" center='0 0.1 0' rotation='0 0 1 0'>
+        <HAnimJoint name="Neck" center='0 0.1 0' rotation='0 0 1 0'>
+            <HAnimJoint name="Head" center='0 0.1 0' rotation='0 0 1 0'/>
+        </HAnimJoint>
+    </HAnimJoint>
+    <HAnimJoint name="LeftShoulder" center='-0.1 0.1 0' rotation='0 0 1 0'>
+        <HAnimJoint name="LeftElbow" center='-0.1 0 0' rotation='0 0 1 0'>
+            <HAnimJoint name="LeftHand" center='-0.1 0 0' rotation='0 0 1 0'/>
+        </HAnimJoint>
+    </HAnimJoint>
+    <HAnimJoint name="RightShoulder" center='0.1 0.1 0' rotation='0 0 1 0'>
+        <HAnimJoint name="RightElbow" center='0.1 0 0' rotation='0 0 1 0'>
+            <HAnimJoint name="RightHand" center='0.1 0 0' rotation='0 0 1 0'/>
+        </HAnimJoint>
+    </HAnimJoint>
+    <HAnimJoint name="LeftHip" center='-0.05 -0.1 0' rotation='0 0 1 0'>
+        <HAnimJoint name="LeftKnee" center='-0.05 -0.1 0' rotation='0 0 1 0'>
+            <HAnimJoint name="LeftFoot" center='-0.05 -0.1 0' rotation='0 0 1 0'/>
+        </HAnimJoint>
+    </HAnimJoint>
+    <HAnimJoint name="RightHip" center='0.05 -0.1 0' rotation='0 0 1 0'>
+        <HAnimJoint name="RightKnee" center='0.05 -0.1 0' rotation='0 0 1 0'>
+            <HAnimJoint name="RightFoot" center='0.05 -0.1 0' rotation='0 0 1 0'/>
+        </HAnimJoint>
+    </HAnimJoint>
+</HAnimJoint>
+
+<!-- First humanoid with lighter skin -->
+<Transform translation='-1 0 0'>
+    <HAnimHumanoid joint="USE Skeleton" version='2.0' name='Humanoid1'>
+        <Shape>
+            <Appearance>
+                <PhysicalMaterial diffuseColor='0.8 0.6 0.4'/>
+            </Appearance>
+            <Box size='0.2 0.8 0.2'/>
+        </Shape>
+    </HAnimHumanoid>
+</Transform>
+
+<!-- Second humanoid with darker skin -->
+<Transform translation='1 0 0'>
+    <HAnimHumanoid joint="USE Skeleton" version='2.0' name='Humanoid2'>
+        <Shape>
+            <Appearance>
+                <PhysicalMaterial diffuseColor='0.2 0.1 0.05'/>
+            </Appearance>
+            <Box size='0.2 0.8 0.2'/>
+        </Shape>
+    </HAnimHumanoid>
+</Transform>
+</Scene>
+</X3D>

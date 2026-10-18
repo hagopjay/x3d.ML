@@ -1,0 +1,94 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Windmill on a grassy hill' position='0 6 22' orientation='1 0 0 -0.05'/>
+    <Background skyColor='0.4 0.6 0.9'/>
+    <DirectionalLight direction='-0.8 -1 -0.2' intensity='0.9' color='1 0.98 0.9'/>
+
+    <Transform translation='-8 0 -8'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.65 0.25' ambientIntensity='0.2'/>
+        </Appearance>
+        <ElevationGrid xDimension='5' zDimension='5' xSpacing='4' zSpacing='4' solid='false'
+                       height='0 0.5 1.0 0.5 0
+                               0.5 1.5 2.0 1.5 0.5
+                               1.0 2.0 3.0 2.0 1.0
+                               0.5 1.5 2.0 1.5 0.5
+                               0 0.5 1.0 0.5 0'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 3 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.95 0.95 0.95'/>
+        </Appearance>
+        <Extrusion 
+          crossSection='1.0 0.0, 0.9239 0.3827, 0.7071 0.7071, 0.3827 0.9239, 
+                        0.0 1.0, -0.3827 0.9239, -0.7071 0.7071, -0.9239 0.3827, 
+                        -1.0 0.0, -0.9239 -0.3827, -0.7071 -0.7071, -0.3827 -0.9239, 
+                        0.0 -1.0, 0.3827 -0.9239, 0.7071 -0.7071, 0.9239 -0.3827, 
+                        1.0 0.0'
+          spine='0 0 0, 0 6 0'
+          scale='1.5 1.5, 0.8 0.8' />
+      </Shape>
+
+      <Transform translation='0 6 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.15 0.15'/>
+          </Appearance>
+          <Cone bottomRadius='1.1' height='1.5'/>
+        </Shape>
+      </Transform>
+
+      <Transform translation='0 5.2 0.85' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.2'/>
+          </Appearance>
+          <Cylinder radius='0.25' height='0.5'/>
+        </Shape>
+      </Transform>
+
+      <Transform translation='0 5.2 1.15' DEF='BladesTransform'>
+        <Transform DEF='SingleBlade'>
+          <Transform translation='0 2.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.3 0.2 0.1'/>
+              </Appearance>
+              <Box size='0.1 5 0.05'/>
+            </Shape>
+          </Transform>
+          <Transform translation='0.3 2.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.85 0.85 0.85'/>
+              </Appearance>
+              <Box size='0.5 4.5 0.02'/>
+            </Shape>
+          </Transform>
+        </Transform>
+        
+        <Transform rotation='0 0 1 -1.5708'>
+          <Transform USE='SingleBlade'/>
+        </Transform>
+        <Transform rotation='0 0 1 -3.1416'>
+          <Transform USE='SingleBlade'/>
+        </Transform>
+        <Transform rotation='0 0 1 -4.7124'>
+          <Transform USE='SingleBlade'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='Timer' cycleInterval='8' loop='true'/>
+    <OrientationInterpolator DEF='Rotator' 
+      key='0 0.25 0.5 0.75 1' 
+      keyValue='0 0 1 0, 0 0 1 -1.5708, 0 0 1 -3.1416, 0 0 1 -4.7124, 0 0 1 -6.2832'/>
+    
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Rotator' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator' fromField='value_changed' toNode='BladesTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

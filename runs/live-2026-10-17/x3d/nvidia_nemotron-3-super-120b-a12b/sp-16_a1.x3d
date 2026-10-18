@@ -1,0 +1,106 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Cozy cabin interior' position='0 1.5 5'/>
+    <!-- Floor -->
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.6 0.4 0.2' specularColor='0.2 0.2 0.2' shininess='0.1'/>
+        </Appearance>
+        <Box size='10 0.1 10'/>
+      </Shape>
+    </Transform>
+    <!-- North wall -->
+    <Transform translation='0 2.5 -5'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.8 0.7 0.6'/>
+        </Appearance>
+        <Box size='10 5 0.1'/>
+      </Shape>
+    </Transform>
+    <!-- East wall -->
+    <Transform translation='5 2.5 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.8 0.7 0.6'/>
+        </Appearance>
+        <Box size='0.1 5 10'/>
+      </Shape>
+    </Transform>
+    <!-- South wall -->
+    <Transform translation='0 2.5 5'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.8 0.7 0.6'/>
+        </Appearance>
+        <Box size='10 5 0.1'/>
+      </Shape>
+    </Transform>
+    <!-- Table -->
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.5 0.35 0.2'/>
+        </Appearance>
+        <Box size='2 0.1 1.5'/>
+      </Shape>
+    </Transform>
+    <!-- Chair 1 -->
+    <Transform translation='-0.8 0 -0.4'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.5 0.35 0.2'/>
+        </Appearance>
+        <Box size='0.4 0.4 0.4'/>
+      </Shape>
+    </Transform>
+    <!-- Chair 2 -->
+    <Transform translation='0.8 0 -0.4'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.5 0.35 0.2'/>
+        </Appearance>
+        <Box size='0.4 0.4 0.4'/>
+      </Shape>
+    </Transform>
+    <!-- Lamp base -->
+    <Transform translation='0 1.5 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.2 0.2 0.2'/>
+        </Appearance>
+        <Box size='0.2 0.1 0.2'/>
+      </Shape>
+    </Transform>
+    <!-- Lamp pole -->
+    <Transform translation='0 1.5 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.2 0.2 0.2'/>
+        </Appearance>
+        <Box size='0.05 0.5 0.05'/>
+      </Shape>
+    </Transform>
+    <!-- Lamp shade -->
+    <Transform translation='0 1.8 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.9 0.8 0.6'/>
+        </Appearance>
+        <Box size='0.3 0.1 0.3'/>
+      </Shape>
+    </Transform>
+    <!-- PointLight -->
+    <PointLight intensity='1.0' color='1 0.9 0.8' location='0 1.8 0'/>
+    <!-- Red rug -->
+    <Transform translation='0 -0.45 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.8 0.1 0.1' specularColor='0.2 0.2 0.2' shininess='0.1'/>
+        </Appearance>
+        <Box size='3 0.02 2'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

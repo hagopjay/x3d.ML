@@ -1,0 +1,132 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Proximity-Triggered Statue Light'/>
+    <meta name='description' content='Walk within five metres of the statue centre to turn on its spotlight. Walk away to turn it off.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Proximity-Triggered Statue Light'/>
+    <Background skyColor='0.015 0.02 0.035'/>
+    <NavigationInfo type='"WALK" "EXAMINE" "ANY"' headlight='false' speed='2'/>
+    <Viewpoint description='Approach the statue to activate its light' position='0 1.7 9'/>
+
+    <DirectionalLight direction='-0.4 -1 -0.5' intensity='0.16' color='0.6 0.7 1'/>
+
+    <SpotLight DEF='StatueLight'
+               on='false'
+               global='true'
+               location='0 5 3'
+               direction='0 -0.759 -0.651'
+               color='1 0.88 0.67'
+               intensity='1'
+               radius='12'
+               beamWidth='0.38'
+               cutOffAngle='0.65'
+               attenuation='1 0 0'/>
+
+    <!-- The sensor encloses the entire five-metre sphere. The Script
+         performs a true distance test rather than a box-only test. -->
+    <ProximitySensor DEF='ApproachSensor' center='0 1.5 0' size='12 12 12'/>
+
+    <Script DEF='DistanceSwitch'>
+      <field name='viewerPosition' accessType='inputOnly' type='SFVec3f'/>
+      <field name='sensorActive' accessType='inputOnly' type='SFBool'/>
+      <field name='lightOn' accessType='outputOnly' type='SFBool'/>
+      <field name='currentState' accessType='initializeOnly' type='SFBool' value='false'/>
+      <![CDATA[
+ecmascript:
+function setLight(value) {
+    if (value != currentState) {
+        currentState = value;
+        lightOn = value;
+    }
+}
+
+function viewerPosition(value) {
+    var dx = value.x;
+    var dy = value.y - 1.5;
+    var dz = value.z;
+    setLight(dx * dx + dy * dy + dz * dz <= 25);
+}
+
+function sensorActive(value) {
+    if (!value) {
+        setLight(false);
+    }
+}
+      ]]>
+    </Script>
+
+    <ROUTE fromNode='ApproachSensor' fromField='position_changed' toNode='DistanceSwitch' toField='viewerPosition'/>
+    <ROUTE fromNode='ApproachSensor' fromField='isActive' toNode='DistanceSwitch' toField='sensorActive'/>
+    <ROUTE fromNode='DistanceSwitch' fromField='lightOn' toNode='StatueLight' toField='set_on'/>
+
+    <!-- Ground -->
+    <Transform translation='0 -0.1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.18 0.2 0.23'/>
+        </Appearance>
+        <Box size='24 0.2 24'/>
+      </Shape>
+    </Transform>
+
+    <!-- Pedestal -->
+    <Transform translation='0 0.3 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.24 0.25 0.28'/>
+        </Appearance>
+        <Box size='1.5 0.6 1.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Stylized stone statue -->
+    <Transform translation='0 1.35 0'>
+      <Shape>
+        <Appearance DEF='Stone'>
+          <Material diffuseColor='0.72 0.7 0.64' specularColor='0.18 0.18 0.16' shininess='0.18'/>
+        </Appearance>
+        <Cone bottomRadius='0.48' height='1.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.2 0'>
+      <Shape>
+        <Appearance USE='Stone'/>
+        <Sphere radius='0.3'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.42 1.65 0' rotation='0 0 1 -0.35'>
+      <Shape>
+        <Appearance USE='Stone'/>
+        <Cylinder radius='0.12' height='0.85'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.42 1.65 0' rotation='0 0 1 0.35'>
+      <Shape>
+        <Appearance USE='Stone'/>
+        <Cylinder radius='0.12' height='0.85'/>
+      </Shape>
+    </Transform>
+
+    <!-- Overhead spotlight housing -->
+    <Transform translation='0 5.1 3' rotation='1 0 0 0.709'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.09 0.1 0.12'/>
+        </Appearance>
+        <Cylinder radius='0.2' height='0.4'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.95 0.78'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.83 0.88' emissiveColor='0.16 0.18 0.22'/>
+        </Appearance>
+        <Text string='"APPROACH TO ILLUMINATE" "Light activates within 5 metres"'>
+          <FontStyle size='0.13' justify='"MIDDLE" "MIDDLE"'/>
+        </Text>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

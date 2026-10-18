@@ -1,0 +1,144 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Bookshelf.x3d'/>
+    <meta name='description' content='A bookshelf with three shelves holding five books each. Click the red book on the bottom left to slide it out.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Bookshelf Front View' position='0 3 10'/>
+    
+    <Group>
+      <Transform translation='-2 3 0'>
+        <Shape DEF='Board'>
+          <Appearance>
+            <Material diffuseColor='0.4 0.2 0.1'/>
+          </Appearance>
+          <Box size='0.2 6 1'/>
+        </Shape>
+      </Transform>
+      <Transform translation='2 3 0'>
+        <Shape USE='Board'/>
+      </Transform>
+      <Transform translation='0 0.1 0'>
+        <Shape DEF='Shelf'>
+          <Appearance>
+            <Material diffuseColor='0.4 0.2 0.1'/>
+          </Appearance>
+          <Box size='3.8 0.2 1'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.0 0'>
+        <Shape USE='Shelf'/>
+      </Transform>
+      <Transform translation='0 3.9 0'>
+        <Shape USE='Shelf'/>
+      </Transform>
+      <Transform translation='0 5.9 0'>
+        <Shape USE='Shelf'/>
+      </Transform>
+    </Group>
+
+    <Transform DEF='InteractiveBook' translation='-1.5 0.95 0'>
+      <TouchSensor DEF='BookTouch' description='Click to slide book'/>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0 0'/>
+        </Appearance>
+        <Box DEF='BookSize' size='0.4 1.5 0.8'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-0.7 0.95 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 0.8 0'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.1 0.95 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 0 0.8'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.9 0.95 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.8 0.8 0'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='1.6 0.95 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 0.8 0.8'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-1.6 2.85 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.8 0 0.8'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.9 2.85 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.5 0 0'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.1 2.85 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 0.5 0'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.7 2.85 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 0 0.5'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='1.5 2.85 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.5 0.5 0'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-1.5 4.75 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.5 0 0.5'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.8 4.75 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 0.5 0.5'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 4.75 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='1 0.5 0'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.8 4.75 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0 1 0.5'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+    <Transform translation='1.6 4.75 0'>
+      <Shape>
+        <Appearance><Material diffuseColor='0.5 0 1'/></Appearance>
+        <Box USE='BookSize'/>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='BookTimer' cycleInterval='1' loop='false'/>
+    <PositionInterpolator DEF='BookMover' key='0 0.5 1' keyValue='-1.5 0.95 0, -1.5 0.95 0.5, -1.5 0.95 0'/>
+    
+    <ROUTE fromNode='BookTouch' fromField='touchTime' toNode='BookTimer' toField='startTime'/>
+    <ROUTE fromNode='BookTimer' fromField='fraction_changed' toNode='BookMover' toField='set_fraction'/>
+    <ROUTE fromNode='BookMover' fromField='value_changed' toNode='InteractiveBook' toField='translation'/>
+  </Scene>
+</X3D>

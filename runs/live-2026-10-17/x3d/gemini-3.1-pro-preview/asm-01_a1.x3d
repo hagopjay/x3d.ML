@@ -1,0 +1,53 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Front view of the house' position='0 2 15'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    
+    <Transform translation='0 0 0'>
+      <Shape DEF='HouseBody'>
+        <Box size='6 4 5'/>
+        <Appearance>
+          <Material diffuseColor='0.9 0.8 0.7'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 2 0'>
+      <Shape DEF='HouseRoof'>
+        <IndexedFaceSet solid='true' coordIndex='0 1 2 -1 0 2 3 -1 0 3 4 -1 0 4 1 -1 1 4 3 2 -1'>
+          <Coordinate point='0 2.5 0 -3.5 0 3 3.5 0 3 3.5 0 -3 -3.5 0 -3'/>
+        </IndexedFaceSet>
+        <Appearance>
+          <Material diffuseColor='0.6 0.2 0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 -0.5 2.51'>
+      <Shape DEF='HouseDoor'>
+        <Box size='1.2 3 0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.4 0.2 0.1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-1.8 0.5 2.51'>
+      <Shape DEF='HouseWindow1'>
+        <Box size='1.2 1.2 0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.7 0.9'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='1.8 0.5 2.51'>
+      <Shape DEF='HouseWindow2'>
+        <Box size='1.2 1.2 0.1'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.7 0.9'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

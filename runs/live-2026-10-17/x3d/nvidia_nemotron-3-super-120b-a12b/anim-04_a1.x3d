@@ -1,0 +1,16 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <TimeSensor DEF='TS' cycleInterval='6' loop='true'/>
+    <ColorInterpolator DEF='CI' key='0 0.333 0.666' keyValue='1 0 0  0 1 0  0 0 1'/>
+    <Material DEF='MAT' diffuseColor='1 0 0'/>
+    <Shape>
+      <Appearance>
+        <Material USE='MAT'/>
+      </Appearance>
+      <Sphere radius='1'/>
+    </Shape>
+    <Viewpoint description='Cycling color sphere' position='0 0 5'/>
+    <ROUTE fromNode='TS' fromField='fraction_changed' toNode='CI' toField='set_fraction'/>
+    <ROUTE fromNode='CI' fromField='value_changed' toNode='MAT' toField='diffuseColor'/>
+  </Scene>
+</X3D>

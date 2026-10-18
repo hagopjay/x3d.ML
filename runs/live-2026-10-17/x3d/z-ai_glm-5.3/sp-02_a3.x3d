@@ -1,0 +1,99 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Planetarium'/>
+    <meta name='generator' content='X_ITE'/>
+  </head>
+  <Scene>
+    <Background skyColor='0 0 0'/>
+    <Viewpoint description='Planetarium' position='0 10 30' orientation='1 0 0 -0.32'/>
+    <PointLight color='1 1 0.9' intensity='1' radius='50'/>
+
+    <!-- Glowing yellow Sun at the centre -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0' emissiveColor='1 0.9 0.2' ambientIntensity='0.333'/>
+        </Appearance>
+        <Sphere radius='1.5'/>
+      </Shape>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 0' emissiveColor='1 0.8 0.1' transparency='0.55'/>
+        </Appearance>
+        <Sphere radius='2.1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Mercury: small grey planet, innermost and fastest orbit -->
+    <Transform DEF='MercuryOrbit'>
+      <Transform translation='3 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.6 0.6 0.6'/>
+          </Appearance>
+          <Sphere radius='0.3'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='MercuryClock' cycleInterval='4' loop='true'/>
+    <OrientationInterpolator DEF='MercuryOrbitPath' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0 0 1 0 1.5708 0 1 0 3.1416 0 1 0 4.7124 0 1 0 6.2832'/>
+    <ROUTE fromNode='MercuryClock' fromField='fraction_changed' toNode='MercuryOrbitPath' toField='set_fraction'/>
+    <ROUTE fromNode='MercuryOrbitPath' fromField='value_changed' toNode='MercuryOrbit' toField='set_rotation'/>
+
+    <!-- Venus: orange planet, second orbit -->
+    <Transform DEF='VenusOrbit'>
+      <Transform translation='5 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.6 0.2'/>
+          </Appearance>
+          <Sphere radius='0.5'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='VenusClock' cycleInterval='7' loop='true'/>
+    <OrientationInterpolator DEF='VenusOrbitPath' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0 0 1 0 1.5708 0 1 0 3.1416 0 1 0 4.7124 0 1 0 6.2832'/>
+    <ROUTE fromNode='VenusClock' fromField='fraction_changed' toNode='VenusOrbitPath' toField='set_fraction'/>
+    <ROUTE fromNode='VenusOrbitPath' fromField='value_changed' toNode='VenusOrbit' toField='set_rotation'/>
+
+    <!-- Earth: blue planet, third orbit -->
+    <Transform DEF='EarthOrbit'>
+      <Transform translation='7.5 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.4 0.9'/>
+          </Appearance>
+          <Sphere radius='0.55'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='EarthClock' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='EarthOrbitPath' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0 0 1 0 1.5708 0 1 0 3.1416 0 1 0 4.7124 0 1 0 6.2832'/>
+    <ROUTE fromNode='EarthClock' fromField='fraction_changed' toNode='EarthOrbitPath' toField='set_fraction'/>
+    <ROUTE fromNode='EarthOrbitPath' fromField='value_changed' toNode='EarthOrbit' toField='set_rotation'/>
+
+    <!-- Jupiter: largest planet, outermost and slowest orbit, with a flat ring -->
+    <Transform DEF='JupiterOrbit'>
+      <Transform translation='10.5 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.6 0.4'/>
+          </Appearance>
+          <Sphere radius='1.0'/>
+        </Shape>
+        <Transform rotation='1 0 0.15 0.25' scale='1 0.06 1'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.9 0.85 0.7' transparency='0.4'/>
+            </Appearance>
+            <Torus insideRadius='1.4' outsideRadius='2.3'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='JupiterClock' cycleInterval='16' loop='true'/>
+    <OrientationInterpolator DEF='JupiterOrbitPath' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0 0 1 0 1.5708 0 1 0 3.1416 0 1 0 4.7124 0 1 0 6.2832'/>
+    <ROUTE fromNode='JupiterClock' fromField='fraction_changed' toNode='JupiterOrbitPath' toField='set_fraction'/>
+    <ROUTE fromNode='JupiterOrbitPath' fromField='value_changed' toNode='JupiterOrbit' toField='set_rotation'/>
+  </Scene>
+</X3D>

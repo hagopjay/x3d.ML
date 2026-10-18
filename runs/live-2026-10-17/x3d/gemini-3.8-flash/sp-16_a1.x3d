@@ -1,0 +1,250 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='cozy_cabin.x3d' name='title'/>
+    <meta content='Cozy cabin interior with wooden floor, walls, table, chairs, PointLight lamp, and red rug.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Cozy Cabin Interior'/>
+    <Viewpoint description='Cabin Interior View' position='0 1.7 3.2' orientation='1 0 0 -0.15'/>
+
+    <!-- Ambient / Warm Room Lighting -->
+    <PointLight DEF='LampLight' location='0 1.1 0' color='1 0.82 0.5' intensity='12' radius='8' shadowIntensity='0.5'/>
+    <DirectionalLight direction='0.3 -0.8 -0.5' color='0.3 0.25 0.2' intensity='0.6'/>
+
+    <!-- Wooden Floor -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.42 0.26 0.14' specularColor='0.1 0.08 0.05' shininess='0.15'/>
+        </Appearance>
+        <Box size='6 0.1 5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Back Wall -->
+    <Transform translation='0 1.5 -2.5'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.48 0.32 0.18'/>
+        </Appearance>
+        <Box size='6 3 0.1'/>
+      </Shape>
+    </Transform>
+
+    <!-- Left Wall -->
+    <Transform translation='-3 1.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.3 0.17'/>
+        </Appearance>
+        <Box size='0.1 3 5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Right Wall -->
+    <Transform translation='3 1.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.3 0.17'/>
+        </Appearance>
+        <Box size='0.1 3 5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Window on Back Wall -->
+    <Transform translation='0 1.7 -2.44'>
+      <!-- Outer Frame -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.15 0.08'/>
+        </Appearance>
+        <Box size='1.6 1.2 0.06'/>
+      </Shape>
+      <!-- Night Sky / Glass -->
+      <Transform translation='0 0 0.02'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.05 0.08 0.18' emissiveColor='0.02 0.04 0.1'/>
+          </Appearance>
+          <Box size='1.4 1.0 0.04'/>
+        </Shape>
+      </Transform>
+      <!-- Window Mullions -->
+      <Transform translation='0 0 0.04'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.25 0.15 0.08'/>
+          </Appearance>
+          <Box size='0.04 1.0 0.02'/>
+        </Shape>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.25 0.15 0.08'/>
+          </Appearance>
+          <Box size='1.4 0.04 0.02'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Red Rug -->
+    <Transform translation='0 0.01 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.68 0.12 0.12' specularColor='0.05 0.02 0.02'/>
+        </Appearance>
+        <Box size='3 0.02 2.2'/>
+      </Shape>
+      <!-- Fringe / Border -->
+      <Transform translation='0 0.005 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.75 0.5'/>
+          </Appearance>
+          <Box size='3.06 0.015 0.06'/>
+        </Shape>
+        <Transform translation='0 0 1.07'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.85 0.75 0.5'/>
+            </Appearance>
+            <Box size='3.06 0.015 0.06'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 0 -1.07'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.85 0.75 0.5'/>
+            </Appearance>
+            <Box size='3.06 0.015 0.06'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Wooden Dining Table -->
+    <Transform translation='0 0 0'>
+      <!-- Table Top -->
+      <Transform translation='0 0.72 0'>
+        <Shape>
+          <Appearance DEF='TableWood'>
+            <Material diffuseColor='0.36 0.22 0.12' specularColor='0.15 0.1 0.05' shininess='0.25'/>
+          </Appearance>
+          <Box size='1.4 0.06 0.9'/>
+        </Shape>
+      </Transform>
+      <!-- Table Legs -->
+      <Transform translation='-0.6 0.345 -0.36'>
+        <Shape DEF='TableLeg'>
+          <Appearance USE='TableWood'/>
+          <Cylinder radius='0.035' height='0.69'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.6 0.345 -0.36'>
+        <Shape USE='TableLeg'/>
+      </Transform>
+      <Transform translation='-0.6 0.345 0.36'>
+        <Shape USE='TableLeg'/>
+      </Transform>
+      <Transform translation='0.6 0.345 0.36'>
+        <Shape USE='TableLeg'/>
+      </Transform>
+    </Transform>
+
+    <!-- Table Lamp -->
+    <Transform translation='0 0.75 0'>
+      <!-- Lamp Base -->
+      <Transform translation='0 0.015 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.5 0.35 0.15' specularColor='0.4 0.3 0.1' shininess='0.5'/>
+          </Appearance>
+          <Cylinder radius='0.09' height='0.03'/>
+        </Shape>
+      </Transform>
+      <!-- Lamp Stem -->
+      <Transform translation='0 0.15 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.5 0.35 0.15' specularColor='0.4 0.3 0.1' shininess='0.5'/>
+          </Appearance>
+          <Cylinder radius='0.015' height='0.25'/>
+        </Shape>
+      </Transform>
+      <!-- Glowing Bulb inside -->
+      <Transform translation='0 0.3 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0.95 0.8' emissiveColor='1 0.9 0.6'/>
+          </Appearance>
+          <Sphere radius='0.04'/>
+        </Shape>
+      </Transform>
+      <!-- Lamp Shade -->
+      <Transform translation='0 0.32 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.92 0.85 0.68' emissiveColor='0.45 0.38 0.2' transparency='0.15'/>
+          </Appearance>
+          <Cone bottomRadius='0.16' height='0.22' bottom='false'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Chair Left (Facing Table) -->
+    <Transform DEF='Chair' translation='-0.95 0 0'>
+      <!-- Seat -->
+      <Transform translation='0 0.44 0'>
+        <Shape>
+          <Appearance DEF='ChairWood'>
+            <Material diffuseColor='0.38 0.23 0.13' specularColor='0.1 0.07 0.04'/>
+          </Appearance>
+          <Box size='0.44 0.04 0.44'/>
+        </Shape>
+      </Transform>
+      <!-- Chair Legs -->
+      <Transform translation='-0.17 0.21 -0.17'>
+        <Shape DEF='ChairLeg'>
+          <Appearance USE='ChairWood'/>
+          <Cylinder radius='0.02' height='0.42'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.17 0.21 -0.17'>
+        <Shape USE='ChairLeg'/>
+      </Transform>
+      <Transform translation='-0.17 0.21 0.17'>
+        <Shape USE='ChairLeg'/>
+      </Transform>
+      <Transform translation='0.17 0.21 0.17'>
+        <Shape USE='ChairLeg'/>
+      </Transform>
+      <!-- Backrest Uprights -->
+      <Transform translation='-0.18 0.68 -0.17'>
+        <Shape DEF='BackSpindle'>
+          <Appearance USE='ChairWood'/>
+          <Cylinder radius='0.018' height='0.46'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-0.18 0.68 0.17'>
+        <Shape USE='BackSpindle'/>
+      </Transform>
+      <Transform translation='-0.18 0.68 0'>
+        <Shape DEF='BackSpindleMid'>
+          <Appearance USE='ChairWood'/>
+          <Cylinder radius='0.014' height='0.44'/>
+        </Shape>
+      </Transform>
+      <!-- Top Rail -->
+      <Transform translation='-0.18 0.9 0'>
+        <Shape>
+          <Appearance USE='ChairWood'/>
+          <Box size='0.04 0.07 0.44'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Chair Right (Facing Table) -->
+    <Transform translation='0.95 0 0' rotation='0 1 0 3.14159'>
+      <Transform USE='Chair'/>
+    </Transform>
+  </Scene>
+</X3D>

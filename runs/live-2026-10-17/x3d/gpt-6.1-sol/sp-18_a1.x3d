@@ -1,0 +1,187 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Five Orange Fish'/>
+    <meta name='description' content='A glass aquarium with sand, cylinder plants, and five cone fish circling at different heights and speeds. Touch the aquarium to restart their swimming cycles.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Five Orange Fish'/>
+    <Background skyColor='0.025 0.055 0.09'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Aquarium overview' position='8 6.5 12' orientation='-0.457 0.879 0.139 0.658' centerOfRotation='0 2 0'/>
+    <DirectionalLight direction='-0.4 -1 -0.5' intensity='0.9' color='0.86 0.95 1'/>
+    <DirectionalLight direction='0.7 -0.4 0.6' intensity='0.55' color='0.5 0.78 1'/>
+    <PointLight location='0 5 0' intensity='0.65' radius='12' color='1 0.94 0.77'/>
+
+    <!-- Dark display plinth and sandy floor. -->
+    <Transform translation='0 -0.3 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.065 0.095 0.12' specularColor='0.25 0.3 0.35' shininess='0.6'/>
+        </Appearance>
+        <Box size='8.5 0.5 5.3'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.03 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.76 0.62 0.37' specularColor='0.12 0.1 0.06' shininess='0.08'/>
+        </Appearance>
+        <Box size='7.96 0.22 4.76'/>
+      </Shape>
+    </Transform>
+
+    <!-- Cylindrical plants near the back and corners leave the swimming paths clear. -->
+    <Transform translation='-3.35 1.04 -1.85'>
+      <Shape DEF='PlantStem'>
+        <Appearance>
+          <Material diffuseColor='0.07 0.48 0.16' specularColor='0.2 0.5 0.2' shininess='0.35'/>
+        </Appearance>
+        <Cylinder radius='0.09' height='1.8'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-3.05 1.4 -1.95' scale='0.85 1.4 0.85' rotation='0 0 1 -0.12'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='-2.72 0.85 -1.8' scale='1.1 0.8 1.1' rotation='0 0 1 0.16'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='2.95 1.25 -1.85' scale='1 1.24 1' rotation='0 0 1 -0.1'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='3.3 1.65 -1.9' scale='0.9 1.68 0.9' rotation='0 0 1 0.08'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='3.55 0.94 -1.65' scale='1.15 0.9 1.15' rotation='0 0 1 -0.18'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='-3.45 0.8 1.55' scale='0.9 0.74 0.9' rotation='0 0 1 0.1'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='-3.12 1.05 1.65' scale='0.8 1.02 0.8' rotation='0 0 1 -0.14'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+    <Transform translation='3.3 0.85 1.55' scale='1 0.8 1' rotation='0 0 1 -0.12'>
+      <Shape USE='PlantStem'/>
+    </Transform>
+
+    <!-- Each cone points along the tangent to its circular swimming path. -->
+    <Transform DEF='OrbitOne' translation='0 0.8 0'>
+      <Transform translation='1.15 0 0' rotation='1 0 0 -1.570796'>
+        <Shape DEF='OrangeFish'>
+          <Appearance>
+            <Material diffuseColor='1 0.29 0.025' specularColor='1 0.72 0.3' shininess='0.5'/>
+          </Appearance>
+          <Cone bottomRadius='0.2' height='0.7'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Transform DEF='OrbitTwo' translation='0 1.5 0'>
+      <Transform translation='1.5 0 0' rotation='1 0 0 -1.570796'>
+        <Shape USE='OrangeFish'/>
+      </Transform>
+    </Transform>
+    <Transform DEF='OrbitThree' translation='0 2.2 0'>
+      <Transform translation='1.8 0 0' rotation='1 0 0 -1.570796'>
+        <Shape USE='OrangeFish'/>
+      </Transform>
+    </Transform>
+    <Transform DEF='OrbitFour' translation='0 2.95 0'>
+      <Transform translation='1.35 0 0' rotation='1 0 0 -1.570796'>
+        <Shape USE='OrangeFish'/>
+      </Transform>
+    </Transform>
+    <Transform DEF='OrbitFive' translation='0 3.7 0'>
+      <Transform translation='1.9 0 0' rotation='1 0 0 -1.570796'>
+        <Shape USE='OrangeFish'/>
+      </Transform>
+    </Transform>
+
+    <!-- Transparent, open-topped tank. -->
+    <Group>
+      <TouchSensor DEF='RestartSwimming' description='Touch the glass to restart the fish swimming cycles'/>
+      <Transform translation='0 2.25 -2.43'>
+        <Shape>
+          <Appearance DEF='GlassAppearance'>
+            <Material diffuseColor='0.48 0.8 0.9' specularColor='0.8 0.95 1' shininess='0.95' transparency='0.9'/>
+          </Appearance>
+          <Box size='8.16 4.5 0.08'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.25 2.43'>
+        <Shape>
+          <Appearance USE='GlassAppearance'/>
+          <Box size='8.16 4.5 0.08'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-4.04 2.25 0'>
+        <Shape>
+          <Appearance USE='GlassAppearance'/>
+          <Box size='0.08 4.5 4.8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='4.04 2.25 0'>
+        <Shape>
+          <Appearance USE='GlassAppearance'/>
+          <Box size='0.08 4.5 4.8'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 -0.1 0'>
+        <Shape>
+          <Appearance USE='GlassAppearance'/>
+          <Box size='8.16 0.08 4.94'/>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <!-- Fine pale rims make the glass silhouette readable. -->
+    <Transform translation='0 4.5 -2.43'>
+      <Shape DEF='LongRim'>
+        <Appearance DEF='RimAppearance'>
+          <Material diffuseColor='0.36 0.6 0.67' specularColor='0.8 0.95 1' shininess='0.8'/>
+        </Appearance>
+        <Box size='8.18 0.045 0.055'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 4.5 2.43'>
+      <Shape USE='LongRim'/>
+    </Transform>
+    <Transform translation='-4.04 4.5 0'>
+      <Shape DEF='SideRim'>
+        <Appearance USE='RimAppearance'/>
+        <Box size='0.055 0.045 4.9'/>
+      </Shape>
+    </Transform>
+    <Transform translation='4.04 4.5 0'>
+      <Shape USE='SideRim'/>
+    </Transform>
+
+    <TimeSensor DEF='ClockOne' cycleInterval='7' loop='true'/>
+    <TimeSensor DEF='ClockTwo' cycleInterval='10' loop='true'/>
+    <TimeSensor DEF='ClockThree' cycleInterval='13' loop='true'/>
+    <TimeSensor DEF='ClockFour' cycleInterval='16' loop='true'/>
+    <TimeSensor DEF='ClockFive' cycleInterval='20' loop='true'/>
+
+    <OrientationInterpolator DEF='CircleOne' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.570796, 0 1 0 3.141593, 0 1 0 4.712389, 0 1 0 6.283185'/>
+    <OrientationInterpolator DEF='CircleTwo' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 1.1, 0 1 0 2.670796, 0 1 0 4.241593, 0 1 0 5.812389, 0 1 0 7.383185'/>
+    <OrientationInterpolator DEF='CircleThree' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 2.2, 0 1 0 3.770796, 0 1 0 5.341593, 0 1 0 6.912389, 0 1 0 8.483185'/>
+    <OrientationInterpolator DEF='CircleFour' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 3.3, 0 1 0 4.870796, 0 1 0 6.441593, 0 1 0 8.012389, 0 1 0 9.583185'/>
+    <OrientationInterpolator DEF='CircleFive' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 4.4, 0 1 0 5.970796, 0 1 0 7.541593, 0 1 0 9.112389, 0 1 0 10.683185'/>
+
+    <ROUTE fromNode='ClockOne' fromField='fraction_changed' toNode='CircleOne' toField='set_fraction'/>
+    <ROUTE fromNode='CircleOne' fromField='value_changed' toNode='OrbitOne' toField='set_rotation'/>
+    <ROUTE fromNode='ClockTwo' fromField='fraction_changed' toNode='CircleTwo' toField='set_fraction'/>
+    <ROUTE fromNode='CircleTwo' fromField='value_changed' toNode='OrbitTwo' toField='set_rotation'/>
+    <ROUTE fromNode='ClockThree' fromField='fraction_changed' toNode='CircleThree' toField='set_fraction'/>
+    <ROUTE fromNode='CircleThree' fromField='value_changed' toNode='OrbitThree' toField='set_rotation'/>
+    <ROUTE fromNode='ClockFour' fromField='fraction_changed' toNode='CircleFour' toField='set_fraction'/>
+    <ROUTE fromNode='CircleFour' fromField='value_changed' toNode='OrbitFour' toField='set_rotation'/>
+    <ROUTE fromNode='ClockFive' fromField='fraction_changed' toNode='CircleFive' toField='set_fraction'/>
+    <ROUTE fromNode='CircleFive' fromField='value_changed' toNode='OrbitFive' toField='set_rotation'/>
+
+    <ROUTE fromNode='RestartSwimming' fromField='touchTime' toNode='ClockOne' toField='set_startTime'/>
+    <ROUTE fromNode='RestartSwimming' fromField='touchTime' toNode='ClockTwo' toField='set_startTime'/>
+    <ROUTE fromNode='RestartSwimming' fromField='touchTime' toNode='ClockThree' toField='set_startTime'/>
+    <ROUTE fromNode='RestartSwimming' fromField='touchTime' toNode='ClockFour' toField='set_startTime'/>
+    <ROUTE fromNode='RestartSwimming' fromField='touchTime' toNode='ClockFive' toField='set_startTime'/>
+  </Scene>
+</X3D>

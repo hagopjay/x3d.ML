@@ -1,0 +1,60 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint DEF='View1' description='Waving figure' position='0 1.5 5'/>
+    <Background skyColor='0.7 0.8 1.0'/>
+    <DirectionalLight direction='0 -1 0' intensity='0.5'/>
+
+    <TouchSensor DEF='TouchSensor'/>
+    <TimeSensor DEF='Timer' cycleInterval='2' loop='true'/>
+    <OrientationInterpolator DEF='WaveInterpolator'
+        key='0 0.5 1'
+        keyValue='0 0 0 0, 0 0 1 1.5708, 0 0 0 0'/>
+
+    <HAnimHumanoid version='2.0'>
+      <HAnimJoint name='HumanoidRoot' type='Joint'>
+        <HAnimSegment name='HumanoidRoot'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial diffuseColor='0.8 0.6 0.4'/>
+            </Appearance>
+            <Box size='0.2 0.2 0.2'/>
+          </Shape>
+        </HAnimSegment>
+        <HAnimJoint name='RightShoulder' type='Joint' DEF='RShoulder'>
+          <HAnimSegment name='RightUpperArm'>
+            <Shape>
+              <Appearance>
+                <UnlitMaterial diffuseColor='0.8 0.6 0.4'/>
+              </Appearance>
+              <Box size='0.1 0.4 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimJoint name='RightElbow' type='Joint'>
+            <HAnimSegment name='RightForearm'>
+              <Shape>
+                <Appearance>
+                  <UnlitMaterial diffuseColor='0.8 0.6 0.4'/>
+                </Appearance>
+                <Box size='0.1 0.3 0.1'/>
+              </Shape>
+            </HAnimSegment>
+            <HAnimJoint name='RightWrist' type='Joint'>
+              <HAnimSegment name='RightHand'>
+                <Shape>
+                  <Appearance>
+                    <UnlitMaterial diffuseColor='0.8 0.6 0.4'/>
+                  </Appearance>
+                  <Box size='0.1 0.1 0.2'/>
+                </Shape>
+              </HAnimSegment>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+    </HAnimHumanoid>
+
+    <ROUTE fromNode='TouchSensor' fromField='touchTime' toNode='Timer' toField='startTime'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='WaveInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='WaveInterpolator' fromField='value_changed' toNode='RShoulder' toField='rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,95 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Rotating DNA double helix' position='0 0 5'/>
+    <Transform DEF='DNARoot'>
+      <!-- Appearances -->
+      <Appearance DEF='BlueApp'>
+        <PhysicalMaterial baseColor='0 0 1'/>
+      </Appearance>
+      <Appearance DEF='OrangeApp'>
+        <PhysicalMaterial baseColor='1 0.5 0'/>
+      </Appearance>
+      <Appearance DEF='CylApp'>
+        <PhysicalMaterial baseColor='0.5 0.5 0.5'/>
+      </Appearance>
+      <!-- Geometry -->
+      <Shape DEF='BlueSphere'>
+        <Appearance USE='BlueApp'/>
+        <Sphere radius='0.05'/>
+      </Shape>
+      <Shape DEF='OrangeSphere'>
+        <Appearance USE='OrangeApp'/>
+        <Sphere radius='0.05'/>
+      </Shape>
+      <Shape DEF='CylinderRung'>
+        <Appearance USE='CylApp'/>
+        <Cylinder radius='0.02' height='1'/>
+      </Shape>
+      <!-- Strand A (blue) spheres -->
+      <Transform translation='0.500 0.000 0.000'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.405 0.340 0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.155 0.680 0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.155 1.020 0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.405 1.360 0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.500 1.700 0.000'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.405 2.040 -0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.155 2.380 -0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.155 2.720 -0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.405 3.060 -0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.500 3.400 0.000'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.405 3.740 0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.155 4.080 0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.155 4.420 0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.405 4.760 0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.500 5.100 0.000'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.405 5.440 -0.294'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='-0.155 5.780 -0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.155 6.120 -0.476'><Shape USE='BlueSphere'/></Transform>
+      <Transform translation='0.405 6.460 -0.294'><Shape USE='BlueSphere'/></Transform>
+      <!-- Strand B (orange) spheres -->
+      <Transform translation='-0.500 0.000 0.000'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.405 0.340 -0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.155 0.680 -0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.155 1.020 -0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.405 1.360 -0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.500 1.700 0.000'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.405 2.040 0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.155 2.380 0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.155 2.720 0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.405 3.060 0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.500 3.400 0.000'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.405 3.740 -0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.155 4.080 -0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.155 4.420 -0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.405 4.760 -0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.500 5.100 0.000'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.405 5.440 0.294'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='0.155 5.780 0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.155 6.120 0.476'><Shape USE='OrangeSphere'/></Transform>
+      <Transform translation='-0.405 6.460 0.294'><Shape USE='OrangeSphere'/></Transform>
+      <!-- Base-pair rungs (cylinders) -->
+      <Transform translation='0 0.000 0' rotation='0 0 1 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 0.340 0' rotation='-0.588 0 0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 0.680 0' rotation='-0.951 0 0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 1.020 0' rotation='-0.951 0 -0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 1.360 0' rotation='-0.588 0 -0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 1.700 0' rotation='0 0 -1 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 2.040 0' rotation='0.588 0 -0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 2.380 0' rotation='0.951 0 -0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 2.720 0' rotation='0.951 0 0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 3.060 0' rotation='0.588 0 0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 3.400 0' rotation='0 0 1 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 3.740 0' rotation='-0.588 0 0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 4.080 0' rotation='-0.951 0 0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 4.420 0' rotation='-0.951 0 -0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 4.760 0' rotation='-0.588 0 -0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 5.100 0' rotation='0 0 -1 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 5.440 0' rotation='0.588 0 -0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 5.780 0' rotation='0.951 0 -0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 6.120 0' rotation='0.951 0 0.309 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+      <Transform translation='0 6.460 0' rotation='0.588 0 0.809 1.57079632679'><Shape USE='CylinderRung'/></Transform>
+    </Transform>
+    <!-- Animation: slow rotation about Y axis -->
+    <TimeSensor DEF='Cycle' loop='true' interval='10'/>
+    <OrientationInterpolator DEF='Spin'>
+      <key value='0 1'/><keyValue value='0 0 1 0 0 0 1 6.2831853071795

@@ -1,0 +1,36 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='ToggleSphere.x3d'/>
+    <meta name='description' content='A sphere that toggles between red and green each time it is clicked, using a BooleanToggle and a Script-free approach.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Toggle Sphere View' position='0 0 5'/>
+    <Group>
+      <TouchSensor DEF='Toucher' description='Click to toggle color'/>
+      <Switch DEF='ColorSwitch' whichChoice='0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere/>
+        </Shape>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0 1 0'/>
+          </Appearance>
+          <Sphere/>
+        </Shape>
+      </Switch>
+    </Group>
+    <BooleanToggle DEF='BToggle' toggle='false'/>
+    <BooleanFilter DEF='BFilter'/>
+    <IntegerTrigger DEF='TrigRed' integerKey='0'/>
+    <IntegerTrigger DEF='TrigGreen' integerKey='1'/>
+    <ROUTE fromNode='Toucher' fromField='isActive' toNode='BToggle' toField='set_boolean'/>
+    <ROUTE fromNode='BToggle' fromField='toggle' toNode='BFilter' toField='set_boolean'/>
+    <ROUTE fromNode='BFilter' fromField='inputFalse' toNode='TrigRed' toField='set_boolean'/>
+    <ROUTE fromNode='BFilter' fromField='inputTrue' toNode='TrigGreen' toField='set_boolean'/>
+    <ROUTE fromNode='TrigRed' fromField='triggerValue' toNode='ColorSwitch' toField='whichChoice'/>
+    <ROUTE fromNode='TrigGreen' fromField='triggerValue' toNode='ColorSwitch' toField='whichChoice'/>
+  </Scene>
+</X3D>

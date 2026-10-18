@@ -1,0 +1,212 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='3'/>
+    <meta name='title' content='Shared HAnim skeleton, individual skins'/>
+    <meta name='description' content='Two HAnim 2.0 humanoids share one joint hierarchy using DEF and USE, with independent skin coordinates and different skin colours. Click either humanoid to animate both.'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Shared skeleton, two skins'/>
+    <Background skyColor='0.075 0.10 0.15'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='true'/>
+    <Viewpoint description='Two humanoids — click either to wave' position='0 1.5 8' centerOfRotation='0 1.4 0' fieldOfView='0.65'/>
+    <DirectionalLight direction='-0.4 -1 -0.7' intensity='0.85'/>
+    <DirectionalLight direction='0.7 -0.3 1' intensity='0.45' color='0.65 0.78 1'/>
+
+    <Transform translation='0 -0.06 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.17 0.21 0.28'/>
+        </Appearance>
+        <Box size='7 0.12 3'/>
+      </Shape>
+    </Transform>
+
+    <Group>
+      <TouchSensor DEF='WaveTouch' description='Click to animate the shared skeleton'/>
+
+      <HAnimHumanoid name='warm_skin_humanoid' version='2.0' translation='-1.05 0 0'>
+        <!-- This hierarchy is shared by both humanoids. Joint centres and
+             skinCoordIndex values are expressed in their common bind space. -->
+        <HAnimJoint containerField='skeleton' DEF='SharedRoot' name='humanoid_root'
+                    center='0 1.1 0'
+                    skinCoordIndex='0 1 2 3 4 5 6 7'
+                    skinCoordWeight='1 1 1 1 1 1 1 1'>
+          <HAnimJoint DEF='Spine' name='vl5' center='0 1.35 0'
+                      skinCoordIndex='8 9 10 11 12 13 14 15'
+                      skinCoordWeight='1 1 1 1 1 1 1 1'>
+            <HAnimJoint DEF='HeadJoint' name='skullbase' center='0 2.25 0'
+                        skinCoordIndex='16 17 18 19 20 21 22 23'
+                        skinCoordWeight='1 1 1 1 1 1 1 1'/>
+            <HAnimJoint DEF='LeftShoulder' name='l_shoulder' center='0.48 2.06 0'
+                        skinCoordIndex='40 41 42 43 44 45 46 47'
+                        skinCoordWeight='1 1 1 1 1 1 1 1'>
+              <HAnimJoint DEF='LeftElbow' name='l_elbow' center='0.48 1.6 0'
+                          skinCoordIndex='48 49 50 51 52 53 54 55'
+                          skinCoordWeight='1 1 1 1 1 1 1 1'/>
+            </HAnimJoint>
+            <HAnimJoint DEF='RightShoulder' name='r_shoulder' center='-0.48 2.06 0'
+                        skinCoordIndex='24 25 26 27 28 29 30 31'
+                        skinCoordWeight='1 1 1 1 1 1 1 1'>
+              <HAnimJoint DEF='RightElbow' name='r_elbow' center='-0.48 1.6 0'
+                          skinCoordIndex='32 33 34 35 36 37 38 39'
+                          skinCoordWeight='1 1 1 1 1 1 1 1'/>
+            </HAnimJoint>
+          </HAnimJoint>
+          <HAnimJoint DEF='LeftHip' name='l_hip' center='0.17 1.1 0'
+                      skinCoordIndex='72 73 74 75 76 77 78 79'
+                      skinCoordWeight='1 1 1 1 1 1 1 1'>
+            <HAnimJoint DEF='LeftKnee' name='l_knee' center='0.17 0.6 0'
+                        skinCoordIndex='80 81 82 83 84 85 86 87'
+                        skinCoordWeight='1 1 1 1 1 1 1 1'/>
+          </HAnimJoint>
+          <HAnimJoint DEF='RightHip' name='r_hip' center='-0.17 1.1 0'
+                      skinCoordIndex='56 57 58 59 60 61 62 63'
+                      skinCoordWeight='1 1 1 1 1 1 1 1'>
+            <HAnimJoint DEF='RightKnee' name='r_knee' center='-0.17 0.6 0'
+                        skinCoordIndex='64 65 66 67 68 69 70 71'
+                        skinCoordWeight='1 1 1 1 1 1 1 1'/>
+          </HAnimJoint>
+        </HAnimJoint>
+
+        <HAnimJoint containerField='joints' USE='SharedRoot'/>
+        <HAnimJoint containerField='joints' USE='Spine'/>
+        <HAnimJoint containerField='joints' USE='HeadJoint'/>
+        <HAnimJoint containerField='joints' USE='LeftShoulder'/>
+        <HAnimJoint containerField='joints' USE='LeftElbow'/>
+        <HAnimJoint containerField='joints' USE='RightShoulder'/>
+        <HAnimJoint containerField='joints' USE='RightElbow'/>
+        <HAnimJoint containerField='joints' USE='LeftHip'/>
+        <HAnimJoint containerField='joints' USE='LeftKnee'/>
+        <HAnimJoint containerField='joints' USE='RightHip'/>
+        <HAnimJoint containerField='joints' USE='RightKnee'/>
+
+        <Coordinate containerField='skinCoord' DEF='WarmCoordinates' point='
+          -0.30 1.05 -0.17, 0.30 1.05 -0.17, 0.30 1.35 -0.17, -0.30 1.35 -0.17,
+          -0.30 1.05 0.17, 0.30 1.05 0.17, 0.30 1.35 0.17, -0.30 1.35 0.17,
+          -0.35 1.35 -0.18, 0.35 1.35 -0.18, 0.35 2.15 -0.18, -0.35 2.15 -0.18,
+          -0.35 1.35 0.18, 0.35 1.35 0.18, 0.35 2.15 0.18, -0.35 2.15 0.18,
+          -0.22 2.25 -0.20, 0.22 2.25 -0.20, 0.22 2.78 -0.20, -0.22 2.78 -0.20,
+          -0.22 2.25 0.20, 0.22 2.25 0.20, 0.22 2.78 0.20, -0.22 2.78 0.20,
+          -0.58 1.60 -0.12, -0.38 1.60 -0.12, -0.38 2.12 -0.12, -0.58 2.12 -0.12,
+          -0.58 1.60 0.12, -0.38 1.60 0.12, -0.38 2.12 0.12, -0.58 2.12 0.12,
+          -0.58 1.10 -0.12, -0.38 1.10 -0.12, -0.38 1.60 -0.12, -0.58 1.60 -0.12,
+          -0.58 1.10 0.12, -0.38 1.10 0.12, -0.38 1.60 0.12, -0.58 1.60 0.12,
+          0.38 1.60 -0.12, 0.58 1.60 -0.12, 0.58 2.12 -0.12, 0.38 2.12 -0.12,
+          0.38 1.60 0.12, 0.58 1.60 0.12, 0.58 2.12 0.12, 0.38 2.12 0.12,
+          0.38 1.10 -0.12, 0.58 1.10 -0.12, 0.58 1.60 -0.12, 0.38 1.60 -0.12,
+          0.38 1.10 0.12, 0.58 1.10 0.12, 0.58 1.60 0.12, 0.38 1.60 0.12,
+          -0.28 0.60 -0.14, -0.05 0.60 -0.14, -0.05 1.10 -0.14, -0.28 1.10 -0.14,
+          -0.28 0.60 0.14, -0.05 0.60 0.14, -0.05 1.10 0.14, -0.28 1.10 0.14,
+          -0.28 0.04 -0.14, -0.05 0.04 -0.14, -0.05 0.60 -0.14, -0.28 0.60 -0.14,
+          -0.28 0.04 0.14, -0.05 0.04 0.14, -0.05 0.60 0.14, -0.28 0.60 0.14,
+          0.05 0.60 -0.14, 0.28 0.60 -0.14, 0.28 1.10 -0.14, 0.05 1.10 -0.14,
+          0.05 0.60 0.14, 0.28 0.60 0.14, 0.28 1.10 0.14, 0.05 1.10 0.14,
+          0.05 0.04 -0.14, 0.28 0.04 -0.14, 0.28 0.60 -0.14, 0.05 0.60 -0.14,
+          0.05 0.04 0.14, 0.28 0.04 0.14, 0.28 0.60 0.14, 0.05 0.60 0.14'/>
+        <Shape containerField='skin'>
+          <Appearance>
+            <Material diffuseColor='0.72 0.39 0.23' specularColor='0.15 0.12 0.10' shininess='0.15'/>
+          </Appearance>
+          <IndexedFaceSet creaseAngle='0' coordIndex='
+            0 3 2 1 -1 4 5 6 7 -1 0 4 7 3 -1 1 2 6 5 -1 0 1 5 4 -1 3 7 6 2 -1
+            8 11 10 9 -1 12 13 14 15 -1 8 12 15 11 -1 9 10 14 13 -1 8 9 13 12 -1 11 15 14 10 -1
+            16 19 18 17 -1 20 21 22 23 -1 16 20 23 19 -1 17 18 22 21 -1 16 17 21 20 -1 19 23 22 18 -1
+            24 27 26 25 -1 28 29 30 31 -1 24 28 31 27 -1 25 26 30 29 -1 24 25 29 28 -1 27 31 30 26 -1
+            32 35 34 33 -1 36 37 38 39 -1 32 36 39 35 -1 33 34 38 37 -1 32 33 37 36 -1 35 39 38 34 -1
+            40 43 42 41 -1 44 45 46 47 -1 40 44 47 43 -1 41 42 46 45 -1 40 41 45 44 -1 43 47 46 42 -1
+            48 51 50 49 -1 52 53 54 55 -1 48 52 55 51 -1 49 50 54 53 -1 48 49 53 52 -1 51 55 54 50 -1
+            56 59 58 57 -1 60 61 62 63 -1 56 60 63 59 -1 57 58 62 61 -1 56 57 61 60 -1 59 63 62 58 -1
+            64 67 66 65 -1 68 69 70 71 -1 64 68 71 67 -1 65 66 70 69 -1 64 65 69 68 -1 67 71 70 66 -1
+            72 75 74 73 -1 76 77 78 79 -1 72 76 79 75 -1 73 74 78 77 -1 72 73 77 76 -1 75 79 78 74 -1
+            80 83 82 81 -1 84 85 86 87 -1 80 84 87 83 -1 81 82 86 85 -1 80 81 85 84 -1 83 87 86 82 -1'>
+            <Coordinate USE='WarmCoordinates'/>
+          </IndexedFaceSet>
+        </Shape>
+      </HAnimHumanoid>
+
+      <HAnimHumanoid name='deep_skin_humanoid' version='2.0' translation='1.05 0 0'>
+        <HAnimJoint containerField='skeleton' USE='SharedRoot'/>
+        <HAnimJoint containerField='joints' USE='SharedRoot'/>
+        <HAnimJoint containerField='joints' USE='Spine'/>
+        <HAnimJoint containerField='joints' USE='HeadJoint'/>
+        <HAnimJoint containerField='joints' USE='LeftShoulder'/>
+        <HAnimJoint containerField='joints' USE='LeftElbow'/>
+        <HAnimJoint containerField='joints' USE='RightShoulder'/>
+        <HAnimJoint containerField='joints' USE='RightElbow'/>
+        <HAnimJoint containerField='joints' USE='LeftHip'/>
+        <HAnimJoint containerField='joints' USE='LeftKnee'/>
+        <HAnimJoint containerField='joints' USE='RightHip'/>
+        <HAnimJoint containerField='joints' USE='RightKnee'/>
+
+        <!-- Separate skin coordinates avoid sharing mutable deformed geometry. -->
+        <Coordinate containerField='skinCoord' DEF='DeepCoordinates' point='
+          -0.30 1.05 -0.17, 0.30 1.05 -0.17, 0.30 1.35 -0.17, -0.30 1.35 -0.17,
+          -0.30 1.05 0.17, 0.30 1.05 0.17, 0.30 1.35 0.17, -0.30 1.35 0.17,
+          -0.35 1.35 -0.18, 0.35 1.35 -0.18, 0.35 2.15 -0.18, -0.35 2.15 -0.18,
+          -0.35 1.35 0.18, 0.35 1.35 0.18, 0.35 2.15 0.18, -0.35 2.15 0.18,
+          -0.22 2.25 -0.20, 0.22 2.25 -0.20, 0.22 2.78 -0.20, -0.22 2.78 -0.20,
+          -0.22 2.25 0.20, 0.22 2.25 0.20, 0.22 2.78 0.20, -0.22 2.78 0.20,
+          -0.58 1.60 -0.12, -0.38 1.60 -0.12, -0.38 2.12 -0.12, -0.58 2.12 -0.12,
+          -0.58 1.60 0.12, -0.38 1.60 0.12, -0.38 2.12 0.12, -0.58 2.12 0.12,
+          -0.58 1.10 -0.12, -0.38 1.10 -0.12, -0.38 1.60 -0.12, -0.58 1.60 -0.12,
+          -0.58 1.10 0.12, -0.38 1.10 0.12, -0.38 1.60 0.12, -0.58 1.60 0.12,
+          0.38 1.60 -0.12, 0.58 1.60 -0.12, 0.58 2.12 -0.12, 0.38 2.12 -0.12,
+          0.38 1.60 0.12, 0.58 1.60 0.12, 0.58 2.12 0.12, 0.38 2.12 0.12,
+          0.38 1.10 -0.12, 0.58 1.10 -0.12, 0.58 1.60 -0.12, 0.38 1.60 -0.12,
+          0.38 1.10 0.12, 0.58 1.10 0.12, 0.58 1.60 0.12, 0.38 1.60 0.12,
+          -0.28 0.60 -0.14, -0.05 0.60 -0.14, -0.05 1.10 -0.14, -0.28 1.10 -0.14,
+          -0.28 0.60 0.14, -0.05 0.60 0.14, -0.05 1.10 0.14, -0.28 1.10 0.14,
+          -0.28 0.04 -0.14, -0.05 0.04 -0.14, -0.05 0.60 -0.14, -0.28 0.60 -0.14,
+          -0.28 0.04 0.14, -0.05 0.04 0.14, -0.05 0.60 0.14, -0.28 0.60 0.14,
+          0.05 0.60 -0.14, 0.28 0.60 -0.14, 0.28 1.10 -0.14, 0.05 1.10 -0.14,
+          0.05 0.60 0.14, 0.28 0.60 0.14, 0.28 1.10 0.14, 0.05 1.10 0.14,
+          0.05 0.04 -0.14, 0.28 0.04 -0.14, 0.28 0.60 -0.14, 0.05 0.60 -0.14,
+          0.05 0.04 0.14, 0.28 0.04 0.14, 0.28 0.60 0.14, 0.05 0.60 0.14'/>
+        <Shape containerField='skin'>
+          <Appearance>
+            <Material diffuseColor='0.28 0.13 0.075' specularColor='0.16 0.12 0.10' shininess='0.15'/>
+          </Appearance>
+          <IndexedFaceSet creaseAngle='0' coordIndex='
+            0 3 2 1 -1 4 5 6 7 -1 0 4 7 3 -1 1 2 6 5 -1 0 1 5 4 -1 3 7 6 2 -1
+            8 11 10 9 -1 12 13 14 15 -1 8 12 15 11 -1 9 10 14 13 -1 8 9 13 12 -1 11 15 14 10 -1
+            16 19 18 17 -1 20 21 22 23 -1 16 20 23 19 -1 17 18 22 21 -1 16 17 21 20 -1 19 23 22 18 -1
+            24 27 26 25 -1 28 29 30 31 -1 24 28 31 27 -1 25 26 30 29 -1 24 25 29 28 -1 27 31 30 26 -1
+            32 35 34 33 -1 36 37 38 39 -1 32 36 39 35 -1 33 34 38 37 -1 32 33 37 36 -1 35 39 38 34 -1
+            40 43 42 41 -1 44 45 46 47 -1 40 44 47 43 -1 41 42 46 45 -1 40 41 45 44 -1 43 47 46 42 -1
+            48 51 50 49 -1 52 53 54 55 -1 48 52 55 51 -1 49 50 54 53 -1 48 49 53 52 -1 51 55 54 50 -1
+            56 59 58 57 -1 60 61 62 63 -1 56 60 63 59 -1 57 58 62 61 -1 56 57 61 60 -1 59 63 62 58 -1
+            64 67 66 65 -1 68 69 70 71 -1 64 68 71 67 -1 65 66 70 69 -1 64 65 69 68 -1 67 71 70 66 -1
+            72 75 74 73 -1 76 77 78 79 -1 72 76 79 75 -1 73 74 78 77 -1 72 73 77 76 -1 75 79 78 74 -1
+            80 83 82 81 -1 84 85 86 87 -1 80 84 87 83 -1 81 82 86 85 -1 80 81 85 84 -1 83 87 86 82 -1'>
+            <Coordinate USE='DeepCoordinates'/>
+          </IndexedFaceSet>
+        </Shape>
+      </HAnimHumanoid>
+    </Group>
+
+    <Transform translation='0 3.22 0'>
+      <Shape>
+        <Appearance>
+          <Material emissiveColor='0.85 0.90 1'/>
+        </Appearance>
+        <Text string='"ONE SKELETON · TWO SKINS" "Click either figure to wave"'>
+          <FontStyle justify='"MIDDLE" "MIDDLE"' size='0.15'/>
+        </Text>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='WaveClock' cycleInterval='4' loop='false' startTime='-1'/>
+    <OrientationInterpolator DEF='ShoulderMotion'
+      key='0 0.25 0.75 1'
+      keyValue='0 0 1 0, 0 0 1 2.2, 0 0 1 2.2, 0 0 1 0'/>
+    <OrientationInterpolator DEF='ElbowMotion'
+      key='0 0.25 0.375 0.5 0.625 0.75 1'
+      keyValue='0 0 1 0, 0 0 1 0.2, 0 0 1 0.75, 0 0 1 0.2, 0 0 1 0.75, 0 0 1 0.2, 0 0 1 0'/>
+
+    <ROUTE fromNode='WaveTouch' fromField='touchTime' toNode='WaveClock' toField='set_startTime'/>
+    <ROUTE fromNode='WaveClock' fromField='fraction_changed' toNode='ShoulderMotion' toField='set_fraction'/>
+    <ROUTE fromNode='WaveClock' fromField='fraction_changed' toNode='ElbowMotion' toField='set_fraction'/>
+    <ROUTE fromNode='ShoulderMotion' fromField='value_changed' toNode='LeftShoulder' toField='set_rotation'/>
+    <ROUTE fromNode='ElbowMotion' fromField='value_changed' toNode='LeftElbow' toField='set_rotation'/>
+  </Scene>
+</X3D>

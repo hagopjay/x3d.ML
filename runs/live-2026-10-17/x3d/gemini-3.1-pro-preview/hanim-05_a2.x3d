@@ -1,0 +1,95 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Waving HAnim Figure' position='0 1.2 4'/>
+    <DirectionalLight direction='0 -1 -1' intensity='0.8'/>
+    <DirectionalLight direction='0 1 1' intensity='0.4'/>
+    <Group>
+      <TouchSensor DEF='TouchAnim' description='Touch to make figure wave'/>
+      <TimeSensor DEF='WaveClock' cycleInterval='3.0' loop='false'/>
+      <OrientationInterpolator DEF='ShoulderAnim' key='0 0.1 0.9 1' keyValue='0 0 1 0, 0 0 1 -2.5, 0 0 1 -2.5, 0 0 1 0'/>
+      <OrientationInterpolator DEF='ElbowAnim' key='0 0.1 0.3 0.5 0.7 0.9 1' keyValue='1 0 0 0, 1 0 0 0, 1 0 0 -1.0, 1 0 0 0.2, 1 0 0 -1.0, 1 0 0 0, 1 0 0 0'/>
+      <HAnimHumanoid DEF='SimpleMan' name='SimpleMan' version='2.0'>
+        <HAnimJoint DEF='humanoid_root' name='humanoid_root' center='0 1 0' containerField='skeleton'>
+          <HAnimSegment DEF='sacrum' name='sacrum'>
+            <Transform translation='0 1 0'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0 0.2 0.8'/>
+                </Appearance>
+                <Box size='0.3 0.2 0.2'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          <HAnimJoint DEF='vl5' name='vl5' center='0 1.2 0'>
+            <HAnimSegment DEF='t8' name='t8'>
+              <Transform translation='0 1.4 0'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0 0.2 0.8'/>
+                  </Appearance>
+                  <Box size='0.4 0.6 0.2'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            <HAnimJoint DEF='r_shoulder' name='r_shoulder' center='0.3 1.6 0'>
+              <HAnimSegment DEF='r_upperarm' name='r_upperarm'>
+                <Transform translation='0.3 1.4 0'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.8 0.5 0.2'/>
+                    </Appearance>
+                    <Cylinder radius='0.05' height='0.4'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+              <HAnimJoint DEF='r_elbow' name='r_elbow' center='0.3 1.2 0'>
+                <HAnimSegment DEF='r_forearm' name='r_forearm'>
+                  <Transform translation='0.3 1.0 0'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.8 0.5 0.2'/>
+                      </Appearance>
+                        <Cylinder radius='0.04' height='0.4'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimJoint>
+            <HAnimJoint DEF='l_shoulder' name='l_shoulder' center='-0.3 1.6 0'>
+              <HAnimSegment DEF='l_upperarm' name='l_upperarm'>
+                <Transform translation='-0.3 1.4 0'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.8 0.5 0.2'/>
+                    </Appearance>
+                    <Cylinder radius='0.05' height='0.4'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+              <HAnimJoint DEF='l_elbow' name='l_elbow' center='-0.3 1.2 0'>
+                <HAnimSegment DEF='l_forearm' name='l_forearm'>
+                  <Transform translation='-0.3 1.0 0'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.8 0.5 0.2'/>
+                      </Appearance>
+                      <Cylinder radius='0.04' height='0.4'/>
+                    </Shape>
+                  </Transform>
+                </HAnimSegment>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimHumanoid>
+    </Group>
+    <ROUTE fromNode='TouchAnim' fromField='touchTime' toNode='WaveClock' toField='startTime'/>
+    <ROUTE fromNode='WaveClock' fromField='fraction_changed' toNode='ShoulderAnim' toField='set_fraction'/>
+    <ROUTE fromNode='WaveClock' fromField='fraction_changed' toNode='ElbowAnim' toField='set_fraction'/>
+    <ROUTE fromNode='ShoulderAnim' fromField='value_changed' toNode='r_shoulder' toField='set_rotation'/>
+    <ROUTE fromNode='ElbowAnim' fromField='value_changed' toNode='r_elbow' toField='set_rotation'/>
+  </Scene>
+</X3D>

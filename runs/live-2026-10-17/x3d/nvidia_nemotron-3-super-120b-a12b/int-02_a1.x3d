@@ -1,0 +1,30 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Toggle Sphere Color'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Click the sphere to toggle its color between red and green' position='0 0 5'/>
+
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material DEF='SphereMaterial' diffuseColor='1 0 0'/>
+        </Appearance>
+        <Sphere radius='1'/>
+      </Shape>
+    </Transform>
+
+    <TouchSensor DEF='ClickSensor' description='Click to toggle color'/>
+    <BooleanToggle DEF='ColorToggle'/>
+    <Select DEF='ColorSelector'>
+      <boolInput field='boolInput'/>
+      <falseValue field='falseValue'>1 0 0</falseValue>
+      <trueValue field='trueValue'>0 1 0</trueValue>
+      <output field='output'/>
+    </Select>
+
+    <ROUTE fromNode='ClickSensor' fromField='touchTime' toNode='ColorToggle' toField='set_bool'/>
+    <ROUTE fromNode='ColorToggle' fromField='value_changed' toNode='ColorSelector' toField='boolInput'/>
+    <ROUTE fromNode='ColorSelector' fromField='output' toNode='SphereMaterial' toField='diffuseColor'/>
+  </Scene>
+</X3D>

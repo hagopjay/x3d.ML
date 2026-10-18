@@ -1,0 +1,273 @@
+<X3D profile='Full' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='torii_gate_in_water.x3d' name='title'/>
+    <meta content='A vermilion Japanese torii gate standing in calm shallow water flanked by two stone lanterns under a low evening sun.' name='description'/>
+    <meta content='X3D-Edit 4.0, https://savage.nps.edu/X3D-Edit' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Torii Gate in Shallow Water'/>
+
+    <!-- Viewpoints -->
+    <Viewpoint description='Front View of Torii Gate' position='0 2.2 12' orientation='1 0 0 -0.05'/>
+    <Viewpoint description='Angled Sunset View' position='6 2.5 9' orientation='0 1 0 0.58'/>
+    <Viewpoint description='Close-up Water Level' position='0 0.8 5' orientation='1 0 0 0.05'/>
+
+    <!-- Low Evening Sun and Ambient Light -->
+    <DirectionalLight direction='-0.6 -0.25 -0.75' color='1.0 0.72 0.45' intensity='1.4'/>
+    <DirectionalLight direction='0.4 0.8 0.5' color='0.3 0.35 0.5' intensity='0.4'/>
+
+    <!-- Sky and Horizon Gradient -->
+    <Background
+      skyAngle='1.1 1.35 1.57'
+      skyColor='0.12 0.16 0.35, 0.38 0.28 0.45, 0.82 0.48 0.3, 0.98 0.72 0.42'
+      groundAngle='1.4 1.57'
+      groundColor='0.08 0.15 0.22, 0.12 0.22 0.3, 0.4 0.3 0.25'/>
+
+    <!-- Sun Disc in the distance -->
+    <Transform translation='-35 14 -50'>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial emissiveColor='1.0 0.9 0.7'/>
+        </Appearance>
+        <Sphere radius='3.0'/>
+      </Shape>
+    </Transform>
+
+    <!-- Sandy Seabed / Ground beneath water -->
+    <Transform translation='0 -0.6 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.32 0.26 0.2' shininess='0.05'/>
+        </Appearance>
+        <Box size='60 0.2 60'/>
+      </Shape>
+    </Transform>
+
+    <!-- Shallow Water Surface -->
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.12 0.32 0.42' specularColor='0.8 0.85 0.9' shininess='0.9' transparency='0.35'/>
+        </Appearance>
+        <Box size='60 0.05 60'/>
+      </Shape>
+    </Transform>
+
+    <!-- ==================== TORII GATE ==================== -->
+    <Group DEF='ToriiGate'>
+      <!-- Left Column (Hashira) -->
+      <Transform translation='-2.6 3.1 0' rotation='0 0 1 -0.02'>
+        <Shape>
+          <Appearance DEF='VermilionMaterial'>
+            <Material diffuseColor='0.85 0.2 0.08' specularColor='0.3 0.1 0.05' shininess='0.25'/>
+          </Appearance>
+          <Cylinder radius='0.28' height='6.2'/>
+        </Shape>
+        <!-- Black Base Sleeve (Nemaki) -->
+        <Transform translation='0 -2.3 0'>
+          <Shape>
+            <Appearance DEF='BlackTrimMaterial'>
+              <Material diffuseColor='0.1 0.1 0.1' specularColor='0.2 0.2 0.2' shininess='0.4'/>
+            </Appearance>
+            <Cylinder radius='0.32' height='1.6'/>
+          </Shape>
+        </Transform>
+        <!-- Stone Base Plinth -->
+        <Transform translation='0 -3.0 0'>
+          <Shape>
+            <Appearance DEF='StoneMaterial'>
+              <Material diffuseColor='0.5 0.5 0.48' shininess='0.1'/>
+            </Appearance>
+            <Cylinder radius='0.42' height='0.4'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Right Column (Hashira) -->
+      <Transform translation='2.6 3.1 0' rotation='0 0 1 0.02'>
+        <Shape>
+          <Appearance USE='VermilionMaterial'/>
+          <Cylinder radius='0.28' height='6.2'/>
+        </Shape>
+        <!-- Black Base Sleeve (Nemaki) -->
+        <Transform translation='0 -2.3 0'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Cylinder radius='0.32' height='1.6'/>
+          </Shape>
+        </Transform>
+        <!-- Stone Base Plinth -->
+        <Transform translation='0 -3.0 0'>
+          <Shape>
+            <Appearance USE='StoneMaterial'/>
+            <Cylinder radius='0.42' height='0.4'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Lower Horizontal Beam (Nuki) -->
+      <Transform translation='0 4.7 0'>
+        <Shape>
+          <Appearance USE='VermilionMaterial'/>
+          <Box size='7.4 0.35 0.26'/>
+        </Shape>
+        <!-- Left Beam Peg/Wedge (Kusabi) -->
+        <Transform translation='-2.6 0 0'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Box size='0.1 0.45 0.32'/>
+          </Shape>
+        </Transform>
+        <!-- Right Beam Peg/Wedge (Kusabi) -->
+        <Transform translation='2.6 0 0'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Box size='0.1 0.45 0.32'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Central Strut (Gakuzuka) with Dedication Plaque -->
+      <Transform translation='0 5.4 0'>
+        <Shape>
+          <Appearance USE='VermilionMaterial'/>
+          <Box size='0.24 0.95 0.22'/>
+        </Shape>
+        <!-- Plaque (Gaku) -->
+        <Transform translation='0 0 0.12'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Box size='0.55 0.75 0.04'/>
+          </Shape>
+          <!-- Plaque Gold Inner Panel -->
+          <Transform translation='0 0 0.025'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.75 0.6 0.2' specularColor='0.6 0.5 0.2' shininess='0.6'/>
+              </Appearance>
+              <Box size='0.42 0.62 0.01'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+
+      <!-- Secondary Sub-lintel (Shimaki) -->
+      <Transform translation='0 6.0 0'>
+        <Shape>
+          <Appearance USE='VermilionMaterial'/>
+          <Box size='7.8 0.35 0.52'/>
+        </Shape>
+      </Transform>
+
+      <!-- Main Upper Roof Beam (Kasagi) -->
+      <Transform translation='0 6.3 0'>
+        <Shape>
+          <Appearance USE='VermilionMaterial'/>
+          <Box size='8.6 0.32 0.62'/>
+        </Shape>
+        <!-- Black Curved Ridge Cap on Kasagi -->
+        <Transform translation='0 0.2 0'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Box size='8.8 0.12 0.68'/>
+          </Shape>
+        </Transform>
+        <!-- Left upturned roof end accent -->
+        <Transform translation='-4.4 0.08 0' rotation='0 0 1 0.3'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Box size='0.4 0.16 0.68'/>
+          </Shape>
+        </Transform>
+        <!-- Right upturned roof end accent -->
+        <Transform translation='4.4 0.08 0' rotation='0 0 1 -0.3'>
+          <Shape>
+            <Appearance USE='BlackTrimMaterial'/>
+            <Box size='0.4 0.16 0.68'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Group>
+
+    <!-- ==================== STONE LANTERNS (TORO) ==================== -->
+    <!-- Left Stone Lantern -->
+    <Transform DEF='StoneLantern' translation='-4.8 0 2.2'>
+      <!-- Submerged Foundation Block -->
+      <Transform translation='0 -0.15 0'>
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Box size='1.2 0.4 1.2'/>
+        </Shape>
+      </Transform>
+
+      <!-- Base Pedestal (Kiso) -->
+      <Transform translation='0 0.2 0'>
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Cylinder radius='0.55' height='0.35'/>
+        </Shape>
+      </Transform>
+
+      <!-- Shaft (Sao) -->
+      <Transform translation='0 0.95 0'>
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Cylinder radius='0.22' height='1.2'/>
+        </Shape>
+      </Transform>
+
+      <!-- Middle Platform (Chudai) -->
+      <Transform translation='0 1.65 0'>
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Cylinder radius='0.62' height='0.22'/>
+        </Shape>
+      </Transform>
+
+      <!-- Light Chamber (Hibukuro) -->
+      <Transform translation='0 2.05 0'>
+        <!-- Outer Stone Frame Corners -->
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Box size='0.56 0.6 0.56'/>
+        </Shape>
+        <!-- Inner Firebox Core Glowing Warmly -->
+        <Shape>
+          <Appearance>
+            <UnlitMaterial emissiveColor='1.0 0.7 0.3'/>
+          </Appearance>
+          <Box size='0.4 0.45 0.4'/>
+        </Shape>
+        <!-- Warm PointLight casting illumination from lantern -->
+        <PointLight color='1.0 0.68 0.3' intensity='0.6' radius='4.0'/>
+      </Transform>
+
+      <!-- Umbrella Roof (Kasa) -->
+      <Transform translation='0 2.5 0'>
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Cone bottomRadius='0.85' height='0.45'/>
+        </Shape>
+      </Transform>
+
+      <!-- Top Finial Jewel (Hoju) -->
+      <Transform translation='0 2.85 0'>
+        <Shape>
+          <Appearance USE='StoneMaterial'/>
+          <Sphere radius='0.16'/>
+        </Shape>
+        <Transform translation='0 0.16 0'>
+          <Shape>
+            <Appearance USE='StoneMaterial'/>
+            <Cone bottomRadius='0.08' height='0.16'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Right Stone Lantern (Instanced and mirrored) -->
+    <Transform translation='4.8 0 2.2'>
+      <Group USE='StoneLantern'/>
+    </Transform>
+  </Scene>
+</X3D>

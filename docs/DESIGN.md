@@ -142,3 +142,19 @@ Of the 36 scenes that flip valid to invalid on 8c0a457, 17 draw nothing. The con
 Renderer facts the demo had to respect. (1) X_ITE loaded from a CDN inside the artifact viewer loses lazy components, fonts and wasm at run time (found earlier in the Shroud thread), so the page ships X_ITE as its own published files (`demo/mkxite.py`, 105 files, 8.5 MB, MIT licence included). (2) While a new world is swapped in, X_ITE keeps showing the previous scene's last frame, so a sample taken then reports the old pixels (measured: a nothing-drawable scene after a drawing one read 8% and 21%); the page loads an empty world first and lets it clear. (3) The live 3D tab uses the same watcher as the offline pass and reads "no frame" as nothing drawable only when X_ITE printed dropped-node messages or the record says so; on a slow device it waits up to 12 s and says "NO FRAME YET".
 
 The demo (`demo/`, page "Tether Firehose 2") replays this with live hashing, a validator ladder (service, then fork 8c0a457, then fork eb4b4b4, re-validating stored scenes "from the files alone" and flagging the stale verdicts), a tamper scrubber with signing on and off, a real X_ITE view of the selected scene beside its chain, and a share-safe switch; `demo/build_v2.py --share` produces a source-level clean variant. Not investigated: the 13 to 63 valid jump at fork 76fc439 and d61d4de (S).
+
+## 9. Fourth pass: a recorded live run of real model calls (added 17 Oct 2026, 21:5x)
+
+Method: five models (gemini-3.8-flash, gemini-3.1-pro-preview, gpt-6.1-sol; glm-5.3 and nemotron-3-super-120b-a12b on a free trial tier) were sent the same 50 prompts; every answer was validated in process on fork eb4b4b4; an invalid answer went back to the model with its own report, up to 3 attempts; every attempt was rendered offline in X_ITE 16.5.0 (the section 8 watcher). Data: `runs/live-2026-10-17/`, `demo/data/live.json`; tables in `LIVE-RUN-FINDINGS.md`; spend in `COST-LEDGER.md`. One run per prompt per model.
+
+| Finding | Grade | Sample |
+|---|---|---|
+| With only the validator's report sent back, first-try valid 20, 57 and 77% becomes 98, 100 and 100% for the three paid models | Confirmed for the sample; Suspected as a rate | 50, 47 and 43 scenes, fork eb4b4b4 |
+| 54 of the 119 first-try failures carried a profile-component error and it was gone after the next repair in 58 of 58 cases; XSD errors took more (76 gone, 55 still there) | Confirmed | 201 scenes |
+| The median repair changes 7 tag lines (12% of the scene); 17 of 96 successful repairs rewrote more than half | Confirmed | 96 repairs |
+| 7 of the 178 scenes valid at the end draw nothing: 2 proximity-lit, 4 geospatial, 1 H-Anim humanoid whose boxes hang off no joint (the loop converged on a scene that passes by saying less) | Confirmed for these scenes; the H-Anim pattern Suspected (one case) | X_ITE 16.5.0, each opened by hand |
+| 10 of the 23 scenes that never became valid still draw something | Confirmed | X_ITE is more lenient than the validator |
+| Validator median 1 ms, p90 5 ms, in process | Confirmed | 358 calls |
+| Per valid scene (list-price estimate) gpt-6.1-sol 0.027, gemini-3.8-flash 0.033, gemini-3.1-pro-preview 0.103 USD | Likely | finished chains only |
+
+What it changes in this document: section 5 (what a pipeline gains) now has a measured loop number, and section 3 (limits) a new honest one: the repair loop optimises for the checker, so a render check and an eyes-on pass stay in. Where tethering pays beyond X3D, and what to build next: `research/traceability-2026-10-17/WHERE-TETHERING-PAYS.md` (also a Claude Doc).

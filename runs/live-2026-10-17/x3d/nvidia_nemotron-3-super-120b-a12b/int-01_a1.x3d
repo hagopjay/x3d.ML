@@ -1,0 +1,36 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+<Transform>
+<Shape>
+<Box size='0.5 0.5 0.5'/>
+<Appearance>
+<Material diffuseColor='0.2 0.6 0.8'/>
+</Appearance>
+</Shape>
+<TouchSensor DEF='ButtonTouch'/>
+</Transform>
+
+<BooleanTrigger DEF='StartTrigger'/>
+
+<TimeSensor DEF='SpinTimer' loop='true' cycleInterval='4'/>
+
+<OrientationInterpolator DEF='SpinInterpolator'
+ key='0 1'
+ keyValue='0 0 1 0 0 0 1 6.283185307179586'/>
+
+<Transform DEF='CylTransform' translation='0 -1 0'>
+<Shape>
+<Cylinder radius='0.2' height='1'/>
+<Appearance>
+<Material diffuseColor='0.8 0.6 0.2'/>
+</Appearance>
+</Shape>
+</Transform>
+
+<ROUTE fromNode='ButtonTouch' fromField='isOver' toNode='StartTrigger' toField='set_bool'/>
+<ROUTE fromNode='StartTrigger' fromField='changed' toNode='SpinTimer' toField='startTime'/>
+<ROUTE fromNode='SpinTimer' fromField='fraction_changed' toNode='SpinInterpolator' toField='set_fraction'/>
+<ROUTE fromNode='SpinInterpolator' fromField='value_changed' toNode='CylTransform' toField='rotation'/>
+<Viewpoint DEF='View' description='Button spins cylinder on touch' position='0 2 5'/>
+</Scene>
+</X3D>

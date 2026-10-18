@@ -1,0 +1,187 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Two HAnim Humanoids Sharing Geometries' position='0.75 0.2 3'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    
+    <Group>
+      <TouchSensor DEF='Touch' description='Click anywhere to make them wave'/>
+
+      <HAnimHumanoid DEF='H1' name='H1' version='2.0'>
+        <HAnimJoint containerField='skeleton' DEF='H1_root' name='humanoid_root' center='0 0 0'>
+          <HAnimSegment DEF='H1_pelvis' name='pelvis'>
+            <Transform translation='0 0 0'>
+              <Shape>
+                <Appearance DEF='App1'>
+                  <Material diffuseColor='1 0.5 0.2'/>
+                </Appearance>
+                <Box DEF='PelvisGeom' size='0.3 0.2 0.2'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          
+          <HAnimJoint DEF='H1_vl5' name='vl5' center='0 0.1 0'>
+            <HAnimSegment DEF='H1_c5' name='c5'>
+              <Transform translation='0 0.25 0'>
+                <Shape>
+                  <Appearance USE='App1'/>
+                  <Box DEF='TorsoGeom' size='0.4 0.3 0.2'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            
+            <HAnimJoint DEF='H1_skullbase' name='skullbase' center='0 0.4 0'>
+              <HAnimSegment DEF='H1_skull' name='skull'>
+                <Transform translation='0 0.5 0'>
+                  <Shape>
+                    <Appearance USE='App1'/>
+                    <Sphere DEF='HeadGeom' radius='0.15'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+            </HAnimJoint>
+            
+            <HAnimJoint DEF='H1_l_shoulder' name='l_shoulder' center='0.25 0.3 0'>
+              <HAnimSegment DEF='H1_l_upperarm' name='l_upperarm'>
+                <Transform translation='0.25 0.1 0'>
+                  <Shape>
+                    <Appearance USE='App1'/>
+                    <Cylinder DEF='ArmGeom' radius='0.05' height='0.4'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+            </HAnimJoint>
+            
+            <HAnimJoint DEF='H1_r_shoulder' name='r_shoulder' center='-0.25 0.3 0'>
+              <HAnimSegment DEF='H1_r_upperarm' name='r_upperarm'>
+                <Transform translation='-0.25 0.1 0'>
+                  <Shape>
+                    <Appearance USE='App1'/>
+                    <Cylinder USE='ArmGeom'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+            </HAnimJoint>
+          </HAnimJoint>
+          
+          <HAnimJoint DEF='H1_l_hip' name='l_hip' center='0.15 -0.1 0'>
+            <HAnimSegment DEF='H1_l_thigh' name='l_thigh'>
+              <Transform translation='0.15 -0.3 0'>
+                <Shape>
+                  <Appearance USE='App1'/>
+                  <Cylinder DEF='LegGeom' radius='0.06' height='0.4'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+          
+          <HAnimJoint DEF='H1_r_hip' name='r_hip' center='-0.15 -0.1 0'>
+            <HAnimSegment DEF='H1_r_thigh' name='r_thigh'>
+              <Transform translation='-0.15 -0.3 0'>
+                <Shape>
+                  <Appearance USE='App1'/>
+                  <Cylinder USE='LegGeom'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimHumanoid>
+
+      <HAnimHumanoid DEF='H2' name='H2' version='2.0' translation='1.5 0 0'>
+        <HAnimJoint containerField='skeleton' DEF='H2_root' name='humanoid_root' center='0 0 0'>
+          <HAnimSegment DEF='H2_pelvis' name='pelvis'>
+            <Transform translation='0 0 0'>
+              <Shape>
+                <Appearance DEF='App2'>
+                  <Material diffuseColor='0.2 0.5 1'/>
+                </Appearance>
+                <Box USE='PelvisGeom'/>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          
+          <HAnimJoint DEF='H2_vl5' name='vl5' center='0 0.1 0'>
+            <HAnimSegment DEF='H2_c5' name='c5'>
+              <Transform translation='0 0.25 0'>
+                <Shape>
+                  <Appearance USE='App2'/>
+                  <Box USE='TorsoGeom'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+            
+            <HAnimJoint DEF='H2_skullbase' name='skullbase' center='0 0.4 0'>
+              <HAnimSegment DEF='H2_skull' name='skull'>
+                <Transform translation='0 0.5 0'>
+                  <Shape>
+                    <Appearance USE='App2'/>
+                    <Sphere USE='HeadGeom'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+            </HAnimJoint>
+            
+            <HAnimJoint DEF='H2_l_shoulder' name='l_shoulder' center='0.25 0.3 0'>
+              <HAnimSegment DEF='H2_l_upperarm' name='l_upperarm'>
+                <Transform translation='0.25 0.1 0'>
+                  <Shape>
+                    <Appearance USE='App2'/>
+                    <Cylinder USE='ArmGeom'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+            </HAnimJoint>
+            
+            <HAnimJoint DEF='H2_r_shoulder' name='r_shoulder' center='-0.25 0.3 0'>
+              <HAnimSegment DEF='H2_r_upperarm' name='r_upperarm'>
+                <Transform translation='-0.25 0.1 0'>
+                  <Shape>
+                    <Appearance USE='App2'/>
+                    <Cylinder USE='ArmGeom'/>
+                  </Shape>
+                </Transform>
+              </HAnimSegment>
+            </HAnimJoint>
+          </HAnimJoint>
+          
+          <HAnimJoint DEF='H2_l_hip' name='l_hip' center='0.15 -0.1 0'>
+            <HAnimSegment DEF='H2_l_thigh' name='l_thigh'>
+              <Transform translation='0.15 -0.3 0'>
+                <Shape>
+                  <Appearance USE='App2'/>
+                  <Cylinder USE='LegGeom'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+          
+          <HAnimJoint DEF='H2_r_hip' name='r_hip' center='-0.15 -0.1 0'>
+            <HAnimSegment DEF='H2_r_thigh' name='r_thigh'>
+              <Transform translation='-0.15 -0.3 0'>
+                <Shape>
+                  <Appearance USE='App2'/>
+                  <Cylinder USE='LegGeom'/>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimHumanoid>
+    </Group>
+
+    <TimeSensor DEF='Timer' cycleInterval='2.0'/>
+    <OrientationInterpolator DEF='WaveL' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 0, 0 0 1 1.5, 0 0 1 0.5, 0 0 1 1.5, 0 0 1 0'/>
+    <OrientationInterpolator DEF='WaveR' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 0, 0 0 1 -1.5, 0 0 1 -0.5, 0 0 1 -1.5, 0 0 1 0'/>
+
+    <ROUTE fromNode='Touch' fromField='touchTime' toNode='Timer' toField='startTime'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='WaveL' toField='set_fraction'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='WaveR' toField='set_fraction'/>
+    <ROUTE fromNode='WaveL' fromField='value_changed' toNode='H1_l_shoulder' toField='rotation'/>
+    <ROUTE fromNode='WaveL' fromField='value_changed' toNode='H2_l_shoulder' toField='rotation'/>
+    <ROUTE fromNode='WaveR' fromField='value_changed' toNode='H1_r_shoulder' toField='rotation'/>
+    <ROUTE fromNode='WaveR' fromField='value_changed' toNode='H2_r_shoulder' toField='rotation'/>
+  </Scene>
+</X3D>

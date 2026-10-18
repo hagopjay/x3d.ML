@@ -1,0 +1,38 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Solar System View' position='0 0 20'/>
+    <PointLight intensity='1' color='1 1 1' location='0 0 0'/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <UnlitMaterial emissiveColor='1 1 0'/>
+        </Appearance>
+        <Sphere radius='2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='5 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.8 0.2 0.2' metalness='0.1' roughness='0.5'/>
+        </Appearance>
+        <Sphere radius='0.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='10 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.2 0.6 0.8' metalness='0.0' roughness='0.4'/>
+        </Appearance>
+        <Sphere radius='0.4'/>
+      </Shape>
+    </Transform>
+    <Transform translation='15 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.2 0.8 0.2' metalness='0.0' roughness='0.6'/>
+        </Appearance>
+        <Sphere radius='0.3'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

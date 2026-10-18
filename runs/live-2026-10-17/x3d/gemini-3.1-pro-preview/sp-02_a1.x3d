@@ -1,0 +1,86 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Planetarium'/>
+    <Background skyColor='0.02 0.02 0.05'/>
+    <Viewpoint description='Planetarium View' position='0 12 30' orientation='1 0 0 -0.3'/>
+    
+    <Transform>
+      <PointLight color='1 0.95 0.5' intensity='1.2' radius='100'/>
+      <Shape>
+        <Sphere radius='2.5'/>
+        <Appearance>
+          <Material diffuseColor='0 0 0' emissiveColor='1 0.9 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <TimeSensor DEF='Timer1' cycleInterval='3' loop='true'/>
+    <OrientationInterpolator DEF='Rotator1' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Orbit1'>
+      <Transform translation='5 0 0'>
+        <Shape>
+          <Sphere radius='0.3'/>
+          <Appearance>
+            <Material diffuseColor='0.6 0.6 0.6'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Timer1' fromField='fraction_changed' toNode='Rotator1' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator1' fromField='value_changed' toNode='Orbit1' toField='rotation'/>
+
+    <TimeSensor DEF='Timer2' cycleInterval='5' loop='true'/>
+    <OrientationInterpolator DEF='Rotator2' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Orbit2'>
+      <Transform translation='8 0 0'>
+        <Shape>
+          <Sphere radius='0.5'/>
+          <Appearance>
+            <Material diffuseColor='0.2 0.5 0.9'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Timer2' fromField='fraction_changed' toNode='Rotator2' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator2' fromField='value_changed' toNode='Orbit2' toField='rotation'/>
+
+    <TimeSensor DEF='Timer3' cycleInterval='8' loop='true'/>
+    <OrientationInterpolator DEF='Rotator3' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Orbit3'>
+      <Transform translation='11 0 0'>
+        <Shape>
+          <Sphere radius='0.4'/>
+          <Appearance>
+            <Material diffuseColor='0.9 0.3 0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Timer3' fromField='fraction_changed' toNode='Rotator3' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator3' fromField='value_changed' toNode='Orbit3' toField='rotation'/>
+
+    <TimeSensor DEF='Timer4' cycleInterval='15' loop='true'/>
+    <OrientationInterpolator DEF='Rotator4' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <Transform DEF='Orbit4'>
+      <Transform translation='16 0 0'>
+        <Shape>
+          <Sphere radius='1.2'/>
+          <Appearance>
+            <Material diffuseColor='0.8 0.7 0.5'/>
+          </Appearance>
+        </Shape>
+        <Transform rotation='1 0 0 0.4'>
+          <Shape>
+            <Cylinder radius='2.4' height='0.02'/>
+            <Appearance>
+              <Material diffuseColor='0.7 0.6 0.4'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Timer4' fromField='fraction_changed' toNode='Rotator4' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator4' fromField='value_changed' toNode='Orbit4' toField='rotation'/>
+
+  </Scene>
+</X3D>

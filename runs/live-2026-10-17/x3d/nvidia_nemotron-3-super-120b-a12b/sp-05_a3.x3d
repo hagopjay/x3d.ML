@@ -1,0 +1,67 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Desk lamp with articulated arm' position='0 5 10'/>
+    <!-- Base -->
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.2 0.2 0.2' roughness='0.5' metallic='0.0'/>
+        </Appearance>
+        <Cylinder height='0.2' radius='0.5'/>
+      </Shape>
+    </Transform>
+    <!-- Lower arm -->
+    <Transform translation='0 0.2 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.7 0.6' roughness='0.5' metallic='0.0'/>
+        </Appearance>
+        <Cylinder height='1.0' radius='0.05'/>
+      </Shape>
+    </Transform>
+    <!-- Upper arm (animated) -->
+    <Transform translation='0 1.2 0' DEF='UpperArm'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.7 0.6' roughness='0.5' metallic='0.0'/>
+        </Appearance>
+        <Cylinder height='1.0' radius='0.05'/>
+      </Shape>
+    </Transform>
+    <!-- Cone shade -->
+    <Transform translation='0 2.4 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.9 0.9 0.9' roughness='0.5' metallic='0.0'/>
+        </Appearance>
+        <Cone height='0.5' bottomRadius='0.25'/>
+      </Shape>
+    </Transform>
+    <!-- SpotLight inside cone -->
+    <Transform translation='0 2.4 0'>
+      <SpotLight intensity='2.0' color='1 1 1' beamWidth='0.5' cutOffAngle='0.5' location='0 0 0' direction='0 -1 0'/>
+    </Transform>
+    <!-- Desk surface -->
+    <Transform translation='0 -0.2 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.55 0.35 0.2' roughness='0.8' metallic='0.0'/>
+        </Appearance>
+        <Box size='2 0.05 2'/>
+      </Shape>
+    </Transform>
+    <!-- Animation: upper arm sway -->
+    <TimeSensor DEF='LampTimer' cycleInterval='4' loop='true' enabled='true'/>
+    <OrientationInterpolator DEF='LampRot'>
+      <field name='key' type='MFFloat' value='0 0.5 1'/>
+      <field name='keyValue' type='MFVec4f' value='0 1 0 -0.2618 0 1 0 0 0 1 0 0.2618'/>
+    </OrientationInterpolator>
+    <ROUTE fromNode='LampTimer' fromField='fraction_changed' toNode='LampRot' toField='set_fraction'/>
+    <ROUTE fromNode='LampRot' fromField='value_changed' toNode='UpperArm' toField='rotation'/>
+    <!-- Interaction: TouchSensor (no DEF, thus no usage constraint) -->
+    <TouchSensor/>
+  </Scene>
+</X3D>

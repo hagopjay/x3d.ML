@@ -1,0 +1,147 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Japanese Torii Gate at Sunset'/>
+    <Viewpoint description='Torii Gate View' position='0 2.5 16' orientation='1 0 0 -0.05'/>
+    
+    <Background skyColor='0.9 0.4 0.1 0.8 0.5 0.2 0.3 0.4 0.6' skyAngle='1.3 1.57'/>
+    <DirectionalLight direction='0.8 -0.2 -0.5' color='1 0.7 0.4' intensity='1.5' ambientIntensity='0.4'/>
+
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Box size='60 0.1 60'/>
+        <Appearance>
+          <Material diffuseColor='0.1 0.4 0.6' transparency='0.4' specularColor='0.8 0.9 1' shininess='0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Group>
+      <Transform translation='-3.5 3 0'>
+        <Shape>
+          <Cylinder radius='0.45' height='8'/>
+          <Appearance>
+            <Material DEF='Vermilion' diffuseColor='0.85 0.22 0.15' shininess='0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-3.5 -0.8 0'>
+        <Shape>
+          <Cylinder radius='0.6' height='0.6'/>
+          <Appearance>
+            <Material DEF='Stone' diffuseColor='0.55 0.55 0.55'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+
+      <Transform translation='3.5 3 0'>
+        <Shape>
+          <Cylinder radius='0.45' height='8'/>
+          <Appearance>
+            <Material USE='Vermilion'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='3.5 -0.8 0'>
+        <Shape>
+          <Cylinder radius='0.6' height='0.6'/>
+          <Appearance>
+            <Material USE='Stone'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+
+      <Transform translation='0 4.5 0'>
+        <Shape>
+          <Box size='9 0.5 0.5'/>
+          <Appearance>
+            <Material USE='Vermilion'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+
+      <Transform translation='0 6.5 0'>
+        <Shape>
+          <Box size='11 0.6 0.7'/>
+          <Appearance>
+            <Material USE='Vermilion'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      
+      <Transform translation='0 6.85 0'>
+        <Shape>
+          <Box size='11.2 0.1 0.8'/>
+          <Appearance>
+            <Material diffuseColor='0.1 0.1 0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+
+      <Transform translation='0 5.5 0'>
+        <Shape>
+          <Box size='0.5 1.5 0.5'/>
+          <Appearance>
+            <Material USE='Vermilion'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Group>
+
+    <Transform translation='-6.5 0 3'>
+      <Group DEF='Lantern'>
+        <Transform translation='0 -0.2 0'>
+          <Shape>
+            <Box size='1 0.4 1'/>
+            <Appearance>
+              <Material USE='Stone'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0 0.7 0'>
+          <Shape>
+            <Cylinder radius='0.25' height='1.4'/>
+            <Appearance>
+              <Material USE='Stone'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0 1.5 0'>
+          <Shape>
+            <Box size='1.2 0.2 1.2'/>
+            <Appearance>
+              <Material USE='Stone'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0 2.0 0'>
+          <Shape>
+            <Box size='0.8 0.8 0.8'/>
+            <Appearance>
+              <Material diffuseColor='0.8 0.8 0.6' emissiveColor='0.9 0.6 0.1'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0 2.6 0'>
+          <Shape>
+            <Cone bottomRadius='1.2' height='0.6'/>
+            <Appearance>
+              <Material USE='Stone'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0 3.0 0'>
+          <Shape>
+            <Sphere radius='0.2'/>
+            <Appearance>
+              <Material USE='Stone'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Group>
+    </Transform>
+
+    <Transform translation='6.5 0 3'>
+      <Group USE='Lantern'/>
+    </Transform>
+  </Scene>
+</X3D>

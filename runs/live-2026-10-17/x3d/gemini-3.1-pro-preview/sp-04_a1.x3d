@@ -1,0 +1,116 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Greek Temple'/>
+    <Background skyColor='0.4 0.6 0.8' groundColor='0.3 0.5 0.2'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <Viewpoint description='Front View' position='0 6 25'/>
+    <DirectionalLight DEF='Sun' direction='-0.8 -0.3 -0.5' color='1 0.9 0.7' intensity='1.2' ambientIntensity='0.4'/>
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Box size='60 1 60'/>
+        <Appearance>
+          <Material diffuseColor='0.3 0.6 0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Group>
+      <TouchSensor DEF='TempleTouch' description='Touch to move the sun'/>
+      <Transform translation='0 0.25 0'>
+        <Shape>
+          <Box size='20.5 0.5 10.5'/>
+          <Appearance DEF='MarbleApp'>
+            <Material diffuseColor='0.92 0.88 0.8' specularColor='0.1 0.1 0.1' shininess='0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0 0.75 0'>
+        <Shape>
+          <Box size='19.5 0.5 9.5'/>
+          <Appearance USE='MarbleApp'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 1.25 0'>
+        <Shape>
+          <Box size='18.5 0.5 8.5'/>
+          <Appearance USE='MarbleApp'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 4.5 0'>
+        <Shape>
+          <Box size='13 6 4'/>
+          <Appearance USE='MarbleApp'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-8.75 4.5 -3.75'>
+        <Shape DEF='Column'>
+          <Cylinder radius='0.4' height='6'/>
+          <Appearance USE='MarbleApp'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-6.25 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='-3.75 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='-1.25 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='1.25 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='3.75 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='6.25 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='8.75 4.5 -3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='-8.75 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='-6.25 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='-3.75 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='-1.25 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='1.25 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='3.75 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='6.25 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='8.75 4.5 3.75'>
+        <Shape USE='Column'/>
+      </Transform>
+      <Transform translation='0 8.0 0'>
+        <Shape>
+          <Box size='19 1 9'/>
+          <Appearance USE='MarbleApp'/>
+        </Shape>
+      </Transform>
+      <Transform>
+        <Shape>
+          <IndexedFaceSet coordIndex='0 1 2 -1 4 3 5 -1 3 0 2 5 -1 1 4 5 2 -1 0 3 4 1 -1' solid='true'>
+            <Coordinate point='-9.5 8.5 -4.5, -9.5 8.5 4.5, -9.5 11.0 0, 9.5 8.5 -4.5, 9.5 8.5 4.5, 9.5 11.0 0'/>
+          </IndexedFaceSet>
+          <Appearance USE='MarbleApp'/>
+        </Shape>
+      </Transform>
+    </Group>
+    <TimeSensor DEF='SunTimer' cycleInterval='8'/>
+    <PositionInterpolator DEF='SunAnim' key='0 0.5 1' keyValue='-0.8 -0.3 -0.5, 0.8 -0.3 -0.5, -0.8 -0.3 -0.5'/>
+    <ROUTE fromNode='TempleTouch' fromField='touchTime' toNode='SunTimer' toField='startTime'/>
+    <ROUTE fromNode='SunTimer' fromField='fraction_changed' toNode='SunAnim' toField='set_fraction'/>
+    <ROUTE fromNode='SunAnim' fromField='value_changed' toNode='Sun' toField='set_direction'/>
+  </Scene>
+</X3D>

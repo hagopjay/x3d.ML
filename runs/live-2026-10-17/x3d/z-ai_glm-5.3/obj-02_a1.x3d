@@ -1,0 +1,45 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Background skyColor='0.87 0.9 0.94'/>
+    <Viewpoint description='Wooden table, three-quarter view' position='2.4 1.5 2.8' orientation='-0.4 0.92 0 0.75' centerOfRotation='0 0.4 0'/>
+    <Viewpoint description='Wooden table, front view' position='0 0.9 3.2' orientation='-1 0 0 0.17' centerOfRotation='0 0.4 0'/>
+    <DirectionalLight global='true' direction='-0.4 -1 -0.5' intensity='1.1' color='1 0.97 0.92'/>
+    <DirectionalLight global='true' direction='0.6 -0.6 0.4' intensity='0.35' color='0.85 0.9 1'/>
+    <!-- Floor for context -->
+    <Transform translation='0 -0.01 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.8 0.78' roughness='0.9' metalness='0'/>
+        </Appearance>
+        <Box size='6 0.02 6'/>
+      </Shape>
+    </Transform>
+    <!-- Table top: 2 m x 1 m, 5 cm thick, upper surface at 0.8 m -->
+    <Transform translation='0 0.775 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.55 0.35 0.18' roughness='0.6' metalness='0'/>
+        </Appearance>
+        <Box size='2 0.05 1'/>
+      </Shape>
+    </Transform>
+    <!-- One leg defined once, reused at all four corners -->
+    <Transform translation='-0.9 0.375 -0.4'>
+      <Shape DEF='Leg'>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.45 0.28 0.14' roughness='0.75' metalness='0'/>
+        </Appearance>
+        <Cylinder radius='0.04' height='0.75'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.9 0.375 -0.4'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='-0.9 0.375 0.4'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='0.9 0.375 0.4'>
+      <Shape USE='Leg'/>
+    </Transform>
+  </Scene>
+</X3D>

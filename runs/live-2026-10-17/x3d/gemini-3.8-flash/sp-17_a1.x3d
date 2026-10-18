@@ -1,0 +1,303 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='pendulum_clock.x3d' name='title'/>
+    <meta content='A grandfather pendulum clock with tall wooden case, 12 tick marks, and animated brass pendulum swinging every 2 seconds.' name='description'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Grandfather Pendulum Clock'/>
+    
+    <Viewpoint description='Front View' position='0 1.25 2.6'/>
+    <Viewpoint description='Clock Face Close-up' position='0 1.65 0.85'/>
+
+    <DirectionalLight direction='0.4 -0.8 -0.5' intensity='0.9'/>
+    <DirectionalLight direction='-0.4 -0.4 -0.3' intensity='0.4'/>
+
+    <!-- Wooden Case -->
+    <!-- Base Plinth -->
+    <Transform translation='0 0.06 0'>
+      <Shape>
+        <Appearance DEF='WoodApp'>
+          <Material diffuseColor='0.32 0.14 0.06' specularColor='0.25 0.12 0.05' shininess='0.25'/>
+        </Appearance>
+        <Box size='0.56 0.12 0.36'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.15 0'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.52 0.06 0.33'/>
+      </Shape>
+    </Transform>
+
+    <!-- Waist / Mid Case (Trunk) -->
+    <!-- Back Panel -->
+    <Transform translation='0 0.82 -0.12'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.44 1.28 0.04'/>
+      </Shape>
+    </Transform>
+    <!-- Left Side Panel -->
+    <Transform translation='-0.21 0.82 0'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.04 1.28 0.28'/>
+      </Shape>
+    </Transform>
+    <!-- Right Side Panel -->
+    <Transform translation='0.21 0.82 0'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.04 1.28 0.28'/>
+      </Shape>
+    </Transform>
+    <!-- Lower Waist Front Panel -->
+    <Transform translation='0 0.32 0.12'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.44 0.28 0.04'/>
+      </Shape>
+    </Transform>
+    <!-- Waist Glass Door / Window Frame -->
+    <Transform translation='-0.19 0.88 0.12'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.04 0.84 0.04'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.19 0.88 0.12'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.04 0.84 0.04'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 1.28 0.12'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.42 0.04 0.04'/>
+      </Shape>
+    </Transform>
+    <!-- Window Glass -->
+    <Transform translation='0 0.87 0.115'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.9 0.95' transparency='0.75' specularColor='0.9 0.9 0.9' shininess='0.9'/>
+        </Appearance>
+        <Box size='0.34 0.78 0.01'/>
+      </Shape>
+    </Transform>
+
+    <!-- Mid Waist Cornice -->
+    <Transform translation='0 1.35 0.01'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.50 0.06 0.34'/>
+      </Shape>
+    </Transform>
+
+    <!-- Upper Hood Housing the Dial -->
+    <Transform translation='0 1.66 0.01'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.46 0.56 0.32'/>
+      </Shape>
+    </Transform>
+    <!-- Hood Crown / Pediment -->
+    <Transform translation='0 1.97 0.01'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.52 0.06 0.35'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.04 0.01' rotation='0 0 1 0.7854'>
+      <Shape>
+        <Appearance USE='WoodApp'/>
+        <Box size='0.1 0.1 0.34'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.12 0.01'>
+      <Shape>
+        <Appearance DEF='BrassApp'>
+          <Material diffuseColor='0.78 0.62 0.22' specularColor='0.95 0.85 0.45' shininess='0.85'/>
+        </Appearance>
+        <Sphere radius='0.035'/>
+      </Shape>
+    </Transform>
+
+    <!-- Brass Chime Weights -->
+    <Transform translation='-0.08 1.05 0'>
+      <Shape>
+        <Appearance USE='BrassApp'/>
+        <Cylinder height='0.35' radius='0.024'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.08 1.33 0'>
+      <Shape>
+        <Appearance USE='BrassApp'/>
+        <Cylinder height='0.22' radius='0.003'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.08 0.98 0'>
+      <Shape>
+        <Appearance USE='BrassApp'/>
+        <Cylinder height='0.35' radius='0.024'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0.08 1.26 0'>
+      <Shape>
+        <Appearance USE='BrassApp'/>
+        <Cylinder height='0.22' radius='0.003'/>
+      </Shape>
+    </Transform>
+
+    <!-- Clock Dial Assembly -->
+    <Transform translation='0 1.65 0.17'>
+      <!-- Dial Outer Brass Bezel -->
+      <Transform rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='BrassApp'/>
+          <Cylinder height='0.012' radius='0.19'/>
+        </Shape>
+      </Transform>
+      <!-- Circular White Face -->
+      <Transform translation='0 0 0.008' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.96 0.95 0.92' specularColor='0.1 0.1 0.1' shininess='0.1'/>
+          </Appearance>
+          <Cylinder height='0.006' radius='0.175'/>
+        </Shape>
+      </Transform>
+
+      <!-- Center Brass Cap -->
+      <Transform translation='0 0 0.022' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='BrassApp'/>
+          <Cylinder height='0.008' radius='0.014'/>
+        </Shape>
+      </Transform>
+
+      <!-- Hour & Minute Hands -->
+      <Transform translation='0 0 0.016' rotation='0 0 1 -0.6'>
+        <Transform translation='0 0.045 0'>
+          <Shape>
+            <Appearance DEF='BlackApp'>
+              <Material diffuseColor='0.05 0.05 0.05'/>
+            </Appearance>
+            <Box size='0.012 0.09 0.003'/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform translation='0 0 0.018' rotation='0 0 1 0.75'>
+        <Transform translation='0 0.065 0'>
+          <Shape>
+            <Appearance USE='BlackApp'/>
+            <Box size='0.008 0.13 0.003'/>
+          </Shape>
+        </Transform>
+      </Transform>
+
+      <!-- Twelve Tick Marks built with DEF and USE -->
+      <!-- 12 o'clock -->
+      <Transform translation='0 0.142 0.012'>
+        <Shape DEF='TickMark'>
+          <Appearance USE='BlackApp'/>
+          <Box size='0.008 0.026 0.002'/>
+        </Shape>
+      </Transform>
+      <!-- 1 o'clock (-30 deg = -0.5236 rad) -->
+      <Transform rotation='0 0 1 -0.5236'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 2 o'clock (-60 deg = -1.0472 rad) -->
+      <Transform rotation='0 0 1 -1.0472'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 3 o'clock (-90 deg = -1.5708 rad) -->
+      <Transform rotation='0 0 1 -1.5708'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 4 o'clock (-120 deg = -2.0944 rad) -->
+      <Transform rotation='0 0 1 -2.0944'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 5 o'clock (-150 deg = -2.6180 rad) -->
+      <Transform rotation='0 0 1 -2.6180'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 6 o'clock (-180 deg = -3.1416 rad) -->
+      <Transform rotation='0 0 1 -3.1416'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 7 o'clock (-210 deg = -3.6652 rad) -->
+      <Transform rotation='0 0 1 -3.6652'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 8 o'clock (-240 deg = -4.1888 rad) -->
+      <Transform rotation='0 0 1 -4.1888'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 9 o'clock (-270 deg = -4.7124 rad) -->
+      <Transform rotation='0 0 1 -4.7124'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 10 o'clock (-300 deg = -5.2360 rad) -->
+      <Transform rotation='0 0 1 -5.2360'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+      <!-- 11 o'clock (-330 deg = -5.7596 rad) -->
+      <Transform rotation='0 0 1 -5.7596'>
+        <Transform translation='0 0.142 0.012'>
+          <Shape USE='TickMark'/>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Swinging Brass Pendulum (Pivot at y=1.36) -->
+    <Transform DEF='PendulumTransform' center='0 1.36 0'>
+      <!-- Suspension Rod -->
+      <Transform translation='0 0.95 0'>
+        <Shape>
+          <Appearance USE='BrassApp'/>
+          <Cylinder height='0.78' radius='0.007'/>
+        </Shape>
+      </Transform>
+      <!-- Pendulum Bob -->
+      <Transform translation='0 0.56 0' rotation='1 0 0 1.5708'>
+        <Shape>
+          <Appearance USE='BrassApp'/>
+          <Cylinder height='0.024' radius='0.09'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Animation: Pendulum swings back and forth every 2 seconds -->
+    <TimeSensor DEF='PendulumTimer' cycleInterval='2.0' loop='true'/>
+    <OrientationInterpolator DEF='PendulumInterp'
+      key='0.0 0.25 0.5 0.75 1.0'
+      keyValue='0 0 1 0.0, 0 0 1 0.11, 0 0 1 0.0, 0 0 1 -0.11, 0 0 1 0.0'/>
+
+    <ROUTE fromNode='PendulumTimer' fromField='fraction_changed' toNode='PendulumInterp' toField='set_fraction'/>
+    <ROUTE fromNode='PendulumInterp' fromField='value_changed' toNode='PendulumTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

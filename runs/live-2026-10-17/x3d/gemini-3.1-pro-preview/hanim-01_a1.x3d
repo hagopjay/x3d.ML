@@ -1,0 +1,74 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Minimal HAnim Humanoid'/>
+    <Viewpoint description='Front View' position='0 0.5 2'/>
+    <TimeSensor DEF='Clock' cycleInterval='2' loop='true'/>
+    <OrientationInterpolator DEF='LHipSpin' key='0 0.5 1' keyValue='1 0 0 0.3, 1 0 0 -0.3, 1 0 0 0.3'/>
+    <OrientationInterpolator DEF='RHipSpin' key='0 0.5 1' keyValue='1 0 0 -0.3, 1 0 0 0.3, 1 0 0 -0.3'/>
+    <HAnimHumanoid name='MinimalHumanoid' version='2.0'>
+      <HAnimJoint DEF='humanoid_root' name='humanoid_root' center='0 0.8 0' containerField='skeleton'>
+        <HAnimSegment DEF='sacrum' name='sacrum'>
+          <Transform translation='0 0.75 0'>
+            <Shape>
+              <Box size='0.1 0.1 0.1'/>
+              <Appearance>
+                <Material DEF='Mat' diffuseColor='0.8 0.8 0.8'/>
+              </Appearance>
+            </Shape>
+          </Transform>
+        </HAnimSegment>
+        <HAnimJoint DEF='sacroiliac' name='sacroiliac' center='0 0.7 0'>
+          <HAnimSegment DEF='pelvis' name='pelvis'>
+            <Transform translation='0 0.65 0'>
+              <Shape>
+                <Box size='0.25 0.1 0.1'/>
+                <Appearance>
+                  <Material USE='Mat'/>
+                </Appearance>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+          <HAnimJoint DEF='l_hip' name='l_hip' center='0.1 0.6 0'>
+            <HAnimSegment DEF='l_thigh' name='l_thigh'>
+              <Transform translation='0.1 0.45 0'>
+                <Shape>
+                  <Box size='0.08 0.3 0.08'/>
+                  <Appearance>
+                    <Material USE='Mat'/>
+                  </Appearance>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+          <HAnimJoint DEF='r_hip' name='r_hip' center='-0.1 0.6 0'>
+            <HAnimSegment DEF='r_thigh' name='r_thigh'>
+              <Transform translation='-0.1 0.45 0'>
+                <Shape>
+                  <Box size='0.08 0.3 0.08'/>
+                  <Appearance>
+                    <Material USE='Mat'/>
+                  </Appearance>
+                </Shape>
+              </Transform>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+      <HAnimJoint USE='humanoid_root' containerField='joints'/>
+      <HAnimJoint USE='sacroiliac' containerField='joints'/>
+      <HAnimJoint USE='l_hip' containerField='joints'/>
+      <HAnimJoint USE='r_hip' containerField='joints'/>
+      <HAnimSegment USE='sacrum' containerField='segments'/>
+      <HAnimSegment USE='pelvis' containerField='segments'/>
+      <HAnimSegment USE='l_thigh' containerField='segments'/>
+      <HAnimSegment USE='r_thigh' containerField='segments'/>
+    </HAnimHumanoid>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='LHipSpin' toField='set_fraction'/>
+    <ROUTE fromNode='LHipSpin' fromField='value_changed' toNode='l_hip' toField='set_rotation'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='RHipSpin' toField='set_fraction'/>
+    <ROUTE fromNode='RHipSpin' fromField='value_changed' toNode='r_hip' toField='set_rotation'/>
+  </Scene>
+</X3D>

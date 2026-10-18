@@ -1,0 +1,94 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Apple Tree'/>
+    <Background skyColor='0.58 0.79 0.96'/>
+    <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+    <Viewpoint description='Apple tree on grass' position='0 3.1 11'/>
+    <DirectionalLight direction='-0.5 -1 -0.6' intensity='0.9'/>
+    <DirectionalLight direction='0.6 -0.4 0.7' intensity='0.35'/>
+    
+    <Transform translation='0 -0.06 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.22 0.48 0.12' ambientIntensity='0.35'/>
+        </Appearance>
+        <Box size='16 0.12 16'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 1.25 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.35 0.17 0.065'/>
+        </Appearance>
+        <Cylinder radius='0.3' height='2.5'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 2.7 0'>
+      <Shape>
+        <Appearance DEF='Foliage'>
+          <Material diffuseColor='0.07 0.39 0.12' ambientIntensity='0.3'/>
+        </Appearance>
+        <Cone bottomRadius='1.6' height='2.3'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 3.65 0'>
+      <Shape>
+        <Appearance USE='Foliage'/>
+        <Cone bottomRadius='1.25' height='2.1'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 4.5 0'>
+      <Shape>
+        <Appearance USE='Foliage'/>
+        <Cone bottomRadius='0.9' height='1.8'/>
+      </Shape>
+    </Transform>
+
+    <Transform DEF='BobbingApples'>
+      <Transform translation='-1.05 1.98 0.85'>
+        <Shape DEF='Apple'>
+          <Appearance>
+            <Material diffuseColor='0.85 0.025 0.035' specularColor='0.8 0.4 0.35' shininess='0.45'/>
+          </Appearance>
+          <Sphere radius='0.145'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0.05 2.03 1.32'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='1.08 2.12 0.68'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='-0.64 2.58 0.76'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='0.62 2.64 0.73'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='-0.78 3.04 0.69'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='0.4 3.2 0.85'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='-0.14 3.72 0.64'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='0.56 3.98 0.46'>
+        <Shape USE='Apple'/>
+      </Transform>
+      <Transform translation='-0.23 4.55 0.39'>
+        <Shape USE='Apple'/>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='BobbingClock' cycleInterval='4' loop='true'/>
+    <PositionInterpolator DEF='GentleBob'
+      key='0 0.25 0.5 0.75 1'
+      keyValue='0 0 0, 0 0.065 0, 0 0 0, 0 -0.065 0, 0 0 0'/>
+    <ROUTE fromNode='BobbingClock' fromField='fraction_changed' toNode='GentleBob' toField='set_fraction'/>
+    <ROUTE fromNode='GentleBob' fromField='value_changed' toNode='BobbingApples' toField='set_translation'/>
+  </Scene>
+</X3D>

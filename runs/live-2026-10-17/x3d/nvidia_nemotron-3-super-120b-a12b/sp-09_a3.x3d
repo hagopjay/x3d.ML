@@ -1,0 +1,182 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+  <component name='Shape' level='2'/>
+</head>
+<Scene>
+  <Viewpoint description='Medieval castle view' position='0 20 30'/>
+
+  <!-- Geometry definitions -->
+  <Cylinder DEF='TowerBaseGeom' radius='2' height='10'></Cylinder>
+  <Cone DEF='TowerRoofGeom' bottomRadius='2.5' height='5'></Cone>
+  <Box DEF='WallGeom' size='20 2 0.5'></Box>
+  <Cylinder DEF='FlagPoleGeom' radius='0.2' height='5'></Cylinder>
+  <Box DEF='FlagGeom' size='2 1.5 0.1'></Box>
+  <Box DEF='LawnGeom' size='30 0.2 30'></Box>
+  <Box DEF='GatehouseGeom' size='6 4 0.5'></Box>
+  <Box DEF='DoorwayGeom' size='4 2 0.1'></Box>
+
+  <!-- Appearance definitions -->
+  <Appearance DEF='MatGray'>
+    <PhysicalMaterial baseColor='0.8 0.8 0.8'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatBrown'>
+    <PhysicalMaterial baseColor='0.5 0.25 0.0'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatWall'>
+    <PhysicalMaterial baseColor='0.75 0.75 0.75'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatPole'>
+    <PhysicalMaterial baseColor='0.4 0.4 0.4'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatRed'>
+    <PhysicalMaterial baseColor='0.8 0.0 0.0'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatLawn'>
+    <PhysicalMaterial baseColor='0.2 0.6 0.2'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatGate'>
+    <PhysicalMaterial baseColor='0.3 0.3 0.3'></PhysicalMaterial>
+  </Appearance>
+  <Appearance DEF='MatDoor'>
+    <PhysicalMaterial baseColor='0.0 0.0 0.0'></PhysicalMaterial>
+  </Appearance>
+
+  <!-- Lawn -->
+  <Transform>
+    <Shape>
+      <USE name='LawnGeom'></USE>
+      <USE name='MatLawn'></USE>
+    </Shape>
+  </Transform>
+
+  <!-- Towers -->
+  <!-- Southwest -->
+  <Transform translation='-10 0 -10'>
+    <Transform translation='0 5 0'>
+      <Shape>
+        <USE name='TowerBaseGeom'></USE>
+        <USE name='MatGray'></USE>
+      </Shape>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <Shape>
+        <USE name='TowerRoofGeom'></USE>
+        <USE name='MatBrown'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+
+  <!-- Southeast -->
+  <Transform translation='10 0 -10'>
+    <Transform translation='0 5 0'>
+      <Shape>
+        <USE name='TowerBaseGeom'></USE>
+        <USE name='MatGray'></USE>
+      </Shape>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <Shape>
+        <USE name='TowerRoofGeom'></USE>
+        <USE name='MatBrown'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+
+  <!-- Northeast -->
+  <Transform translation='10 0 10'>
+    <Transform translation='0 5 0'>
+      <Shape>
+        <USE name='TowerBaseGeom'></USE>
+        <USE name='MatGray'></USE>
+      </Shape>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <Shape>
+        <USE name='TowerRoofGeom'></USE>
+        <USE name='MatBrown'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+
+  <!-- Northwest -->
+  <Transform translation='-10 0 10'>
+    <Transform translation='0 5 0'>
+      <Shape>
+        <USE name='TowerBaseGeom'></USE>
+        <USE name='MatGray'></USE>
+      </Shape>
+    </Transform>
+    <Transform translation='0 12.5 0'>
+      <Shape>
+        <USE name='TowerRoofGeom'></USE>
+        <USE name='MatBrown'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+
+  <!-- Walls -->
+  <!-- South wall -->
+  <Transform translation='0 1 -10'>
+    <Shape>
+      <USE name='WallGeom'></USE>
+      <USE name='MatWall'></USE>
+    </Shape>
+  </Transform>
+  <!-- East wall -->
+  <Transform translation='10 1 0'>
+    <Transform rotation='0 1 0 1.57079633'>
+      <Shape>
+        <USE name='WallGeom'></USE>
+        <USE name='MatWall'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+  <!-- North wall -->
+  <Transform translation='0 1 10'>
+    <Shape>
+      <USE name='WallGeom'></USE>
+      <USE name='MatWall'></USE>
+    </Shape>
+  </Transform>
+  <!-- West wall -->
+  <Transform translation='-10 1 0'>
+    <Transform rotation='0 1 0 1.57079633'>
+      <Shape>
+        <USE name='WallGeom'></USE>
+        <USE name='MatWall'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+
+  <!-- Gatehouse -->
+  <Transform translation='0 2 -10'>
+    <Shape>
+      <USE name='GatehouseGeom'></USE>
+      <USE name='MatGate'></USE>
+    </Shape>
+  </Transform>
+  <Transform translation='0 2 -9.8'>
+    <Shape>
+      <USE name='DoorwayGeom'></USE>
+      <USE name='MatDoor'></USE>
+    </Shape>
+  </Transform>
+
+  <!-- Flag on tallest tower (Northeast) -->
+  <Transform translation='10 15 10'>
+    <Transform>
+      <!-- Pole -->
+      <Shape>
+        <USE name='FlagPoleGeom'></USE>
+        <USE name='MatPole'></USE>
+      </Shape>
+    </Transform>
+    <Transform translation='0 5 0'>
+      <Shape>
+        <USE name='FlagGeom'></USE>
+        <USE name='MatRed'></USE>
+      </Shape>
+    </Transform>
+  </Transform>
+</Scene>
+</X3D>

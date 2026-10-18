@@ -1,0 +1,30 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title="Newton's Cradle"/>
+    <Viewpoint description="Newton's Cradle Front View" position="0 2 14"/>
+    <Background skyColor="0.05 0.05 0.1, 0.1 0.1 0.2, 0.2 0.2 0.3" skyAngle="1.57, 3.14"/>
+    
+    <DirectionalLight direction="-0.5 -1 -0.5" intensity="1.2" color="1 0.98 0.95"/>
+    <DirectionalLight direction="0.5 -0.5 0.5" intensity="0.5" color="0.8 0.85 1"/>
+
+    <Transform translation="0 -1 0">
+      <TouchSensor DEF="Touch" description="Touch to restart animation"/>
+      <Shape>
+        <Box size="8 0.4 4"/>
+        <Appearance DEF="FrameApp">
+          <PhysicalMaterial baseColor="0.05 0.05 0.05" roughness="0.5" metallic="0.8"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation="3.5 2 1.5">
+      <Shape DEF="PillarShape">
+        <Cylinder radius="0.1" height="6"/>
+        <Appearance><USE name="FrameApp"/></Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation="3.5 2 -1.5">
+      <USE name="PillarShape"/>
+    </Transform>
+    <Transform translation="-3.5 2 1.5">
+      <USE name="PillarShape"/>

@@ -1,0 +1,34 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Pointer Highlight Box'/>
+    <Viewpoint description='View the interactive box' position='0 0 6'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <Background skyColor='0.08 0.10 0.14'/>
+
+    <Group>
+      <TouchSensor DEF='BoxTouch' description='Hover to highlight the box'/>
+      <Shape>
+        <Appearance>
+          <Material DEF='BoxMaterial' diffuseColor='0.2 0.4 0.7' emissiveColor='0 0 0'/>
+        </Appearance>
+        <Box size='2 2 2'/>
+      </Shape>
+    </Group>
+
+    <Script DEF='HighlightController'>
+      <field name='set_over' accessType='inputOnly' type='SFBool'/>
+      <field name='highlightColor' accessType='outputOnly' type='SFColor'/>
+      <![CDATA[
+        ecmascript:
+        function set_over(value) {
+          highlightColor = value
+            ? new SFColor(1, 1, 0)
+            : new SFColor(0, 0, 0);
+        }
+      ]]>
+    </Script>
+
+    <ROUTE fromNode='BoxTouch' fromField='isOver' toNode='HighlightController' toField='set_over'/>
+    <ROUTE fromNode='HighlightController' fromField='highlightColor' toNode='BoxMaterial' toField='set_emissiveColor'/>
+  </Scene>
+</X3D>

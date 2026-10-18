@@ -1,0 +1,61 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Door View' position='0 1 4'/>
+    <ProximitySensor DEF='OnLoadTrigger' size='100 100 100'/>
+    <TimeSensor DEF='DoorTimer' cycleInterval='2' loop='false'/>
+    <OrientationInterpolator DEF='DoorRotator' key='0 1' keyValue='0 1 0 0 0 1 0 1.570796'/>
+    <Transform translation='-0.6 1 0'>
+      <Shape>
+        <Box size='0.1 2 0.2'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0.6 1 0'>
+      <Shape>
+        <Box size='0.1 2 0.2'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.05 0'>
+      <Shape>
+        <Box size='1.3 0.1 0.2'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform DEF='DoorHinge' translation='-0.55 1 0'>
+      <Transform translation='0.55 0 0'>
+        <Shape>
+          <Box size='1.1 2 0.05'/>
+          <Appearance>
+            <Material diffuseColor='0.4 0.2 0.1'/>
+          </Appearance>
+        </Shape>
+        <Transform translation='0.45 0 0.05'>
+          <Shape>
+            <Sphere radius='0.04'/>
+            <Appearance>
+              <Material diffuseColor='0.9 0.8 0.1'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0.45 0 -0.05'>
+          <Shape>
+            <Sphere radius='0.04'/>
+            <Appearance>
+              <Material diffuseColor='0.9 0.8 0.1'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='OnLoadTrigger' fromField='enterTime' toNode='DoorTimer' toField='startTime'/>
+    <ROUTE fromNode='DoorTimer' fromField='fraction_changed' toNode='DoorRotator' toField='set_fraction'/>
+    <ROUTE fromNode='DoorRotator' fromField='value_changed' toNode='DoorHinge' toField='rotation'/>
+  </Scene>
+</X3D>

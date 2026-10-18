@@ -2,7 +2,7 @@
 import asyncio, re, os
 from playwright.async_api import async_playwright
 EXE=os.environ.get('CHROME')   # unset: Playwright's own Chromium
-URL=os.environ.get('PAGE','http://127.0.0.1:8782/v2test.html')
+URL=os.environ.get('PAGE','http://127.0.0.1:8782/v3test.html')
 res=[]
 def ok(n,c,d=''):
     res.append(bool(c)); print(('PASS ' if c else 'FAIL ')+n+(' :: '+str(d)[:300] if d!='' else ''),flush=True)
@@ -21,7 +21,7 @@ async def main():
             await pg.click(f'#tabs button[data-t={t}]'); await pg.wait_for_timeout(200)
             n=len(await pg.evaluate('document.getElementById("insBody").innerText')); ok(f'tab {t} still has content',n>80,n)
         await pg.click('#bTour'); await pg.wait_for_timeout(2500)
-        tn=await pg.evaluate('document.getElementById("tn").innerText'); ok('tour still opens',bool(re.search(r'1\s*/\s*9',tn)) or bool(tn.strip()),tn[:80])
+        tn=await pg.evaluate('document.getElementById("tn").innerText'); ok('tour still opens',bool(re.search(r'^1\s*/\s*\d+',tn.strip())),tn[:80])
         k=await pg.evaluate('document.querySelectorAll("#fh tr").length'); ok('firehose still streams',k>=20,k)
         ok('no page errors',not errs,errs)
         await b.close()

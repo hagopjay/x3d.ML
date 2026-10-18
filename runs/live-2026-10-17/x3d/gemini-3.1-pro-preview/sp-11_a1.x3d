@@ -1,0 +1,105 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Gyroscope.x3d'/>
+    <meta name='description' content='A gyroscope with three nested rings rotating around a central spinning disc.'/>
+  </head>
+  <Scene>
+    <Background skyColor='0.05 0.1 0.15'/>
+    <Viewpoint description='Gyroscope View' position='0 0 3.5'/>
+    <DirectionalLight direction='-0.5 -1 -0.5' intensity='1.0'/>
+    <DirectionalLight direction='0.5 1 0.5' intensity='0.5'/>
+
+    <TimeSensor DEF='ClockOuter' cycleInterval='7.0' loop='true'/>
+    <TimeSensor DEF='ClockMiddle' cycleInterval='5.0' loop='true'/>
+    <TimeSensor DEF='ClockInner' cycleInterval='3.5' loop='true'/>
+    <TimeSensor DEF='ClockDisc' cycleInterval='0.5' loop='true'/>
+
+    <OrientationInterpolator DEF='InterpOuter' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0, 1 0 0 1.57079, 1 0 0 3.14159, 1 0 0 4.71239, 1 0 0 6.28319'/>
+    <OrientationInterpolator DEF='InterpMiddle' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 0, 0 0 1 1.57079, 0 0 1 3.14159, 0 0 1 4.71239, 0 0 1 6.28319'/>
+    <OrientationInterpolator DEF='InterpInner' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0, 1 0 0 1.57079, 1 0 0 3.14159, 1 0 0 4.71239, 1 0 0 6.28319'/>
+    <OrientationInterpolator DEF='InterpDisc' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.57079, 0 1 0 3.14159, 0 1 0 4.71239, 0 1 0 6.28319'/>
+
+    <Transform DEF='OuterRing'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.8 0.15 0.15' metallic='0.9' roughness='0.2'/>
+        </Appearance>
+        <Extrusion DEF='RingGeom' crossSection='0.05 0.05, 0.05 -0.05, -0.05 -0.05, -0.05 0.05, 0.05 0.05' spine='1 0 0, 0.9238 0 0.3826, 0.7071 0 0.7071, 0.3826 0 0.9238, 0 0 1, -0.3826 0 0.9238, -0.7071 0 0.7071, -0.9238 0 0.3826, -1 0 0, -0.9238 0 -0.3826, -0.7071 0 -0.7071, -0.3826 0 -0.9238, 0 0 -1, 0.3826 0 -0.9238, 0.7071 0 -0.7071, 0.9238 0 -0.3826, 1 0 0'/>
+      </Shape>
+
+      <Transform DEF='MiddleRing' scale='0.8 0.8 0.8'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.2 0.8 0.3' metallic='0.9' roughness='0.2'/>
+          </Appearance>
+          <Extrusion USE='RingGeom'/>
+        </Shape>
+
+        <Transform DEF='InnerRing' scale='0.8 0.8 0.8'>
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.2 0.3 0.9' metallic='0.9' roughness='0.2'/>
+            </Appearance>
+            <Extrusion USE='RingGeom'/>
+          </Shape>
+
+          <Transform DEF='CentralDisc' scale='0.7 0.7 0.7'>
+            <Shape>
+              <Appearance>
+                <PhysicalMaterial baseColor='0.9 0.7 0.1' metallic='1.0' roughness='0.1'/>
+              </Appearance>
+              <Cylinder radius='0.85' height='0.05'/>
+            </Shape>
+
+            <Transform translation='0 0.03 0'>
+              <Shape>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0.2 0.2 0.2' metallic='0.6' roughness='0.5'/>
+                </Appearance>
+                <Cylinder radius='0.3' height='0.02'/>
+              </Shape>
+            </Transform>
+
+            <Transform translation='0 -0.03 0'>
+              <Shape>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0.2 0.2 0.2' metallic='0.6' roughness='0.5'/>
+                </Appearance>
+                <Cylinder radius='0.3' height='0.02'/>
+              </Shape>
+            </Transform>
+
+            <Transform translation='0.6 0.025 0'>
+              <Shape>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0 0 0' metallic='0' roughness='1'/>
+                </Appearance>
+                <Box size='0.2 0.025 0.2'/>
+              </Shape>
+            </Transform>
+            <Transform translation='-0.6 0.025 0'>
+              <Shape>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0 0 0' metallic='0' roughness='1'/>
+                </Appearance>
+                <Box size='0.2 0.025 0.2'/>
+              </Shape>
+            </Transform>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <ROUTE fromNode='ClockOuter' fromField='fraction_changed' toNode='InterpOuter' toField='set_fraction'/>
+    <ROUTE fromNode='InterpOuter' fromField='value_changed' toNode='OuterRing' toField='rotation'/>
+
+    <ROUTE fromNode='ClockMiddle' fromField='fraction_changed' toNode='InterpMiddle' toField='set_fraction'/>
+    <ROUTE fromNode='InterpMiddle' fromField='value_changed' toNode='MiddleRing' toField='rotation'/>
+
+    <ROUTE fromNode='ClockInner' fromField='fraction_changed' toNode='InterpInner' toField='set_fraction'/>
+    <ROUTE fromNode='InterpInner' fromField='value_changed' toNode='InnerRing' toField='rotation'/>
+
+    <ROUTE fromNode='ClockDisc' fromField='fraction_changed' toNode='InterpDisc' toField='set_fraction'/>
+    <ROUTE fromNode='InterpDisc' fromField='value_changed' toNode='CentralDisc' toField='rotation'/>
+  </Scene>
+</X3D>

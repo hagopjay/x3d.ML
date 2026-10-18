@@ -1,0 +1,98 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Lunar Base' position='0 12 40' orientation='1 0 0 -0.15'/>
+    <Background skyColor='0.01 0.01 0.02'/>
+    <DirectionalLight direction='-0.8 -0.6 -0.4' intensity='1.5' color='1 0.98 0.95' ambientIntensity='0.15'/>
+    
+    <Transform translation='-40 30 -80'>
+      <Shape>
+        <Sphere radius='15'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.1 0.3 0.8' metallic='0' roughness='0.8' emissiveColor='0.05 0.1 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 -2.5 0'>
+      <Shape>
+        <Box size='150 5 150'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.3 0.3 0.3' metallic='0.1' roughness='0.9'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0 0'>
+      <Shape DEF='DomeShape'>
+        <Sphere radius='5'/>
+        <Appearance DEF='DomeMat'>
+          <PhysicalMaterial baseColor='0.9 0.9 0.95' metallic='0.2' roughness='0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Transform translation='-15 0 0'>
+      <Shape USE='DomeShape'/>
+    </Transform>
+
+    <Transform translation='15 0 0'>
+      <Shape USE='DomeShape'/>
+    </Transform>
+
+    <Transform translation='0 0 -15'>
+      <Shape USE='DomeShape'/>
+    </Transform>
+
+    <Transform translation='-7.5 0 0' rotation='0 0 1 1.57'>
+      <Shape DEF='TubeShape'>
+        <Cylinder radius='1.5' height='15'/>
+        <Appearance USE='DomeMat'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='7.5 0 0' rotation='0 0 1 1.57'>
+      <Shape USE='TubeShape'/>
+    </Transform>
+
+    <Transform translation='0 0 -7.5' rotation='1 0 0 1.57'>
+      <Shape USE='TubeShape'/>
+    </Transform>
+
+    <Transform DEF='Rover' translation='-10 1 15'>
+      <Transform translation='0 0.5 0'>
+        <Shape>
+          <Box size='3 1.5 4'/>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.8 0.6 0.1' metallic='0.5' roughness='0.5'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-1.7 0 1.2' rotation='0 0 1 1.57'>
+        <Shape DEF='RoverWheel'>
+          <Cylinder radius='0.8' height='0.4'/>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.1 0.1 0.1' metallic='0' roughness='0.9'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='1.7 0 1.2' rotation='0 0 1 1.57'>
+        <Shape USE='RoverWheel'/>
+      </Transform>
+      <Transform translation='-1.7 0 -1.2' rotation='0 0 1 1.57'>
+        <Shape USE='RoverWheel'/>
+      </Transform>
+      <Transform translation='1.7 0 -1.2' rotation='0 0 1 1.57'>
+        <Shape USE='RoverWheel'/>
+      </Transform>
+    </Transform>
+
+    <TimeSensor DEF='Timer' cycleInterval='20' loop='true'/>
+    <PositionInterpolator DEF='Mover' key='0 0.25 0.5 0.75 1' keyValue='-10 1 15, 10 1 15, 10 1 -10, -10 1 -10, -10 1 15'/>
+    <OrientationInterpolator DEF='Rotator' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 -1.57, 0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71'/>
+    
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Mover' toField='set_fraction'/>
+    <ROUTE fromNode='Mover' fromField='value_changed' toNode='Rover' toField='translation'/>
+    <ROUTE fromNode='Timer' fromField='fraction_changed' toNode='Rotator' toField='set_fraction'/>
+    <ROUTE fromNode='Rotator' fromField='value_changed' toNode='Rover' toField='rotation'/>
+  </Scene>
+</X3D>

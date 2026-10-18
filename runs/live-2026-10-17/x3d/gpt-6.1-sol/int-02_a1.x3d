@@ -1,0 +1,45 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <WorldInfo title='Click to Toggle Red and Green'/>
+    <Background skyColor='0.04 0.05 0.08'/>
+    <Viewpoint description='Click the sphere to toggle its color' position='0 0 5'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+
+    <Transform>
+      <TouchSensor DEF='SphereTouch' description='Toggle red and green'/>
+      <Shape>
+        <Appearance>
+          <Material DEF='SphereMaterial' diffuseColor='1 0 0' specularColor='0.4 0.4 0.4' shininess='0.5'/>
+        </Appearance>
+        <Sphere radius='1'/>
+      </Shape>
+    </Transform>
+
+    <BooleanToggle DEF='ColorToggle' toggle='false'/>
+    <BooleanFilter DEF='ColorFilter'/>
+
+    <TimeTrigger DEF='GreenTrigger'/>
+    <TimeTrigger DEF='RedTrigger'/>
+
+    <TimeSensor DEF='GreenClock' cycleInterval='0.01' loop='false'/>
+    <TimeSensor DEF='RedClock' cycleInterval='0.01' loop='false'/>
+
+    <ColorInterpolator DEF='GreenColor' key='0 1' keyValue='0 1 0, 0 1 0'/>
+    <ColorInterpolator DEF='RedColor' key='0 1' keyValue='1 0 0, 1 0 0'/>
+
+    <ROUTE fromNode='SphereTouch' fromField='isActive' toNode='ColorToggle' toField='set_boolean'/>
+    <ROUTE fromNode='ColorToggle' fromField='toggle' toNode='ColorFilter' toField='set_boolean'/>
+
+    <ROUTE fromNode='ColorFilter' fromField='inputTrue' toNode='GreenTrigger' toField='set_boolean'/>
+    <ROUTE fromNode='ColorFilter' fromField='inputFalse' toNode='RedTrigger' toField='set_boolean'/>
+
+    <ROUTE fromNode='GreenTrigger' fromField='triggerTime' toNode='GreenClock' toField='set_startTime'/>
+    <ROUTE fromNode='RedTrigger' fromField='triggerTime' toNode='RedClock' toField='set_startTime'/>
+
+    <ROUTE fromNode='GreenClock' fromField='fraction_changed' toNode='GreenColor' toField='set_fraction'/>
+    <ROUTE fromNode='RedClock' fromField='fraction_changed' toNode='RedColor' toField='set_fraction'/>
+
+    <ROUTE fromNode='GreenColor' fromField='value_changed' toNode='SphereMaterial' toField='set_diffuseColor'/>
+    <ROUTE fromNode='RedColor' fromField='value_changed' toNode='SphereMaterial' toField='set_diffuseColor'/>
+  </Scene>
+</X3D>

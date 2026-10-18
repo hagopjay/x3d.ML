@@ -1,0 +1,27 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint DEF='View1' description='Metallic gold ring' position='0 0 5'/>
+    <Viewpoint USE='View1' position='0 0 10' description='Metallic gold ring (copy)'/>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial baseColor='1 0.84 0' metalness='1' roughness='0.2'/>
+      </Appearance>
+      <Extrusion DEF='RingExtrusion'
+        spine='2 0 0 1.8478 0.7654 0 1.4142 1.4142 0 0.7654 1.8478 0 0 2 0 -0.7654 1.8478 0 -1.4142 1.4142 0 -1.8478 0.7654 0 -2 0 0 -1.8478 -0.7654 0 -1.4142 -1.4142 0 -0.7654 -1.8478 0 0 -2 0 0.7654 -1.8478 0 1.4142 -1.4142 0 1.8478 -0.7654 0'
+        crossSection='0.5 0 0.463 0.191 0.354 0.354 0.191 0.463 0 0.5 -0.191 0.463 -0.354 0.354 -0.463 0.191 -0.5 0 -0.463 -0.191 -0.354 -0.354 -0.191 -0.463 0 -0.5 0.191 -0.463 0.354 -0.354 0.463 -0.191'
+        scale='1 1'
+        orientation='0 0 1 0'
+        beginCap='true'
+        endCap='true'/>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial baseColor='1 0.84 0' metalness='1' roughness='0.2'/>
+      </Appearance>
+      <Extrusion USE='RingExtrusion'/>
+    </Shape>
+  </Scene>
+</X3D>

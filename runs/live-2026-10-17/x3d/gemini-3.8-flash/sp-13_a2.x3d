@@ -1,0 +1,293 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component level='1' name='Shape'/>
+    <meta content='rocket_launch.x3d' name='title'/>
+    <meta content='A rocket on a launch pad with a gantry tower launching and shrinking into the distance' name='description'/>
+    <meta content='X3D-Edit 4.0' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Rocket Launch Pad'/>
+    <Background groundAngle='1.3 1.57' groundColor='0.15 0.18 0.12 0.25 0.3 0.2 0.4 0.42 0.38' skyAngle='1.1 1.4 1.57' skyColor='0.05 0.1 0.25 0.1 0.25 0.55 0.4 0.6 0.85 0.7 0.8 0.95'/>
+
+    <Viewpoint description='Launch Pad View' fieldOfView='0.85' orientation='-0.18 0.97 0.14 0.55' position='18 12 32'/>
+    <Viewpoint description='Close-up Rocket' fieldOfView='0.78' orientation='0 1 0 0' position='0 8 18'/>
+
+    <DirectionalLight color='1 0.96 0.9' direction='-0.6 -0.7 -0.4' intensity='1.2'/>
+    <DirectionalLight color='0.5 0.6 0.8' direction='0.6 0.3 0.7' intensity='0.35'/>
+
+    <!-- Terrain and Concrete Launch Complex -->
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.25 0.28 0.22'/>
+        </Appearance>
+        <Cylinder height='1' radius='60'/>
+      </Shape>
+    </Transform>
+
+    <Transform translation='0 0.5 0'>
+      <!-- Concrete Pad Slab -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.55 0.57 0.58'/>
+        </Appearance>
+        <Cylinder height='1' radius='14'/>
+      </Shape>
+      <!-- Launch Mount Pedestal -->
+      <Transform translation='0 1.25 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.22 0.25'/>
+          </Appearance>
+          <Cylinder height='1.5' radius='3.5'/>
+        </Shape>
+        <!-- Exhaust Duct Opening -->
+        <Transform translation='0 0.76 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.05 0.05 0.05'/>
+            </Appearance>
+            <Cylinder height='0.1' radius='2.2'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+
+    <!-- Gantry Tower Structure -->
+    <Transform translation='-5.5 0 0'>
+      <!-- Foundation -->
+      <Transform translation='0 0.75 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.32 0.35'/>
+          </Appearance>
+          <Box size='4.5 1.5 4.5'/>
+        </Shape>
+      </Transform>
+
+      <!-- Tower Legs (4 red-orange lattice columns) -->
+      <Transform translation='-1.6 12.5 -1.6'>
+        <Shape DEF='TowerColumn'>
+          <Appearance DEF='TowerApp'>
+            <Material diffuseColor='0.8 0.22 0.1'/>
+          </Appearance>
+          <Cylinder height='22' radius='0.15'/>
+        </Shape>
+      </Transform>
+      <Transform translation='1.6 12.5 -1.6'>
+        <Shape USE='TowerColumn'/>
+      </Transform>
+      <Transform translation='-1.6 12.5 1.6'>
+        <Shape USE='TowerColumn'/>
+      </Transform>
+      <Transform translation='1.6 12.5 1.6'>
+        <Shape USE='TowerColumn'/>
+      </Transform>
+
+      <!-- Horizontal Service Platforms along Tower -->
+      <Transform translation='0 5 0'>
+        <Shape DEF='TowerPlatform'>
+          <Appearance DEF='MetalPlatform'>
+            <Material diffuseColor='0.4 0.42 0.45'/>
+          </Appearance>
+          <Box size='3.6 0.25 3.6'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 9 0'>
+        <Shape USE='TowerPlatform'/>
+      </Transform>
+      <Transform translation='0 13 0'>
+        <Shape USE='TowerPlatform'/>
+      </Transform>
+      <Transform translation='0 17 0'>
+        <Shape USE='TowerPlatform'/>
+      </Transform>
+      <Transform translation='0 21 0'>
+        <Shape USE='TowerPlatform'/>
+      </Transform>
+      <Transform translation='0 23.5 0'>
+        <Shape>
+          <Appearance USE='MetalPlatform'/>
+          <Box size='3.8 0.4 3.8'/>
+        </Shape>
+      </Transform>
+
+      <!-- Gantry Cross Bracing Struts -->
+      <Transform rotation='0 0 1 0.785' translation='0 7 1.6'>
+        <Shape DEF='CrossBrace'>
+          <Appearance USE='TowerApp'/>
+          <Box size='4.4 0.1 0.1'/>
+        </Shape>
+      </Transform>
+      <Transform rotation='0 0 1 -0.785' translation='0 7 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+      <Transform rotation='0 0 1 0.785' translation='0 11 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+      <Transform rotation='0 0 1 -0.785' translation='0 11 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+      <Transform rotation='0 0 1 0.785' translation='0 15 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+      <Transform rotation='0 0 1 -0.785' translation='0 15 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+      <Transform rotation='0 0 1 0.785' translation='0 19 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+      <Transform rotation='0 0 1 -0.785' translation='0 19 1.6'>
+        <Shape USE='CrossBrace'/>
+      </Transform>
+
+      <!-- Umbilical Access Arms reaching to Rocket -->
+      <Transform translation='2.6 13.2 0'>
+        <Shape DEF='AccessArm'>
+          <Appearance>
+            <Material diffuseColor='0.6 0.65 0.7'/>
+          </Appearance>
+          <Box size='2.5 0.4 0.6'/>
+        </Shape>
+      </Transform>
+      <Transform translation='2.6 19.5 0'>
+        <Shape USE='AccessArm'/>
+      </Transform>
+
+      <!-- Lightning Mast -->
+      <Transform translation='0 26.5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.9 0.9'/>
+          </Appearance>
+          <Cylinder height='6' radius='0.08'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Animated Rocket Assembly -->
+    <Transform DEF='RocketTransform' translation='0 2 0'>
+      <!-- Rocket Engine Nozzle -->
+      <Transform rotation='1 0 0 3.14159' translation='0 0.4 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.22'/>
+          </Appearance>
+          <Cone bottomRadius='0.75' height='0.9'/>
+        </Shape>
+      </Transform>
+
+      <!-- Rocket First Stage Main Core -->
+      <Transform translation='0 5.5 0'>
+        <Shape>
+          <Appearance DEF='WhiteRocketBody'>
+            <Material diffuseColor='0.96 0.96 0.97'/>
+          </Appearance>
+          <Cylinder height='9.2' radius='0.9'/>
+        </Shape>
+      </Transform>
+
+      <!-- Black Stripe Accent Band -->
+      <Transform translation='0 3.5 0'>
+        <Shape>
+          <Appearance DEF='DarkMarking'>
+            <Material diffuseColor='0.1 0.1 0.12'/>
+          </Appearance>
+          <Cylinder height='0.7' radius='0.91'/>
+        </Shape>
+      </Transform>
+
+      <!-- Interstage Ring -->
+      <Transform translation='0 10.3 0'>
+        <Shape>
+          <Appearance USE='DarkMarking'/>
+          <Cylinder height='0.5' radius='0.89'/>
+        </Shape>
+      </Transform>
+
+      <!-- Rocket Second Stage Core -->
+      <Transform translation='0 12.8 0'>
+        <Shape>
+          <Appearance USE='WhiteRocketBody'/>
+          <Cylinder height='4.5' radius='0.88'/>
+        </Shape>
+      </Transform>
+
+      <!-- Payload Fairing Cone (Nose Cone) -->
+      <Transform translation='0 16.5 0'>
+        <Shape>
+          <Appearance USE='WhiteRocketBody'/>
+          <Cone bottomRadius='0.88' height='3.2'/>
+        </Shape>
+      </Transform>
+
+      <!-- Aerodynamic Fins (4 Cardinal Orientations) -->
+      <Transform translation='1.15 1.5 0'>
+        <Shape DEF='FinShape'>
+          <Appearance USE='TowerApp'/>
+          <Box size='0.9 1.8 0.08'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-1.15 1.5 0'>
+        <Shape USE='FinShape'/>
+      </Transform>
+      <Transform translation='0 1.5 1.15'>
+        <Shape DEF='FinShapeZ'>
+          <Appearance USE='TowerApp'/>
+          <Box size='0.08 1.8 0.9'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 1.5 -1.15'>
+        <Shape USE='FinShapeZ'/>
+      </Transform>
+
+      <!-- Exhaust Flame Assembly (Orange Cone Flame Under Rocket) -->
+      <Transform DEF='FlameTransform' scale='0.001 0.001 0.001' translation='0 0 0'>
+        <!-- Outer Glowing Orange Flame Cone (pointing down) -->
+        <Transform rotation='1 0 0 3.14159' translation='0 -2.4 0'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial emissiveColor='1.0 0.4 0.02' transparency='0.15'/>
+            </Appearance>
+            <Cone bottomRadius='0.8' height='5.0'/>
+          </Shape>
+        </Transform>
+
+        <!-- Inner Bright Yellow/White Core Flame Cone -->
+        <Transform rotation='1 0 0 3.14159' translation='0 -1.6 0'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial emissiveColor='1.0 0.92 0.4' transparency='0.05'/>
+            </Appearance>
+            <Cone bottomRadius='0.45' height='3.2'/>
+          </Shape>
+        </Transform>
+
+        <!-- Dynamic Thrust Point Light -->
+        <PointLight color='1 0.6 0.1' intensity='6' location='0 -2 0' radius='25'/>
+      </Transform>
+    </Transform>
+
+    <!-- Animation Clocks and Interpolators -->
+    <TimeSensor DEF='LaunchClock' cycleInterval='9.0' enabled='true' loop='true'/>
+
+    <!-- Rocket Position: Pad hold, rapid liftoff ascent, curvature into sky, then reset -->
+    <PositionInterpolator DEF='RocketAscent' key='0.0 0.18 0.35 0.55 0.78 0.88 0.94 1.0' keyValue='0.0 2.0 0.0 0.0 2.0 0.0 0.0 12.0 -1.0 0.0 45.0 -18.0 0.0 130.0 -70.0 0.0 220.0 -140.0 0.0 2.0 0.0 0.0 2.0 0.0'/>
+
+    <!-- Rocket Shrink: Full scale on pad, shrinks drastically into far distance, resets -->
+    <PositionInterpolator DEF='RocketScale' key='0.0 0.18 0.35 0.55 0.78 0.88 0.94 1.0' keyValue='1.0 1.0 1.0 1.0 1.0 1.0 0.9 0.9 0.9 0.6 0.6 0.6 0.22 0.22 0.22 0.02 0.02 0.02 0.001 0.001 0.001 1.0 1.0 1.0'/>
+
+    <!-- Flame Scale: Ignites at liftoff, flares, shrinks in distance, turns off at pad -->
+    <PositionInterpolator DEF='FlameScale' key='0.0 0.15 0.18 0.3 0.6 0.78 0.88 0.9 1.0' keyValue='0.001 0.001 0.001 0.001 0.001 0.001 0.9 1.3 0.9 1.1 1.6 1.1 1.0 1.5 1.0 0.8 1.2 0.8 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001'/>
+
+    <!-- Animation ROUTEs -->
+    <ROUTE fromField='fraction_changed' fromNode='LaunchClock' toField='set_fraction' toNode='RocketAscent'/>
+    <ROUTE fromField='value_changed' fromNode='RocketAscent' toField='translation' toNode='RocketTransform'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='LaunchClock' toField='set_fraction' toNode='RocketScale'/>
+    <ROUTE fromField='value_changed' fromNode='RocketScale' toField='scale' toNode='RocketTransform'/>
+
+    <ROUTE fromField='fraction_changed' fromNode='LaunchClock' toField='set_fraction' toNode='FlameScale'/>
+    <ROUTE fromField='value_changed' fromNode='FlameScale' toField='scale' toNode='FlameTransform'/>
+  </Scene>
+</X3D>

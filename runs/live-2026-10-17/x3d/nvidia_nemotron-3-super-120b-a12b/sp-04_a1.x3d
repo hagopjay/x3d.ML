@@ -1,0 +1,82 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+  <Appearance DEF='Marble'>
+    <PhysicalMaterial baseColor='0.9 0.85 0.7' roughness='0.2'/>
+  </Appearance>
+  <Appearance DEF='GroundAppear'>
+    <PhysicalMaterial baseColor='0.2 0.6 0.2' roughness='0.8'/>
+  </Appearance>
+  <Shape DEF='Column'>
+    <Cylinder height='4' radius='0.5'/>
+    <Appearance USE='Marble'/>
+  </Shape>
+
+  <!-- Ground -->
+  <Shape>
+    <Box size='100 1 100'/>
+    <Appearance USE='GroundAppear'/>
+  </Shape>
+
+  <!-- Base steps -->
+  <Transform translation='0 0.5 0'>
+    <Shape>
+      <Box size='20 1 10'/>
+      <Appearance USE='Marble'/>
+    </Shape>
+  </Transform>
+  <Transform translation='0 1.5 0'>
+    <Shape>
+      <Box size='18 1 8'/>
+      <Appearance USE='Marble'/>
+    </Shape>
+  </Transform>
+  <Transform translation='0 2.5 0'>
+    <Shape>
+      <Box size='16 1 6'/>
+      <Appearance USE='Marble'/>
+    </Shape>
+  </Transform>
+
+  <!-- Columns (8 per long side, front and back) -->
+  <!-- Front side (z = +4) -->
+  <Transform translation='-7 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='-5 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='-3 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='-1 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='1 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='3 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='5 5 4'><USE DEF='Column'/></Transform>
+  <Transform translation='7 5 4'><USE DEF='Column'/></Transform>
+  <!-- Back side (z = -4) -->
+  <Transform translation='-7 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='-5 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='-3 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='-1 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='1 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='3 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='5 5 -4'><USE DEF='Column'/></Transform>
+  <Transform translation='7 5 -4'><USE DEF='Column'/></Transform>
+
+  <!-- Roof slab -->
+  <Transform translation='0 7.25 0'>
+    <Shape>
+      <Box size='20 0.5 10'/>
+      <Appearance USE='Marble'/>
+    </Shape>
+  </Transform>
+
+  <!-- Pediment (front face) -->
+  <Shape>
+    <IndexedFaceSet coordIndex='0 1 2 -1'>
+      <Coordinate point='10 7.5 -5 10 7.5 5 10 9.5 0'/>
+    </IndexedFaceSet>
+    <Appearance USE='Marble'/>
+  </Shape>
+
+  <!-- Lighting -->
+  <DirectionalLight direction='-1 -1 -0.5' intensity='0.5' color='1 1 1'/>
+
+  <!-- Viewpoint -->
+  <Viewpoint position='0 10 20' description='View of Greek temple'/>
+</Scene>
+</X3D>

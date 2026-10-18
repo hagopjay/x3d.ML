@@ -1,0 +1,266 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta content='medieval_castle.x3d' name='title'/>
+    <meta content='Medieval castle with four corner towers, crenellations, gatehouse, animated red flag, and green lawn' name='description'/>
+    <meta content='X3D-Edit 4.0, https://savage.nps.edu/X3D-Edit' name='generator'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Medieval Castle'/>
+    <Background skyColor='0.4 0.6 0.9 0.7 0.8 0.95 0.9 0.95 1.0' skyAngle='1.2 1.57'/>
+    <DirectionalLight direction='-0.6 -0.8 -0.5' intensity='0.9' shadowIntensity='0.5'/>
+    <DirectionalLight direction='0.7 0.3 0.6' intensity='0.3'/>
+    
+    <Viewpoint description='Castle Overview' position='0 18 42' orientation='1 0 0 -0.25'/>
+    <Viewpoint description='Gatehouse Close-up' position='0 5 18' orientation='1 0 0 -0.1'/>
+    <Viewpoint description='High Angle View' position='30 35 30' orientation='-0.6 0.75 0.28 0.85'/>
+
+    <!-- Green Lawn Base -->
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.22 0.52 0.18' roughness='0.9' specularColor='0.05 0.1 0.05'/>
+        </Appearance>
+        <Cylinder height='1' radius='40'/>
+      </Shape>
+    </Transform>
+
+    <!-- Castle Courtyard Cobblestones -->
+    <Transform translation='0 0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.45 0.43 0.4' roughness='0.8'/>
+        </Appearance>
+        <Box size='18 0.2 18'/>
+      </Shape>
+    </Transform>
+
+    <!-- Shared Materials & Geometries Defined in Wall Segments -->
+    <!-- East Wall (X = +9) -->
+    <Transform translation='9 3.5 0'>
+      <Shape DEF='WallSegmentZ'>
+        <Appearance DEF='StoneWallApp'>
+          <Material diffuseColor='0.62 0.6 0.56' roughness='0.7' specularColor='0.1 0.1 0.1'/>
+        </Appearance>
+        <Box size='1.6 7 14'/>
+      </Shape>
+    </Transform>
+
+    <!-- West Wall (X = -9) -->
+    <Transform translation='-9 3.5 0'>
+      <Shape USE='WallSegmentZ'/>
+    </Transform>
+
+    <!-- North (Back) Wall (Z = -9) -->
+    <Transform translation='0 3.5 -9'>
+      <Shape DEF='WallSegmentX'>
+        <Appearance USE='StoneWallApp'/>
+        <Box size='14 7 1.6'/>
+      </Shape>
+    </Transform>
+
+    <!-- Crenellation Merlon Definitions and Rows -->
+    <!-- Single Merlon for X-axis walls -->
+    <Transform translation='-6 7.4 -9'>
+      <Shape DEF='MerlonX'>
+        <Appearance USE='StoneWallApp'/>
+        <Box size='1.2 0.8 1.8'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-3 7.4 -9'><Shape USE='MerlonX'/></Transform>
+    <Transform translation='0 7.4 -9'><Shape USE='MerlonX'/></Transform>
+    <Transform translation='3 7.4 -9'><Shape USE='MerlonX'/></Transform>
+    <Transform translation='6 7.4 -9'><Shape USE='MerlonX'/></Transform>
+
+    <!-- Single Merlon for Z-axis walls -->
+    <Transform translation='9 7.4 -6'>
+      <Shape DEF='MerlonZ'>
+        <Appearance USE='StoneWallApp'/>
+        <Box size='1.8 0.8 1.2'/>
+      </Shape>
+    </Transform>
+    <Transform translation='9 7.4 -3'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='9 7.4 0'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='9 7.4 3'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='9 7.4 6'><Shape USE='MerlonZ'/></Transform>
+
+    <Transform translation='-9 7.4 -6'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='-9 7.4 -3'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='-9 7.4 0'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='-9 7.4 3'><Shape USE='MerlonZ'/></Transform>
+    <Transform translation='-9 7.4 6'><Shape USE='MerlonZ'/></Transform>
+
+    <!-- Front South Walls flanking Gatehouse -->
+    <Transform translation='-5.5 3.5 9'>
+      <Shape>
+        <Appearance USE='StoneWallApp'/>
+        <Box size='5 7 1.6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-6 7.4 9'><Shape USE='MerlonX'/></Transform>
+    <Transform translation='-4 7.4 9'><Shape USE='MerlonX'/></Transform>
+
+    <Transform translation='5.5 3.5 9'>
+      <Shape>
+        <Appearance USE='StoneWallApp'/>
+        <Box size='5 7 1.6'/>
+      </Shape>
+    </Transform>
+    <Transform translation='4 7.4 9'><Shape USE='MerlonX'/></Transform>
+    <Transform translation='6 7.4 9'><Shape USE='MerlonX'/></Transform>
+
+    <!-- Corner Towers (Standard: NW, SW, SE) -->
+    <!-- Tower Shared Appearance -->
+    <!-- Southwest Tower (-9, 0, 9) -->
+    <Transform translation='-9 5.5 9'>
+      <Shape DEF='TowerBody'>
+        <Appearance DEF='TowerStoneApp'>
+          <Material diffuseColor='0.58 0.56 0.53' roughness='0.65' specularColor='0.12 0.12 0.12'/>
+        </Appearance>
+        <Cylinder height='11' radius='2.4'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-9 12.5 9'>
+      <Shape DEF='TowerRoof'>
+        <Appearance DEF='RoofApp'>
+          <Material diffuseColor='0.45 0.18 0.15' roughness='0.5' specularColor='0.2 0.1 0.1'/>
+        </Appearance>
+        <Cone bottomRadius='3' height='3.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Southeast Tower (9, 0, 9) -->
+    <Transform translation='9 5.5 9'>
+      <Shape USE='TowerBody'/>
+    </Transform>
+    <Transform translation='9 12.5 9'>
+      <Shape USE='TowerRoof'/>
+    </Transform>
+
+    <!-- Northwest Tower (-9, 0, -9) -->
+    <Transform translation='-9 5.5 -9'>
+      <Shape USE='TowerBody'/>
+    </Transform>
+    <Transform translation='-9 12.5 -9'>
+      <Shape USE='TowerRoof'/>
+    </Transform>
+
+    <!-- Tallest Corner Tower: Northeast Tower (9, 0, -9) -->
+    <Transform translation='9 7.5 -9'>
+      <Shape>
+        <Appearance USE='TowerStoneApp'/>
+        <Cylinder height='15' radius='2.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='9 16.7 -9'>
+      <Shape>
+        <Appearance USE='RoofApp'/>
+        <Cone bottomRadius='3.2' height='4.2'/>
+      </Shape>
+    </Transform>
+
+    <!-- Flagpole & Red Flag on Tallest Tower -->
+    <Transform translation='9 20 -9'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.7 0.7 0.7' metalness='0.8' roughness='0.3'/>
+        </Appearance>
+        <Cylinder height='3.5' radius='0.08'/>
+      </Shape>
+      <!-- Animated Flag Group -->
+      <Transform DEF='FlagTransform' translation='0 1.1 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.85 0.08 0.08' roughness='0.6' specularColor='0.3 0.05 0.05'/>
+          </Appearance>
+          <IndexedFaceSet coordIndex='0 1 2 3 -1 3 2 1 0 -1' solid='false'>
+            <Coordinate point='0 0.4 0, 1.8 0.25 0, 1.8 -0.45 0, 0 -0.3 0'/>
+          </IndexedFaceSet>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Gatehouse Structure -->
+    <Transform translation='0 4.2 9.5'>
+      <!-- Main Gatehouse Block -->
+      <Shape>
+        <Appearance USE='TowerStoneApp'/>
+        <Box size='6 8.4 3.2'/>
+      </Shape>
+      <!-- Gatehouse Crenellations -->
+      <Transform translation='-2.2 4.6 0'><Shape USE='MerlonX'/></Transform>
+      <Transform translation='0 4.6 0'><Shape USE='MerlonX'/></Transform>
+      <Transform translation='2.2 4.6 0'><Shape USE='MerlonX'/></Transform>
+      <!-- Portal Arch Surround (Stone Frame) -->
+      <Transform translation='0 -1.6 1.62'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.35 0.34 0.32' roughness='0.8'/>
+          </Appearance>
+          <Box size='3.4 5.2 0.3'/>
+        </Shape>
+      </Transform>
+      <!-- Deep Dark Doorway Interior -->
+      <Transform translation='0 -1.8 1.7'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.05 0.05 0.05' roughness='1.0'/>
+          </Appearance>
+          <Box size='2.5 4.5 0.2'/>
+        </Shape>
+      </Transform>
+      <!-- Heavy Portcullis Grate -->
+      <Transform translation='0 -1.8 1.75'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.15 0.15 0.15' metalness='0.9' roughness='0.4'/>
+          </Appearance>
+          <IndexedFaceSet coordIndex='0 1 -1 2 3 -1 4 5 -1 6 7 -1 8 9 -1 10 11 -1' lines='true'>
+            <Coordinate point='-1 -2.25 0, -1 2.25 0, -0.5 -2.25 0, -0.5 2.25 0, 0 -2.25 0, 0 2.25 0, 0.5 -2.25 0, 0.5 2.25 0, 1 -2.25 0, 1 2.25 0, -1.2 0 0, 1.2 0 0'/>
+          </IndexedFaceSet>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Left & Right Gate Turrets -->
+    <Transform translation='-3.2 4.5 10.5'>
+      <Shape>
+        <Appearance USE='TowerStoneApp'/>
+        <Cylinder height='9' radius='1.1'/>
+      </Shape>
+      <Transform translation='0 5.2 0'>
+        <Shape>
+          <Appearance USE='RoofApp'/>
+          <Cone bottomRadius='1.4' height='2'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <Transform translation='3.2 4.5 10.5'>
+      <Shape>
+        <Appearance USE='TowerStoneApp'/>
+        <Cylinder height='9' radius='1.1'/>
+      </Shape>
+      <Transform translation='0 5.2 0'>
+        <Shape>
+          <Appearance USE='RoofApp'/>
+          <Cone bottomRadius='1.4' height='2'/>
+        </Shape>
+      </Transform>
+    </Transform>
+
+    <!-- Wooden Drawbridge in front of Gate -->
+    <Transform translation='0 0.15 13.5' rotation='1 0 0 0.05'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.38 0.24 0.12' roughness='0.85'/>
+        </Appearance>
+        <Box size='2.6 0.25 5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Flag Flutter Animation -->
+    <TimeSensor DEF='FlagTimer' cycleInterval='2.0' loop='true'/>
+    <OrientationInterpolator DEF='FlagFlutter' key='0.0 0.25 0.5 0.75 1.0' keyValue='0 1 0 0.08, 0 1 0 -0.15, 0 1 0 0.12, 0 1 0 -0.06, 0 1 0 0.08'/>
+    <ROUTE fromNode='FlagTimer' fromField='fraction_changed' toNode='FlagFlutter' toField='set_fraction'/>
+    <ROUTE fromNode='FlagFlutter' fromField='value_changed' toNode='FlagTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,70 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geospatial' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Overview View' position='0 70 120' orientation='1 0 0 -0.55'/>
+    <GeoViewpoint description='Torgersen Hall Aerial View' geoSystem='"GD" "WE"' position='37.2285 -80.419448 760' orientation='1 0 0 -0.6'/>
+
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='37.229984 -80.419448 635'>
+      <Transform translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.45 0.25'/>
+          </Appearance>
+          <Box size='140 1 140'/>
+        </Shape>
+      </Transform>
+      <Transform translation='-25 12.5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.55 0.3 0.25'/>
+          </Appearance>
+          <Box size='35 25 30'/>
+        </Shape>
+      </Transform>
+      <Transform translation='10 16 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.4 0.45 0.5' transparency='0.2'/>
+          </Appearance>
+          <Box size='35 10 12'/>
+        </Shape>
+      </Transform>
+      <Transform translation='40 10 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.55 0.3 0.25'/>
+          </Appearance>
+          <Box size='25 20 28'/>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+
+    <GeoLocation DEF='DroneLocation' geoSystem='"GD" "WE"' geoCoords='37.2295 -80.4199 685'>
+      <Transform>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.2 0.1'/>
+          </Appearance>
+          <Box size='2 0.6 2'/>
+        </Shape>
+        <Transform translation='0 0.4 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.1 0.7 0.9'/>
+            </Appearance>
+            <Box size='0.8 0.4 0.8'/>
+          </Shape>
+        </Transform>
+      </Transform>
+    </GeoLocation>
+
+    <TimeSensor DEF='DroneTimer' cycleInterval='20' loop='true'/>
+
+    <GeoPositionInterpolator DEF='DronePath' geoSystem='"GD" "WE"' key='0 0.25 0.5 0.75 1' keyValue='37.2295 -80.4199 685 37.2305 -80.4199 685 37.2305 -80.4189 685 37.2295 -80.4189 685 37.2295 -80.4199 685'/>
+
+    <ROUTE fromNode='DroneTimer' fromField='fraction_changed' toNode='DronePath' toField='set_fraction'/>
+    <ROUTE fromNode='DronePath' fromField='geovalue_changed' toNode='DroneLocation' toField='set_geoCoords'/>
+  </Scene>
+</X3D>

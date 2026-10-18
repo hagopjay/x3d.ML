@@ -1,0 +1,36 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='HoverHighlightBox.x3d'/>
+    <meta name='description' content='A box that becomes emissive yellow while the pointer is over it.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Hover Box View' position='0 0 5'/>
+    
+    <Transform rotation='0.5 1 0 0.5'>
+      <TouchSensor DEF='BoxTouchSensor' description='Hover to highlight'/>
+      <Shape>
+        <Box/>
+        <Appearance>
+          <Material DEF='BoxMaterial' diffuseColor='0.2 0.5 0.8' emissiveColor='0 0 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+
+    <Script DEF='HoverScript'>
+      <field accessType='inputOnly' name='set_isOver' type='SFBool'/>
+      <field accessType='outputOnly' name='emissive_changed' type='SFColor'/>
+      <![CDATA[ecmascript:
+        function set_isOver(value) {
+            if (value) {
+                emissive_changed = new SFColor(1, 1, 0);
+            } else {
+                emissive_changed = new SFColor(0, 0, 0);
+            }
+        }
+      ]]>
+    </Script>
+
+    <ROUTE fromNode='BoxTouchSensor' fromField='isOver' toNode='HoverScript' toField='set_isOver'/>
+    <ROUTE fromNode='HoverScript' fromField='emissive_changed' toNode='BoxMaterial' toField='emissiveColor'/>
+  </Scene>
+</X3D>

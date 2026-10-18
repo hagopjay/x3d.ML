@@ -1,0 +1,34 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Eye Level View' position='0 1.6 2' centerOfRotation='0 1.6 0'/>
+
+    <HAnimHumanoid name='Humanoid' version='2.0'>
+      <HAnimJoint DEF='hanim_humanoid_root' name='humanoid_root' center='0 0.8 0' containerField='skeleton'>
+        <HAnimSegment DEF='hanim_pelvis' name='pelvis'>
+          <Transform translation='0 0.8 0'>
+            <Shape>
+              <Box size='0.2 0.2 0.2'/>
+              <Appearance><Material diffuseColor='0 0 1'/></Appearance>
+            </Shape>
+          </Transform>
+        </HAnimSegment>
+
+        <HAnimJoint DEF='hanim_vl5' name='vl5' center='0 1.0 0'>
+          <HAnimSegment DEF='hanim_l5' name='l5'>
+            <Transform translation='0 1.1 0'>
+              <Shape>
+                <Box size='0.15 0.3 0.15'/>
+                <Appearance><Material diffuseColor='0 1 0'/></Appearance>
+              </Shape>
+            </Transform>
+          </HAnimSegment>
+
+          <HAnimJoint DEF='hanim_skullbase' name='skullbase' center='0 1.4 0'>
+            <HAnimSegment DEF='hanim_skull' name='skull'>
+              <Transform translation='0 1.5 0'>
+                <Shape>
+                  <Sphere radius='0.1'/>
+                  <Appearance><
