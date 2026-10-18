@@ -10,7 +10,7 @@ Almost not at all in the shipped path; it is a development and authoring channel
 |---|---|---|
 | x3d_mcp (validator, tools) to Blender | **No.** No `bpy` or Blender import anywhere in `src/`; the only mention is `docs/ecosystem-research.md` listing BlenderMCP as prior art | C (grep) |
 | x3d-blender-io add-on (`source/`) | **No.** Needs `bpy` only; `blender_version_min = 4.2.0` | C |
-| x3d-blender-io dev scripts | **Yes, five files**: `blender_mcp_client.py`, `drive1-3.py`, `gen_scene_via_mcp.py`. Hard-coded `~/Projects/x3d/mcp-for-blender/.venv`; telemetry switched off by env | C |
+| x3d-blender-io dev scripts | **No.** Corrected: the five files first listed here (`blender_mcp_client.py`, `drive1-3.py`, `gen_scene_via_mcp.py`) are untracked scratch scripts left in one local checkout during the live demo, not part of the repo (0 tracked files, 0 on origin/main). Nothing in the repo drives blender_mcp | C (git ls-files, git ls-tree origin/main) |
 | Export suite (194 cases) and physics stress | **No.** Fresh headless `Blender -b` per case. The add-on itself refuses `-b` (B-24), another reason it cannot be a CI dependency | C |
 | x3d.poc, x3d.ML | **No** (no source reference) | C |
 | Physics stress, `mcp_overhead` suite | Measured it: 54 ms floor per `execute_blender_code` call from a 50 ms timer poll (B-20), superlinear receive loop (B-21) | C |
