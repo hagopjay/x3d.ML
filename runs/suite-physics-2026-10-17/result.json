@@ -1,0 +1,599 @@
+{
+ "physics": {
+  "audit": "verified",
+  "ledger_bytes": 219515,
+  "steps": [
+   {
+    "agent": "ingest_runs.py",
+    "n": 1,
+    "op": "ingest"
+   },
+   {
+    "agent": "analyst",
+    "groups": 12,
+    "n": 2,
+    "op": "measure",
+    "records": 12,
+    "suite": "composite"
+   },
+   {
+    "agent": "analyst",
+    "groups": 221,
+    "n": 3,
+    "op": "measure",
+    "records": 221,
+    "suite": "fit"
+   },
+   {
+    "agent": "blender",
+    "groups": 132,
+    "n": 4,
+    "op": "measure",
+    "records": 132,
+    "suite": "rigid_accuracy"
+   },
+   {
+    "agent": "blender",
+    "groups": 23,
+    "n": 5,
+    "op": "measure",
+    "records": 23,
+    "suite": "env"
+   },
+   {
+    "agent": "blender",
+    "groups": 334,
+    "n": 6,
+    "op": "measure",
+    "records": 1000,
+    "suite": "rigid_scale"
+   },
+   {
+    "agent": "blender",
+    "groups": 193,
+    "n": 7,
+    "op": "measure",
+    "records": 193,
+    "suite": "stability"
+   },
+   {
+    "agent": "blender",
+    "groups": 59,
+    "n": 8,
+    "op": "measure",
+    "records": 65,
+    "suite": "determinism"
+   },
+   {
+    "agent": "blender",
+    "groups": 72,
+    "n": 9,
+    "op": "measure",
+    "records": 72,
+    "suite": "constraints"
+   },
+   {
+    "agent": "blender",
+    "groups": 121,
+    "n": 10,
+    "op": "measure",
+    "records": 363,
+    "suite": "rigid_solver_sweep"
+   },
+   {
+    "agent": "blender",
+    "groups": 96,
+    "n": 11,
+    "op": "measure",
+    "records": 192,
+    "suite": "cloth"
+   },
+   {
+    "agent": "blender",
+    "groups": 24,
+    "n": 12,
+    "op": "measure",
+    "records": 36,
+    "suite": "softbody"
+   },
+   {
+    "agent": "blender",
+    "groups": 36,
+    "n": 13,
+    "op": "measure",
+    "records": 108,
+    "suite": "fluid"
+   },
+   {
+    "agent": "blender",
+    "groups": 27,
+    "n": 14,
+    "op": "measure",
+    "records": 27,
+    "suite": "x3d_fidelity"
+   },
+   {
+    "agent": "blender",
+    "groups": 39,
+    "n": 15,
+    "op": "measure",
+    "records": 117,
+    "suite": "mcp_overhead"
+   },
+   {
+    "agent": "blender",
+    "groups": 52,
+    "n": 16,
+    "op": "measure",
+    "records": 52,
+    "suite": "rigid_scale_derived"
+   },
+   {
+    "agent": "blender",
+    "groups": 12,
+    "n": 17,
+    "op": "measure",
+    "records": 12,
+    "suite": "rigid_solver_sweep_derived"
+   },
+   {
+    "agent": "blender",
+    "groups": 1,
+    "n": 18,
+    "op": "measure",
+    "records": 1,
+    "suite": "done"
+   },
+   {
+    "agent": "x3d",
+    "groups": 94,
+    "n": 19,
+    "op": "measure",
+    "records": 94,
+    "suite": "coverage"
+   },
+   {
+    "agent": "x3d",
+    "groups": 314,
+    "n": 20,
+    "op": "measure",
+    "records": 314,
+    "suite": "detection"
+   },
+   {
+    "agent": "x3d",
+    "groups": 114,
+    "n": 21,
+    "op": "measure",
+    "records": 304,
+    "suite": "scale"
+   },
+   {
+    "agent": "x3d",
+    "groups": 12,
+    "n": 22,
+    "op": "measure",
+    "records": 12,
+    "suite": "roundtrip"
+   },
+   {
+    "agent": "x3d",
+    "groups": 50,
+    "n": 23,
+    "op": "measure",
+    "records": 50,
+    "suite": "blender_io"
+   },
+   {
+    "agent": "x3d",
+    "groups": 9,
+    "n": 24,
+    "op": "measure",
+    "records": 9,
+    "suite": "prototype"
+   },
+   {
+    "agent": "x3d",
+    "groups": 9,
+    "n": 25,
+    "op": "measure",
+    "records": 9,
+    "suite": "env"
+   },
+   {
+    "agent": "x3d",
+    "groups": 1,
+    "n": 26,
+    "op": "measure",
+    "records": 2,
+    "suite": "done"
+   },
+   {
+    "agent": "blender",
+    "n": 27,
+    "op": "judge"
+   },
+   {
+    "agent": "x3d",
+    "n": 28,
+    "op": "judge"
+   },
+   {
+    "agent": "ingest_runs.py",
+    "findings_total": 43,
+    "n": 29,
+    "op": "summary"
+   }
+  ],
+  "tools": {
+   "blender": [
+    "5.1.0"
+   ],
+   "python": [
+    "3.13.9"
+   ],
+   "python_x3d_mcp_venv": [
+    "Python 3.12.8"
+   ],
+   "sha_mcp_for_blender": [
+    "7a0373e"
+   ],
+   "sha_x3d_blender_io": [
+    "5da2707"
+   ],
+   "sha_x3d_mcp": [
+    "eb4b4b4"
+   ],
+   "x3d_py_version": [
+    "4.0.65.7"
+   ]
+  },
+  "verify": {
+   "ok": true,
+   "problems": [],
+   "status": "verified",
+   "steps": 29
+  }
+ },
+ "suite_runs": [
+  {
+   "blender": "5.1.0",
+   "cases": 194,
+   "core_in_validate_log": [
+    143,
+    147
+   ],
+   "core_pass_total": [
+    143,
+    147
+   ],
+   "created": "2026-10-15T22:34:21",
+   "profiles": [
+    {
+     "bytes": 7002916,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:FAIL": 4,
+      "CORE:PASS": 127,
+      "FIDELITY:PASS": 2,
+      "FIDELITY:WARN": 17,
+      "ROADMAP:MISSING": 26
+     },
+     "failed_cases": [
+      "Z01.empty.robust",
+      "Z01.wire.robust",
+      "Z06.decoy.ao",
+      "Z09.gn.nophantom"
+     ],
+     "file": "x3d_suite_main.x3d",
+     "file_sha256": "fb66e7b38457d77ea33f5c785529027bc9e0c71b1022487426e03842db517030",
+     "profile": "main",
+     "steps": 3,
+     "verdict": "invalid"
+    },
+    {
+     "bytes": 4910710,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 13,
+      "FIDELITY:WARN": 2
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_crease.x3d",
+     "file_sha256": "4dd7b57d1e80ce6d65ba481476761b1434caabd89dd73bc8ba5f5a5761fc3b28",
+     "profile": "crease",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4616502,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 3
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_x41.x3d",
+     "file_sha256": "d602b908ec3b58fd7633ee5c351b99502947763498bcb18ad63b7997bda8af31",
+     "profile": "x41",
+     "steps": 3,
+     "verdict": "valid"
+    }
+   ],
+   "run": "suite-run-51"
+  },
+  {
+   "blender": "5.1.0",
+   "cases": 194,
+   "core_in_validate_log": [
+    146,
+    147
+   ],
+   "core_pass_total": [
+    146,
+    147
+   ],
+   "created": "2026-10-15T22:37:53",
+   "profiles": [
+    {
+     "bytes": 7002375,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:FAIL": 1,
+      "CORE:PASS": 130,
+      "FIDELITY:PASS": 2,
+      "FIDELITY:WARN": 17,
+      "ROADMAP:MISSING": 26
+     },
+     "failed_cases": [
+      "Z06.decoy.ao"
+     ],
+     "file": "x3d_suite_main.x3d",
+     "file_sha256": "aff7553ac9edab08272360bda2eea4b937611abf4d3cb62d65f06f155f97efa9",
+     "profile": "main",
+     "steps": 3,
+     "verdict": "invalid"
+    },
+    {
+     "bytes": 4910363,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 13,
+      "FIDELITY:WARN": 2
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_crease.x3d",
+     "file_sha256": "d34137ea7e26e0be6dbee5dd5f2f32c6a537ad69f4e8cbd3783edd65311cc97c",
+     "profile": "crease",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4615962,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 3
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_x41.x3d",
+     "file_sha256": "ecff3fff62f82ae3c7bc304158727d3e3010bc8144c351662ee10bb36f019afe",
+     "profile": "x41",
+     "steps": 3,
+     "verdict": "valid"
+    }
+   ],
+   "run": "suite-run-51b"
+  },
+  {
+   "blender": "5.1.0",
+   "cases": 194,
+   "core_in_validate_log": [
+    147,
+    147
+   ],
+   "core_pass_total": [
+    147,
+    147
+   ],
+   "created": "2026-10-15T23:27:49",
+   "profiles": [
+    {
+     "bytes": 7002261,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 131,
+      "FIDELITY:PASS": 2,
+      "FIDELITY:WARN": 17,
+      "ROADMAP:MISSING": 26
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_main.x3d",
+     "file_sha256": "14bfb44769d0b2c8ee5ed47fedd0f4e7762b836a37ff51ad24d9a7a56c26f787",
+     "profile": "main",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4910243,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 13,
+      "FIDELITY:WARN": 2
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_crease.x3d",
+     "file_sha256": "a5dbd61da4febb7b00c904709681f64f843452b4e41a7c5bb2aa63a4235e97e8",
+     "profile": "crease",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4615851,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 3
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_x41.x3d",
+     "file_sha256": "16bb4c21005ae528d98c98982df603d0980203ed3bd1f37a308b7026f71c7877",
+     "profile": "x41",
+     "steps": 3,
+     "verdict": "valid"
+    }
+   ],
+   "run": "suite-run-51c"
+  },
+  {
+   "blender": "5.1.0",
+   "cases": 194,
+   "core_in_validate_log": [
+    143,
+    147
+   ],
+   "core_pass_total": [
+    143,
+    147
+   ],
+   "created": "2026-10-17T18:14:40",
+   "profiles": [
+    {
+     "bytes": 7010757,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:FAIL": 4,
+      "CORE:PASS": 127,
+      "FIDELITY:PASS": 2,
+      "FIDELITY:WARN": 17,
+      "ROADMAP:MISSING": 21,
+      "ROADMAP:NEW": 5
+     },
+     "failed_cases": [
+      "Z01.empty.robust",
+      "Z01.wire.robust",
+      "Z09.gn.nophantom",
+      "Z15.curve.wire"
+     ],
+     "file": "x3d_suite_main.x3d",
+     "file_sha256": "3fbc010c523c10c2759dcbebd222853548c386ab564c24eec0463638060d600e",
+     "profile": "main",
+     "steps": 3,
+     "verdict": "invalid"
+    },
+    {
+     "bytes": 4912018,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 13,
+      "FIDELITY:WARN": 2
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_crease.x3d",
+     "file_sha256": "e750f29f122d9d25f8dabcf63535c45924f9b79a7bf396f9e051edc83b8011fd",
+     "profile": "crease",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4617797,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 3
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_x41.x3d",
+     "file_sha256": "c6a545bb7cf436e590104f7902cf3b0fd49cb903e18f222bf7078efd6f974ec6",
+     "profile": "x41",
+     "steps": 3,
+     "verdict": "valid"
+    }
+   ],
+   "run": "suite-run-upstream"
+  },
+  {
+   "blender": "5.1.0",
+   "cases": 194,
+   "core_in_validate_log": [
+    147,
+    147
+   ],
+   "core_pass_total": [
+    147,
+    147
+   ],
+   "created": "2026-10-17T18:23:00",
+   "profiles": [
+    {
+     "bytes": 7010356,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 131,
+      "FIDELITY:PASS": 2,
+      "FIDELITY:WARN": 17,
+      "ROADMAP:MISSING": 21,
+      "ROADMAP:NEW": 5
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_main.x3d",
+     "file_sha256": "1d534de49d5a80fe61bd581f352766b0268bf5998e80a903c4766272e6913138",
+     "profile": "main",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4911814,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 13,
+      "FIDELITY:WARN": 2
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_crease.x3d",
+     "file_sha256": "d3763a1b95ddd8f20e29b7fbed696569e38721cb74bfb6c8ad9852929bcd24e8",
+     "profile": "crease",
+     "steps": 3,
+     "verdict": "valid"
+    },
+    {
+     "bytes": 4617387,
+     "chain_status": "verified",
+     "counts": {
+      "CORE:PASS": 3
+     },
+     "failed_cases": [],
+     "file": "x3d_suite_x41.x3d",
+     "file_sha256": "61771b0f840287116cbc7d7540c7fb18af31917ed56afe8ee9918f091b0adbb1",
+     "profile": "x41",
+     "steps": 3,
+     "verdict": "valid"
+    }
+   ],
+   "run": "suite-run-merged"
+  }
+ ],
+ "tamper": {
+  "physics": {
+   "LAST step edited (no successor, unsigned)": {
+    "audit_with_sources": "evidence-mismatch",
+    "verify": "verified"
+   },
+   "metric edited inside the record (stability group 0)": {
+    "first_problem": "step 8: prev hash does not match step 7 (step removed or edited)",
+    "verify": "broken-chain"
+   },
+   "one single-repeat float value +1% in the source JSONL": {
+    "audit": "evidence-mismatch",
+    "named": [
+     "step 1 (ingest): field files differs from the source",
+     "step 4: groups freefall_4s/max_abs_err/f6e97095: record [1, 0.817485351562496] vs source [1, 0.825660205078121]"
+    ],
+    "verify_of_record": "verified"
+   },
+   "pristine": "verified"
+  },
+  "suite_main": {
+   "a Transform translation edited in the scene": "stale",
+   "a non-passing case (Z00.world.fog) flipped to PASS inside the record": "broken-chain",
+   "audit": "verified",
+   "pristine": "verified"
+  }
+ }
+}
