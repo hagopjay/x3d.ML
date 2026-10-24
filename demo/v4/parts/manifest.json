@@ -1,0 +1,170 @@
+{
+ "built": "2026-10-24T22:02:30Z",
+ "parts": {
+  "live.core": {
+   "bytes_raw": 336481,
+   "bytes_gz": 66429,
+   "bytes_b64": 88572,
+   "sha256": "d287b58e9115df5f48ab8fcf4f0d74eaa022eb242f4aa4289e7deca6bb5949f9",
+   "rows": 201,
+   "source": "RECORDED 17 Oct",
+   "recorded": "2026-10-17",
+   "validator": "fork@eb4b4b4",
+   "xite": "16.5.0",
+   "source_file": "demo/data/live.json minus B[] and r.jpg",
+   "file": "parts/live.core.txt"
+  },
+  "live.bodies": {
+   "bytes_raw": 1373727,
+   "bytes_gz": 121917,
+   "bytes_b64": 162556,
+   "sha256": "6499f2a99f1127d62f41d2fa334c11b9c0a04b1e96e903454cc473a0df879eb5",
+   "rows": 358,
+   "source": "RECORDED 17 Oct",
+   "recorded": "2026-10-17",
+   "validator": "fork@eb4b4b4",
+   "xite": "16.5.0",
+   "source_file": "demo/data/live.json B[]",
+   "file": "parts/live.bodies.txt"
+  },
+  "live.jpg": {
+   "bytes_raw": 885665,
+   "bytes_gz": 370091,
+   "bytes_b64": 493456,
+   "sha256": "7a05f8b644ad06104dc109d2c8fb69f65c536d86d9177f81d11d6989528af485",
+   "rows": 286,
+   "source": "RECORDED 17 Oct",
+   "recorded": "2026-10-17",
+   "validator": "fork@eb4b4b4",
+   "xite": "16.5.0",
+   "source_file": "demo/data/live.json A[].r.jpg",
+   "file": "parts/live.jpg.txt"
+  },
+  "replay": {
+   "bytes_raw": 826599,
+   "bytes_gz": 183532,
+   "bytes_b64": 244712,
+   "sha256": "ebb06fe2071b3834b53771a35ebe7db85739dfc91294ed2021282f147ece9872",
+   "rows": 174,
+   "source": "RECORDED 11 Oct",
+   "recorded": "2026-10-11",
+   "validator": "svc@11Oct + fork@8c0a457 + fork@eb4b4b4",
+   "xite": "16.5.0",
+   "source_file": "demo/data/replay.json",
+   "file": "parts/replay.txt"
+  },
+  "events": {
+   "bytes_raw": 14018,
+   "bytes_gz": 2744,
+   "bytes_b64": 3660,
+   "sha256": "11937f73560866b93219f97668b9e6cde9c5947af51154cf45dcef17b4e656fa",
+   "rows": 125,
+   "source": "RECORDED 17 Oct",
+   "recorded": "2026-10-17",
+   "validator": "fork@eb4b4b4",
+   "xite": null,
+   "source_file": "demo/v4/data/events.json",
+   "file": "parts/events.txt"
+  },
+  "renders.series": {
+   "bytes_raw": 72407,
+   "bytes_gz": 14139,
+   "bytes_b64": 18852,
+   "sha256": "af2c7de5d6d72ea613795bbaf2f83ee959fb33cdab73687edfc2d1d8ef27e7ec",
+   "rows": 383,
+   "source": "RECORDED 17 Oct",
+   "recorded": "2026-10-17",
+   "validator": null,
+   "xite": "16.5.0",
+   "source_file": "demo/v4/data/renders.series.json",
+   "file": "parts/renders.series.txt"
+  },
+  "renders.151": {
+   "bytes_raw": 110524,
+   "bytes_gz": 19540,
+   "bytes_b64": 26056,
+   "sha256": "c9396fe23ef8e2fb76a3b4c30f079b3858e88361783d97777855ea69fb94eb1f",
+   "rows": 557,
+   "source": "MEASURED 24 Oct",
+   "recorded": "2026-10-24",
+   "validator": null,
+   "xite": "16.5.1",
+   "source_file": "demo/v4/data/renders.151.json",
+   "file": "parts/renders.151.txt"
+  },
+  "drift": {
+   "bytes_raw": 171838,
+   "bytes_gz": 5627,
+   "bytes_b64": 7504,
+   "sha256": "f4c03fed8fd87f8de43315c63fae602c1b5043c21de44cddfca7e2a695b1e95a",
+   "rows": 1776,
+   "source": "RECORDED per commit",
+   "recorded": "2026-10-11..24",
+   "validator": "fork 8c0a457, c9c9788, 688174f, 76fc439, d61d4de, eb4b4b4, d5598c4, 8dd0d3e",
+   "xite": null,
+   "source_file": "drift/*.json",
+   "file": "parts/drift.txt"
+  },
+  "suite": {
+   "bytes_raw": 21301,
+   "bytes_gz": 5179,
+   "bytes_b64": 6908,
+   "sha256": "4d0e478866411c4b84de047565a02c27f4888da274f5a095071b1ebd76f14b48",
+   "rows": 9,
+   "source": "RECORDED 17 Oct (owner's machine)",
+   "recorded": "2026-10-17",
+   "validator": "fork@fa0b389 (ledger XSD)",
+   "xite": null,
+   "source_file": "runs/suite-physics-2026-10-17/",
+   "file": "parts/suite.txt"
+  },
+  "xsd40": {
+   "bytes_raw": 1333390,
+   "bytes_gz": 102500,
+   "bytes_b64": 136668,
+   "sha256": "0509fa5bd6016a0b9104ced3c91d6585c8073041f79b8c3f9758748d131b5192",
+   "rows": null,
+   "source": "Web3D X3D 4.0 schema",
+   "recorded": null,
+   "validator": null,
+   "xite": null,
+   "source_file": "demo/jsval/data/schemas/x3d-4.0.xsd",
+   "file": "parts/xsd40.txt"
+  },
+  "xsd41": {
+   "bytes_raw": 1363165,
+   "bytes_gz": 104492,
+   "bytes_b64": 139324,
+   "sha256": "1a7935caa7e6a63de2b275968bdc48da2f34124a43acb7b293674c3d16646a85",
+   "rows": null,
+   "source": "Web3D X3D 4.1 schema",
+   "recorded": null,
+   "validator": null,
+   "xite": null,
+   "source_file": "demo/jsval/data/schemas/x3d-4.1.xsd",
+   "file": "parts/xsd41.txt"
+  }
+ },
+ "canary": {
+  "bodies": 558,
+  "flips": 0,
+  "set": {
+   "live": 383,
+   "replay": 174,
+   "ledger": 1
+  }
+ },
+ "HAS_CYCLES": false,
+ "HAS_RUN2": false,
+ "validator_recorded": [
+  "fork@eb4b4b4",
+  "fork@8dd0d3e"
+ ],
+ "port": "js-port-of-8dd0d3e",
+ "xite": "16.5.0",
+ "passes": [
+  "16.5.0",
+  "16.5.1"
+ ],
+ "encoding": "gzip level 9 mtime 0, base64, one line; sha256 is of the decoded bytes"
+}
