@@ -1,0 +1,45 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Door Swing Animation'/>
+    <meta name='creator' content='X3D Author'/>
+    <meta name='description' content='A door that swings open 90 degrees over 2 seconds on load and stays open.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Door swing animation' position='0 1.5 5'/>
+    <Background skyColor='0.5 0.7 1.0'/>
+    <!-- Floor -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Box size='10 0.1 10'/>
+        <Appearance>
+          <Material diffuseColor='0.3 0.3 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Door frame (static) -->
+    <Transform translation='0 1.5 0'>
+      <Shape>
+        <Box size='2.2 3.2 0.2'/>
+        <Appearance>
+          <Material diffuseColor='0.4 0.2 0.1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Animated door -->
+    <Transform DEF='DoorTransform' translation='0 1.5 0'>
+      <Transform translation='1 0 0'>
+        <Shape>
+          <Box size='2 3 0.1'/>
+          <Appearance>
+            <Material diffuseColor='0.6 0.3 0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <!-- Animation nodes -->
+    <TimeSensor DEF='DoorTimer' cycleInterval='2' loop='false'/>
+    <OrientationInterpolator DEF='DoorInterpolator' key='0 1' keyValue='0 1 0 0  0 1 0 1.57079632679'/>
+    <ROUTE fromNode='DoorTimer' fromField='fraction_changed' toNode='DoorInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='DoorInterpolator' fromField='value_changed' toNode='DoorTransform' toField='rotation'/>
+  </Scene>
+</X3D>

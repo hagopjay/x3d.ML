@@ -1,0 +1,137 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Two humanoids side by side' position='0 0 5'/>
+    <!-- Shared joint hierarchy -->
+    <HAnimJoint DEF='SharedRoot' name='HumanoidRoot' center='0 0 0'>
+      <children>
+        <HAnimJoint name='spine' center='0 0.1 0'/>
+        <HAnimJoint name='neck' center='0 0.2 0'/>
+        <HAnimJoint name='head' center='0 0.3 0'/>
+        <HAnimJoint name='l_shoulder' center='-0.15 0.15 0'/>
+        <HAnimJoint name='l_elbow' center='-0.3 0.15 0'/>
+        <HAnimJoint name='l_wrist' center='-0.45 0.15 0'/>
+        <HAnimJoint name='r_shoulder' center='0.15 0.15 0'/>
+        <HAnimJoint name='r_elbow' center='0.3 0.15 0'/>
+        <HAnimJoint name='r_wrist' center='0.45 0.15 0'/>
+        <HAnimJoint name='l_hip' center='-0.1 -0.1 0'/>
+        <HAnimJoint name='l_knee' center='-0.1 -0.3 0'/>
+        <HAnimJoint name='l_ankle' center='-0.1 -0.5 0'/>
+        <HAnimJoint name='r_hip' center='0.1 -0.1 0'/>
+        <HAnimJoint name='r_knee' center='0.1 -0.3 0'/>
+        <HAnimJoint name='r_ankle' center='0.1 -0.5 0'/>
+      </children>
+    </HAnimJoint>
+    <!-- First humanoid (red) -->
+    <Transform translation='-1 0 0'>
+      <HAnimHumanoid version='2.0' name='Humanoid1'>
+        <skeleton USE='SharedRoot'/>
+        <segments>
+          <HAnimSegment name='Body' joint='spine'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='1 0 0'/>
+              </Appearance>
+              <Box size='0.3 0.4 0.2'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='Head' joint='head'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='1 0 0'/>
+              </Appearance>
+              <Box size='0.2 0.2 0.2'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='LeftArm' joint='l_shoulder'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='1 0 0'/>
+              </Appearance>
+              <Box size='0.1 0.4 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='RightArm' joint='r_shoulder'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='1 0 0'/>
+              </Appearance>
+              <Box size='0.1 0.4 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='LeftLeg' joint='l_hip'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='1 0 0'/>
+              </Appearance>
+              <Box size='0.1 0.5 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='RightLeg' joint='r_hip'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='1 0 0'/>
+              </Appearance>
+              <Box size='0.1 0.5 0.1'/>
+            </Shape>
+          </HAnimSegment>
+        </segments>
+      </HAnimHumanoid>
+    </Transform>
+    <!-- Second humanoid (blue) -->
+    <Transform translation='1 0 0'>
+      <HAnimHumanoid version='2.0' name='Humanoid2'>
+        <skeleton USE='SharedRoot'/>
+        <segments>
+          <HAnimSegment name='Body' joint='spine'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+              <Box size='0.3 0.4 0.2'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='Head' joint='head'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+              <Box size='0.2 0.2 0.2'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='LeftArm' joint='l_shoulder'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+              <Box size='0.1 0.4 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='RightArm' joint='r_shoulder'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+              <Box size='0.1 0.4 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='LeftLeg' joint='l_hip'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+              <Box size='0.1 0.5 0.1'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimSegment name='RightLeg' joint='r_hip'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0 0 1'/>
+              </Appearance>
+              <Box size='0.1 0.5 0.1'/>
+            </Shape>
+          </HAnimSegment>
+        </segments>
+      </HAnimHumanoid>
+    </Transform>
+  </Scene>
+</X3D>

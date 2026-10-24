@@ -1,0 +1,36 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+    <meta name='title' content='Wooden Table'/>
+  </head>
+  <Scene>
+    <WorldInfo title='Wooden Table'/>
+    <Viewpoint description='Wooden table' position='2.5 1.3 2.5' orientation='-0.35 0.94 0 0.75' centerOfRotation='0 0.4 0'/>
+    <NavigationInfo type='"EXAMINE" "ANY"'/>
+    <!-- Table top: 2 m x 1 m, 6 cm thick -->
+    <Transform translation='0 0.73 0'>
+      <Shape>
+        <Appearance DEF='Wood'>
+          <PhysicalMaterial baseColor='0.45 0.26 0.11' roughness='0.55'/>
+        </Appearance>
+        <Box size='2 0.06 1'/>
+      </Shape>
+    </Transform>
+    <!-- Front-right leg (DEF), the other three legs reuse it -->
+    <Transform translation='0.9 0.35 0.4'>
+      <Shape DEF='Leg'>
+        <Appearance USE='Wood'/>
+        <Cylinder radius='0.04' height='0.7'/>
+      </Shape>
+    </Transform>
+    <Transform translation='-0.9 0.35 0.4'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='0.9 0.35 -0.4'>
+      <Shape USE='Leg'/>
+    </Transform>
+    <Transform translation='-0.9 0.35 -0.4'>
+      <Shape USE='Leg'/>
+    </Transform>
+  </Scene>
+</X3D>

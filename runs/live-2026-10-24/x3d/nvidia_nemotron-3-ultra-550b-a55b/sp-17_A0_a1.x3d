@@ -1,0 +1,110 @@
+<X3D> document, no prose, no markdown fences.
+
+We must use only X3D 4.0 nodes. No 4.1 nodes.
+
+We need to include a Viewpoint with description.
+
+We need to animate the pendulum swinging back and forth every 2 seconds. Use TimeSensor + OrientationInterpolator (or PositionInterpolator). Since pendulum swings rotationally, use OrientationInterpolator.
+
+We need to create tick marks using DEF and USE: define one tick mark geometry and reuse it 12 times with different rotations.
+
+We need a tall wooden case: maybe a Box with wood texture (Appearance with ImageTexture or just Material). Since we cannot use external textures, we can use Material with diffuseColor brown.
+
+Circular white face: a Cylinder or Disk (Circle) with white material.
+
+Brass pendulum: a Cylinder or Box with brass material (yellowish).
+
+We need to structure the scene graph: a Transform for the clock case, containing the face and pendulum.
+
+Pendulum should be a child of a Transform that rotates about the pivot point (top of pendulum). Use a Transform with rotation axis (0 0 1) maybe? Actually pendulum swings in a plane, say around x-axis? Typically pendulum swings in the plane of the clock face (vertical plane). Let's assume the clock face is on the front (negative z direction). The pendulum hangs down from the top center of the case, swinging in the y-z plane (i.e., rotation about x-axis). So we can have a Transform for the pendulum pivot at the top center of the case, with a child Transform that rotates about x-axis.
+
+We'll use a TimeSensor with cycleInterval = 2 (seconds) and loop = true. Then an OrientationInterpolator with key [0, 0.5, 1] and keyValue for angles: at 0: 0 rad, at 0.5: max angle (say 0.3 rad), at 1: 0 rad. But to swing back and forth, we need to go from -max to +max and back. Actually a simple harmonic motion: we can define key at 0: -max, 0.5: +max, 1: -max. But OrientationInterpolator interpolates shortest path, so we need to define keyValues accordingly. Alternatively use a PositionInterpolator for translation? But pendulum rotates.
+
+Better: Use a TimeSensor driving a Script? But we must use TimeSensor + OrientationInterpolator.
+
+We can set key = [0, 0.25, 0.5, 0.75, 1] and keyValue = [-max, 0, max, 0, -max] for rotation about x-axis. That will swing back and forth smoothly.
+
+Define max angle = 0.3 rad (~17 degrees). Use OrientationInterpolator with keyValue as SFRotation values: each is axis-angle: x y z angle. For rotation about x-axis: 1 0 0 angle.
+
+So keyValue: "1 0 0 -0.3  1 0 0 0  1 0 0 0.3  1 0 0 0  1 0 0 -0.3". But note that at key=0.25 we want 0, at 0.5 max, at 0.75 0, at 1 -max. That works.
+
+But we need to route TimeSensor.fraction_changed to OrientationInterpolator.set_fraction, and OrientationInterpolator.value_changed to the pendulum Transform's set_rotation.
+
+We need to DEF the pendulum Transform (the rotating one) and USE it in ROUTE.
+
+We also need to create tick marks: define a single tick mark as a thin Box or Cylinder, then use a Transform for each tick mark rotated around the center of the face. Use DEF for the tick mark geometry (maybe a Shape with geometry and appearance) and then USE it in multiple Transforms? Actually we can DEF a Shape and then USE it inside multiple Transform nodes? In X3D, you can DEF a Shape and then USE it as a child of multiple Transform nodes? Yes, you can USE a node that is a Shape, but each USE will share the same geometry and appearance. However, each tick mark needs its own Transform for positioning and rotation. So we can DEF a Shape (the tick mark) and then in each Transform we add a USE of that Shape. That's acceptable.
+
+Alternatively, we can DEF a Transform that includes the tick mark geometry and then USE that Transform? But each tick mark needs different rotation, so we need separate Transforms. So we can DEF the Shape (geometry+appearance) and then in each tick Transform we USE that Shape.
+
+We'll create a Group for the face, containing the face background (a white Circle or Disk) and the tick marks.
+
+We need to keep nodes under 200. Should be fine.
+
+Now, write the X3D document.
+
+We must include the XML header? The instruction says output only the <X3D> document. Probably include the XML declaration? Not required but okay. We'll output the <X3D> element with attributes.
+
+We'll include a head with meta tags? Not required but can include.
+
+We'll include a Scene with the content.
+
+Let's outline:
+
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Pendulum Clock'/>
+    <meta name='description' content='A tall wooden case clock with a white face, twelve tick marks, and a swinging brass pendulum.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Pendulum Clock' position='0 1.5 5'/>
+    <!-- Clock case -->
+    <Transform translation='0 0 0'>
+      <!-- Wooden case: tall box -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.55 0.35 0.2' specularColor='0.1 0.1 0.1' shininess='0.2'/>
+        </Appearance>
+        <Box size='0.6 2.5 0.3'/>
+      </Shape>
+      <!-- Clock face: white circle on front -->
+      <Transform translation='0 0 0.151'> <!-- slightly in front of case front face -->
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 1 1' specularColor='0.2 0.2 0.2' shininess='0.5'/>
+          </Appearance>
+          <Cylinder radius='0.25' height='0.01' top='true' bottom='true' side='false'/>
+        </Shape>
+        <!-- Tick marks -->
+        <Transform DEF='TickMark' rotation='0 0 1 0'> <!-- placeholder, will be reused? Actually we need a Shape for tick mark -->
+        </Transform>
+      </Transform>
+      <!-- Pendulum pivot at bottom center of case? Actually pendulum hangs from top inside case. Let's place pivot at top center of case interior: translation 0 1.2 0? The case height is 2.5, so top is at y=1.25. The face is at y=0? We'll set case centered at origin. So case extends from y=-1.25 to y=1.25. The face is at front center (z=0.15). The pendulum pivot could be at (0, 1.0, 0) inside case. Then pendulum rod hangs down. -->
+      <Transform translation='0 1.0 0' DEF='PendulumPivot'>
+        <Transform DEF='PendulumArm'>
+          <!-- Pendulum rod: thin cylinder -->
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.8 0.6 0.2' specularColor='0.5 0.5 0.5' shininess='0.8'/>
+            </Appearance>
+            <Cylinder radius='0.01' height='1.0'/>
+          </Shape>
+          <!-- Pendulum bob: sphere or box at bottom -->
+          <Transform translation='0 -0.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.6 0.2' specularColor='0.5 0.5 0.5' shininess='0.8'/>
+              </Appearance>
+              <Sphere radius='0.08'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+    <!-- Animation -->
+    <TimeSensor DEF='ClockTimer' cycleInterval='2' loop='true'/>
+    <OrientationInterpolator DEF='PendulumSwing' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 -0.3  1 0 0 0  1 0 0 0.3  1 0 0 0  1 0 0 -0.3'/>
+    <ROUTE fromNode='ClockTimer' fromField='fraction_changed' toNode='PendulumSwing' toField='set_fraction'/>
+    <ROUTE fromNode='PendulumSwing' fromField='value_changed' toNode='PendulumArm' toField='set_rotation'/>
+    <!-- Tick marks: we need to define a tick mark shape and then 12 transforms each rotated by 30 degrees around z-axis. -->
+  </Scene>
+</X3D>

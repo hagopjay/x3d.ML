@@ -1,0 +1,147 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Small City Block with Blinking Central Tower'/>
+    <meta name='description' content='Nine colourful buildings of varying heights stand on a three by three grid separated by grey streets. The tall central tower carries a beacon whose colour cycles and blinks.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Overview of the nine-building city block and its animated central tower beacon.'
+               position='0 20 42'
+               orientation='1 0 0 -0.35'
+               fieldOfView='0.9'
+               centerOfRotation='0 5 0'/>
+    <Background color='0.68 0.76 0.86'/>
+    <AmbientLight color='0.75 0.80 0.88' intensity='0.45'/>
+    <DirectionalLight color='1 0.96 0.88' intensity='0.85' direction='0.45 -1 0.6'/>
+
+    <TimeSensor id='BeaconClock' cycleInterval='4' loop='true' startTime='0'/>
+    <ColorInterpolator id='BeaconColorCycle'
+                       key='0 0.2 0.4 0.6 0.8 1'
+                       keyValue='1 0 0  0.25 0 0  1 0.55 0  0 1 0  0 0.25 1  1 0 0'/>
+    <ROUTE BeaconClock.fraction TO BeaconColorCycle.set_fraction/>
+    <ROUTE BeaconColorCycle.value_changed TO BeaconMaterial.color/>
+    <ROUTE BeaconColorCycle.value_changed TO BeaconMaterial.emissiveColor/>
+    <ROUTE BeaconColorCycle.value_changed TO BeaconLight.color/>
+    <ROUTE BeaconTouch.touchTime TO BeaconClock.startTime/>
+
+    <Group id='GroundAndStreets'>
+      <Box size='46 0.2 46' position='0 -0.1 0'>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.52 0.53 0.55' roughness='0.95'/>
+        </Appearance>
+      </Box>
+      <Box size='46 0.06 5' position='0 0.03 -6'>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.30 0.31 0.33' roughness='0.9'/>
+        </Appearance>
+      </Box>
+      <Box size='46 0.06 5' position='0 0.03 6'>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.30 0.31 0.33' roughness='0.9'/>
+        </Appearance>
+      </Box>
+      <Box size='5 0.06 46' position='-6 0.03 0'>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.30 0.31 0.33' roughness='0.9'/>
+        </Appearance>
+      </Box>
+      <Box size='5 0.06 46' position='6 0.03 0'>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.30 0.31 0.33' roughness='0.9'/>
+        </Appearance>
+      </Box>
+    </Group>
+
+    <Group id='BuildingGrid'>
+      <Group position='-12 0 -12'>
+        <Box size='7 3.2 7' position='0 1.6 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.78 0.32 0.30' roughness='0.8'/>
+          </Appearance>
+        </Box>
+      </Group>
+      <Group position='0 0 -12'>
+        <Box size='7 5.6 7' position='0 2.8 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.30 0.48 0.72' roughness='0.75'/>
+          </Appearance>
+        </Box>
+      </Group>
+      <Group position='12 0 -12'>
+        <Box size='7 4.4 7' position='0 2.2 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.36 0.62 0.42' roughness='0.8'/>
+          </Appearance>
+        </Box>
+      </Group>
+
+      <Group position='-12 0 0'>
+        <Box size='7 7.8 7' position='0 3.9 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.86 0.65 0.28' roughness='0.78'/>
+          </Appearance>
+        </Box>
+      </Group>
+
+      <Group id='CentralTower' position='0 0 0'>
+        <Box size='7 9 7' position='0 4.5 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.24 0.28 0.38' roughness='0.7'/>
+          </Appearance>
+        </Box>
+        <Box size='5 4 5' position='0 11 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.33 0.39 0.51' roughness='0.65'/>
+          </Appearance>
+        </Box>
+        <Box size='5.4 0.3 5.4' position='0 13.15 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.16 0.18 0.24' roughness='0.6'/>
+          </Appearance>
+        </Box>
+        <Cylinder radius='0.12' height='1.0' position='0 13.8 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.18 0.18 0.20' roughness='0.5'/>
+          </Appearance>
+        </Cylinder>
+        <Group id='BeaconGroup' position='0 14.55 0'>
+          <Sphere radius='0.65' position='0 0 0'>
+            <Appearance>
+              <UnlitMaterial id='BeaconMaterial' color='1 0 0' emissiveColor='1 0 0'/>
+            </Appearance>
+          </Sphere>
+          <PointLight id='BeaconLight' color='1 0 0' intensity='1.6' attenuation='0 0 1' position='0 0 0'/>
+          <TouchSensor id='BeaconTouch' description='Touch the blinking beacon to restart its colour cycle.'/>
+        </Group>
+      </Group>
+
+      <Group position='12 0 0'>
+        <Box size='7 6.6 7' position='0 3.3 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.55 0.36 0.68' roughness='0.78'/>
+          </Appearance>
+        </Box>
+      </Group>
+
+      <Group position='-12 0 12'>
+        <Box size='7 4.9 7' position='0 2.45 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.25 0.60 0.62' roughness='0.8'/>
+          </Appearance>
+        </Box>
+      </Group>
+      <Group position='0 0 12'>
+        <Box size='7 8.7 7' position='0 4.35 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.88 0.48 0.22' roughness='0.75'/>
+          </Appearance>
+        </Box>
+      </Group>
+      <Group position='12 0 12'>
+        <Box size='7 3.8 7' position='0 1.9 0'>
+          <Appearance>
+            <PhysicalMaterial diffuseColor='0.78 0.45 0.62' roughness='0.8'/>
+          </Appearance>
+        </Box>
+      </Group>
+    </Group>
+  </

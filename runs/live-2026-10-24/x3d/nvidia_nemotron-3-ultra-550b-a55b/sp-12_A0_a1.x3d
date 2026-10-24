@@ -1,0 +1,194 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Tree with apples'/>
+    <meta name='description' content='A tree with trunk, foliage, and bobbing apples on a grass plane'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Tree scene' position='0 5 10' orientation='0 1 0 -0.5'/>
+    <Background skyColor='0.5 0.7 1.0'/>
+    
+    <!-- Time sensor for animation -->
+    <TimeSensor DEF='Clock' loop='true' cycleInterval='4'/>
+    <!-- Position interpolator for vertical bobbing -->
+    <PositionInterpolator DEF='Bob' key='0 0.5 1' keyValue='0 0 0 0 0.05 0 0 0 0'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Bob' toField='set_fraction'/>
+    
+    <!-- Ground plane with touch sensor -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.6 0.2'/>
+        </Appearance>
+        <Box size='20 0.1 20'/>
+      </Shape>
+      <TouchSensor DEF='GroundTouch'/>
+    </Transform>
+    
+    <!-- Trunk -->
+    <Transform translation='0 1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.4 0.2 0.1'/>
+        </Appearance>
+        <Cylinder radius='0.2' height='2'/>
+      </Shape>
+    </Transform>
+    
+    <!-- Foliage: three overlapping cones -->
+    <Transform translation='0 2.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.1 0.5 0.1'/>
+        </Appearance>
+        <Cone bottomRadius='0.8' height='1.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 3.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.1 0.5 0.1'/>
+        </Appearance>
+        <Cone bottomRadius='0.6' height='1.5'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 4.5 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.1 0.5 0.1'/>
+        </Appearance>
+        <Cone bottomRadius='0.4' height='1.5'/>
+      </Shape>
+    </Transform>
+    
+    <!-- Apples: 10 spheres with bobbing animation -->
+    <!-- Apple 1 -->
+    <Transform translation='0.5 3.5 0.5'>
+      <Transform DEF='AppleBob1' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob1' toField='set_translation'/>
+    
+    <!-- Apple 2 -->
+    <Transform translation='-0.5 3.5 0.5'>
+      <Transform DEF='AppleBob2' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob2' toField='set_translation'/>
+    
+    <!-- Apple 3 -->
+    <Transform translation='0.5 3.5 -0.5'>
+      <Transform DEF='AppleBob3' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob3' toField='set_translation'/>
+    
+    <!-- Apple 4 -->
+    <Transform translation='-0.5 3.5 -0.5'>
+      <Transform DEF='AppleBob4' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob4' toField='set_translation'/>
+    
+    <!-- Apple 5 -->
+    <Transform translation='0.7 4.2 0'>
+      <Transform DEF='AppleBob5' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob5' toField='set_translation'/>
+    
+    <!-- Apple 6 -->
+    <Transform translation='-0.7 4.2 0'>
+      <Transform DEF='AppleBob6' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob6' toField='set_translation'/>
+    
+    <!-- Apple 7 -->
+    <Transform translation='0 4.2 0.7'>
+      <Transform DEF='AppleBob7' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob7' toField='set_translation'/>
+    
+    <!-- Apple 8 -->
+    <Transform translation='0 4.2 -0.7'>
+      <Transform DEF='AppleBob8' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob8' toField='set_translation'/>
+    
+    <!-- Apple 9 -->
+    <Transform translation='0.4 4.8 0.4'>
+      <Transform DEF='AppleBob9' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob9' toField='set_translation'/>
+    
+    <!-- Apple 10 -->
+    <Transform translation='-0.4 4.8 -0.4'>
+      <Transform DEF='AppleBob10' translation='0 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.05'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='Bob' fromField='value_changed' toNode='AppleBob10' toField='set_translation'/>
+  </Scene>
+</X3D>

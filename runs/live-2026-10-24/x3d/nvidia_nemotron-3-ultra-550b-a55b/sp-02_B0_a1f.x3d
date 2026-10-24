@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <meta name="title" content="Planetarium"/>
+    <meta name="description" content="A glowing yellow Sun with four orbiting planets and a ring around the largest planet."/>
+  </head>
+  <Scene>
+    <Viewpoint description="Planetarium view" position="0 0 30"/>
+    <!-- Sun -->
+    <Transform translation="0 0 0">
+      <Shape>
+        <Sphere radius="1.5"/>
+        <Appearance>
+          <Material diffuseColor="1 1 0" emissiveColor="1 1 0"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Planet 1: red, radius 0.5, orbit radius 5, period 10s -->
+    <Transform DEF="Orbit_1">
+      <TimeSensor DEF="TS_1" loop="true" cycleInterval="10"/>
+      <OrientationInterpolator DEF="OI_1" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185"/>
+      <Transform translation="5 0 0">
+        <Shape>
+          <Sphere radius="0.5"/>
+          <Appearance>
+            <Material diffuseColor="1 0 0"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <!-- Planet 2: green, radius 0.8, orbit radius 8, period 20s -->
+    <Transform DEF="Orbit_2">
+      <TimeSensor DEF="TS_2" loop="true" cycleInterval="20"/>
+      <OrientationInterpolator DEF="OI_2" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185"/>
+      <Transform translation="8 0 0">
+        <Shape>
+          <Sphere radius="0.8"/>
+          <Appearance>
+            <Material diffuseColor="0 1 0"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <!-- Planet 3: blue (largest), radius 1.2, orbit radius 12, period 30s, with ring -->
+    <Transform DEF="Orbit_3">
+      <TimeSensor DEF="TS_3" loop="true" cycleInterval="30"/>
+      <OrientationInterpolator DEF="OI_3" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185"/>
+      <Transform translation="12 0 0">
+        <Shape>
+          <Sphere radius="1.2"/>
+          <Appearance>
+            <Material diffuseColor="0 0 1"/>
+          </Appearance>
+        </Shape>
+        <!-- Ring around planet 3 -->
+        <Shape>
+          <Cylinder radius="1.5" height="0.02" topRadius="1.5" bottomRadius="1.5" solid="false"/>
+          <Appearance>
+            <Material diffuseColor="0.5 0.5 1" transparency="0.3"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <!-- Planet 4: orange, radius 0.7, orbit radius 16, period 40s -->
+    <Transform DEF="Orbit_4">
+      <TimeSensor DEF="TS_4" loop="true" cycleInterval="40"/>
+      <OrientationInterpolator DEF="OI_4" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185"/>
+      <Transform translation="16 0 0">
+        <Shape>
+          <Sphere radius="0.7"/>
+          <Appearance>
+            <Material diffuseColor="1 0.5 0"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <!-- ROUTEs for animation -->
+    <ROUTE fromNode="TS_1" fromField="fraction_changed" toNode="OI_1" toField="set_fraction"/>
+    <ROUTE fromNode="OI_1" fromField="value_changed" toNode="Orbit_1" toField="rotation"/>
+    <ROUTE fromNode="TS_2" fromField="fraction_changed" toNode="OI_2" toField="set_fraction"/>
+    <ROUTE fromNode="OI_2" fromField="value_changed" toNode="Orbit_2" toField="rotation"/>
+    <ROUTE fromNode="TS_3" fromField="fraction_changed" toNode="OI_3" toField="set_fraction"/>
+    <ROUTE fromNode="OI_3" fromField="value_changed" toNode="Orbit_3" toField="rotation"/>
+    <ROUTE fromNode="TS_4" fromField="fraction_changed" toNode="OI_4" toField="set_fraction"/>
+    <ROUTE fromNode="OI_4" fromField="value_changed" toNode="Orbit_4" toField="rotation"/>
+  </Scene>
+</X3D>

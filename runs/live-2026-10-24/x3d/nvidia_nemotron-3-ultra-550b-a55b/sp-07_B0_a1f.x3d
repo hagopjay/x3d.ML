@@ -1,0 +1,157 @@
+<X3D> document, no prose, no markdown fences.
+
+We must ensure we use only X3D 4.0 nodes. No EnvironmentLight, Tangent, GaussianSplats, HAnimPose, InlineGeometry. PhysicalMaterial and UnlitMaterial allowed. HAnim is HAnim 2.0 component but not needed.
+
+We need to define geometry: spheres for strands, cylinders for rungs. Use DEF for sphere and cylinder prototypes, then USE them in a Transform hierarchy for each position.
+
+We have 20 base pairs, so 20 rungs. Each rung connects two spheres (one on each strand) at same height. The strands are helices: each strand is a helix of spheres. Could create a series of Transform nodes for each sphere position along helix. Use a Script? But we can manually create 20*2 = 40 spheres (20 per strand). That's okay under 200 nodes.
+
+But we can also use a single sphere geometry and reuse with USE, but each sphere needs its own Transform for position. That's many Transform nodes. Could use a single Transform with a PositionInterpolator? But simpler: create a group for each base pair: a Transform for the rung (cylinder) and two spheres at ends. But we need rotation about long axis (Y). So we can put everything under a top-level Transform that rotates.
+
+We'll create a TimeSensor with cycleInterval=10 (slow). OrientationInterpolator with key [0,1] and keyValue [0 1 0 0, 0 1 0 6.283185] (full rotation). ROUTE from TimeSensor.fraction_changed to OrientationInterpolator.set_fraction, and from OrientationInterpolator.value_changed to topTransform.rotation.
+
+We need to define the geometry: DEF SphereGeometry Sphere { radius 0.05 } (small). DEF CylinderGeometry Cylinder { radius 0.02 height 0.3 } (thin). But cylinder height should match distance between strands. The strands radius from center maybe 0.5? Let's define helix radius = 0.5. The two strands are offset by 180 degrees? Actually double helix: two strands intertwined. For simplicity, we can have two helices with same radius but phase offset of 180 degrees (pi). Each base pair connects corresponding points on the two helices at same height. So for each base pair i from 0 to 19, we compute angle = i * (2*pi/10?) Actually 20 base pairs over maybe 2 turns? Let's do 2 full turns over 20 base pairs: each step = 2*pi/10 = 0.628 rad per base pair? That would be 10 base pairs per turn. 20 base pairs = 2 turns. Height per base pair = total height / 20. Let total height = 4. So each step height = 0.2. So positions: for strand A: x = r*cos(theta), z = r*sin(theta), y = i*0.2 - 2 (centered). For strand B: phase offset pi: x = r*cos(theta+pi) = -r*cos(theta), z = -r*sin(theta). So they are opposite.
+
+Rung connects (xA, y, zA) to (xB, y, zB). The cylinder should be oriented along the vector between them. That's more complex. But we can simplify: make rung as a cylinder along X axis? But the vector between strands is horizontal (since same y). Actually both strands have same y, so rung is horizontal line connecting opposite points. The vector is from (xA, y, zA) to (-xA, y, -zA) = (-2xA, 0, -2zA). That's a line through origin. Could orient cylinder along that direction. But easier: we can just create a thin cylinder scaled and rotated to connect the two spheres. However, that requires per-rung Transform with rotation. Could also use a Box or a line? But requirement: thin cylinders.
+
+Given node limit, we can approximate: create a cylinder of height = distance between strands (2*r = 1.0) and radius 0.02, and place it at midpoint (0, y, 0) and rotate it to align with the vector. The vector direction is from strand A to strand B: (-2xA, 0, -2zA). That's a vector in XZ plane. The cylinder's default orientation is along Y axis. So we need to rotate it to align with that vector. Could use a Transform with rotation that aligns Y to that vector. That's doable but many nodes.
+
+Alternative: Use a simple shape: a line (IndexedLineSet) but requirement says thin cylinders. Could use a Cylinder with height = 1.0 and place it at midpoint, but orientation must be along the line connecting the two spheres. Since the line is horizontal, we can rotate cylinder 90 degrees about Z axis? Actually cylinder along Y, we want it along X axis (if strand A at (r,0) and strand B at (-r,0) then rung along X). But for general angle, the rung is along the line through origin at angle theta+pi/2? Wait: points are (r cosθ, r sinθ) and (-r cosθ, -r sinθ). The vector from A to B is (-2r cosθ, -2r sinθ). That's a vector pointing from A to B, which is opposite to the position vector of A. So the rung is collinear with the position vector of A (but opposite direction). So the rung lies along the radial line. So we can orient cylinder along that radial direction. That means cylinder's axis should be along the vector (cosθ, sinθ) in XZ plane. Since cylinder default is Y, we need to rotate it to align Y with that vector. That's a rotation of -90 degrees about axis perpendicular to both Y and the vector. Could compute but heavy.
+
+Simplify: Instead of cylinders, we could use a Box shaped as a thin rectangular prism oriented along the radial direction? Still need rotation.
+
+Maybe we can avoid per-rung rotation by using a single cylinder for each rung but oriented along X axis and then rotate the whole rung group around Y axis by theta? Actually if we create a rung as a cylinder along X axis (by rotating the cylinder 90 deg about Z), then we can place it at the midpoint and rotate the whole rung around Y by theta. That would align it radially. Let's do: default cylinder along Y. To make it along X, we can rotate -90 deg about Z (or 90 about Z). Rotation: 0 0 1 -1.5708. Then if we apply an additional rotation about Y by theta, the cylinder will point radially outward. But the rung should be centered at origin? Actually the rung should be centered at (0, y, 0) and extend from -r to +r along the radial direction. If we have a cylinder of height 2r (1.0) along X, centered at origin, then rotating about Y by theta will align it along the radial direction at angle theta. But the cylinder's center is at origin, so after rotation it's still centered at origin. Then we translate it to (0, y, 0). That works! So each rung can be a Transform: translation 0 y 0, rotation 0 1 0 theta, and inside a Transform that rotates cylinder to X axis (rotate -90 about Z). But we can combine rotations: first rotate cylinder to X axis (rotate about Z -90), then rotate about Y by theta. Since rotations are not commutative, we need to apply in correct order. In X3D, Transform rotation field applies after translation? Actually Transform: children are transformed by rotation then scale then translation? The order: translation, rotation, scale, center, etc. But we can nest: outer Transform for translation and Y rotation, inner Transform for Z rotation to align cylinder to X. Or we can define a prototype for rung: a Transform with rotation 0 0 1 -1.5708 (to align cylinder to X) and then a child Transform with rotation 0 1 0 theta and translation 0 y 0, containing the cylinder geometry. But that's two Transforms per rung.
+
+Alternatively, we can define a single Transform per rung that sets rotation to orient the cylinder directly. We can compute a single rotation axis-angle that rotates Y to the radial vector. The radial vector is (cosθ, 0, sinθ) in XZ plane. The rotation from Y (0,1,0) to (cosθ,0,sinθ) is a rotation of -90 degrees about axis ( -sinθ, 0, cosθ )? Actually we can use a rotation of -π/2 about axis ( -sinθ, 0, cosθ ). But that's messy.
+
+Given node limit, we can accept a simpler representation: use a thin Box (or Cylinder) that is not perfectly oriented but just a line? But requirement says thin cylinders. Might be okay if we approximate with cylinders along Y but placed at each sphere? No.
+
+Maybe we can avoid per-rung rotation by making the rungs as cylinders along Y but connecting spheres vertically? But the strands are helices, so spheres are at different y. The rung should connect spheres at same y (base pair). In our design, both strands have same y for each base pair. So rung is horizontal. So cylinder along Y would be vertical, not horizontal. So we need horizontal cylinders.
+
+We could use a Cylinder with height = 1.0 and radius 0.02, and set its orientation by rotating the Transform. We'll do per rung: a Transform with translation (0, y, 0) and rotation (0,1,0, theta) and a child Transform with rotation (0,0,1,-1.5708) containing the cylinder. That's 2 Transforms per rung, plus the cylinder USE. 20 rungs => 40 Transforms. Plus 40 spheres (20 per strand) each with a Transform. That's 80 Transforms. Plus top Transform for rotation. Total nodes maybe ~130, under 200.
+
+We can reduce by combining the two rotations into one Transform per rung: we can set rotation field to a single axis-angle that rotates the cylinder from Y to the radial direction. But we can also define a prototype for rung that includes the inner rotation, and then use a Transform for each rung with translation and Y rotation. That's still two Transforms per rung (one for the rung prototype instance, one for positioning). But we can define a DEF for the rung geometry (a Transform that rotates cylinder to X) and then USE it inside a Transform for each rung with translation and Y rotation. However, USE cannot be used inside a Transform that also has its own translation/rotation? Actually we can have a Transform that contains a USE of a Group that contains the rotated cylinder. But the USE must refer to a node that is a Group or Transform. We can DEF a Group "RungGeometry" that contains a Transform rotating cylinder to X, and then for each rung we create a Transform with translation and Y rotation, and inside that Transform we USE RungGeometry. That would be one Transform per rung (for positioning) plus the shared RungGeometry. Good.
+
+Similarly for spheres: we can DEF a Sphere geometry (Shape with Appearance and Sphere). Then for each sphere we need a Transform to position it. Could also share a Transform? No, each sphere needs unique position. So we need 40 Transforms for spheres.
+
+But we can also create the two strands as a series of Transform nodes for each sphere. That's okay.
+
+Let's count nodes: 
+- X3D root
+- Scene
+- TimeSensor (1)
+- OrientationInterpolator (1)
+- ROUTE (2)
+- Viewpoint (1)
+- Top Transform (rotating) (1)
+- Inside top Transform: 
+   - Group for strand A spheres (20 Transforms each with USE SphereShape)
+   - Group for strand B spheres (20 Transforms each with USE SphereShape)
+   - Group for rungs (20 Transforms each with translation and Y rotation, containing USE RungGeometry)
+- DEFs: SphereShape (Shape with Appearance and Sphere), RungGeometry (Group containing Transform rotating cylinder to X and USE CylinderShape), CylinderShape (Shape with Appearance and Cylinder)
+- Appearances: BlueMaterial, OrangeMaterial, RungMaterial (maybe gray)
+Total nodes: ~1 (Scene) + 1 (TimeSensor) + 1 (OI) + 2 (ROUTE) + 1 (Viewpoint) + 1 (TopTransform) + 20+20+20 = 60 Transforms + 3 Groups? Actually we can put spheres directly under top Transform without extra Groups. But we need to organize. Let's just put all under top Transform.
+
+We'll define DEFs at top of Scene (or inside top Transform). Use DEF for SphereShapeBlue, SphereShapeOrange, CylinderShape, RungGeometry.
+
+But note: The spheres on strand A are blue, strand B orange. So we need two sphere shapes with different colors. Could define two Shape nodes with different Appearance. Or define one Sphere geometry and two Appearances, then combine in Shape. But Shape includes both geometry and appearance. We can DEF two Shapes: BlueSphereShape and OrangeSphereShape. Then USE them in Transforms.
+
+Similarly, rung cylinder can be a single Shape with gray appearance.
+
+RungGeometry: a Group containing a Transform that rotates the cylinder to X axis. That Transform can have a child USE CylinderShape. Then each rung Transform (position+Yrot) will have a child USE RungGeometry.
+
+But careful: If we USE RungGeometry inside a Transform, the RungGeometry's internal Transform (rotate to X) will be applied relative to the parent Transform's coordinate system. That's fine: parent Transform does translation and Y rotation, then child Transform does Z rotation. The order: parent Transform's rotation (Y) then translation? Actually Transform node: the transformation is applied as: translation, rotation, scale, center, scaleOrientation. The children are transformed by that. So if parent Transform has rotation Y, then child Transform's rotation Z is applied after parent's rotation? The child's local coordinate system is rotated by parent's rotation. So the child's Z rotation will be around the parent's rotated Z axis? Actually the child's rotation is applied in the parent's coordinate system after parent's rotation. So if parent rotates by theta about Y, then child's rotation about Z (which is now rotated) will not be a simple Z rotation in world coordinates. We want the cylinder to be first rotated to X (local), then the whole assembly rotated about Y. That means we need the Y rotation to be applied after the Z rotation? Actually we want the cylinder's local X axis to point radially. If we first rotate cylinder to X (Z rotation -90), then rotate about Y by theta, the cylinder's axis will be rotated accordingly. In a scene graph, if we have a parent Transform with rotation Y, and a child Transform with rotation Z, the child's geometry is first transformed by child's rotation (Z), then by parent's rotation (Y). Because the child's local coordinates are transformed by child's transform, then the result is transformed by parent's transform. So the order is child then parent. That means the cylinder is first rotated by Z (to X), then by Y (to radial). That's exactly what we want: first align to X, then rotate about Y to point radially. Good! So we can have parent Transform (per rung) with rotation Y (theta) and translation (0,y,0). Inside it, a child Transform (the RungGeometry) with rotation Z -90 and USE CylinderShape. But RungGeometry is a Group containing that child Transform. If we USE RungGeometry inside the parent Transform, the RungGeometry's internal Transform becomes a child of the parent Transform. So the order: parent Transform (Y rotation, translation) -> child Transform (Z rotation) -> cylinder. That yields cylinder first rotated by Z, then by Y. Perfect.
+
+Thus we can define:
+DEF RungGeometry Group {
+  children [
+    Transform {
+      rotation 0 0 1 -1.57079632679
+      children [ USE CylinderShape ]
+    }
+  ]
+}
+
+Then for each rung i:
+Transform {
+  translation 0 y_i 0
+  rotation 0 1 0 theta_i
+  children [ USE RungGeometry ]
+}
+
+Great.
+
+Now for spheres: we need to position each sphere at (x, y, z) for each strand. We'll create a Transform for each sphere with translation (x, y, z) and children [ USE BlueSphereShape ] or OrangeSphereShape.
+
+We can compute positions for 20 base pairs. Let's set parameters:
+- radius = 0.5
+- height_per_bp = 0.2
+- total_height = 20 * 0.2 = 4.0, centered at y=0 => y_i = -2.0 + i*0.2 + 0.1? Actually if we want base pairs at y positions from -2 to 2? Let's set y_i = -2.0 + i*0.2 + 0.1? That would center each base pair at the middle of the step? But spheres are at the base pair positions. For each base pair i (0..19), we have two spheres at same y. Let's set y_i = -2.0 + i*0.2 + 0.1? That would put first at -1.9, last at 1.9. But we can just set y_i = -2.0 + i*0.2 (so first at -2.0, last at 1.8). That's fine.
+
+Angle per base pair: we want 2 full turns over 20 base pairs => 20 steps for 4π radians => step = 4π/20 = π/5 = 0.6283185 rad. So theta_i = i * π/5.
+
+Strand A: x = radius * cos(theta_i), z = radius * sin(theta_i)
+Strand B: x = -radius * cos(theta_i), z = -radius * sin(theta_i) (phase offset π)
+
+Rung: at same y_i, theta_i (the radial direction for rung is same as strand A's angle). The rung's Y rotation should be theta_i (since we want cylinder to point along radial direction of strand A). But note: the cylinder after Z rotation points along +X. Then parent Y rotation by theta_i will rotate +X to direction (cosθ, 0, sinθ). That's exactly the radial direction of strand A. The rung extends from -radius to +radius along that direction, centered at origin. That connects the two strands? The strand A sphere is at (radius*cosθ, y, radius*sinθ). The strand B sphere is at (-radius*cosθ, y, -radius*sinθ). The rung cylinder centered at origin with half-length radius along radial direction will have ends at ±radius along that direction. But the radial direction vector is (cosθ, 0, sinθ). The cylinder's ends after rotation: one end at (radius*cosθ, 0, radius*sinθ) and the other at (-radius*cosθ, 0, -radius*sinθ). That matches the sphere positions exactly (ignoring y). Since we translate the rung to y_i, the cylinder's ends will be at y_i as well. Perfect! So the rung connects the two spheres.
+
+Thus our design works.
+
+Now we need to create the X3D file.
+
+We'll write the XML with proper namespace and schema location.
+
+We'll include a Viewpoint with description "DNA Double Helix".
+
+We'll set up the animation: TimeSensor DEF='TS' cycleInterval='10' loop='true'. OrientationInterpolator DEF='OI' key='0 1' keyValue='0 1 0 0  0 1 0 6.28318530718'. ROUTE from TS.fraction_changed to OI.set_fraction. ROUTE from OI.value_changed to TopTransform.rotation (we'll DEF TopTransform as 'Helix').
+
+We need to ensure the top Transform has DEF='Helix' so we can route to its rotation.
+
+Now, we need to create the scene graph.
+
+Let's outline the structure:
+
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Rotating DNA Double Helix'/>
+    <meta name='description' content='Two spiral strands with base-pair rungs rotating about long axis'/>
+  </head>
+  <Scene>
+    <Viewpoint DEF='VP' position='0 0 10' description='DNA Double Helix'/>
+    <TimeSensor DEF='TS' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='OI' key='0 1' keyValue='0 1 0 0  0 1 0 6.28318530718'/>
+    <ROUTE fromNode='TS' fromField='fraction_changed' toNode='OI' toField='set_fraction'/>
+    <ROUTE fromNode='OI' fromField='value_changed' toNode='Helix' toField='rotation'/>
+    <Transform DEF='Helix'>
+      <!-- Define reusable shapes -->
+      <Shape DEF='BlueSphereShape'>
+        <Appearance>
+          <Material diffuseColor='0 0 1'/>
+        </Appearance>
+        <Sphere radius='0.05'/>
+      </Shape>
+      <Shape DEF='OrangeSphereShape'>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0'/>
+        </Appearance>
+        <Sphere radius='0.05'/>
+      </Shape>
+      <Shape DEF='CylinderShape'>
+        <Appearance>
+          <Material diffuseColor='0.5 0.5 0.5'/>
+        </Appearance>
+        <Cylinder radius='0.02' height='1.0'/>
+      </Shape>
+      <Group DEF='RungGeometry'>
+        <Transform rotation='0 0 1 -1.57079632679'>
+          <Shape USE='CylinderShape'/>
+        </Transform>
+      </Group>
+      <!-- Strand A spheres -->
+      <!-- 20 Transforms for blue spheres -->
+      <!-- Strand B spheres -->
+      <!-- 20 Transforms for orange spheres -->
+      <!-- 20 Rung Transforms -->
+    </Transform>
+  </Scene>
+</X3D>

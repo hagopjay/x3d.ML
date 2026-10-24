@@ -1,0 +1,144 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+  <meta name='title' content='Aquarium'/>
+</head>
+<Scene>
+  <Viewpoint description='Aquarium view' position='0 0 7'/>
+  <Background skyColor='0.2 0.4 0.6'/>
+  <!-- Tank -->
+  <Transform>
+    <Shape>
+      <Box size='4 3 2'/>
+      <Appearance>
+        <Material transparency='0.8' diffuseColor='0.7 0.9 1.0' specularColor='1 1 1' shininess='0.9'/>
+      </Appearance>
+    </Shape>
+    <TouchSensor/>
+  </Transform>
+  <!-- Sand floor -->
+  <Transform translation='0 -1.45 0'>
+    <Shape>
+      <Box size='4 0.1 2'/>
+      <Appearance>
+        <Material diffuseColor='0.9 0.8 0.6'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <!-- Plants -->
+  <Transform translation='-1.5 -1.2 -0.5'>
+    <Shape>
+      <Cylinder radius='0.05' height='0.5'/>
+      <Appearance>
+        <Material diffuseColor='0 0.6 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <Transform translation='1.5 -1.2 0.5'>
+    <Shape>
+      <Cylinder radius='0.05' height='0.5'/>
+      <Appearance>
+        <Material diffuseColor='0 0.6 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <Transform translation='-1.0 -1.2 0.8'>
+    <Shape>
+      <Cylinder radius='0.05' height='0.5'/>
+      <Appearance>
+        <Material diffuseColor='0 0.6 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <Transform translation='1.0 -1.2 -0.8'>
+    <Shape>
+      <Cylinder radius='0.05' height='0.5'/>
+      <Appearance>
+        <Material diffuseColor='0 0.6 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <Transform translation='0 -1.2 0'>
+    <Shape>
+      <Cylinder radius='0.05' height='0.5'/>
+      <Appearance>
+        <Material diffuseColor='0 0.6 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+  <!-- Fish 1 -->
+  <TimeSensor DEF='TS1' cycleInterval='10' loop='true'/>
+  <OrientationInterpolator DEF='OI1' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832'/>
+  <Transform DEF='Center1' translation='0 -1.0 0'>
+    <Transform translation='0.8 0 0'>
+      <Shape>
+        <Cone bottomRadius='0.1' height='0.3' side='true' bottom='true'/>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0' emissiveColor='1 0.3 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Transform>
+  <ROUTE fromNode='TS1' fromField='fraction_changed' toNode='OI1' toField='set_fraction'/>
+  <ROUTE fromNode='OI1' fromField='value_changed' toNode='Center1' toField='rotation'/>
+  <!-- Fish 2 -->
+  <TimeSensor DEF='TS2' cycleInterval='8' loop='true'/>
+  <OrientationInterpolator DEF='OI2' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832'/>
+  <Transform DEF='Center2' translation='0 -0.5 0'>
+    <Transform translation='0.7 0 0'>
+      <Shape>
+        <Cone bottomRadius='0.1' height='0.3' side='true' bottom='true'/>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0' emissiveColor='1 0.3 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Transform>
+  <ROUTE fromNode='TS2' fromField='fraction_changed' toNode='OI2' toField='set_fraction'/>
+  <ROUTE fromNode='OI2' fromField='value_changed' toNode='Center2' toField='rotation'/>
+  <!-- Fish 3 -->
+  <TimeSensor DEF='TS3' cycleInterval='6' loop='true'/>
+  <OrientationInterpolator DEF='OI3' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832'/>
+  <Transform DEF='Center3' translation='0 0 0'>
+    <Transform translation='0.6 0 0'>
+      <Shape>
+        <Cone bottomRadius='0.1' height='0.3' side='true' bottom='true'/>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0' emissiveColor='1 0.3 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Transform>
+  <ROUTE fromNode='TS3' fromField='fraction_changed' toNode='OI3' toField='set_fraction'/>
+  <ROUTE fromNode='OI3' fromField='value_changed' toNode='Center3' toField='rotation'/>
+  <!-- Fish 4 -->
+  <TimeSensor DEF='TS4' cycleInterval='5' loop='true'/>
+  <OrientationInterpolator DEF='OI4' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832'/>
+  <Transform DEF='Center4' translation='0 0.5 0'>
+    <Transform translation='0.5 0 0'>
+      <Shape>
+        <Cone bottomRadius='0.1' height='0.3' side='true' bottom='true'/>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0' emissiveColor='1 0.3 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Transform>
+  <ROUTE fromNode='TS4' fromField='fraction_changed' toNode='OI4' toField='set_fraction'/>
+  <ROUTE fromNode='OI4' fromField='value_changed' toNode='Center4' toField='rotation'/>
+  <!-- Fish 5 -->
+  <TimeSensor DEF='TS5' cycleInterval='4' loop='true'/>
+  <OrientationInterpolator DEF='OI5' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832'/>
+  <Transform DEF='Center5' translation='0 1.0 0'>
+    <Transform translation='0.4 0 0'>
+      <Shape>
+        <Cone bottomRadius='0.1' height='0.3' side='true' bottom='true'/>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0' emissiveColor='1 0.3 0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Transform>
+  <ROUTE fromNode='TS5' fromField='fraction_changed' toNode='OI5' toField='set_fraction'/>
+  <ROUTE fromNode='OI5' fromField='value_changed' toNode='Center5' toField='rotation'/>
+</Scene>
+</X3D>

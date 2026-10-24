@@ -1,0 +1,37 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Traffic cone' position='0.9 0.55 1.2' orientation='-0.217 0.976 0 0.657' centerOfRotation='0 0.35 0'/>
+    <DirectionalLight direction='-0.4 -0.8 -0.6' intensity='1'/>
+    <DirectionalLight direction='0.7 -0.3 0.6' intensity='0.35' color='0.9 0.9 1'/>
+    <Transform translation='0 -0.005 0'>
+      <Shape>
+        <Box size='4 0.01 4'/>
+        <Appearance>
+          <Material diffuseColor='0.3 0.3 0.32'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.025 0'>
+      <Shape>
+        <Box size='0.45 0.05 0.45'/>
+        <Appearance>
+          <Material diffuseColor='0.05 0.05 0.06' shininess='0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0.375 0'>
+      <Shape>
+        <Cone bottomRadius='0.16' height='0.65'/>
+        <Appearance>
+          <Material diffuseColor='1 0.4 0.05' specularColor='0.3 0.15 0.05' shininess='0.25'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Shape>
+      <Extrusion crossSection='1 0 0.924 0.383 0.707 0.707 0.383 0.924 0 1 -0.383 0.924 -0.707 0.707 -0.924 0.383 -1 0 -0.924 -0.383 -0.707 -0.707 -0.383 -0.924 0 -1 0.383 -0.924 0.707 -0.707 0.924 -0.383 1 0' spine='0 0.33 0 0 0.45 0' scale='0.094 0.094 0.063 0.063' creaseAngle='1.5'/>
+      <Appearance>
+        <Material diffuseColor='0.92 0.92 0.92' specularColor='0.6 0.6 0.6' shininess='0.5' emissiveColor='0.04 0.04 0.04'/>
+      </Appearance>
+    </Shape>
+  </Scene>
+</X3D>

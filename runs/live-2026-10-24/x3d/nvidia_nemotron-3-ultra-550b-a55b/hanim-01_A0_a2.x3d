@@ -1,0 +1,51 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description='HAnim minimal humanoid' position='0 1.5 5'/>
+    <HAnimHumanoid version='2.0' name='Humanoid'>
+      <HAnimJoint DEF='humanoid_root' name='humanoid_root' center='0 0 0' containerField='joints'>
+        <HAnimSegment DEF='root_segment' name='root_segment'>
+          <Shape>
+            <Box size='0.1 0.1 0.1'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.8 0.8 0.8'/>
+            </Appearance>
+          </Shape>
+        </HAnimSegment>
+        <HAnimJoint DEF='sacroiliac' name='sacroiliac' center='0 0.1 0' containerField='joints'>
+          <HAnimSegment DEF='sacroiliac_segment' name='sacroiliac_segment'>
+            <Shape>
+              <Box size='0.1 0.1 0.1'/>
+              <Appearance>
+                <PhysicalMaterial baseColor='0.7 0.7 0.7'/>
+              </Appearance>
+            </Shape>
+          </HAnimSegment>
+          <HAnimJoint DEF='l_hip' name='l_hip' center='-0.1 0.1 0' containerField='joints'>
+            <HAnimSegment DEF='l_hip_segment' name='l_hip_segment'>
+              <Shape>
+                <Box size='0.1 0.1 0.1'/>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0.6 0.6 0.6'/>
+                </Appearance>
+              </Shape>
+            </HAnimSegment>
+          </HAnimJoint>
+          <HAnimJoint DEF='r_hip' name='r_hip' center='0.1 0.1 0' containerField='joints'>
+            <HAnimSegment DEF='r_hip_segment' name='r_hip_segment'>
+              <Shape>
+                <Box size='0.1 0.1 0.1'/>
+                <Appearance>
+                  <PhysicalMaterial baseColor='0.6 0.6 0.6'/>
+                </Appearance>
+              </Shape>
+            </HAnimSegment>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+    </HAnimHumanoid>
+  </Scene>
+</X3D>

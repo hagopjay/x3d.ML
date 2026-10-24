@@ -1,0 +1,25 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+<Viewpoint DEF='Viewpoint1' description='Waving HAnim figure' position='0 1.5 3'/>
+<HAnimHumanoid DEF='Humanoid' version='2.0'>
+  <HAnimJoint DEF='RootJoint' name='HAnimHumanoid' center='0 0 0' containerField='skeleton'>
+    <HAnimJoint DEF='RShoulder' name='r_shoulder' center='0.15 1.4 0' containerField='children'>
+      <HAnimSegment DEF='Segment_R_UpperArm' name='r_upperarm' joints='RShoulder' containerField='children'>
+        <Transform translation='0 -0.15 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='1 0.8 0.6'/>
+            </Appearance>
+            <Box size='0.1 0.3 0.1'/>
+          </Shape>
+        </Transform>
+      </HAnimSegment>
+    </HAnimJoint>
+  </HAnimJoint>
+</HAnimHumanoid>
+<TimeSensor DEF='WaveTimer' cycleInterval='2' loop='true'/>
+<OrientationInterpolator DEF='WaveInterpolator' key='0 0.5 1' keyValue='0 0 1 0 0 0 1 1.57 0 0 1 0'/>
+<ROUTE fromNode='WaveTimer' fromField='fraction_changed' toNode='WaveInterpolator' toField='set_fraction'/>
+<ROUTE fromNode='WaveInterpolator' fromField='value_changed' toNode='RShoulder' toField='set_rotation'/>
+</Scene>
+</X3D>

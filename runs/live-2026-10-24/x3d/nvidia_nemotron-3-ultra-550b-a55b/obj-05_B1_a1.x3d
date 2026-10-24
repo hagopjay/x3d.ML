@@ -1,0 +1,15 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Gold Ring' position='0 2 5'/>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial baseColor='1 0.84 0' metallic='1' roughness='0.2'/>
+      </Appearance>
+      <Extrusion
+        crossSection='0.2 0 0.19 0.06 0.14 0.14 0.06 0.19 0 0.2 -0.06 0.19 -0.14 0.14 -0.19 0.06 -0.2 0 -0.19 -0.06 -0.14 -0.14 -0.06 -0.19 0 -0.2 0.06 -0.19 0.14 -0.14 0.19 -0.06'
+        spine='1 0 0 0.98 0 0.2 0.92 0 0.38 0.83 0 0.55 0.71 0 0.71 0.55 0 0.83 0.38 0 0.92 0.2 0 0.98 0 0 1 -0.2 0 0.98 -0.38 0 0.92 -0.55 0 0.83 -0.71 0 0.71 -0.83 0 0.55 -0.92 0 0.38 -0.98 0 0.2 -1 0 0 -0.98 0 -0.2 -0.92 0 -0.38 -0.83 0 -0.55 -0.71 0 -0.71 -0.55 0 -0.83 -0.38 0 -0.92 -0.2 0 -0.98 0 0 -1 0.2 0 -0.98 0.38 0 -0.92 0.55 0 -0.83 0.71 0 -0.71 0.83 0 -0.55 0.92 0 -0.38 0.98 0 -0.2'
+        solid='false'
+        creaseAngle='0.5'/>
+    </Shape>
+  </Scene>
+</X3D>

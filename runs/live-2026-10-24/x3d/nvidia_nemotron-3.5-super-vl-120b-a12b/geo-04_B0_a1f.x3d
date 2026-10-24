@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Geospatial" level="1"/>
+    <component name="Shape" level="2"/>
+  </head>
+  <Scene>
+    <GeoLocation geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.2296 -80.4199 650.0"/>
+    <GeoViewpoint geoSystem="&quot;GD&quot; &quot;WE&quot;" position="37.2296 -80.4199 700.0" description="Torgersen Hall"/>
+    <Viewpoint description="Animated drone over Torgersen Hall" position="0 80 -80"/>
+    <Transform DEF="DroneTransform" translation="0 50 0">
+      <Shape>
+        <Box size="2 2 2"/>
+        <Appearance>
+          <PhysicalMaterial baseColor="0.1 0.4 0.9"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF="TourTimer" cycleInterval="12" loop="TRUE"/>
+    <GeoPositionInterpolator DEF="PathInterpolator" key="0 0.25 0.5 0.75 1" keyValue="-20 50 -20 20 50 -20 20 50 20 -20 50 20 -20 50 -20"/>
+    <ROUTE fromNode="TourTimer" fromField="fraction_changed" toNode="PathInterpolator" toField="set_fraction"/>
+    <ROUTE fromNode="PathInterpolator" fromField="value_changed" toNode="DroneTransform" toField="translation"/>
+  </Scene>
+</X3D>

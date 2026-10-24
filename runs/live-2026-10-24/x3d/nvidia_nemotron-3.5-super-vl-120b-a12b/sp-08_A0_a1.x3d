@@ -1,0 +1,111 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head></head>
+<Scene>
+<Viewpoint description='A small city block with nine buildings and a blinking central tower' position='0 25 -60'/>
+
+<Transform translation='0 0 0'>
+  <Shape>
+    <Box size='100 0.2 100'/>
+    <Appearance>
+      <Material diffuseColor='0.5 0.5 0.5'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='-20 5 -20'>
+  <Shape>
+    <Box size='8 10 8'/>
+    <Appearance>
+      <Material diffuseColor='0.8 0.2 0.2'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='0 4 -20'>
+  <Shape>
+    <Box size='8 8 8'/>
+    <Appearance>
+      <Material diffuseColor='0.2 0.8 0.2'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='20 6 -20'>
+  <Shape>
+    <Box size='8 12 8'/>
+    <Appearance>
+      <Material diffuseColor='0.2 0.2 0.8'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='-20 7 0'>
+  <Shape>
+    <Box size='8 14 8'/>
+    <Appearance>
+      <Material diffuseColor='0.8 0.8 0.2'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='0 20 0'>
+  <Shape>
+    <Box size='10 40 10'/>
+    <Appearance>
+      <Material diffuseColor='0.7 0.7 0.7'/>
+    </Appearance>
+  </Shape>
+  <Transform translation='0 40.5 0'>
+    <Shape>
+      <Box size='2 1 2'/>
+      <Appearance>
+        <Material DEF='LightMat' emissiveColor='1 0 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+</Transform>
+
+<Transform translation='20 5 0'>
+  <Shape>
+    <Box size='8 10 8'/>
+    <Appearance>
+      <Material diffuseColor='0.8 0.4 0.2'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='-20 3 20'>
+  <Shape>
+    <Box size='8 6 8'/>
+    <Appearance>
+      <Material diffuseColor='0.4 0.2 0.8'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='0 8 20'>
+  <Shape>
+    <Box size='8 16 8'/>
+    <Appearance>
+      <Material diffuseColor='0.2 0.8 0.8'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<Transform translation='20 4 20'>
+  <Shape>
+    <Box size='8 8 8'/>
+    <Appearance>
+      <Material diffuseColor='0.8 0.2 0.8'/>
+    </Appearance>
+  </Shape>
+</Transform>
+
+<TimeSensor DEF='Clock' cycleInterval='2' loop='true'/>
+<ColorInterpolator DEF='LightColor' key='0 0.5 1' keyValue='1 0 0 0.1 0 0 1 0 0'/>
+
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='LightColor' toField='set_fraction'/>
+<ROUTE fromNode='LightColor' fromField='value_changed' toNode='LightMat' toField='emissiveColor'/>
+
+</Scene>
+</X3D>

@@ -1,0 +1,442 @@
+{
+ "t_start": 1792872702.4546216,
+ "validator": "8dd0d3e",
+ "max_attempts": 3,
+ "system_sha": "bb3836a7a7da",
+ "repair_autofix_sha": "13289c898819",
+ "cap_usd": 1.0,
+ "prompts": 50,
+ "models": [
+  {
+   "id": "gemini-3.8-flash",
+   "provider": "vertex",
+   "parallel": 8,
+   "temperature": 0.4,
+   "max_out": 12000
+  },
+  {
+   "id": "gemini-3.1-pro-preview",
+   "provider": "vertex",
+   "parallel": 4,
+   "temperature": null,
+   "max_out": 12000
+  },
+  {
+   "id": "gpt-6.1-sol",
+   "provider": "openai",
+   "parallel": 4,
+   "temperature": null,
+   "max_out": 12000
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "provider": "nvidia",
+   "parallel": 8,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "nvidia/nemotron-3-super-120b-a12b",
+   "provider": "nvidia",
+   "parallel": 3,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "nvidia/nemotron-3-ultra-550b-a55b",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "minimaxai/minimax-m3.1-flash",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000
+  }
+ ],
+ "arms": [
+  "A",
+  "B"
+ ],
+ "samples": 2,
+ "segments": [
+  {
+   "start": 1792872702.4546216,
+   "validator": "8dd0d3e",
+   "cap_usd": 1.0,
+   "lane_cap_usd": null,
+   "wall_min": 150.0,
+   "lane_wall_min": null,
+   "concurrency": 6,
+   "arms": [
+    "A",
+    "B"
+   ],
+   "b_models": [
+    "nvidia/nemotron-3.5-super-vl-120b-a12b",
+    "nvidia/nemotron-3-ultra-550b-a55b"
+   ],
+   "samples": 2,
+   "lanes": {
+    "z-ai/glm-5.3|A": {
+     "model": "z-ai/glm-5.3",
+     "arm": "A",
+     "provider": "nvidia",
+     "parallel": 2,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 1.0,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 25,
+     "failed": 2,
+     "done": 10,
+     "cut": 2,
+     "not_started": 88
+    },
+    "nvidia/nemotron-3-ultra-550b-a55b|A": {
+     "model": "nvidia/nemotron-3-ultra-550b-a55b",
+     "arm": "A",
+     "provider": "nvidia",
+     "parallel": 2,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 1.0,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 133,
+     "failed": 0,
+     "done": 67,
+     "cut": 1,
+     "not_started": 32
+    },
+    "nvidia/nemotron-3-ultra-550b-a55b|B": {
+     "model": "nvidia/nemotron-3-ultra-550b-a55b",
+     "arm": "B",
+     "provider": "nvidia",
+     "parallel": 2,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 1.0,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 127,
+     "failed": 0,
+     "done": 64,
+     "cut": 0,
+     "not_started": 36
+    },
+    "minimaxai/minimax-m3.1-flash|A": {
+     "model": "minimaxai/minimax-m3.1-flash",
+     "arm": "A",
+     "provider": "nvidia",
+     "parallel": 2,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 1.0,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 88,
+     "failed": 0,
+     "done": 29,
+     "cut": 2,
+     "not_started": 69
+    },
+    "nvidia/nemotron-3.5-super-vl-120b-a12b|A": {
+     "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "arm": "A",
+     "provider": "nvidia",
+     "parallel": 2,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 1.0,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 126,
+     "failed": 0,
+     "done": 46,
+     "cut": 2,
+     "not_started": 52
+    },
+    "nvidia/nemotron-3.5-super-vl-120b-a12b|B": {
+     "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "arm": "B",
+     "provider": "nvidia",
+     "parallel": 2,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 1.0,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 122,
+     "failed": 0,
+     "done": 50,
+     "cut": 0,
+     "not_started": 50
+    }
+   },
+   "parallel": {
+    "z-ai/glm-5.3|A": 2,
+    "nvidia/nemotron-3-ultra-550b-a55b|A": 2,
+    "nvidia/nemotron-3-ultra-550b-a55b|B": 2,
+    "minimaxai/minimax-m3.1-flash|A": 2,
+    "nvidia/nemotron-3.5-super-vl-120b-a12b|A": 2,
+    "nvidia/nemotron-3.5-super-vl-120b-a12b|B": 2
+   },
+   "end": 1792882003.2260966,
+   "stopped_by": "wall 150 min",
+   "cut": [
+    {
+     "lane": "z-ai/glm-5.3",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "sp-03",
+     "after_attempt": 0,
+     "after_seq": 0,
+     "by": "error: CallError stream exceeded 420s"
+    },
+    {
+     "lane": "minimaxai/minimax-m3.1-flash",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "int-03",
+     "after_attempt": 1,
+     "after_seq": 1,
+     "by": "wall 150 min"
+    },
+    {
+     "lane": "nvidia/nemotron-3-ultra-550b-a55b",
+     "arm": "A",
+     "sample": 1,
+     "prompt_id": "sp-07",
+     "after_attempt": 1,
+     "after_seq": 1,
+     "by": "wall 150 min"
+    },
+    {
+     "lane": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "geo-03",
+     "after_attempt": 2,
+     "after_seq": 2,
+     "by": "wall 150 min"
+    },
+    {
+     "lane": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "geo-04",
+     "after_attempt": 2,
+     "after_seq": 2,
+     "by": "wall 150 min"
+    },
+    {
+     "lane": "minimaxai/minimax-m3.1-flash",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "int-04",
+     "after_attempt": 1,
+     "after_seq": 1,
+     "by": "wall 150 min"
+    },
+    {
+     "lane": "z-ai/glm-5.3",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "sp-05",
+     "after_attempt": 2,
+     "after_seq": 2,
+     "by": "wall 150 min"
+    }
+   ]
+  }
+ ],
+ "lanes": {
+  "z-ai/glm-5.3|A": {
+   "model": "z-ai/glm-5.3",
+   "arm": "A",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 1.0,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 25,
+   "failed": 2,
+   "done": 10,
+   "cut": 2,
+   "not_started": 88
+  },
+  "nvidia/nemotron-3-ultra-550b-a55b|A": {
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "arm": "A",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 1.0,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 133,
+   "failed": 0,
+   "done": 67,
+   "cut": 1,
+   "not_started": 32
+  },
+  "nvidia/nemotron-3-ultra-550b-a55b|B": {
+   "model": "nvidia/nemotron-3-ultra-550b-a55b",
+   "arm": "B",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 1.0,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 127,
+   "failed": 0,
+   "done": 64,
+   "cut": 0,
+   "not_started": 36
+  },
+  "minimaxai/minimax-m3.1-flash|A": {
+   "model": "minimaxai/minimax-m3.1-flash",
+   "arm": "A",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 1.0,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 88,
+   "failed": 0,
+   "done": 29,
+   "cut": 2,
+   "not_started": 69
+  },
+  "nvidia/nemotron-3.5-super-vl-120b-a12b|A": {
+   "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "arm": "A",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 1.0,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 126,
+   "failed": 0,
+   "done": 46,
+   "cut": 2,
+   "not_started": 52
+  },
+  "nvidia/nemotron-3.5-super-vl-120b-a12b|B": {
+   "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "arm": "B",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 1.0,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 122,
+   "failed": 0,
+   "done": 50,
+   "cut": 0,
+   "not_started": 50
+  }
+ },
+ "cut": [
+  {
+   "lane": "z-ai/glm-5.3",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "sp-03",
+   "after_attempt": 0,
+   "after_seq": 0,
+   "by": "error: CallError stream exceeded 420s"
+  },
+  {
+   "lane": "minimaxai/minimax-m3.1-flash",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "int-03",
+   "after_attempt": 1,
+   "after_seq": 1,
+   "by": "wall 150 min"
+  },
+  {
+   "lane": "nvidia/nemotron-3-ultra-550b-a55b",
+   "arm": "A",
+   "sample": 1,
+   "prompt_id": "sp-07",
+   "after_attempt": 1,
+   "after_seq": 1,
+   "by": "wall 150 min"
+  },
+  {
+   "lane": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "geo-03",
+   "after_attempt": 2,
+   "after_seq": 2,
+   "by": "wall 150 min"
+  },
+  {
+   "lane": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "geo-04",
+   "after_attempt": 2,
+   "after_seq": 2,
+   "by": "wall 150 min"
+  },
+  {
+   "lane": "minimaxai/minimax-m3.1-flash",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "int-04",
+   "after_attempt": 1,
+   "after_seq": 1,
+   "by": "wall 150 min"
+  },
+  {
+   "lane": "z-ai/glm-5.3",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "sp-05",
+   "after_attempt": 2,
+   "after_seq": 2,
+   "by": "wall 150 min"
+  }
+ ],
+ "spent_usd_est": 0.0,
+ "stopped_by": "wall 150 min"
+}

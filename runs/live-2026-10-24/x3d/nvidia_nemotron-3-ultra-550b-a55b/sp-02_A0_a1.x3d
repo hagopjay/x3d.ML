@@ -1,0 +1,84 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+<Viewpoint description='Planetarium view' position='0 0 30'/>
+<!-- Sun -->
+<Shape>
+  <Sphere radius='1.5'/>
+  <Appearance>
+    <UnlitMaterial emissiveColor='1 1 0' diffuseColor='1 1 0'/>
+  </Appearance>
+</Shape>
+
+<!-- Planet 1 -->
+<Transform DEF='Orbit1'>
+  <TimeSensor DEF='TS1' cycleInterval='10'/>
+  <OrientationInterpolator DEF='OI1' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+  <Transform translation='0 0 -5'>
+    <Shape>
+      <Sphere radius='0.5'/>
+      <Appearance>
+        <Material diffuseColor='1 0 0'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+</Transform>
+
+<!-- Planet 2 -->
+<Transform DEF='Orbit2'>
+  <TimeSensor DEF='TS2' cycleInterval='20'/>
+  <OrientationInterpolator DEF='OI2' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+  <Transform translation='0 0 -8'>
+    <Shape>
+      <Sphere radius='0.8'/>
+      <Appearance>
+        <Material diffuseColor='0 0 1'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+</Transform>
+
+<!-- Planet 3 (largest) with ring -->
+<Transform DEF='Orbit3'>
+  <TimeSensor DEF='TS3' cycleInterval='30'/>
+  <OrientationInterpolator DEF='OI3' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+  <Transform translation='0 0 -12'>
+    <Shape>
+      <Sphere radius='1.2'/>
+      <Appearance>
+        <Material diffuseColor='0 1 0'/>
+      </Appearance>
+    </Shape>
+    <Shape>
+      <Torus majorRadius='1.7' minorRadius='0.05'/>
+      <Appearance>
+        <Material diffuseColor='0.5 0.5 0.5'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+</Transform>
+
+<!-- Planet 4 -->
+<Transform DEF='Orbit4'>
+  <TimeSensor DEF='TS4' cycleInterval='40'/>
+  <OrientationInterpolator DEF='OI4' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+  <Transform translation='0 0 -15'>
+    <Shape>
+      <Sphere radius='0.6'/>
+      <Appearance>
+        <Material diffuseColor='1 1 1'/>
+      </Appearance>
+    </Shape>
+  </Transform>
+</Transform>
+
+<!-- ROUTEs for orbital animation -->
+<ROUTE fromNode='TS1' fromField='fraction_changed' toNode='OI1' toField='set_fraction'/>
+<ROUTE fromNode='OI1' fromField='value_changed' toNode='Orbit1' toField='set_rotation'/>
+<ROUTE fromNode='TS2' fromField='fraction_changed' toNode='OI2' toField='set_fraction'/>
+<ROUTE fromNode='OI2' fromField='value_changed' toNode='Orbit2' toField='set_rotation'/>
+<ROUTE fromNode='TS3' fromField='fraction_changed' toNode='OI3' toField='set_fraction'/>
+<ROUTE fromNode='OI3' fromField='value_changed' toNode='Orbit3' toField='set_rotation'/>
+<ROUTE fromNode='TS4' fromField='fraction_changed' toNode='OI4' toField='set_fraction'/>
+<ROUTE fromNode='OI4' fromField='value_changed' toNode='Orbit4' toField='set_rotation'/>
+</Scene>
+</X3D>

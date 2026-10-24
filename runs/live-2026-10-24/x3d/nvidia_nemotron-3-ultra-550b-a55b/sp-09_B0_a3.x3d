@@ -1,0 +1,331 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+<Viewpoint position='0 30 30' description='Medieval Castle'/>
+<!-- Green lawn -->
+<Transform translation='0 -0.05 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.2 0.6 0.2'/>
+</Appearance>
+<Box size='100 0.1 100'/>
+</Shape>
+</Transform>
+
+<!-- Definitions for shared geometry and material -->
+<Box DEF='WallBox' size='20 5 1'/>
+<Material DEF='WallMaterial' diffuseColor='0.6 0.6 0.6'/>
+<Box DEF='CrenelBox' size='1 1 1'/>
+<Material DEF='CrenelMaterial' diffuseColor='0.6 0.6 0.6'/>
+
+<!-- Tower 1: back-left -->
+<Transform translation='-10 0 10'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.6 0.6'/>
+</Appearance>
+<Cylinder radius='2' height='10'/>
+</Shape>
+<Transform translation='0 10 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.2'/>
+</Appearance>
+<Cone bottomRadius='2' height='5'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Tower 2: back-right -->
+<Transform translation='10 0 10'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.6 0.6'/>
+</Appearance>
+<Cylinder radius='2' height='10'/>
+</Shape>
+<Transform translation='0 10 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.2'/>
+</Appearance>
+<Cone bottomRadius='2' height='5'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Tower 3: front-right (tallest) with flag -->
+<Transform translation='10 0 -10'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.6 0.6'/>
+</Appearance>
+<Cylinder radius='2' height='15'/>
+</Shape>
+<Transform translation='0 15 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.2'/>
+</Appearance>
+<Cone bottomRadius='2' height='5'/>
+</Shape>
+</Transform>
+<!-- Flag pole and flag -->
+<Transform translation='0 20 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.3 0.3 0.3'/>
+</Appearance>
+<Cylinder radius='0.1' height='5'/>
+</Shape>
+<Transform translation='0 5 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+<Box size='2 1 0.1'/>
+</Shape>
+</Transform>
+</Transform>
+</Transform>
+
+<!-- Tower 4: front-left -->
+<Transform translation='-10 0 -10'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.6 0.6'/>
+</Appearance>
+<Cylinder radius='2' height='10'/>
+</Shape>
+<Transform translation='0 10 0'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0.4 0.2 0.2'/>
+</Appearance>
+<Cone bottomRadius='2' height='5'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Front wall (z=-10) -->
+<Transform translation='0 2.5 -10'>
+<Shape>
+<Appearance>
+<Material USE='WallMaterial'/>
+</Appearance>
+<Box USE='WallBox'/>
+</Shape>
+<!-- Crenels -->
+<Transform translation='-8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='-4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='0 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Back wall (z=10) -->
+<Transform translation='0 2.5 10'>
+<Shape>
+<Appearance>
+<Material USE='WallMaterial'/>
+</Appearance>
+<Box USE='WallBox'/>
+</Shape>
+<Transform translation='-8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='-4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='0 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Left wall (x=-10) rotated 90 deg -->
+<Transform translation='-10 2.5 0' rotation='0 1 0 1.5708'>
+<Shape>
+<Appearance>
+<Material USE='WallMaterial'/>
+</Appearance>
+<Box USE='WallBox'/>
+</Shape>
+<Transform translation='-8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='-4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='0 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Right wall (x=10) rotated 90 deg -->
+<Transform translation='10 2.5 0' rotation='0 1 0 1.5708'>
+<Shape>
+<Appearance>
+<Material USE='WallMaterial'/>
+</Appearance>
+<Box USE='WallBox'/>
+</Shape>
+<Transform translation='-8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='-4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='0 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='4 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+<Transform translation='8 3 0'>
+<Shape>
+<Appearance>
+<Material USE='CrenelMaterial'/>
+</Appearance>
+<Box USE='CrenelBox'/>
+</Shape>
+</Transform>
+</Transform>
+
+<!-- Gatehouse on front wall (centered at x=0, z=-10) -->
+<Transform translation='0 4 -10'>
+<!-- Gatehouse body -->
+<Shape>
+<Appearance>
+<Material diffuseColor='0.6 0.6 0.6'/>
+</Appearance>
+<Box size='6 8 3'/>
+</Shape>
+<!-- Dark doorway on front face -->
+<Transform translation='0 0 -1.55'>
+<Shape>
+<Appearance>
+<Material diffuseColor='0 0 0'/>
+</Appearance>
+<Box size='2 4 0.1'/>
+</Shape>
+</Transform>
+</Transform>
+
+</Scene>
+</X3D>

@@ -1,0 +1,47 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Three Rotating Cubes' />
+  </head>
+  <Scene>
+    <Viewpoint description='Three cubes rotating at different speeds' position='0 0 8' />
+
+    <Transform DEF='cube1'>
+      <Shape>
+        <Box size='1 1 1' />
+        <Appearance>
+          <Material diffuseColor='1 0 0' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='ts1' cycleInterval='4' loop='true' />
+    <OrientationInterpolator DEF='oi1' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586' />
+    <ROUTE fromNode='ts1' fromField='fraction_changed' toNode='oi1' toField='set_fraction' />
+    <ROUTE fromNode='oi1' fromField='value_changed' toNode='cube1' toField='rotation' />
+
+    <Transform DEF='cube2' translation='-2 0 0'>
+      <Shape>
+        <Box size='1 1 1' />
+        <Appearance>
+          <Material diffuseColor='0 1 0' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='ts2' cycleInterval='6' loop='true' />
+    <OrientationInterpolator DEF='oi2' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586' />
+    <ROUTE fromNode='ts2' fromField='fraction_changed' toNode='oi2' toField='set_fraction' />
+    <ROUTE fromNode='oi2' fromField='value_changed' toNode='cube2' toField='rotation' />
+
+    <Transform DEF='cube3' translation='2 0 0'>
+      <Shape>
+        <Box size='1 1 1' />
+        <Appearance>
+          <Material diffuseColor='0 0 1' />
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='ts3' cycleInterval='8' loop='true' />
+    <OrientationInterpolator DEF='oi3' key='0 1' keyValue='0 1 0 0 0 1 0 6.283185307179586' />
+    <ROUTE fromNode='ts3' fromField='fraction_changed' toNode='oi3' toField='set_fraction' />
+    <ROUTE fromNode='oi3' fromField='value_changed' toNode='cube3' toField='rotation' />
+  </Scene>
+</X3D>

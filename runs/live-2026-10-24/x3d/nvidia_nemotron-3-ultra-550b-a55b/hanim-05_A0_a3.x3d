@@ -1,0 +1,211 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='HAnim' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint position='0 1.6 3' description='HAnim waving figure'/>
+    <Transform DEF='FIGURE_ROOT'>
+      <HAnimHumanoid DEF='HUMANOID' version='2.0' name='WavingFigure'>
+        <HAnimJoint DEF='HIP' name='hip' center='0 1 0' ulimit='0 0 0' llimit='0 0 0' containerField='joints'>
+          <HAnimSegment DEF='PELVIS_SEG' name='pelvis' containerField='children'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.6 0.4'/>
+              </Appearance>
+              <Box size='0.3 0.2 0.2'/>
+            </Shape>
+          </HAnimSegment>
+          <HAnimJoint DEF='SPINE1' name='spine1' center='0 1.15 0' ulimit='0.2 0.2 0.2' llimit='-0.2 -0.2 -0.2' containerField='children'>
+            <HAnimSegment DEF='SPINE1_SEG' name='lowerSpine' containerField='children'>
+              <Shape>
+                <Appearance>
+                  <Material diffuseColor='0.8 0.6 0.4'/>
+                </Appearance>
+                <Box size='0.25 0.15 0.15'/>
+              </Shape>
+            </HAnimSegment>
+            <HAnimJoint DEF='SPINE2' name='spine2' center='0 1.3 0' ulimit='0.2 0.2 0.2' llimit='-0.2 -0.2 -0.2' containerField='children'>
+              <HAnimSegment DEF='SPINE2_SEG' name='upperSpine' containerField='children'>
+                <Shape>
+                  <Appearance>
+                    <Material diffuseColor='0.8 0.6 0.4'/>
+                  </Appearance>
+                  <Box size='0.25 0.15 0.15'/>
+                </Shape>
+              </HAnimSegment>
+              <HAnimJoint DEF='NECK' name='neck' center='0 1.55 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                <HAnimSegment DEF='NECK_SEG' name='neckSeg' containerField='children'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.9 0.7 0.5'/>
+                    </Appearance>
+                    <Box size='0.12 0.1 0.12'/>
+                  </Shape>
+                </HAnimSegment>
+                <HAnimJoint DEF='HEAD' name='skullbase' center='0 1.65 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                  <HAnimSegment DEF='HEAD_SEG' name='head' containerField='children'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.9 0.7 0.5'/>
+                      </Appearance>
+                      <Sphere radius='0.12'/>
+                    </Shape>
+                  </HAnimSegment>
+                </HAnimJoint>
+              </HAnimJoint>
+              <HAnimJoint DEF='R_CLAVICLE' name='r_clavicle' center='0.15 1.45 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                <HAnimSegment DEF='R_CLAVICLE_SEG' name='rClavicle' containerField='children'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.8 0.6 0.4'/>
+                    </Appearance>
+                    <Box size='0.15 0.05 0.1'/>
+                  </Shape>
+                </HAnimSegment>
+                <HAnimJoint DEF='R_SHOULDER' name='r_shoulder' center='0.25 1.45 0' ulimit='1.5 1.5 1.5' llimit='-1.5 -1.5 -1.5' containerField='children'>
+                  <HAnimSegment DEF='R_UPPERARM_SEG' name='rUpperArm' containerField='children'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.9 0.7 0.5'/>
+                      </Appearance>
+                      <Cylinder radius='0.05' height='0.3'/>
+                    </Shape>
+                  </HAnimSegment>
+                  <HAnimJoint DEF='R_ELBOW' name='r_elbow' center='0.25 1.15 0' ulimit='0 0 0' llimit='-2.5 0 0' containerField='children'>
+                    <HAnimSegment DEF='R_FOREARM_SEG' name='rForearm' containerField='children'>
+                      <Shape>
+                        <Appearance>
+                          <Material diffuseColor='0.9 0.7 0.5'/>
+                        </Appearance>
+                        <Cylinder radius='0.04' height='0.25'/>
+                      </Shape>
+                    </HAnimSegment>
+                    <HAnimJoint DEF='R_WRIST' name='r_wrist' center='0.25 0.9 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                      <HAnimSegment DEF='R_HAND_SEG' name='rHand' containerField='children'>
+                        <Shape>
+                          <Appearance>
+                            <Material diffuseColor='0.9 0.7 0.5'/>
+                          </Appearance>
+                          <Sphere radius='0.05'/>
+                        </Shape>
+                      </HAnimSegment>
+                    </HAnimJoint>
+                  </HAnimJoint>
+                </HAnimJoint>
+              </HAnimJoint>
+              <HAnimJoint DEF='L_CLAVICLE' name='l_clavicle' center='-0.15 1.45 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                <HAnimSegment DEF='L_CLAVICLE_SEG' name='lClavicle' containerField='children'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.8 0.6 0.4'/>
+                    </Appearance>
+                    <Box size='0.15 0.05 0.1'/>
+                  </Shape>
+                </HAnimSegment>
+                <HAnimJoint DEF='L_SHOULDER' name='l_shoulder' center='-0.25 1.45 0' ulimit='1.5 1.5 1.5' llimit='-1.5 -1.5 -1.5' containerField='children'>
+                  <HAnimSegment DEF='L_UPPERARM_SEG' name='lUpperArm' containerField='children'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.9 0.7 0.5'/>
+                      </Appearance>
+                      <Cylinder radius='0.05' height='0.3'/>
+                    </Shape>
+                  </HAnimSegment>
+                  <HAnimJoint DEF='L_ELBOW' name='l_elbow' center='-0.25 1.15 0' ulimit='0 0 0' llimit='-2.5 0 0' containerField='children'>
+                    <HAnimSegment DEF='L_FOREARM_SEG' name='lForearm' containerField='children'>
+                      <Shape>
+                        <Appearance>
+                          <Material diffuseColor='0.9 0.7 0.5'/>
+                        </Appearance>
+                        <Cylinder radius='0.04' height='0.25'/>
+                      </Shape>
+                    </HAnimSegment>
+                    <HAnimJoint DEF='L_WRIST' name='l_wrist' center='-0.25 0.9 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                      <HAnimSegment DEF='L_HAND_SEG' name='lHand' containerField='children'>
+                        <Shape>
+                          <Appearance>
+                            <Material diffuseColor='0.9 0.7 0.5'/>
+                          </Appearance>
+                          <Sphere radius='0.05'/>
+                        </Shape>
+                      </HAnimSegment>
+                    </HAnimJoint>
+                  </HAnimJoint>
+                </HAnimJoint>
+              </HAnimJoint>
+              <HAnimJoint DEF='R_HIP' name='r_hip' center='0.1 1.0 0' ulimit='1.0 0.5 0.5' llimit='-1.0 -0.5 -0.5' containerField='children'>
+                <HAnimSegment DEF='R_THIGH_SEG' name='rThigh' containerField='children'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.4 0.4 0.8'/>
+                    </Appearance>
+                    <Cylinder radius='0.07' height='0.4'/>
+                  </Shape>
+                </HAnimSegment>
+                <HAnimJoint DEF='R_KNEE' name='r_knee' center='0.1 0.6 0' ulimit='0 0 0' llimit='-2.5 0 0' containerField='children'>
+                  <HAnimSegment DEF='R_SHIN_SEG' name='rShin' containerField='children'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.4 0.4 0.8'/>
+                      </Appearance>
+                      <Cylinder radius='0.05' height='0.4'/>
+                    </Shape>
+                  </HAnimSegment>
+                  <HAnimJoint DEF='R_ANKLE' name='r_ankle' center='0.1 0.2 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                    <HAnimSegment DEF='R_FOOT_SEG' name='rFoot' containerField='children'>
+                      <Shape>
+                        <Appearance>
+                          <Material diffuseColor='0.2 0.2 0.2'/>
+                        </Appearance>
+                        <Box size='0.1 0.05 0.2'/>
+                      </Shape>
+                    </HAnimSegment>
+                  </HAnimJoint>
+                </HAnimJoint>
+              </HAnimJoint>
+              <HAnimJoint DEF='L_HIP' name='l_hip' center='-0.1 1.0 0' ulimit='1.0 0.5 0.5' llimit='-1.0 -0.5 -0.5' containerField='children'>
+                <HAnimSegment DEF='L_THIGH_SEG' name='lThigh' containerField='children'>
+                  <Shape>
+                    <Appearance>
+                      <Material diffuseColor='0.4 0.4 0.8'/>
+                    </Appearance>
+                    <Cylinder radius='0.07' height='0.4'/>
+                  </Shape>
+                </HAnimSegment>
+                <HAnimJoint DEF='L_KNEE' name='l_knee' center='-0.1 0.6 0' ulimit='0 0 0' llimit='-2.5 0 0' containerField='children'>
+                  <HAnimSegment DEF='L_SHIN_SEG' name='lShin' containerField='children'>
+                    <Shape>
+                      <Appearance>
+                        <Material diffuseColor='0.4 0.4 0.8'/>
+                      </Appearance>
+                      <Cylinder radius='0.05' height='0.4'/>
+                    </Shape>
+                  </HAnimSegment>
+                  <HAnimJoint DEF='L_ANKLE' name='l_ankle' center='-0.1 0.2 0' ulimit='0.5 0.5 0.5' llimit='-0.5 -0.5 -0.5' containerField='children'>
+                    <HAnimSegment DEF='L_FOOT_SEG' name='lFoot' containerField='children'>
+                      <Shape>
+                        <Appearance>
+                          <Material diffuseColor='0.2 0.2 0.2'/>
+                        </Appearance>
+                        <Box size='0.1 0.05 0.2'/>
+                      </Shape>
+                    </HAnimSegment>
+                  </HAnimJoint>
+                </HAnimJoint>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimHumanoid>
+      <TouchSensor DEF='TOUCH_SENSOR'/>
+    </Transform>
+    <TimeSensor DEF='WAVE_TIMER' cycleInterval='2' loop='true' enabled='false'/>
+    <OrientationInterpolator DEF='SHOULDER_WAVE' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.2  0 1 0 0  0 1 0 -0.5  0 1 0 0'/>
+    <OrientationInterpolator DEF='ELBOW_WAVE' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0  1 0 0 -1.0  1 0 0 0  1 0 0 0.5  1 0 0 0'/>
+    <ROUTE fromNode='TOUCH_SENSOR' fromField='touchTime' toNode='WAVE_TIMER' toField='startTime'/>
+    <ROUTE fromNode='WAVE_TIMER' fromField='fraction_changed' toNode='SHOULDER_WAVE' toField='set_fraction'/>
+    <ROUTE fromNode='WAVE_TIMER' fromField='fraction_changed' toNode='ELBOW_WAVE' toField='set_fraction'/>
+    <ROUTE fromNode='SHOULDER_WAVE' fromField='value_changed' toNode='R_SHOULDER' toField='set_rotation'/>
+    <ROUTE fromNode='ELBOW_WAVE' fromField='value_changed' toNode='R_ELBOW' toField='set_rotation'/>
+  </Scene>
+</X3D>

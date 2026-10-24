@@ -1,0 +1,45 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='GeoLOD Statue Example'/>
+    <meta name='description' content='Detailed statue within 200m, simple box beyond'/>
+  </head>
+  <Scene>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='0 0 0'/>
+    <GeoViewpoint geoSystem='"GD" "WE"' position='0 0 100' description='Statue View'/>
+    <Viewpoint position='0 0 100' description='Overview'/>
+    <GeoLOD center='0 0 0' range='200'>
+      <!-- Detailed statue (within 200m) -->
+      <Group>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.7 0.6'/>
+          </Appearance>
+          <Cylinder radius='1' height='5'/>
+        </Shape>
+        <Transform translation='0 3 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.9 0.8 0.7'/>
+            </Appearance>
+            <Sphere radius='1.2'/>
+          </Shape>
+        </Transform>
+        <Transform translation='0 -2.5 0'>
+          <Shape>
+            <Appearance>
+              <Material diffuseColor='0.5 0.4 0.3'/>
+            </Appearance>
+            <Box size='2 0.5 2'/>
+          </Shape>
+        </Transform>
+      </Group>
+      <!-- Simple box (beyond 200m) -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.6 0.6'/>
+        </Appearance>
+        <Box size='4 6 4'/>
+      </Shape>
+    </GeoLOD>
+  </Scene>
+</X3D>

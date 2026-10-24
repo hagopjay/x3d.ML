@@ -1,0 +1,70 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Gyroscope view' position='0 0 5'/>
+    <Background skyColor='0.1 0.1 0.2'/>
+    <!-- Central disc -->
+    <Transform DEF='DiscTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.2'/>
+        </Appearance>
+        <Cylinder radius='0.3' height='0.02' top='true' bottom='true' side='true'/>
+      </Shape>
+      <TouchSensor description='Click to interact'/>
+    </Transform>
+    <!-- Ring 1: XY plane -->
+    <Transform DEF='Ring1Transform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.2 0.2' transparency='0.2'/>
+        </Appearance>
+        <Extrusion
+          crossSection='0.02 0 0.01414 0.01414 0 0.02 -0.01414 0.01414 -0.02 0 -0.01414 -0.01414 0 -0.02 0.01414 -0.01414'
+          spine='0.5 0 0 0.4619 0.1913 0 0.3536 0.3536 0 0.1913 0.4619 0 0 0.5 0 -0.1913 0.4619 0 -0.3536 0.3536 0 -0.4619 0.1913 0 -0.5 0 0 -0.4619 -0.1913 0 -0.3536 -0.3536 0 -0.1913 -0.4619 0 0 -0.5 0 0.1913 -0.4619 0 0.3536 -0.3536 0 0.4619 -0.1913 0'
+          solid='false'/>
+      </Shape>
+    </Transform>
+    <!-- Ring 2: YZ plane -->
+    <Transform DEF='Ring2Transform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.8 0.2' transparency='0.2'/>
+        </Appearance>
+        <Extrusion
+          crossSection='0.02 0 0.01414 0.01414 0 0.02 -0.01414 0.01414 -0.02 0 -0.01414 -0.01414 0 -0.02 0.01414 -0.01414'
+          spine='0 0.7 0 0 0.6467 0.2679 0 0.495 0.495 0 0.2679 0.6467 0 0 0.7 0 -0.2679 0.6467 0 -0.495 0.495 0 -0.6467 0.2679 0 -0.7 0 0 -0.6467 -0.2679 0 -0.495 -0.495 0 -0.2679 -0.6467 0 0 -0.7 0 0.2679 -0.6467 0 0.495 -0.495 0 0.6467 -0.2679 0'
+          solid='false'/>
+      </Shape>
+    </Transform>
+    <!-- Ring 3: ZX plane -->
+    <Transform DEF='Ring3Transform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.8' transparency='0.2'/>
+        </Appearance>
+        <Extrusion
+          crossSection='0.02 0 0.01414 0.01414 0 0.02 -0.01414 0.01414 -0.02 0 -0.01414 -0.01414 0 -0.02 0.01414 -0.01414'
+          spine='0.9 0 0 0.8315 0 0.3444 0.6364 0 0.6364 0.3444 0 0.8315 0 0 0.9 0 -0.3444 0.8315 0 -0.6364 0.6364 0 -0.8315 0.3444 0 -0.9 0 0 -0.8315 -0.3444 0 -0.6364 -0.6364 0 -0.3444 -0.8315 0 0 -0.9 0 0.3444 -0.8315 0 0.6364 -0.6364 0 0.8315 -0.3444 0'
+          solid='false'/>
+      </Shape>
+    </Transform>
+    <!-- TimeSensors and OrientationInterpolators -->
+    <TimeSensor DEF='DiscTimeSensor' cycleInterval='4' loop='true'/>
+    <OrientationInterpolator DEF='DiscOI' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 0  0 0 1 1.5708  0 0 1 3.1416  0 0 1 4.7124  0 0 1 6.2832'/>
+    <TimeSensor DEF='Ring1TimeSensor' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='Ring1OI' key='0 0.25 0.5 0.75 1' keyValue='0 0 1 0  0 0 1 1.5708  0 0 1 3.1416  0 0 1 4.7124  0 0 1 6.2832'/>
+    <TimeSensor DEF='Ring2TimeSensor' cycleInterval='7' loop='true'/>
+    <OrientationInterpolator DEF='Ring2OI' key='0 0.25 0.5 0.75 1' keyValue='1 0 0 0  1 0 0 1.5708  1 0 0 3.1416  1 0 0 4.7124  1 0 0 6.2832'/>
+    <TimeSensor DEF='Ring3TimeSensor' cycleInterval='5' loop='true'/>
+    <OrientationInterpolator DEF='Ring3OI' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832'/>
+    <!-- ROUTEs -->
+    <ROUTE fromNode='DiscTimeSensor' fromField='fraction_changed' toNode='DiscOI' toField='set_fraction'/>
+    <ROUTE fromNode='DiscOI' fromField='value_changed' toNode='DiscTransform' toField='set_rotation'/>
+    <ROUTE fromNode='Ring1TimeSensor' fromField='fraction_changed' toNode='Ring1OI' toField='set_fraction'/>
+    <ROUTE fromNode='Ring1OI' fromField='value_changed' toNode='Ring1Transform' toField='set_rotation'/>
+    <ROUTE fromNode='Ring2TimeSensor' fromField='fraction_changed' toNode='Ring2OI' toField='set_fraction'/>
+    <ROUTE fromNode='Ring2OI' fromField='value_changed' toNode='Ring2Transform' toField='set_rotation'/>
+    <ROUTE fromNode='Ring3TimeSensor' fromField='fraction_changed' toNode='Ring3OI' toField='set_fraction'/>
+    <ROUTE fromNode='Ring3OI' fromField='value_changed' toNode='Ring3Transform' toField='set_rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,211 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<Scene>
+  <Shape DEF='WhiteTile'>
+    <Box size='1 0.1 1'/>
+    <Appearance>
+      <Material diffuseColor='1 1 1'/>
+    </Appearance>
+  </Shape>
+  <Shape DEF='BlackTile'>
+    <Box size='1 0.1 1'/>
+    <Appearance>
+      <Material diffuseColor='0 0 0'/>
+    </Appearance>
+  </Shape>
+  <Group>
+    <Transform translation='-3.5 0.05 -3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 -3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 -3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 -3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 -3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 -3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 -3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 -3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 -2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 -2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 -2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 -2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 -2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 -2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 -2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 -2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 -1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 -1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 -1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 -1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 -1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 -1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 -1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 -1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 -0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 -0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 -0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 -0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 -0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 -0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 -0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 -0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 0.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 0.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 1.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 1.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 2.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 2.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-3.5 0.05 3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-2.5 0.05 3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='-1.5 0.05 3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='-0.5 0.05 3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='0.5 0.05 3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='1.5 0.05 3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+    <Transform translation='2.5 0.05 3.5'>
+      <USE DEF='BlackTile'/>
+    </Transform>
+    <Transform translation='3.5 0.05 3.5'>
+      <USE DEF='WhiteTile'/>
+    </Transform>
+  </Group>
+  <Viewpoint description='Chess Board' position='0 5 10' orientation='0 1 0 -0.7'/>
+</Scene>
+</X3D>

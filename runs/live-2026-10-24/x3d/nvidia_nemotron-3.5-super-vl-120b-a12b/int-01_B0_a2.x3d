@@ -1,0 +1,31 @@
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <meta content="Touch box to spin cylinder" name="title"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Tap the box to start the cylinder spinning" position="0 0 6"/>
+    <DirectionalLight intensity="0.9" direction="0 -1 -1"/>
+    <Transform translation="-2 0 0">
+      <Shape>
+        <Box size="0.5 0.5 0.5"/>
+        <Appearance>
+          <Material diffuseColor="0.2 0.6 0.9"/>
+        </Appearance>
+      </Shape>
+      <TouchSensor DEF="ButtonTouch"/>
+    </Transform>
+    <Transform DEF="CylinderTransform" translation="2 0 0">
+      <Shape>
+        <Cylinder radius="0.4" height="1.0"/>
+        <Appearance>
+          <Material diffuseColor="0.9 0.2 0.2"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF="SpinTimer" cycleInterval="5" loop="true" enabled="false"/>
+    <OrientationInterpolator DEF="SpinInterpolator" key="0 1" keyValue="0 0 1 0 0 0 1 6.283185307"/>
+    <ROUTE fromNode="ButtonTouch" fromField="touchTime" toNode="SpinTimer" toField="startTime"/>
+    <ROUTE fromNode="SpinTimer" fromField="fraction_changed" toNode="SpinInterpolator" toField="set_fraction"/>
+    <ROUTE fromNode="SpinInterpolator" fromField="value_changed" toNode="CylinderTransform" toField="rotation"/>
+  </Scene>
+</X3D>

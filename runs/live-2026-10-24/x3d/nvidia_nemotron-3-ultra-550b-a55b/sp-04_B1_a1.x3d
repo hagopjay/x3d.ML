@@ -1,0 +1,77 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint position='0 10 30' description='Greek Temple'/>
+    <DirectionalLight direction='0.5 -0.5 -0.7' color='1 0.95 0.9' intensity='0.8' ambientIntensity='0.2'/>
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Appearance DEF='GroundAppearance'>
+          <Material diffuseColor='0.2 0.6 0.2'/>
+        </Appearance>
+        <Box size='100 0.1 100'/>
+      </Shape>
+    </Transform>
+    <Appearance DEF='MarbleAppearance'>
+      <Material diffuseColor='0.9 0.85 0.8' specularColor='0.3 0.3 0.3' shininess='0.2'/>
+    </Appearance>
+    <Transform translation='0 0.5 0'>
+      <Shape>
+        <Appearance USE='MarbleAppearance'/>
+        <Box size='20 1 30'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 1.5 0'>
+      <Shape>
+        <Appearance USE='MarbleAppearance'/>
+        <Box size='18 1 28'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 2.5 0'>
+      <Shape>
+        <Appearance USE='MarbleAppearance'/>
+        <Box size='16 1 26'/>
+      </Shape>
+    </Transform>
+    <Shape DEF='ColumnShape'>
+      <Appearance USE='MarbleAppearance'/>
+      <Cylinder height='6' radius='0.5'/>
+    </Shape>
+    <Transform translation='-7.5 6 -10.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 -7.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 -4.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 -1.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 1.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 4.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 7.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='-7.5 6 10.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 -10.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 -7.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 -4.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 -1.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 1.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 4.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 7.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='7.5 6 10.5'><USE node='ColumnShape'/></Transform>
+    <Transform translation='0 9.25 0'>
+      <Shape>
+        <Appearance USE='MarbleAppearance'/>
+        <Box size='18 0.5 28'/>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance USE='MarbleAppearance'/>
+        <IndexedFaceSet solid='false' coordIndex='0 1 2 -1'>
+          <Coordinate point='-9 9 -14  9 9 -14  0 12 -14'/>
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance USE='MarbleAppearance'/>
+        <IndexedFaceSet solid='false' coordIndex='0 1 2 -1'>
+          <Coordinate point='-9 9 14  0 12 14  9 9 14'/>
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

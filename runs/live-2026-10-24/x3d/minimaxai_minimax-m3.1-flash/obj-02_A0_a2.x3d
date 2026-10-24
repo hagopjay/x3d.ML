@@ -1,0 +1,69 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Wooden table'/>
+    <meta name='description' content='A 2 by 1 metre wooden table top standing on four cylindrical legs.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Three-quarter view of the wooden table' position='2.6 1.9 2.8' orientation='-0.447 0.894 0 0.804' fieldOfView='0.785'/>
+    <NavigationInfo type='EXAMINE' speed='1'/>
+    <Background backgroundColor='0.88 0.91 0.95'/>
+    <DirectionalLight direction='-0.4 -1 -0.5' intensity='0.9' color='1 0.97 0.92'/>
+    <DirectionalLight direction='0.6 -0.4 0.7' intensity='0.35' color='0.85 0.9 1'/>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial id='woodMaterial' diffuseColor='0.42 0.24 0.10' specularColor='0.18 0.12 0.06' roughness='0.65'/>
+      </Appearance>
+      <Transform translation='0 -0.02 0'>
+        <Box size='6 0.04 6'/>
+      </Transform>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial diffuseColor='0.55 0.52 0.48' roughness='0.9'/>
+      </Appearance>
+      <Transform translation='0 -0.02 0'>
+        <Box size='6 0.04 6'/>
+      </Transform>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial id='tableWood' diffuseColor='0.45 0.26 0.11' specularColor='0.22 0.15 0.08' roughness='0.55'/>
+      </Appearance>
+      <Transform translation='0 0.74 0'>
+        <Box size='2 0.08 1'/>
+      </Transform>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='tableWood'/>
+      </Appearance>
+      <Transform translation='-0.85 0.35 -0.4'>
+        <Cylinder id='tableLeg' radius='0.05' height='0.7'/>
+      </Transform>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='tableWood'/>
+      </Appearance>
+      <Transform translation='0.85 0.35 -0.4'>
+        <Cylinder USE='tableLeg'/>
+      </Transform>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='tableWood'/>
+      </Appearance>
+      <Transform translation='-0.85 0.35 0.4'>
+        <Cylinder USE='tableLeg'/>
+      </Transform>
+    </Shape>
+    <Shape>
+      <Appearance>
+        <PhysicalMaterial USE='tableWood'/>
+      </Appearance>
+      <Transform translation='0.85 0.35 0.4'>
+        <Cylinder USE='tableLeg'/>
+      </Transform>
+    </Shape>
+  </Scene>
+</X3D>

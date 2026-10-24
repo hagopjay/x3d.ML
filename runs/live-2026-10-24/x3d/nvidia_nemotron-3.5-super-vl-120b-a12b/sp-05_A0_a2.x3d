@@ -1,0 +1,63 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+<meta content='Desk lamp with articulated arm and swaying upper arm' name='title'/>
+<meta content='X3D 4.0 scene' name='description'/>
+<component name='Shape' level='2'/>
+</head>
+<Scene>
+<Viewpoint description='Desk lamp scene' position='0 1 2' orientation='0 1 0 0'/>
+
+<Transform translation='0 0.1 0'>
+<Shape>
+<Cylinder radius='0.4' height='0.2'/>
+<Appearance>
+<PhysicalMaterial baseColor='0.2 0.2 0.2' roughness='0.3'/>
+</Appearance>
+</Shape>
+</Transform>
+
+<Transform translation='0 0.2 0' rotation='1 0 0 0.2'>
+<Shape>
+<Cylinder radius='0.05' height='0.4'/>
+<Appearance>
+<PhysicalMaterial baseColor='0.1 0.1 0.1' roughness='0.2'/>
+</Appearance>
+</Shape>
+
+<Transform DEF='upperArm' translation='0 0.4 0' rotation='1 0 0 -0.2'>
+<Shape>
+<Cylinder radius='0.04' height='0.5'/>
+<Appearance>
+<PhysicalMaterial baseColor='0.1 0.1 0.1' roughness='0.2'/>
+</Appearance>
+</Shape>
+
+<Transform translation='0 0.5 0' rotation='1 0 0 -0.5'>
+<Shape>
+<Cone bottomRadius='0.2' height='0.3'/>
+<Appearance>
+<PhysicalMaterial baseColor='0.9 0.9 0.8' roughness='0.8'/>
+</Appearance>
+</Shape>
+
+<SpotLight location='0 0.15 0' direction='0 -1 0' cutOffAngle='0.7' beamWidth='0.5' intensity='3' color='1 1 0.9'/>
+</Transform>
+</Transform>
+</Transform>
+
+<Transform translation='0 -0.05 0'>
+<Shape>
+<Box size='1 0.05 0.6'/>
+<Appearance>
+<PhysicalMaterial baseColor='0.6 0.4 0.2' roughness='0.9'/>
+</Appearance>
+</Shape>
+</Transform>
+
+<TimeSensor DEF='lampTimer' cycleInterval='6' loop='true'/>
+<OrientationInterpolator DEF='swayInterpolator' key='0 0.5 1' keyValue='0 0 1 0  0 0 1 0.3  0 0 1 0'/>
+<ROUTE fromNode='lampTimer' fromField='fraction_changed' toNode='swayInterpolator' toField='set_fraction'/>
+<ROUTE fromNode='swayInterpolator' fromField='value_changed' toNode='upperArm' toField='rotation'/>
+
+</Scene>
+</X3D>

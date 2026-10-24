@@ -1,0 +1,123 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+ <head>
+  <component name='Shape' level='2'/>
+ </head>
+ <Scene>
+  <Background skyColor='0 0 0'/>
+  <Viewpoint description='Lunar base with three white domes, connecting tubes, a rover, and a blue Earth' position='0 12 -30'/>
+
+  <!-- Regolith ground -->
+  <Transform translation='0 -0.25 0'>
+   <Shape>
+    <Box size='200 0.5 200'/>
+    <Appearance>
+     <PhysicalMaterial baseColor='0.6 0.6 0.6' roughness='1' metallic='0'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+
+  <!-- Dome habitats -->
+  <Transform translation='-8 0.25 0' scale='1 0.5 1'>
+   <Shape>
+    <Sphere radius='0.5'/>
+    <Appearance>
+     <UnlitMaterial emissiveColor='1 1 1'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+  <Transform translation='0 0.25 6' scale='1 0.5 1'>
+   <Shape>
+    <Sphere radius='0.5'/>
+    <Appearance>
+     <UnlitMaterial emissiveColor='1 1 1'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+  <Transform translation='8 0.25 0' scale='1 0.5 1'>
+   <Shape>
+    <Sphere radius='0.5'/>
+    <Appearance>
+     <UnlitMaterial emissiveColor='1 1 1'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+
+  <!-- Connecting tubes -->
+  <Transform translation='-4 0.25 3' rotation='0.6 0 -0.8 1.570796327'>
+   <Shape>
+    <Cylinder radius='0.25' height='10'/>
+    <Appearance>
+     <PhysicalMaterial baseColor='0.8 0.8 0.8' roughness='0.8' metallic='0'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+  <Transform translation='4 0.25 3' rotation='-0.6 0 -0.8 1.570796327'>
+   <Shape>
+    <Cylinder radius='0.25' height='10'/>
+    <Appearance>
+     <PhysicalMaterial baseColor='0.8 0.8 0.8' roughness='0.8' metallic='0'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+
+  <!-- Rover -->
+  <Transform translation='5 0.25 -5'>
+   <Group>
+    <Shape>
+     <Box size='1.2 0.6 2'/>
+     <Appearance>
+      <PhysicalMaterial baseColor='0.2 0.2 0.2' roughness='0.7' metallic='0.1'/>
+     </Appearance>
+    </Shape>
+    <Transform translation='-0.7 0.1 -0.8' rotation='1 0 0 1.570796327'>
+     <Shape>
+      <Cylinder radius='0.18' height='0.4'/>
+      <Appearance>
+       <PhysicalMaterial baseColor='0 0 0' roughness='1' metallic='0'/>
+      </Appearance>
+     </Shape>
+    </Transform>
+    <Transform translation='0.7 0.1 -0.8' rotation='1 0 0 1.570796327'>
+     <Shape>
+      <Cylinder radius='0.18' height='0.4'/>
+      <Appearance>
+       <PhysicalMaterial baseColor='0 0 0' roughness='1' metallic='0'/>
+      </Appearance>
+     </Shape>
+    </Transform>
+    <Transform translation='-0.7 0.1 0.8' rotation='1 0 0 1.570796327'>
+     <Shape>
+      <Cylinder radius='0.18' height='0.4'/>
+      <Appearance>
+       <PhysicalMaterial baseColor='0 0 0' roughness='1' metallic='0'/>
+      </Appearance>
+     </Shape>
+    </Transform>
+    <Transform translation='0.7 0.1 0.8' rotation='1 0 0 1.570796327'>
+     <Shape>
+      <Cylinder radius='0.18' height='0.4'/>
+      <Appearance>
+       <PhysicalMaterial baseColor='0 0 0' roughness='1' metallic='0'/>
+      </Appearance>
+     </Shape>
+    </Transform>
+   </Group>
+  </Transform>
+
+  <!-- Earth -->
+  <Transform DEF='earthTransform' translation='0 60 -150'>
+   <Shape>
+    <Sphere radius='15'/>
+    <Appearance>
+     <UnlitMaterial emissiveColor='0 0.2 1'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+
+  <!-- Earth rotation animation -->
+  <TimeSensor DEF='earthClock' cycleInterval='30' loop='true'/>
+  <OrientationInterpolator DEF='earthRot' key='0 1' keyValue='0 0 1 0 0 0 1 6.283185307'/>
+  <ROUTE fromNode='earthClock' fromField='fraction_changed' toNode='earthRot' toField='set_fraction'/>
+  <ROUTE fromNode='earthRot' fromField='value_changed' toNode='earthTransform' toField='set_rotation'/>
+ </Scene>
+</X3D>

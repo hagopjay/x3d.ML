@@ -1,0 +1,61 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Desk Lamp' position='0 1.5 3' orientation='0 1 0 -0.3'/>
+    <!-- Wooden desk surface -->
+    <Transform translation='0 0.01 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.55 0.35 0.2' roughness='0.8' metallic='0'/>
+        </Appearance>
+        <Box size='1 0.02 0.6'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lamp base -->
+    <Transform translation='0 0.025 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.2 0.2 0.2' roughness='0.4' metallic='0.9'/>
+        </Appearance>
+        <Cylinder radius='0.1' height='0.05'/>
+      </Shape>
+    </Transform>
+
+    <!-- Lower arm -->
+    <Transform translation='0 0.3 0'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.3 0.3 0.3' roughness='0.3' metallic='0.8'/>
+        </Appearance>
+        <Cylinder radius='0.02' height='0.5'/>
+      </Shape>
+    </Transform>
+
+    <!-- Upper arm (animated) -->
+    <Transform DEF='UpperArmTransform' translation='0 0.55 0' rotation='0 0 1 -1.5708'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.3 0.3 0.3' roughness='0.3' metallic='0.8'/>
+        </Appearance>
+        <Cylinder radius='0.02' height='0.4'/>
+      </Shape>
+
+      <!-- Cone shade with SpotLight -->
+      <Transform translation='0.4 -0.1 0' rotation='1 0 0 3.14159'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.1 0.1 0.1' roughness='0.5' metallic='0.7'/>
+          </Appearance>
+          <Cone bottomRadius='0.15' height='0.2'/>
+        </Shape>
+        <SpotLight location='0.4 0.55 0' direction='0 -1 0' radius='1' cutOffAngle='0.5' beamWidth='0.3' intensity='1' color='1 0.95 0.9'/>
+      </Transform>
+    </Transform>
+
+    <!-- Animation: upper arm sways slowly back and forth -->
+    <TimeSensor DEF='SwayTimer' cycleInterval='6' loop='true'/>
+    <OrientationInterpolator DEF='SwayInterpolator' key='0 0.5 1' keyValue='0 1 0 -0.3  0 1 0 0  0 1 0 0.3'/>
+    <ROUTE fromNode='SwayTimer' fromField='fraction_changed' toNode='SwayInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='SwayInterpolator' fromField='value_changed' toNode='UpperArmTransform' toField='rotation'/>
+  </Scene>
+</X3D>

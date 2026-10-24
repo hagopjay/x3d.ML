@@ -1,0 +1,38 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Draggable Cone on Ground Plane'/>
+    <meta name='description' content='A cone that can be dragged along the ground plane using a PlaneSensor'/>
+  </head>
+  <Scene>
+    <Viewpoint position='0 5 10' description='Drag the cone along the ground'/>
+    <Background skyColor='0.5 0.7 1.0'/>
+    
+    <!-- Ground plane for visual reference -->
+    <Transform translation='0 -0.01 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.5 0.3' transparency='0.3'/>
+        </Appearance>
+        <Box size='20 0.02 20'/>
+      </Shape>
+    </Transform>
+    
+    <!-- Draggable cone -->
+    <Transform DEF='ConeTransform' translation='0 1 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0.5 0' specularColor='0.5 0.5 0.5' shininess='0.6'/>
+        </Appearance>
+        <Cone bottomRadius='1' height='2'/>
+      </Shape>
+      <TouchSensor DEF='TouchSensor'/>
+      <PlaneSensor DEF='PlaneSensor' enabled='false' minPosition='-10 -10' maxPosition='10 10'/>
+    </Transform>
+    
+    <!-- ROUTEs for drag interaction -->
+    <ROUTE fromNode='TouchSensor' fromField='isOver' toNode='PlaneSensor' toField='enabled'/>
+    <ROUTE fromNode='TouchSensor' fromField='hitPoint_changed' toNode='PlaneSensor' toField='offset'/>
+    <ROUTE fromNode='PlaneSensor' fromField='trackPoint_changed' toNode='ConeTransform' toField='translation'/>
+    <ROUTE fromNode='TouchSensor' fromField='touchTime' toNode='PlaneSensor' toField='autoOffset'/>
+  </Scene>
+</X3D>

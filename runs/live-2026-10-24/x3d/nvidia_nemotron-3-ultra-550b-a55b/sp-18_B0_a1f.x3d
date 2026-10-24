@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Aquarium view" position="0 0 10"/>
+    <Background skyColor="0.5 0.7 1.0"/>
+    <!-- Glass tank -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial transparency="0.3" diffuseColor="0.8 0.9 1.0"/>
+        </Appearance>
+        <Box size="8 8 8"/>
+      </Shape>
+    </Transform>
+    <!-- Sand floor -->
+    <Transform translation="0 -3.9 0">
+      <Shape>
+        <Appearance>
+          <UnlitMaterial diffuseColor="0.8 0.7 0.5"/>
+        </Appearance>
+        <Box size="7.8 0.2 7.8"/>
+      </Shape>
+    </Transform>
+    <!-- Plants -->
+    <Transform translation="-2 -3.2 -2">
+      <Shape>
+        <Appearance>
+          <UnlitMaterial diffuseColor="0.0 0.6 0.0"/>
+        </Appearance>
+        <Cylinder radius="0.2" height="1.5"/>
+      </Shape>
+    </Transform>
+    <Transform translation="2 -3.2 2">
+      <Shape>
+        <Appearance>
+          <UnlitMaterial diffuseColor="0.0 0.6 0.0"/>
+        </Appearance>
+        <Cylinder radius="0.2" height="1.5"/>
+      </Shape>
+    </Transform>
+    <Transform translation="0 -3.2 3">
+      <Shape>
+        <Appearance>
+          <UnlitMaterial diffuseColor="0.0 0.6 0.0"/>
+        </Appearance>
+        <Cylinder radius="0.2" height="1.5"/>
+      </Shape>
+    </Transform>
+    <!-- Fish 1 -->
+    <Transform DEF="Fish1_Rot">
+      <Transform translation="2 1 0">
+        <Shape>
+          <Appearance>
+            <UnlitMaterial diffuseColor="1 0.5 0"/>
+          </Appearance>
+          <Cone height="0.5" bottomRadius="0.2"/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="TS1" cycleInterval="10" loop="true"/>
+    <OrientationInterpolator DEF="OI1" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0 0 1 0 1.57 0 1 0 3.14 0 1 0 4.71 0 1 0 6.28"/>
+    <ROUTE fromNode="TS1" fromField="fraction_changed" toNode="OI1" toField="set_fraction"/>
+    <ROUTE fromNode="OI1" fromField="value_changed" toNode="Fish1_Rot" toField="rotation"/>
+    <!-- Fish 2 -->
+    <Transform DEF="Fish2_Rot">
+      <Transform translation="2.5 0 0">
+        <Shape>
+          <Appearance>
+            <UnlitMaterial diffuseColor="1 0.5 0"/>
+          </Appearance>
+          <Cone height="0.5" bottomRadius="0.2"/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="TS2" cycleInterval="12" loop="true"/>
+    <OrientationInterpolator DEF="OI2" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0 0 1 0 1.57 0 1 0 3.14 0 1 0 4.71 0 1 0 6.28"/>
+    <ROUTE fromNode="TS2" fromField="fraction_changed" toNode="OI2" toField="set_fraction"/>
+    <ROUTE fromNode="OI2" fromField="value_changed" toNode="Fish2_Rot" toField="rotation"/>
+    <!-- Fish 3 -->
+    <Transform DEF="Fish3_Rot">
+      <Transform translation="1.5 -1 0">
+        <Shape>
+          <Appearance>
+            <UnlitMaterial diffuseColor="1 0.5 0"/>
+          </Appearance>
+          <Cone height="0.5" bottomRadius="0.2"/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="TS3" cycleInterval="8" loop="true"/>
+    <OrientationInterpolator DEF="OI3" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0 0 1 0 1.57 0 1 0 3.14 0 1 0 4.71 0 1 0 6.28"/>
+    <ROUTE fromNode="TS3" fromField="fraction_changed" toNode="OI3" toField="set_fraction"/>
+    <ROUTE fromNode="OI3" fromField="value_changed" toNode="Fish3_Rot" toField="rotation"/>
+    <!-- Fish 4 -->
+    <Transform DEF="Fish4_Rot">
+      <Transform translation="3 2 0">
+        <Shape>
+          <Appearance>
+            <UnlitMaterial diffuseColor="1 0.5 0"/>
+          </Appearance>
+          <Cone height="0.5" bottomRadius="0.2"/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="TS4" cycleInterval="15" loop="true"/>
+    <OrientationInterpolator DEF="OI4" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0 0 1 0 1.57 0 1 0 3.14 0 1 0 4.71 0 1 0 6.28"/>
+    <ROUTE fromNode="TS4" fromField="fraction_changed" toNode="OI4" toField="set_fraction"/>
+    <ROUTE fromNode="OI4" fromField="value_changed" toNode="Fish4_Rot" toField="rotation"/>
+    <!-- Fish 5 -->
+    <Transform DEF="Fish5_Rot">
+      <Transform translation="2.2 -2 0">
+        <Shape>
+          <Appearance>
+            <UnlitMaterial diffuseColor="1 0.5 0"/>
+          </Appearance>
+          <Cone height="0.5" bottomRadius="0.2"/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="TS5" cycleInterval="9" loop="true"/>
+    <OrientationInterpolator DEF="OI5" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0 0 1 0 1.57 0 1 0 3.14 0 1 0 4.71 0 1 0 6.28"/>
+    <ROUTE fromNode="TS5" fromField="fraction_changed" toNode="OI5" toField="set_fraction"/>
+    <ROUTE fromNode="OI5" fromField="value_changed" toNode="Fish5_Rot" toField="rotation"/>
+  </Scene>
+</X3D>

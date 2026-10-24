@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Geospatial" level="1"/>
+  </head>
+  <Scene>
+    <GeoLocation geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.2296 -80.4139 600"/>
+    <GeoViewpoint geoSystem="&quot;GD&quot; &quot;WE&quot;" position="37.2296 -80.4139 600" description="Drillfield overview"/>
+    <Viewpoint description="Drillfield elevation grid" position="0 50 100" orientation="1 0 0 -1.57"/>
+    <Shape>
+      <Appearance>
+        <Material diffuseColor="0.6 0.4 0.2"/>
+      </Appearance>
+      <GeoElevationGrid xDimension="5" zDimension="5" xSpacing="25" zSpacing="25" height="0 0 0 0 0 0 1 2 1 0 0 2 4 2 0 0 1 2 1 0 0 0 0 0 0"/>
+    </Shape>
+  </Scene>
+</X3D>

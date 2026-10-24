@@ -1,0 +1,63 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+<meta name='title' content='Gyroscope'/>
+<meta name='description' content='Three nested rings rotating about different axes around a central spinning disc.'/>
+</head>
+<Scene>
+<Viewpoint description='Gyroscope with nested rotating rings' position='0 0 7'/>
+<NavigationInfo type='"EXAMINE" "ANY"'/>
+<Background skyColor='0.05 0.05 0.1'/>
+<DirectionalLight direction='0 0 -1' intensity='0.9' color='1 1 1'/>
+
+<Transform>
+<Transform DEF='DiscSpin'>
+<Shape>
+<Appearance>
+<PhysicalMaterial baseColor='1 0.8 0' metalness='0.7' roughness='0.3'/>
+</Appearance>
+<Cylinder height='0.04' radius='0.9' subdivision='32' side='TRUE' top='TRUE' bottom='TRUE'/>
+</Shape>
+</Transform>
+
+<Transform rotation='0 0 1 1.57079632679'>
+<Transform DEF='Ring1Spin'>
+<Shape>
+<Appearance>
+<PhysicalMaterial baseColor='0 0.5 1' metalness='0.5' roughness='0.4'/>
+</Appearance>
+<Cylinder height='0.04' radius='1.4' subdivision='32' side='TRUE' top='TRUE' bottom='TRUE'/>
+</Shape>
+</Transform>
+</Transform>
+
+<Transform rotation='1 0 0 -1.57079632679'>
+<Transform DEF='Ring2Spin'>
+<Shape>
+<Appearance>
+<PhysicalMaterial baseColor='0 0.8 0.4' metalness='0.5' roughness='0.4'/>
+</Appearance>
+<Cylinder height='0.04' radius='1.9' subdivision='32' side='TRUE' top='TRUE' bottom='TRUE'/>
+</Shape>
+</Transform>
+</Transform>
+
+<Transform rotation='0.70710678118 0 -0.70710678118 1.57079632679'>
+<Transform DEF='Ring3Spin'>
+<Shape>
+<Appearance>
+<PhysicalMaterial baseColor='1 0.3 0.3' metalness='0.5' roughness='0.4'/>
+</Appearance>
+<Cylinder height='0.04' radius='2.4' subdivision='32' side='TRUE' top='TRUE' bottom='TRUE'/>
+</Shape>
+</Transform>
+</Transform>
+</Transform>
+
+<TimeSensor DEF='ts' cycleInterval='8' loop='TRUE'/>
+
+<OrientationInterpolator DEF='spinDisc' key='0 1' keyValue='0 1 0 0 0 1 0 6.28318530718'/>
+<OrientationInterpolator DEF='spinRing1' key='0 1' keyValue='0 1 0 0 0 1 0 12.5663706144'/>
+<OrientationInterpolator DEF='spinRing2' key='0 1' keyValue='0 1 0 0 0 1 0 3.14159265359'/>
+<OrientationInterpolator DEF='spinRing3' key='0 1' keyValue='0 1 0 0 0 1 0 18.8495559215'/>
+
+<ROUTE fromNode='ts' fromField='fraction_changed' toNode='spinDisc' toField='set

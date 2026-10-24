@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <Scene>
+    <Viewpoint description="Windmill on grassy hill" position="0 15 30" orientation="0 1 0 3.14"/>
+    <Background skyColor="0.5 0.7 1.0"/>
+    <NavigationInfo type="[&quot;EXAMINE&quot;,&quot;WALK&quot;,&quot;FLY&quot;,&quot;ANY&quot;]"/>
+    <!-- Grassy hill using ElevationGrid -->
+    <Transform translation="-8 0 -8">
+      <Shape>
+        <Appearance>
+          <Material diffuseColor="0.3 0.7 0.3" specularColor="0 0 0" shininess="0.1"/>
+        </Appearance>
+        <ElevationGrid xDimension="5" zDimension="5" xSpacing="4" zSpacing="4" height="0 0 0 0 0 0 1 2 1 0 0 2 4 2 0 0 1 2 1 0 0 0 0 0 0"/>
+      </Shape>
+    </Transform>
+    <!-- Windmill -->
+    <Transform translation="0 4 0">
+      <!-- Tower -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor="1 1 1" specularColor="0.2 0.2 0.2" shininess="0.5"/>
+        </Appearance>
+        <Cone bottomRadius="2" height="10" side="true" bottom="true"/>
+      </Shape>
+      <!-- Roof -->
+      <Transform translation="0 10 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0.2 0.1 0.1" specularColor="0.1 0.1 0.1" shininess="0.3"/>
+          </Appearance>
+          <Cone bottomRadius="2.5" height="3" side="true" bottom="true"/>
+        </Shape>
+      </Transform>
+      <!-- Rotating blades -->
+      <Transform DEF="Rotor" translation="0 11 0">
+        <Transform rotation="0 1 0 0">
+          <Shape USE="BladeShape"/>
+        </Transform>
+        <Transform rotation="0 1 0 1.5708">
+          <Shape USE="BladeShape"/>
+        </Transform>
+        <Transform rotation="0 1 0 3.14159">
+          <Shape USE="BladeShape"/>
+        </Transform>
+        <Transform rotation="0 1 0 4.71239">
+          <Shape USE="BladeShape"/>
+        </Transform>
+      </Transform>
+    </Transform>
+    <!-- Blade definition -->
+    <Shape DEF="BladeShape">
+      <Appearance>
+        <Material diffuseColor="0.8 0.8 0.8" specularColor="0.3 0.3 0.3" shininess="0.4"/>
+      </Appearance>
+      <Box size="8 0.2 0.5"/>
+    </Shape>
+    <!-- Animation -->
+    <TimeSensor DEF="SpinTimer" cycleInterval="8" loop="true"/>
+    <OrientationInterpolator DEF="SpinInterpolator" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0 0 1 0 1.5708 0 1 0 3.14159 0 1 0 4.71239 0 1 0 6.28318"/>
+    <ROUTE fromNode="SpinTimer" fromField="fraction_changed" toNode="SpinInterpolator" toField="set_fraction"/>
+    <ROUTE fromNode="SpinInterpolator" fromField="value_changed" toNode="Rotor" toField="rotation"/>
+  </Scene>
+</X3D>

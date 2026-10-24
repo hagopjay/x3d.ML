@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2"/>
+  </head>
+  <Scene>
+    <Background skyColor="0 0 0.2"/>
+    <Viewpoint description="Lighthouse on rocky island" position="0 10 30" orientation="0 1 0 3.14"/>
+    <!-- Sea plane -->
+    <Transform translation="0 -5 0">
+      <Shape>
+        <Box size="200 1 200"/>
+        <Appearance>
+          <Material diffuseColor="0 0 0.5"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Rocky island -->
+    <Transform translation="0 -4.5 0">
+      <Shape>
+        <Cone bottomRadius="8" height="4"/>
+        <Appearance>
+          <Material diffuseColor="0.4 0.3 0.2"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Lighthouse -->
+    <Transform translation="0 -2.5 0">
+      <Group>
+        <!-- Tower base white -->
+        <Transform translation="0 3 0">
+          <Shape>
+            <Cylinder radius="2" height="6"/>
+            <Appearance>
+              <Material diffuseColor="1 1 1"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <!-- First red band -->
+        <Transform translation="0 7.5 0">
+          <Shape>
+            <Cylinder radius="1.9" height="1"/>
+            <Appearance>
+              <Material diffuseColor="1 0 0"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <!-- Middle white -->
+        <Transform translation="0 11.5 0">
+          <Shape>
+            <Cylinder radius="1.8" height="6"/>
+            <Appearance>
+              <Material diffuseColor="1 1 1"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <!-- Second red band -->
+        <Transform translation="0 15.5 0">
+          <Shape>
+            <Cylinder radius="1.7" height="1"/>
+            <Appearance>
+              <Material diffuseColor="1 0 0"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <!-- Top white -->
+        <Transform translation="0 18.5 0">
+          <Shape>
+            <Cylinder radius="1.6" height="4"/>
+            <Appearance>
+              <Material diffuseColor="1 1 1"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <!-- Lantern room (glass) -->
+        <Transform translation="0 22 0" DEF="LANTERN">
+          <Shape>
+            <Cylinder radius="1.5" height="3"/>
+            <Appearance>
+              <PhysicalMaterial transparency="0.2" diffuseColor="1 1 1"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <!-- Rotating beam -->
+        <Transform DEF="BEAM_TRANSFORM" translation="0 23.5 0">
+          <Shape>
+            <Box size="0.2 0.2 20"/>
+            <Appearance>
+              <UnlitMaterial emissiveColor="1 1 0.5"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Group>
+    </Transform>
+    <!-- Animation: sweep beam every 6 seconds -->
+    <TimeSensor DEF="CLOCK" cycleInterval="6" loop="true"/>
+    <OrientationInterpolator DEF="ROTATE" key="0 0.25 0.5 0.75 1" keyValue="0 1 0 0  0 1 0 1.5708  0 1 0 3.1416  0 1 0 4.7124  0 1 0 6.2832"/>
+    <ROUTE fromNode="CLOCK" fromField="fraction_changed" toNode="ROTATE" toField="set_fraction"/>
+    <ROUTE fromNode="ROTATE" fromField="value_changed" toNode="BEAM_TRANSFORM" toField="rotation"/>
+  </Scene>
+</X3D>

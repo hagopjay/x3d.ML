@@ -1,0 +1,126 @@
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2"/>
+    <component name="PhysicalMaterial" level="2"/>
+    <meta name="title" content="Newton's Cradle"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Newton's Cradle" position="0 0.5 2"/>
+    <Group>
+      <!-- Frame: horizontal bar -->
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor="0.1 0.1 0.1" roughness="0.9" metallic="0.0"/>
+        </Appearance>
+        <Box size="1.2 0.05 0.05"/>
+      </Shape>
+      <!-- Five balls hung by wires -->
+      <!-- Ball 0 (leftmost, animated) -->
+      <Transform DEF="Ball0" translation="-0.5 0.5 0">
+        <Transform translation="0 -0.2 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.1 0.1 0.1" roughness="0.9" metallic="0.0"/>
+            </Appearance>
+            <Cylinder radius="0.005" height="0.4"/>
+          </Shape>
+        </Transform>
+        <Transform translation="0 -0.4 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.7 0.7 0.7" roughness="0.1" metallic="1.0"/>
+            </Appearance>
+            <Sphere radius="0.05"/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <!-- Ball 1 (static) -->
+      <Transform translation="-0.25 0.5 0">
+        <Transform translation="0 -0.2 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.1 0.1 0.1" roughness="0.9" metallic="0.0"/>
+            </Appearance>
+            <Cylinder radius="0.005" height="0.4"/>
+          </Shape>
+        </Transform>
+        <Transform translation="0 -0.4 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.7 0.7 0.7" roughness="0.1" metallic="1.0"/>
+            </Appearance>
+            <Sphere radius="0.05"/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <!-- Ball 2 (static) -->
+      <Transform translation="0 0.5 0">
+        <Transform translation="0 -0.2 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.1 0.1 0.1" roughness="0.9" metallic="0.0"/>
+            </Appearance>
+            <Cylinder radius="0.005" height="0.4"/>
+          </Shape>
+        </Transform>
+        <Transform translation="0 -0.4 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.7 0.7 0.7" roughness="0.1" metallic="1.0"/>
+            </Appearance>
+            <Sphere radius="0.05"/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <!-- Ball 3 (static) -->
+      <Transform translation="0.25 0.5 0">
+        <Transform translation="0 -0.2 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.1 0.1 0.1" roughness="0.9" metallic="0.0"/>
+            </Appearance>
+            <Cylinder radius="0.005" height="0.4"/>
+          </Shape>
+        </Transform>
+        <Transform translation="0 -0.4 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.7 0.7 0.7" roughness="0.1" metallic="1.0"/>
+            </Appearance>
+            <Sphere radius="0.05"/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <!-- Ball 4 (rightmost, animated) -->
+      <Transform DEF="Ball4" translation="0.5 0.5 0">
+        <Transform translation="0 -0.2 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.1 0.1 0.1" roughness="0.9" metallic="0.0"/>
+            </Appearance>
+            <Cylinder radius="0.005" height="0.4"/>
+          </Shape>
+        </Transform>
+        <Transform translation="0 -0.4 0">
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.7 0.7 0.7" roughness="0.1" metallic="1.0"/>
+            </Appearance>
+            <Sphere radius="0.05"/>
+          </Shape>
+        </Transform>
+      </Transform>
+      <!-- Touch sensor for interaction -->
+      <TouchSensor DEF="Touch"/>
+    </Group>
+    <!-- Animation -->
+    <TimeSensor DEF="Clock" cycleInterval="4" loop="true"/>
+    <OrientationInterpolator DEF="LeftSwing" key="0 0.05 0.125 0.2 0.25 0.5" keyValue="0 0 1 0  0 0 1 0.1  0 0 1 0.5  0 0 1 0.1  0 0 1 0  0 0 1 0"/>
+    <OrientationInterpolator DEF="RightSwing" key="0.5 0.55 0.625 0.7 0.75 1" keyValue="0 0 1 0  0 0 1 -0.1  0 0 1 -0.5  0 0 1 -0.1  0 0 1 0  0 0 1 0"/>
+    <ROUTE fromNode="Clock" fromField="fraction_changed" toNode="LeftSwing" toField="set_fraction"/>
+    <ROUTE fromNode="Clock" fromField="fraction_changed" toNode="RightSwing" toField="set_fraction"/>
+    <ROUTE fromNode="LeftSwing" fromField="value_changed" toNode="Ball0" toField="set_rotation"/>
+    <ROUTE fromNode="RightSwing" fromField="value_changed" toNode="Ball4" toField="set_rotation"/>
+    <ROUTE fromNode="Touch" fromField="touchTime" toNode="Clock" toField="startTime"/>
+  </Scene>
+</X3D>

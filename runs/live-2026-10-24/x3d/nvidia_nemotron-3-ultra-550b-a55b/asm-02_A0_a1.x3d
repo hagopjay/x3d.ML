@@ -1,0 +1,55 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Solar System View' position='0 0 50'/>
+    <Group>
+      <Transform DEF='SunTransform'>
+        <Shape>
+          <Sphere radius='5'/>
+          <Appearance>
+            <Material emissiveColor='1 1 0' diffuseColor='1 1 0' specularColor='0 0 0' shininess='0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform DEF='Planet1Orbit'>
+        <Transform DEF='Planet1' translation='15 0 0'>
+          <Shape>
+            <Sphere radius='1'/>
+            <Appearance>
+              <Material diffuseColor='0 0 1'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform DEF='Planet2Orbit'>
+        <Transform DEF='Planet2' translation='25 0 0'>
+          <Shape>
+            <Sphere radius='1.5'/>
+            <Appearance>
+              <Material diffuseColor='1 0 0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+      <Transform DEF='Planet3Orbit'>
+        <Transform DEF='Planet3' translation='35 0 0'>
+          <Shape>
+            <Sphere radius='1.2'/>
+            <Appearance>
+              <Material diffuseColor='0 1 0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Group>
+    <TimeSensor DEF='Clock' cycleInterval='20' loop='true'/>
+    <OrientationInterpolator DEF='Orbit1' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.14159 0 1 0 6.28318'/>
+    <OrientationInterpolator DEF='Orbit2' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.14159 0 1 0 6.28318'/>
+    <OrientationInterpolator DEF='Orbit3' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.14159 0 1 0 6.28318'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Orbit1' toField='set_fraction'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Orbit2' toField='set_fraction'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Orbit3' toField='set_fraction'/>
+    <ROUTE fromNode='Orbit1' fromField='value_changed' toNode='Planet1Orbit' toField='rotation'/>
+    <ROUTE fromNode='Orbit2' fromField='value_changed' toNode='Planet2Orbit' toField='rotation'/>
+    <ROUTE fromNode='Orbit3' fromField='value_changed' toNode='Planet3Orbit' toField='rotation'/>
+  </Scene>
+</X3D>

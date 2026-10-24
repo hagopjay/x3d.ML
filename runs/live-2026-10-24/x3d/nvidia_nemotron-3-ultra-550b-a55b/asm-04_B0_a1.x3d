@@ -1,0 +1,23 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Street lamp view' position='0 2 10'/>
+    <Background skyColor='0.5 0.7 1.0'/>
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.3 0.3'/>
+        </Appearance>
+        <Cylinder height='5' radius='0.1' side='true' top='false' bottom='true'/>
+      </Shape>
+      <Transform translation='0 5 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.9 0.9 0.5' emissiveColor='0.8 0.8 0.3'/>
+          </Appearance>
+          <Sphere radius='0.3'/>
+        </Shape>
+        <PointLight location='0 0 0' intensity='1' color='1 1 0.8' radius='10' on='true'/>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>

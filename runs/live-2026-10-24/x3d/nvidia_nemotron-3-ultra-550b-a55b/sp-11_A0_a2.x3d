@@ -1,0 +1,60 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Gyroscope' position='0 0 10'/>
+    <Background skyColor='0.5 0.5 0.5'/>
+    <TimeSensor DEF='DiscTimer' cycleInterval='5' loop='true'/>
+    <TimeSensor DEF='Ring1Timer' cycleInterval='15' loop='true'/>
+    <TimeSensor DEF='Ring2Timer' cycleInterval='20' loop='true'/>
+    <TimeSensor DEF='Ring3Timer' cycleInterval='25' loop='true'/>
+    <OrientationInterpolator DEF='DiscSpin' key='0 1' keyValue='0 1 0 0  0 1 0 6.283185'/>
+    <OrientationInterpolator DEF='Ring1Spin' key='0 1' keyValue='1 0 0 0  1 0 0 6.283185'/>
+    <OrientationInterpolator DEF='Ring2Spin' key='0 1' keyValue='0 1 0 0  0 1 0 6.283185'/>
+    <OrientationInterpolator DEF='Ring3Spin' key='0 1' keyValue='0 0 1 0  0 0 1 6.283185'/>
+    <ROUTE fromNode='DiscTimer' fromField='fraction_changed' toNode='DiscSpin' toField='set_fraction'/>
+    <ROUTE fromNode='DiscSpin' fromField='value_changed' toNode='DiscTransform' toField='rotation'/>
+    <ROUTE fromNode='Ring1Timer' fromField='fraction_changed' toNode='Ring1Spin' toField='set_fraction'/>
+    <ROUTE fromNode='Ring1Spin' fromField='value_changed' toNode='Ring1Transform' toField='rotation'/>
+    <ROUTE fromNode='Ring2Timer' fromField='fraction_changed' toNode='Ring2Spin' toField='set_fraction'/>
+    <ROUTE fromNode='Ring2Spin' fromField='value_changed' toNode='Ring2Transform' toField='rotation'/>
+    <ROUTE fromNode='Ring3Timer' fromField='fraction_changed' toNode='Ring3Spin' toField='set_fraction'/>
+    <ROUTE fromNode='Ring3Spin' fromField='value_changed' toNode='Ring3Transform' toField='rotation'/>
+    <Transform DEF='DiscTransform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.2'/>
+        </Appearance>
+        <Cylinder radius='1.5' height='0.1' top='true' bottom='true' side='true'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Ring1Transform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.8 0.2 0.2' transparency='0.3'/>
+        </Appearance>
+        <Extrusion crossSection='-0.05 -0.005 0.05 -0.005 0.05 0.005 -0.05 0.005 -0.05 -0.005'
+                   spine='0 3 0 0 2.77164 1.14805 0 2.12132 2.12132 0 1.14805 2.77164 0 0 3 0 -1.14805 2.77164 0 -2.12132 2.12132 0 -2.77164 1.14805 0 -3 0 0 -2.77164 -1.14805 0 -2.12132 -2.12132 0 -1.14805 -2.77164 0 0 -3 0 1.14805 -2.77164 0 2.12132 -2.12132 0 2.77164 -1.14805 0 3 0'
+                   solid='false' beginCap='true' endCap='true'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Ring2Transform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.8 0.2' transparency='0.3'/>
+        </Appearance>
+        <Extrusion crossSection='-0.05 -0.005 0.05 -0.005 0.05 0.005 -0.05 0.005 -0.05 -0.005'
+                   spine='4 0 0 3.69552 0 1.53073 2.82843 0 2.82843 1.53073 0 3.69552 0 0 4 -1.53073 0 3.69552 -2.82843 0 2.82843 -3.69552 0 1.53073 -4 0 0 -3.69552 0 -1.53073 -2.82843 0 -2.82843 -1.53073 0 -3.69552 0 0 -4 1.53073 0 -3.69552 2.82843 0 -2.82843 3.69552 0 -1.53073 4 0 0'
+                   solid='false' beginCap='true' endCap='true'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='Ring3Transform'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.8' transparency='0.3'/>
+        </Appearance>
+        <Extrusion crossSection='-0.05 -0.005 0.05 -0.005 0.05 0.005 -0.05 0.005 -0.05 -0.005'
+                   spine='2 0 0 1.84776 0.76537 0 1.41421 1.41421 0 0.76537 1.84776 0 0 2 0 -0.76537 1.84776 0 -1.41421 1.41421 0 -1.84776 0.76537 0 -2 0 0 -1.84776 -0.76537 0 -1.41421 -1.41421 0 -0.76537 -1.84776 0 0 -2 0 0.76537 -1.84776 0 1.41421 -1.41421 0 1.84776 -0.76537 0 2 0 0'
+                   solid='false' beginCap='true' endCap='true'/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

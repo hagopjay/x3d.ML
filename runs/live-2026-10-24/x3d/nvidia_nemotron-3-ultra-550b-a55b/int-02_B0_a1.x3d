@@ -1,0 +1,29 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Sphere Color Toggle'/>
+    <meta name='description' content='A sphere that toggles between red and green each time it is clicked, using a BooleanToggle and a Script-free approach.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Click the sphere to toggle color' position='0 0 5'/>
+    <Group>
+      <TouchSensor DEF='Touch'/>
+      <BooleanToggle DEF='Toggle'/>
+      <Switch DEF='Switch' whichChoice='0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='1'/>
+        </Shape>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0 1 0'/>
+          </Appearance>
+          <Sphere radius='1'/>
+        </Shape>
+      </Switch>
+    </Group>
+    <ROUTE fromNode='Touch' fromField='touchTime' toNode='Toggle' toField='toggle'/>
+    <ROUTE fromNode='Toggle' fromField='value_changed' toNode='Switch' toField='whichChoice'/>
+  </Scene>
+</X3D>

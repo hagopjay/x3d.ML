@@ -1,0 +1,33 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Spin cylinder by touching the box' position='0 0 10'/>
+    <Transform DEF='ButtonTransform' translation='-3 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.2 0.6 0.2'/>
+        </Appearance>
+        <Box size='2 2 2'/>
+      </Shape>
+      <TouchSensor DEF='TouchSensor'/>
+    </Transform>
+    <Transform DEF='CylinderTransform' translation='3 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.6 0.2 0.2'/>
+        </Appearance>
+        <Cylinder radius='1' height='4'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='SpinTimer' cycleInterval='4' loop='true' enabled='false'/>
+    <OrientationInterpolator DEF='SpinInterpolator' key='0 1' keyValue='0 1 0 0  0 1 0 6.283185307179586'/>
+    <Script DEF='StartScript' url='"ecmascript: function touchTime(t) { if (!started) { started = true; enable = true; } }"'>
+      <field name='touchTime' type='SFTime' accessType='inputOnly'/>
+      <field name='enable' type='SFBool' accessType='outputOnly'/>
+      <field name='started' type='SFBool' accessType='initializeOnly' value='false'/>
+    </Script>
+    <ROUTE fromNode='TouchSensor' fromField='touchTime' toNode='StartScript' toField='touchTime'/>
+    <ROUTE fromNode='StartScript' fromField='enable' toNode='SpinTimer' toField='enabled'/>
+    <ROUTE fromNode='SpinTimer' fromField='fraction_changed' toNode='SpinInterpolator' toField='set_fraction'/>
+    <ROUTE fromNode='SpinInterpolator' fromField='value_changed' toNode='CylinderTransform' toField='rotation'/>
+  </Scene>
+</X3D>

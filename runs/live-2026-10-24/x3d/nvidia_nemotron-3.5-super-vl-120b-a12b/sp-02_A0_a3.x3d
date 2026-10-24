@@ -1,0 +1,89 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+ <head>
+  <meta name='title' content='Planetarium'/>
+  <component name='Shape' level='1'/>
+ </head>
+ <Scene>
+  <Viewpoint description='Planetarium view of the Sun and four orbiting planets' position='0 0 22'/>
+  <PointLight intensity='1' color='1 1 1' location='0 0 0' radius='60'/>
+
+  <Transform>
+   <Shape>
+    <Sphere radius='1.5'/>
+    <Appearance>
+     <UnlitMaterial emissiveColor='1 1 0'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+
+  <Transform DEF='orbitMercury' rotation='0 1 0 0'>
+   <Transform translation='4 0 0'>
+    <Shape>
+     <Sphere radius='0.4'/>
+     <Appearance>
+      <Material diffuseColor='0.8 0.8 0.8' specularColor='0.2 0.2 0.2' shininess='0.25'/>
+     </Appearance>
+    </Shape>
+   </Transform>
+  </Transform>
+  <TimeSensor DEF='tsMercury' cycleInterval='4' loop='true'/>
+  <OrientationInterpolator DEF='oiMercury' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.141592654 0 1 0 6.283185307'/>
+  <ROUTE fromNode='tsMercury' fromField='fraction_changed' toNode='oiMercury' toField='set_fraction'/>
+  <ROUTE fromNode='oiMercury' fromField='value_changed' toNode='orbitMercury' toField='rotation'/>
+
+  <Transform DEF='orbitVenus' rotation='0 1 0 0'>
+   <Transform translation='6 0 0'>
+    <Shape>
+     <Sphere radius='0.6'/>
+     <Appearance>
+      <Material diffuseColor='0.9 0.7 0.3' specularColor='0.3 0.2 0.1' shininess='0.3'/>
+     </Appearance>
+    </Shape>
+   </Transform>
+  </Transform>
+  <TimeSensor DEF='tsVenus' cycleInterval='7' loop='true'/>
+  <OrientationInterpolator DEF='oiVenus' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.141592654 0 1 0 6.283185307'/>
+  <ROUTE fromNode='tsVenus' fromField='fraction_changed' toNode='oiVenus' toField='set_fraction'/>
+  <ROUTE fromNode='oiVenus' fromField='value_changed' toNode='orbitVenus' toField='rotation'/>
+
+  <Transform DEF='orbitEarth' rotation='0 1 0 0'>
+   <Transform translation='8 0 0'>
+    <Shape>
+     <Sphere radius='0.65'/>
+     <Appearance>
+      <Material diffuseColor='0.2 0.4 0.9' specularColor='0.4 0.6 1' shininess='0.4'/>
+     </Appearance>
+    </Shape>
+   </Transform>
+  </Transform>
+  <TimeSensor DEF='tsEarth' cycleInterval='10' loop='true'/>
+  <OrientationInterpolator DEF='oiEarth' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.141592654 0 1 0 6.283185307'/>
+  <ROUTE fromNode='tsEarth' fromField='fraction_changed' toNode='oiEarth' toField='set_fraction'/>
+  <ROUTE fromNode='oiEarth' fromField='value_changed' toNode='orbitEarth' toField='rotation'/>
+
+  <Transform DEF='orbitJupiter' rotation='0 1 0 0'>
+   <Transform translation='12 0 0'>
+    <Shape>
+     <Sphere radius='1.2'/>
+     <Appearance>
+      <Material diffuseColor='0.8 0.5 0.3' specularColor='0.4 0.25 0.15' shininess='0.35'/>
+     </Appearance>
+    </Shape>
+    <Transform>
+     <Shape>
+      <IndexedFaceSet coordIndex='0 2 3 1 -1 2 4 5 3 -1 4 6 7 5 -1 6 8 9 7 -1 8 10 11 9 -1 10 12 13 11 -1 12 14 15 13 -1 14 0 1 15'>
+       <Coordinate point='2.2 0 0 1.8 0 0 1.5556349186 0 1.5556349186 1.2727922061 0 1.2727922061 0 0 2.2 0 0 1.8 -1.5556349186 0 1.5556349186 -1.2727922061 0 1.2727922061 -2.2 0 0 -1.8 0 0 -1.5556349186 0 -1.5556349186 -1.2727922061 0 -1.2727922061 0 0 -2.2 0 0 -1.8 1.5556349186 0 -1.5556349186 1.2727922061 0 -1.2727922061'/>
+      </IndexedFaceSet>
+      <Appearance>
+       <Material diffuseColor='0.6 0.6 0.6' specularColor='0.2 0.2 0.2' shininess='0.2'/>
+      </Appearance>
+     </Shape>
+    </Transform>
+   </Transform>
+  </Transform>
+  <TimeSensor DEF='tsJupiter' cycleInterval='16' loop='true'/>
+  <OrientationInterpolator DEF='oiJupiter' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.141592654 0 1 0 6.283185307'/>
+  <ROUTE fromNode='tsJupiter' fromField='fraction_changed' toNode='oiJupiter' toField='set_fraction'/>
+  <ROUTE fromNode='oiJupiter' fromField='value_changed' toNode='orbitJupiter' toField='rotation'/>
+ </Scene>
+</X3D>

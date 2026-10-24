@@ -1,0 +1,41 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Three rotating cubes'/>
+    <Transform DEF='T1'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 0 0'/>
+        </Appearance>
+        <Box size='1 1 1'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='T2' translation='2.5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 1 0'/>
+        </Appearance>
+        <Box size='1 1 1'/>
+      </Shape>
+    </Transform>
+    <Transform DEF='T3' translation='5 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0 0 1'/>
+        </Appearance>
+        <Box size='1 1 1'/>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF='TS1' cycleInterval='4' loop='true'/>
+    <TimeSensor DEF='TS2' cycleInterval='2' loop='true'/>
+    <TimeSensor DEF='TS3' cycleInterval='1' loop='true'/>
+    <OrientationInterpolator DEF='OI1' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+    <OrientationInterpolator DEF='OI2' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+    <OrientationInterpolator DEF='OI3' key='0 1' keyValue='0 1 0 0 0 1 0 6.2831853'/>
+    <ROUTE fromNode='TS1' fromField='fraction_changed' toNode='OI1' toField='set_fraction'/>
+    <ROUTE fromNode='OI1' fromField='value_changed' toNode='T1' toField='rotation'/>
+    <ROUTE fromNode='TS2' fromField='fraction_changed' toNode='OI2' toField='set_fraction'/>
+    <ROUTE fromNode='OI2' fromField='value_changed' toNode='T2' toField='rotation'/>
+    <ROUTE fromNode='TS3' fromField='fraction_changed' toNode='OI3' toField='set_fraction'/>
+    <ROUTE fromNode='OI3' fromField='value_changed' toNode='T3' toField='rotation'/>
+  </Scene>
+</X3D>

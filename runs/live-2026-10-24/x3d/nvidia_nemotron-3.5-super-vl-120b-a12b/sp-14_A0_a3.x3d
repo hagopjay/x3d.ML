@@ -1,0 +1,200 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+<meta name='title' content='Carousel'/>
+</head>
+<Scene>
+<Viewpoint description='Carousel view' position='0 5 10' orientation='0 1 0 0'/>
+<DirectionalLight intensity='0.8' direction='0 -1 -0.5'/>
+
+<Transform DEF='platform' translation='0 0 0' rotation='0 0 1 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.8 0.6 0.4'/>
+</Appearance>
+<Cylinder radius='4' height='0.5'/>
+</Shape>
+
+<Transform translation='0 1.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.9 0.7 0.5'/>
+</Appearance>
+<Cone bottomRadius='4' height='3'/>
+</Shape>
+</Transform>
+
+<TimeSensor DEF='rotTS' cycleInterval='10' loop='TRUE'/>
+<OrientationInterpolator DEF='rotOI' key='0 1' keyValue='0 0 1 0 0 0 1 6.283185307'/>
+<ROUTE fromNode='rotTS' fromField='fraction_changed' toNode='rotOI' toField='set_fraction'/>
+<ROUTE fromNode='rotOI' fromField='value_changed' toNode='platform' toField='set_rotation'/>
+
+<Transform translation='3 0 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse0' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.8 0.2 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS0' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI0' key='0 0.5 1' keyValue='0 2.5 0 0 3.0 0 0 2.5 0'/>
+<ROUTE fromNode='bounceTS0' fromField='fraction_changed' toNode='bouncePI0' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI0' fromField='value_changed' toNode='horse0' toField='set_translation'/>
+</Transform>
+
+<Transform translation='2.121320344 0 2.121320344'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse1' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.2 0.8 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS1' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI1' key='0 0.5 1' keyValue='0 3.0 0 0 2.5 0 0 3.0 0'/>
+<ROUTE fromNode='bounceTS1' fromField='fraction_changed' toNode='bouncePI1' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI1' fromField='value_changed' toNode='horse1' toField='set_translation'/>
+</Transform>
+
+<Transform translation='0 0 3'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse2' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.8 0.2 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS2' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI2' key='0 0.5 1' keyValue='0 2.5 0 0 3.0 0 0 2.5 0'/>
+<ROUTE fromNode='bounceTS2' fromField='fraction_changed' toNode='bouncePI2' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI2' fromField='value_changed' toNode='horse2' toField='set_translation'/>
+</Transform>
+
+<Transform translation='-2.121320344 0 2.121320344'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse3' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.2 0.8 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS3' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI3' key='0 0.5 1' keyValue='0 3.0 0 0 2.5 0 0 3.0 0'/>
+<ROUTE fromNode='bounceTS3' fromField='fraction_changed' toNode='bouncePI3' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI3' fromField='value_changed' toNode='horse3' toField='set_translation'/>
+</Transform>
+
+<Transform translation='-3 0 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse4' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.8 0.2 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS4' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI4' key='0 0.5 1' keyValue='0 2.5 0 0 3.0 0 0 2.5 0'/>
+<ROUTE fromNode='bounceTS4' fromField='fraction_changed' toNode='bouncePI4' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI4' fromField='value_changed' toNode='horse4' toField='set_translation'/>
+</Transform>
+
+<Transform translation='-2.121320344 0 -2.121320344'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse5' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.2 0.8 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS5' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI5' key='0 0.5 1' keyValue='0 3.0 0 0 2.5 0 0 3.0 0'/>
+<ROUTE fromNode='bounceTS5' fromField='fraction_changed' toNode='bouncePI5' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI5' fromField='value_changed' toNode='horse5' toField='set_translation'/>
+</Transform>
+
+<Transform translation='0 0 -3'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse6' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.8 0.2 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS6' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI6' key='0 0.5 1' keyValue='0 2.5 0 0 3.0 0 0 2.5 0'/>
+<ROUTE fromNode='bounceTS6' fromField='fraction_changed' toNode='bouncePI6' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI6' fromField='value_changed' toNode='horse6' toField='set_translation'/>
+</Transform>
+
+<Transform translation='2.121320344 0 -2.121320344'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.4 0.4 0.4'/>
+</Appearance>
+<Cylinder radius='0.05' height='2.5'/>
+</Shape>
+<Transform DEF='horse7' translation='0 2.5 0'>
+<Shape>
+<Appearance>
+<PhysicalMaterial diffuseColor='0.2 0.8 0.2'/>
+</Appearance>
+<Box size='0.8 0.5 1.0'/>
+</Shape>
+</Transform>
+<TimeSensor DEF='bounceTS7' cycleInterval='2' loop='TRUE'/>
+<PositionInterpolator DEF='bouncePI7' key='0 0.5 1' keyValue='0 3.0 0 0 2.5 0 0 3.0 0'/>
+<ROUTE fromNode='bounceTS7' fromField='fraction_changed' toNode='bouncePI7' toField='set_fraction'/>
+<ROUTE fromNode='bouncePI7' fromField='value_changed' toNode='horse7' toField='set_translation'/>
+</Transform>
+</Transform>
+</Scene>
+</X3D>

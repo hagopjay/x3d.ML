@@ -1,0 +1,54 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Bookshelf with colourful books'/>
+    <meta name='description' content='A wooden bookshelf with three shelves, each holding five differently coloured books. Touch the cyan book on the top shelf to slide it out.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Front view of a three-shelf bookshelf holding fifteen colourful books' position='0 2.1 6.2' orientation='1 0 0 0' fieldOfView='0.75'/>
+    <Color color='0.88 0.93 1 1'/>
+    <DirectionalLight direction='-0.4 -1 -0.6' intensity='0.85' color='1 0.96 0.9'/>
+    <DirectionalLight direction='0.6 -0.5 0.4' intensity='0.35' color='0.8 0.88 1'/>
+
+    <Group>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.72 0.68 0.6' specularColor='0.08 0.08 0.08' shininess='0.15'/>
+        </Appearance>
+        <Box size='12 0.12 12'/>
+      </Shape>
+
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.45 0.27 0.14' specularColor='0.18 0.12 0.06' shininess='0.3'/>
+        </Appearance>
+        <Box size='0.16 4.2 0.9' translation='-1.62 2.1 0'/>
+      </Shape>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.45 0.27 0.14' specularColor='0.18 0.12 0.06' shininess='0.3'/>
+        </Appearance>
+        <Box size='0.16 4.2 0.9' translation='1.62 2.1 0'/>
+      </Shape>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.34 0.19 0.09' specularColor='0.1 0.06 0.03' shininess='0.2'/>
+        </Appearance>
+        <Box size='3.08 4.2 0.08' translation='0 2.1 -0.41'/>
+      </Shape>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.45 0.27 0.14' specularColor='0.18 0.12 0.06' shininess='0.3'/>
+        </Appearance>
+        <Box size='3.08 0.12 0.9' translation='0 0.06 0'/>
+      </Shape>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.45 0.27 0.14' specularColor='0.18 0.12 0.06' shininess='0.3'/>
+        </Appearance>
+        <Box size='3.08 0.12 0.9' translation='0 1.36 0'/>
+      </Shape>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial diffuseColor='0.45 0.27 0.14' specularColor='0.18 0.12 0.06' shininess='0.3'/>
+        </Appearance>
+        <

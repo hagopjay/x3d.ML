@@ -1,0 +1,19 @@
+<X3D profile="Immersive" version="4.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <Scene>
+    <Viewpoint description="Bouncing ball" position="0 5 10"/>
+    <Transform DEF="BallTransform" translation="0 0 0">
+      <Shape>
+        <Sphere radius="0.2"/>
+        <Appearance>
+          <PhysicalMaterial baseColor="1 0.2 0.2" roughness="0.3" metalness="0.0"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF="TS" cycleInterval="2" loop="true"/>
+    <PositionInterpolator DEF="PI"
+      key="0 0.2 0.4 0.5 0.6 0.8 1"
+      keyValue="0 0 0  0 1 0  0 1.8 0  0 2 0  0 1.8 0  0 1 0  0 0 0"/>
+    <ROUTE fromNode="TS" fromField="fraction_changed" toNode="PI" toField="set_fraction"/>
+    <ROUTE fromNode="PI" fromField="value_changed" toNode="BallTransform" toField="set_translation"/>
+  </Scene>
+</X3D>

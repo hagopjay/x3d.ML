@@ -1,0 +1,290 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+  <component name='HAnim' level='1'/>
+</head>
+<Scene>
+  <Viewpoint description='Two HAnim humanoids sharing joint hierarchy' position='0 1.5 5'/>
+  <!-- First humanoid (left) with shared joint hierarchy definition -->
+  <Transform translation='-1.5 0 0'>
+    <HAnimHumanoid version='2.0'>
+      <!-- Joint hierarchy defined once with DEFs -->
+      <HAnimJoint DEF='sharedRoot' name='hip' center='0 0.9 0' type='ball' containerField='joints'>
+        <HAnimJoint DEF='spine' name='spine' center='0 0.1 0' type='ball'>
+          <HAnimJoint DEF='neck' name='neck' center='0 0.1 0' type='ball'>
+            <HAnimJoint DEF='head' name='head' center='0 0.1 0' type='ball'/>
+          </HAnimJoint>
+        </HAnimJoint>
+        <HAnimJoint DEF='l_hip' name='l_hip' center='-0.1 0 0' type='ball'>
+          <HAnimJoint DEF='l_knee' name='l_knee' center='0 -0.4 0' type='hinge'>
+            <HAnimJoint DEF='l_ankle' name='l_ankle' center='0 -0.4 0' type='ball'/>
+          </HAnimJoint>
+        </HAnimJoint>
+        <HAnimJoint DEF='r_hip' name='r_hip' center='0.1 0 0' type='ball'>
+          <HAnimJoint DEF='r_knee' name='r_knee' center='0 -0.4 0' type='hinge'>
+            <HAnimJoint DEF='r_ankle' name='r_ankle' center='0 -0.4 0' type='ball'/>
+          </HAnimJoint>
+        </HAnimJoint>
+        <HAnimJoint DEF='l_shoulder' name='l_shoulder' center='-0.2 0.1 0' type='ball'>
+          <HAnimJoint DEF='l_elbow' name='l_elbow' center='-0.3 0 0' type='hinge'>
+            <HAnimJoint DEF='l_wrist' name='l_wrist' center='-0.3 0 0' type='ball'/>
+          </HAnimJoint>
+        </HAnimJoint>
+        <HAnimJoint DEF='r_shoulder' name='r_shoulder' center='0.2 0.1 0' type='ball'>
+          <HAnimJoint DEF='r_elbow' name='r_elbow' center='0.3 0 0' type='hinge'>
+            <HAnimJoint DEF='r_wrist' name='r_wrist' center='0.3 0 0' type='ball'/>
+          </HAnimJoint>
+        </HAnimJoint>
+      </HAnimJoint>
+      <!-- Segments for first humanoid (reddish skin) -->
+      <HAnimSegment name='hip_segment' jointName='hip' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.3 0.2 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='spine_segment' jointName='spine' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.2 0.3 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='head_segment' jointName='head' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Sphere radius='0.15'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_thigh' jointName='l_hip' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.15 0.4 0.15'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_shin' jointName='l_knee' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.12 0.4 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_foot' jointName='l_ankle' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.15 0.1 0.25'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_thigh' jointName='r_hip' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.15 0.4 0.15'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_shin' jointName='r_knee' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.12 0.4 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_foot' jointName='r_ankle' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.15 0.1 0.25'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_upperarm' jointName='l_shoulder' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.12 0.3 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_forearm' jointName='l_elbow' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.1 0.25 0.1'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_hand' jointName='l_wrist' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.1'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_upperarm' jointName='r_shoulder' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.12 0.3 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_forearm' jointName='r_elbow' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.1 0.25 0.1'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_hand' jointName='r_wrist' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.8 0.3 0.3'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.1'/>
+        </Shape>
+      </HAnimSegment>
+    </HAnimHumanoid>
+  </Transform>
+
+  <!-- Second humanoid (right) reusing the same joint hierarchy via USE -->
+  <Transform translation='1.5 0 0'>
+    <HAnimHumanoid version='2.0'>
+      <HAnimJoint USE='sharedRoot' containerField='joints'/>
+      <!-- Segments for second humanoid (bluish skin) -->
+      <HAnimSegment name='hip_segment2' jointName='hip' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.3 0.2 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='spine_segment2' jointName='spine' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.2 0.3 0.2'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='head_segment2' jointName='head' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Sphere radius='0.15'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_thigh2' jointName='l_hip' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.15 0.4 0.15'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_shin2' jointName='l_knee' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.12 0.4 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_foot2' jointName='l_ankle' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.15 0.1 0.25'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_thigh2' jointName='r_hip' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.15 0.4 0.15'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_shin2' jointName='r_knee' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.12 0.4 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_foot2' jointName='r_ankle' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.15 0.1 0.25'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_upperarm2' jointName='l_shoulder' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.12 0.3 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_forearm2' jointName='l_elbow' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.1 0.25 0.1'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='l_hand2' jointName='l_wrist' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.1'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_upperarm2' jointName='r_shoulder' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.12 0.3 0.12'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_forearm2' jointName='r_elbow' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.1 0.25 0.1'/>
+        </Shape>
+      </HAnimSegment>
+      <HAnimSegment name='r_hand2' jointName='r_wrist' containerField='segments'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.3 0.3 0.8'/>
+          </Appearance>
+          <Box size='0.1 0.1 0.1'/>
+        </Shape>
+      </HAnimSegment>
+    </HAnimHumanoid>
+  </Transform>
+</Scene>
+</X3D>

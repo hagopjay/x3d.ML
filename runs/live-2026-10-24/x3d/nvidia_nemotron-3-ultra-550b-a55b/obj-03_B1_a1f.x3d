@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Traffic Cone" position="0 0.5 2"/>
+    <Transform>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor="1 0.5 0" roughness="0.7" metalness="0"/>
+        </Appearance>
+        <Cone height="0.7" bottomRadius="0.15"/>
+      </Shape>
+    </Transform>
+    <Transform translation="0 0.01 0">
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor="0 0 0" roughness="0.9" metalness="0"/>
+        </Appearance>
+        <Box size="0.3 0.02 0.3"/>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

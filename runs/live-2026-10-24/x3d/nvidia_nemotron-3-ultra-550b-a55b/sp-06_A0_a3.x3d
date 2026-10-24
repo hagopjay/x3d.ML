@@ -1,0 +1,84 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='1'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Windmill on grassy hill' position='10 15 30' orientation='0 1 0 3.14'/>
+    <Background skyColor='0.5 0.7 1.0'/>
+    <NavigationInfo type='["EXAMINE","ANY"]'/>
+    <!-- Grassy hill -->
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='0.3 0.6 0.2'/>
+        </Appearance>
+        <ElevationGrid xDimension='5' zDimension='5' xSpacing='5' zSpacing='5' height='0 0 0 0 0 0 1 2 1 0 0 2 4 2 0 0 1 2 1 0 0 0 0 0 0'/>
+      </Shape>
+    </Transform>
+    <!-- Windmill -->
+    <Transform translation='10 4 10'>
+      <!-- Tower -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+        <Cone bottomRadius='1.5' height='10' side='true' bottom='true'/>
+      </Shape>
+      <!-- Roof -->
+      <Transform translation='0 10 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.2'/>
+          </Appearance>
+          <Cone bottomRadius='1.8' height='3' side='true' bottom='true'/>
+        </Shape>
+      </Transform>
+      <!-- Blades hub and rotor -->
+      <Transform translation='0 10 0'>
+        <Transform DEF='Blades' rotation='1 0 0 0'>
+          <!-- Blade 1 (along +Y) -->
+          <Transform rotation='1 0 0 0' translation='0 2.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.8 0.8'/>
+              </Appearance>
+              <Box size='0.2 5 0.5'/>
+            </Shape>
+          </Transform>
+          <!-- Blade 2 (along +Z) -->
+          <Transform rotation='1 0 0 1.5708' translation='0 2.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.8 0.8'/>
+              </Appearance>
+              <Box size='0.2 5 0.5'/>
+            </Shape>
+          </Transform>
+          <!-- Blade 3 (along -Y) -->
+          <Transform rotation='1 0 0 3.1416' translation='0 2.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.8 0.8'/>
+              </Appearance>
+              <Box size='0.2 5 0.5'/>
+            </Shape>
+          </Transform>
+          <!-- Blade 4 (along -Z) -->
+          <Transform rotation='1 0 0 4.7124' translation='0 2.5 0'>
+            <Shape>
+              <Appearance>
+                <Material diffuseColor='0.8 0.8 0.8'/>
+              </Appearance>
+              <Box size='0.2 5 0.5'/>
+            </Shape>
+          </Transform>
+        </Transform>
+      </Transform>
+    </Transform>
+    <!-- Animation: rotate blades around X-axis once every 8 seconds -->
+    <TimeSensor DEF='Clock' cycleInterval='8' loop='true'/>
+    <OrientationInterpolator DEF='Spin' key='0 1' keyValue='1 0 0 0  1 0 0 6.2831853'/>
+    <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Spin' toField='set_fraction'/>
+    <ROUTE fromNode='Spin' fromField='value_changed' toNode='Blades' toField='rotation'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2"/>
+    <title>Planetarium</title>
+  </head>
+  <Scene>
+    <Viewpoint description="Planetarium with a glowing Sun, four orbiting planets, and a ring around the largest planet" position="0 0 25"/>
+    <NavigationInfo type="&quot;EXAMINE&quot; &quot;ANY&quot;"/>
+    <Background skyColor="0 0 0"/>
+    <!-- Sun -->
+    <Transform translation="0 0 0">
+      <Shape>
+        <Sphere radius="2.5"/>
+        <Appearance>
+          <UnlitMaterial emissiveColor="1 1 0"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Planet 1 -->
+    <Transform DEF="orbit1" rotation="0 1 0 0">
+      <Transform translation="6 0 0">
+        <Shape>
+          <Sphere radius="0.7"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="1 0.5 0.2"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="ts1" cycleInterval="10" loop="TRUE"/>
+    <OrientationInterpolator DEF="oi1" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185307"/>
+    <ROUTE fromNode="ts1" fromField="fraction_changed" toNode="oi1" toField="set_fraction"/>
+    <ROUTE fromNode="oi1" fromField="value_changed" toNode="orbit1" toField="rotation"/>
+    <!-- Planet 2 (largest, with ring) -->
+    <Transform DEF="orbit2" rotation="0 1 0 0">
+      <Transform translation="10 0 0">
+        <Shape>
+          <Sphere radius="1.2"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="0.2 0.5 1"/>
+          </Appearance>
+        </Shape>
+        <Transform scale="1 0.15 1">
+          <Shape>
+            <Torus outerRadius="2.5" innerRadius="1.3"/>
+            <Appearance>
+              <PhysicalMaterial baseColor="0.7 0.7 0.7" transparency="0.4"/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="ts2" cycleInterval="15" loop="TRUE"/>
+    <OrientationInterpolator DEF="oi2" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185307"/>
+    <ROUTE fromNode="ts2" fromField="fraction_changed" toNode="oi2" toField="set_fraction"/>
+    <ROUTE fromNode="oi2" fromField="value_changed" toNode="orbit2" toField="rotation"/>
+    <!-- Planet 3 -->
+    <Transform DEF="orbit3" rotation="0 1 0 0">
+      <Transform translation="14 0 0">
+        <Shape>
+          <Sphere radius="0.9"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="0.2 1 0.4"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="ts3" cycleInterval="20" loop="TRUE"/>
+    <OrientationInterpolator DEF="oi3" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185307"/>
+    <ROUTE fromNode="ts3" fromField="fraction_changed" toNode="oi3" toField="set_fraction"/>
+    <ROUTE fromNode="oi3" fromField="value_changed" toNode="orbit3" toField="rotation"/>
+    <!-- Planet 4 -->
+    <Transform DEF="orbit4" rotation="0 1 0 0">
+      <Transform translation="18 0 0">
+        <Shape>
+          <Sphere radius="0.6"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="1 0.2 0.2"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF="ts4" cycleInterval="25" loop="TRUE"/>
+    <OrientationInterpolator DEF="oi4" key="0 1" keyValue="0 1 0 0 0 1 0 6.283185307"/>
+    <ROUTE fromNode="ts4" fromField="fraction_changed" toNode="oi4" toField="set_fraction"/>
+    <ROUTE fromNode="oi4" fromField="value_changed" toNode="orbit4" toField="rotation"/>
+  </Scene>
+</X3D>

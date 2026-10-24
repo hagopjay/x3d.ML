@@ -1,0 +1,10 @@
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Grouping" level="1"/>
+    <component name="Shape" level="2"/>
+    <component name="Geometry3D" level="2"/>
+    <component name="Rendering" level="2"/>
+    <component name="Lighting" level="2"/>
+    <component name="Navigation" level="1"/>
+    <meta content="LOD statue within 200 m, box beyond" name="description"/>
+  </

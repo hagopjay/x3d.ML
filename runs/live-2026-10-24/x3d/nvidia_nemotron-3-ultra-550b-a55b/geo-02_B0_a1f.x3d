@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Geospatial" level="1"/>
+  </head>
+  <Scene>
+    <GeoOrigin geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.7750 -122.4190 10"/>
+    <Viewpoint description="Campus Overview" position="0 20 50"/>
+    <GeoLocation geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.7750 -122.4190 10">
+      <Transform translation="0 1 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="1 0 0"/>
+          </Appearance>
+          <Cylinder height="2" radius="0.5"/>
+        </Shape>
+      </Transform>
+      <Transform translation="0 5 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0 0 0"/>
+          </Appearance>
+          <Text string="Library">
+            <FontStyle size="3"/>
+          </Text>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoLocation geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.7755 -122.4185 15">
+      <Transform translation="0 1 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0 1 0"/>
+          </Appearance>
+          <Cylinder height="2" radius="0.5"/>
+        </Shape>
+      </Transform>
+      <Transform translation="0 5 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0 0 0"/>
+          </Appearance>
+          <Text string="Science Hall">
+            <FontStyle size="3"/>
+          </Text>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoLocation geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.7760 -122.4180 5">
+      <Transform translation="0 1 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0 0 1"/>
+          </Appearance>
+          <Cylinder height="2" radius="0.5"/>
+        </Shape>
+      </Transform>
+      <Transform translation="0 5 0">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0 0 0"/>
+          </Appearance>
+          <Text string="Student Center">
+            <FontStyle size="3"/>
+          </Text>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoViewpoint geoSystem="&quot;GD&quot; &quot;WE&quot;" position="37.7750 -122.4190 10" description="Library"/>
+    <GeoViewpoint geoSystem="&quot;GD&quot; &quot;WE&quot;" position="37.7755 -122.4185 15" description="Science Hall"/>
+    <GeoViewpoint geoSystem="&quot;GD&quot; &quot;WE&quot;" position="37.7760 -122.4180 5" description="Student Center"/>
+  </Scene>
+</X3D>

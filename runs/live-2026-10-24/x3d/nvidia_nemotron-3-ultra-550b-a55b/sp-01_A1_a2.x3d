@@ -1,0 +1,77 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+<component name='Shape' level='2'/>
+</head>
+<Scene>
+<Background skyColor='0 0 0.1'/>
+<Viewpoint position='0 20 50' description='Lighthouse on rocky island'/>
+<!-- Sea -->
+<Transform translation='0 -10 0'>
+<Shape>
+<Box size='200 1 200'/>
+<Appearance>
+<Material diffuseColor='0 0 0.3'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Rocky island -->
+<Transform translation='0 -5 0'>
+<Shape>
+<Sphere radius='10'/>
+<Appearance>
+<Material diffuseColor='0.4 0.3 0.2'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Lighthouse tower (cylinder) -->
+<Transform translation='0 15 0'>
+<Shape>
+<Cylinder radius='3' height='30'/>
+<Appearance>
+<Material diffuseColor='1 1 1'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Red band 1 -->
+<Transform translation='0 10 0'>
+<Shape>
+<Cylinder radius='3.2' height='0.5'/>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Red band 2 -->
+<Transform translation='0 20 0'>
+<Shape>
+<Cylinder radius='3.2' height='0.5'/>
+<Appearance>
+<Material diffuseColor='1 0 0'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Lantern room (glass) -->
+<Transform translation='0 31.5 0'>
+<Shape>
+<Cylinder radius='1.5' height='3'/>
+<Appearance>
+<Material diffuseColor='0.8 0.8 1' transparency='0.5'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Rotating beam -->
+<Transform DEF='BeamTransform' translation='0 33 0'>
+<Shape>
+<Box size='0.2 0.2 30'/>
+<Appearance>
+<Material diffuseColor='1 1 0' emissiveColor='1 1 0'/>
+</Appearance>
+</Shape>
+</Transform>
+<!-- Animation -->
+<TimeSensor DEF='TS' cycleInterval='6' loop='true'/>
+<OrientationInterpolator DEF='OI' key='0 1' keyValue='0 1 0 0  0 1 0 6.2831853'/>
+<ROUTE fromNode='TS' fromField='fraction_changed' toNode='OI' toField='set_fraction'/>
+<ROUTE fromNode='OI' fromField='value_changed' toNode='BeamTransform' toField='rotation'/>
+</Scene>
+</X3D>

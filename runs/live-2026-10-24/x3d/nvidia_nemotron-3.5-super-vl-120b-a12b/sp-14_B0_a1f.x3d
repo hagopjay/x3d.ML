@@ -1,0 +1,82 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Carousel'/>
+    <meta name='description' content='A rotating carousel with eight horses moving up and down alternately.'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Carousel view' position='0 5 10' orientation='0 1 0 0'/>
+    <Background skyColor='0.7 0.85 1.0' groundColor='0.2 0.4 0.2'/>
+    <PointLight location='0 10 0' intensity='1.0' color='1 1 1' radius='50'/>
+
+    <Transform DEF='CarouselRoot'>
+      <Transform translation='0 0.25 0'>
+        <Shape>
+          <Cylinder radius='3' height='0.5'/>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.8 0.6 0.4' roughness='0.6' metalness='0.1'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.5 0'>
+        <Shape>
+          <Cone bottomRadius='3' height='2' subdivision='32'/>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.8 0.2 0.2' roughness='0.7' metalness='0'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+
+      <Group DEF='HorseTemplate'>
+        <Transform translation='0 1.0 0'>
+          <Shape>
+            <Cylinder radius='0.08' height='2.0'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.6 0.4 0.2' roughness='0.8' metalness='0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0 2.1 0'>
+          <Shape>
+            <Box size='0.7 0.4 0.25'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.8 0.5 0.3' roughness='0.8' metalness='0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0.45 2.2 0'>
+          <Shape>
+            <Box size='0.25 0.25 0.35'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.8 0.5 0.3' roughness='0.8' metalness='0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='-0.45 2.2 0'>
+          <Shape>
+            <Box size='0.15 0.15 0.2'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.8 0.5 0.3' roughness='0.8' metalness='0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='0.25 1.8 0.1'>
+          <Shape>
+            <Cylinder radius='0.04' height='0.4'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.6 0.4 0.2' roughness='0.8' metalness='0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+        <Transform translation='-0.25 1.8 0.1'>
+          <Shape>
+            <Cylinder radius='0.04' height='0.4'/>
+            <Appearance>
+              <PhysicalMaterial baseColor='0.6 0.4 0.2' roughness='0.8' metalness='0'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Group>
+
+      <Transform DEF='HorseGroupA'>
+        <Transform translation='2.5 0 0'><USE DEF='HorseTemplate'/></Transform>
+        <Transform translation='0 0

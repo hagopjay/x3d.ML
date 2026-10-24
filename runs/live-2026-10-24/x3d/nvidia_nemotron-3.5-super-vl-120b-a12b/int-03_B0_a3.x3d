@@ -1,0 +1,35 @@
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2"/>
+    <component name="Rendering" level="1"/>
+    <component name="PointingDeviceSensor" level="1"/>
+    <meta name="title" content="Draggable Cone"/>
+  </head>
+  <Scene>
+    <DirectionalLight intensity="0.8" direction="0 -1 -0.5"/>
+    <Viewpoint description="Drag the red cone across the green ground plane" position="0 2 6" orientation="0 1 0 0"/>
+    <!-- Ground plane -->
+    <Shape>
+      <Box size="30 0.1 30"/>
+      <Appearance>
+        <PhysicalMaterial baseColor="0.15 0.55 0.15" roughness="0.8"/>
+      </Appearance>
+    </Shape>
+    <!-- Plane sensor aligned with ground -->
+    <Transform translation="0 0 0">
+      <PlaneSensor DEF="groundDrag" enabled="true" autoOffset="true" offset="0 0 0"/>
+    </Transform>
+    <!-- Cone pivot stays on the drag plane; cone sits above it -->
+    <Transform DEF="conePivot" translation="0 0 0">
+      <Transform translation="0 0.75 0">
+        <Shape>
+          <Cone bottomRadius="0.4" height="1.5"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="0.8 0.2 0.2" roughness="0.4" metallic="0.1"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode="groundDrag" fromField="translationChanged" toNode="conePivot" toField="set_translation"/>
+  </Scene>
+</X3D>

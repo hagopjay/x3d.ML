@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <meta name="title" content="Rotating Blue Cube"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Blue cube rotating about vertical axis every 4 seconds" position="0 0 6"/>
+    <Transform DEF="CubeTransform" rotation="0 1 0 0">
+      <Shape>
+        <Box size="2 2 2"/>
+        <Appearance>
+          <Material diffuseColor="0 0 1"/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <TimeSensor DEF="RotationTimer" cycleInterval="4" loop="TRUE"/>
+    <OrientationInterpolator DEF="RotationInterpolator" key="0 1" keyValue="0 1 0 0 0 1 0 6.28318530718"/>
+    <ROUTE fromNode="RotationTimer" fromField="cycleTime" toNode="RotationInterpolator" toField="set_fraction"/>
+    <ROUTE fromNode="RotationInterpolator" fromField="value_changed" toNode="CubeTransform" toField="rotation"/>
+  </Scene>
+</X3D>

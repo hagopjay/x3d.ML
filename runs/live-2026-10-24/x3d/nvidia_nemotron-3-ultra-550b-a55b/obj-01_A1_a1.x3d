@@ -1,0 +1,22 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Red PBR Sphere Scene' position='0 2 5'/>
+    <DirectionalLight direction='-1 -1 -1' intensity='0.8' color='1 1 1'/>
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Sphere radius='1'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='1 0 0' roughness='0.3' metalness='0.5'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 -0.55 0'>
+      <Shape>
+        <Box size='10 0.1 10'/>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.5 0.5 0.5' roughness='0.9' metalness='0.0'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

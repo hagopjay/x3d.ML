@@ -1,0 +1,119 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Lunar Base'/>
+  </head>
+  <Scene>
+    <Background skyColor='0 0 0'/>
+    <Viewpoint description='Lunar Base Overview' position='0 30 50' orientation='1 0 0 -0.3'/>
+    <!-- Ground -->
+    <Transform translation='0 -0.05 0'>
+      <Shape>
+        <Box size='100 0.1 100'/>
+        <Appearance>
+          <Material diffuseColor='0.3 0.3 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Dome 1 -->
+    <Transform translation='-10 5 0'>
+      <Shape>
+        <Sphere radius='5'/>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Dome 2 -->
+    <Transform translation='10 5 0'>
+      <Shape>
+        <Sphere radius='5'/>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Dome 3 -->
+    <Transform translation='10 5 10'>
+      <Shape>
+        <Sphere radius='5'/>
+        <Appearance>
+          <Material diffuseColor='1 1 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Tube between Dome1 and Dome2 (along X) -->
+    <Transform translation='0 5 0' rotation='0 0 1 -1.5708'>
+      <Shape>
+        <Cylinder radius='1' height='20'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Tube between Dome2 and Dome3 (along Z) -->
+    <Transform translation='10 5 5' rotation='1 0 0 -1.5708'>
+      <Shape>
+        <Cylinder radius='1' height='10'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Rover -->
+    <Transform translation='0 0.5 -20'>
+      <Shape>
+        <Box size='2 1 3'/>
+        <Appearance>
+          <Material diffuseColor='0.4 0.4 0.4'/>
+        </Appearance>
+      </Shape>
+      <!-- Wheels -->
+      <Transform translation='-1 0.2 -1.5' rotation='0 0 1 1.5708'>
+        <Shape>
+          <Cylinder radius='0.3' height='0.2'/>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='1 0.2 -1.5' rotation='0 0 1 1.5708'>
+        <Shape>
+          <Cylinder radius='0.3' height='0.2'/>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='-1 0.2 1.5' rotation='0 0 1 1.5708'>
+        <Shape>
+          <Cylinder radius='0.3' height='0.2'/>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='1 0.2 1.5' rotation='0 0 1 1.5708'>
+        <Shape>
+          <Cylinder radius='0.3' height='0.2'/>
+          <Appearance>
+            <Material diffuseColor='0.2 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <!-- Earth Sphere -->
+    <Transform DEF='EarthTransform' translation='0 5000 -10000'>
+      <Shape>
+        <Sphere radius='4000'/>
+        <Appearance>
+          <Material diffuseColor='0 0 0.5' emissiveColor='0 0 1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Animation for Earth rotation -->
+    <TimeSensor DEF='TS' cycleInterval='30' loop='true'/>
+    <OrientationInterpolator DEF='OI' key='0 0.5 1' keyValue='0 1 0 0  0 1 0 3.14159  0 1 0 6.28318'/>
+    <ROUTE fromNode='TS' fromField='fraction_changed' toNode='OI' toField='set_fraction'/>
+    <ROUTE fromNode='OI' fromField='value_changed' toNode='EarthTransform' toField='rotation'/>
+  </Scene>
+</X3D>

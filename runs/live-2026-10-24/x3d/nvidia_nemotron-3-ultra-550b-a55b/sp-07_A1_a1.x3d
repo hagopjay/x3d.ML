@@ -1,0 +1,49 @@
+<X3D profile='Immersive' version='4.0' ...>
+  <head>
+    <meta name='title' content='Rotating DNA Double Helix'/>
+  </head>
+  <Scene>
+    <Viewpoint description='DNA Double Helix' position='0 0 10'/>
+    <Background skyColor='0.1 0.1 0.2'/>
+    <Transform DEF='DNA_ROOT'>
+      <Shape> <!-- maybe a central axis? not needed -->
+      </Shape>
+      <!-- TimeSensor and OrientationInterpolator for rotation -->
+      <TimeSensor DEF='SpinTimer' cycleInterval='10' loop='true'/>
+      <OrientationInterpolator DEF='SpinInterpolator' key='0 1' keyValue='0 1 0 0  0 1 0 6.2831853'/>
+      <ROUTE fromNode='SpinTimer' fromField='fraction_changed' toNode='SpinInterpolator' toField='set_fraction'/>
+      <ROUTE fromNode='SpinInterpolator' fromField='value_changed' toNode='DNA_ROOT' toField='rotation'/>
+      <TouchSensor DEF='TouchDNA'/>
+      <!-- Now the base pairs -->
+      <!-- We'll create a Group for each base pair? Or just Transforms directly under DNA_ROOT -->
+      <!-- For each i from 0 to 19: -->
+      <!-- Strand A sphere -->
+      <Transform translation='x y z'>
+        <Shape>
+          <Appearance>
+            <Material USE='BlueMat'/>
+          </Appearance>
+          <Sphere USE='SphereGeom'/>
+        </Shape>
+      </Transform>
+      <!-- Strand B sphere -->
+      <Transform translation='x y z'>
+        <Shape>
+          <Appearance>
+            <Material USE='OrangeMat'/>
+          </Appearance>
+          <Sphere USE='SphereGeom'/>
+        </Shape>
+      </Transform>
+      <!-- Rung cylinder -->
+      <Transform translation='0 y 0' rotation='...'> <!-- rotation to align cylinder along radial direction -->
+        <Shape>
+          <Appearance>
+            <Material DEF='RungMat' diffuseColor='0.5 0.5 0.5'/> <!-- gray -->
+          </Appearance>
+          <Cylinder USE='CylinderGeom'/>
+        </Shape>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>

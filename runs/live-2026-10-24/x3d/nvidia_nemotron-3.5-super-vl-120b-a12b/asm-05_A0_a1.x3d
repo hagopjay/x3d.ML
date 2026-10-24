@@ -1,0 +1,149 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head>
+<meta name='title' content='Bookshelf'/>
+</head>
+<Scene>
+<Viewpoint description='Bookshelf with three shelves holding fifteen coloured books' position='0 1.2 3'/>
+<DirectionalLight intensity='0.8' color='1 1 1' direction='0 -1 -0.3'/>
+
+<Transform translation='-0.96 0 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.55 0.35 0.2'/></Appearance>
+<Box size='0.02 1.5 0.3'/>
+</Shape>
+</Transform>
+
+<Transform translation='0.96 0 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.55 0.35 0.2'/></Appearance>
+<Box size='0.02 1.5 0.3'/>
+</Shape>
+</Transform>
+
+<Transform translation='0 0.55 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.55 0.35 0.2'/></Appearance>
+<Box size='1.9 0.02 0.3'/>
+</Shape>
+</Transform>
+
+<Transform translation='0 0.05 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.55 0.35 0.2'/></Appearance>
+<Box size='1.9 0.02 0.3'/>
+</Shape>
+</Transform>
+
+<Transform translation='0 -0.45 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.55 0.35 0.2'/></Appearance>
+<Box size='1.9 0.02 0.3'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.75 0.685 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.8 0.2 0.2'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.5 0.685 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.2 0.8 0.2'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.25 0.685 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.2 0.2 0.8'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='0 0.685 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.8 0.8 0.2'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='0.25 0.685 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.8 0.2 0.8'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.75 0.185 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.2 0.8 0.8'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.5 0.185 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.6 0.3 0.1'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.25 0.185 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.5 0.5 0.5'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='0 0.185 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.9 0.6 0.1'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='0.25 0.185 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.4 0.2 0.6'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.75 -0.315 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.1 0.5 0.3'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.5 -0.315 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.7 0.1 0.3'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='-0.25 -0.315 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.9 0.9 0.9'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='0 -0.315 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.1 0.1 0.1'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+
+<Transform translation='0.25 -0.315 0'>
+<Shape>
+<Appearance><Material diffuseColor='0.6 0.6 0.1'/></Appearance>
+<Box size='0.04 0.25 0.28'/>
+</Shape>
+</Transform>
+</Scene>
+</X3D>

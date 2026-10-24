@@ -1,0 +1,81 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='Planetarium view' position='0 0 20'/>
+    <!-- Sun -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material emissiveColor='1 1 0' diffuseColor='1 1 0'/>
+        </Appearance>
+        <Sphere radius='1'/>
+      </Shape>
+    </Transform>
+    <!-- Planet 1: small red -->
+    <Transform DEF='OT1'>
+      <Transform translation='2 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0 0'/>
+          </Appearance>
+          <Sphere radius='0.2'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='TS1' cycleInterval='10' loop='true'/>
+    <OrientationInterpolator DEF='OI1' key='0 1' keyValue='0 1 0 0  0 1 0 6.28318530718'/>
+    <ROUTE fromNode='TS1' fromField='fraction_changed' toNode='OI1' toField='set_fraction'/>
+    <ROUTE fromNode='OI1' fromField='value_changed' toNode='OT1' toField='rotation'/>
+    <!-- Planet 2: medium green -->
+    <Transform DEF='OT2'>
+      <Transform translation='3 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0 1 0'/>
+          </Appearance>
+          <Sphere radius='0.3'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='TS2' cycleInterval='15' loop='true'/>
+    <OrientationInterpolator DEF='OI2' key='0 1' keyValue='0 1 0 0  0 1 0 6.28318530718'/>
+    <ROUTE fromNode='TS2' fromField='fraction_changed' toNode='OI2' toField='set_fraction'/>
+    <ROUTE fromNode='OI2' fromField='value_changed' toNode='OT2' toField='rotation'/>
+    <!-- Planet 3: larger blue -->
+    <Transform DEF='OT3'>
+      <Transform translation='4 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0 0 1'/>
+          </Appearance>
+          <Sphere radius='0.5'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='TS3' cycleInterval='20' loop='true'/>
+    <OrientationInterpolator DEF='OI3' key='0 1' keyValue='0 1 0 0  0 1 0 6.28318530718'/>
+    <ROUTE fromNode='TS3' fromField='fraction_changed' toNode='OI3' toField='set_fraction'/>
+    <ROUTE fromNode='OI3' fromField='value_changed' toNode='OT3' toField='rotation'/>
+    <!-- Planet 4: largest orange with ring -->
+    <Transform DEF='OT4'>
+      <Transform translation='5 0 0'>
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='1 0.5 0'/>
+          </Appearance>
+          <Sphere radius='0.8'/>
+        </Shape>
+        <!-- Ring around planet 4 -->
+        <Shape>
+          <Appearance>
+            <Material diffuseColor='0.7 0.7 0.7' transparency='0.5'/>
+          </Appearance>
+          <Cylinder height='0.02' radius='1.2' top='true' bottom='true' side='false'/>
+        </Shape>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='TS4' cycleInterval='30' loop='true'/>
+    <OrientationInterpolator DEF='OI4' key='0 1' keyValue='0 1 0 0  0 1 0 6.28318530718'/>
+    <ROUTE fromNode='TS4' fromField='fraction_changed' toNode='OI4' toField='set_fraction'/>
+    <ROUTE fromNode='OI4' fromField='value_changed' toNode='OT4' toField='rotation'/>
+  </Scene>
+</X3D>

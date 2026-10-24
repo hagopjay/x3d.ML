@@ -1,0 +1,100 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <Scene>
+    <Viewpoint description='City Block' position='0 20 40'/>
+    <Background skyColor='0.5 0.7 1.0'/>
+    <!-- Grey ground plane representing streets -->
+    <Transform translation='0 -0.5 0'>
+      <Shape>
+        <Box size='100 1 100'/>
+        <Appearance>
+          <Material diffuseColor='0.3 0.3 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Animation for blinking red light -->
+    <TimeSensor DEF='BlinkTimer' cycleInterval='1.0' loop='true'/>
+    <ColorInterpolator DEF='BlinkColor' key='0 0.5 1' keyValue='1 0 0  0.2 0 0  1 0 0'/>
+    <ROUTE fromNode='BlinkTimer' fromField='fraction_changed' toNode='BlinkColor' toField='set_fraction'/>
+    <ROUTE fromNode='BlinkColor' fromField='value_changed' toNode='TowerLight' toField='color'/>
+    <!-- Building grid 3x3 -->
+    <!-- Row 1 (z = -20) -->
+    <Transform translation='-20 0 -20'>
+      <Shape>
+        <Box size='15 10 15'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.2 0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0 -20'>
+      <Shape>
+        <Box size='15 15 15'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.8 0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='20 0 -20'>
+      <Shape>
+        <Box size='15 20 15'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.2 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Row 2 (z = 0) -->
+    <Transform translation='-20 0 0'>
+      <Shape>
+        <Box size='15 25 15'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.8 0.2'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Central tower with blinking light -->
+    <Transform translation='0 0 0'>
+      <Shape>
+        <Box size='15 50 15'/>
+        <Appearance>
+          <Material diffuseColor='0.5 0.5 0.5'/>
+        </Appearance>
+      </Shape>
+      <Transform translation='0 25 0'>
+        <PointLight DEF='TowerLight' color='1 0 0' intensity='1' radius='30'/>
+      </Transform>
+    </Transform>
+    <Transform translation='20 0 0'>
+      <Shape>
+        <Box size='15 30 15'/>
+        <Appearance>
+          <Material diffuseColor='0.8 0.2 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <!-- Row 3 (z = 20) -->
+    <Transform translation='-20 0 20'>
+      <Shape>
+        <Box size='15 35 15'/>
+        <Appearance>
+          <Material diffuseColor='0.2 0.8 0.8'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='0 0 20'>
+      <Shape>
+        <Box size='15 40 15'/>
+        <Appearance>
+          <Material diffuseColor='0.6 0.3 0.1'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform translation='20 0 20'>
+      <Shape>
+        <Box size='15 45 15'/>
+        <Appearance>
+          <Material diffuseColor='0.1 0.6 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

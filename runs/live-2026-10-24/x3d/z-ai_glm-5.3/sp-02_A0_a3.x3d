@@ -1,0 +1,102 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Planetarium'/>
+    <component name='Geometry2D' level='2'/>
+    <component name='Shape' level='1'/>
+  </head>
+  <Scene>
+    <Background skyColor='0.02 0.02 0.06'/>
+    <Viewpoint description='Planetarium' position='0 50 150' orientation='-1 0 0 0.32'/>
+
+    <!-- Glowing yellow Sun at the centre -->
+    <Transform>
+      <Shape>
+        <Sphere radius='7'/>
+        <Appearance>
+          <UnlitMaterial emissiveColor='1 0.9 0.3'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <Transform scale='1.35 1.35 1.35'>
+      <Shape>
+        <Sphere radius='7'/>
+        <Appearance>
+          <Material diffuseColor='0 0 0' emissiveColor='1 0.7 0.1' transparency='0.6'/>
+        </Appearance>
+      </Shape>
+    </Transform>
+    <PointLight color='1 0.95 0.8' intensity='1' ambientIntensity='0.2' radius='300'/>
+
+    <!-- Planet 1: small grey planet, fast inner orbit -->
+    <TimeSensor DEF='MercuryClock' cycleInterval='8' loop='true'/>
+    <OrientationInterpolator DEF='MercuryOrbit' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+    <Transform DEF='MercurySpin'>
+      <Transform translation='13 0 0'>
+        <Shape>
+          <Sphere radius='0.9'/>
+          <Appearance>
+            <Material diffuseColor='0.7 0.65 0.6'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='MercuryClock' fromField='fraction_changed' toNode='MercuryOrbit' toField='set_fraction'/>
+    <ROUTE fromNode='MercuryOrbit' fromField='value_changed' toNode='MercurySpin' toField='rotation'/>
+
+    <!-- Planet 2: blue planet -->
+    <TimeSensor DEF='BlueClock' cycleInterval='15' loop='true'/>
+    <OrientationInterpolator DEF='BlueOrbit' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+    <Transform DEF='BlueSpin'>
+      <Transform translation='22 0 0'>
+        <Shape>
+          <Sphere radius='1.5'/>
+          <Appearance>
+            <Material diffuseColor='0.2 0.4 0.9'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='BlueClock' fromField='fraction_changed' toNode='BlueOrbit' toField='set_fraction'/>
+    <ROUTE fromNode='BlueOrbit' fromField='value_changed' toNode='BlueSpin' toField='rotation'/>
+
+    <!-- Planet 3: largest planet with a flat ring -->
+    <TimeSensor DEF='RingedClock' cycleInterval='30' loop='true'/>
+    <OrientationInterpolator DEF='RingedOrbit' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+    <Transform DEF='RingedSpin'>
+      <Transform translation='36 0 0'>
+        <Shape>
+          <Sphere radius='4.2'/>
+          <Appearance>
+            <Material diffuseColor='0.95 0.75 0.45'/>
+          </Appearance>
+        </Shape>
+        <Transform rotation='1 0 0 1.5708'>
+          <Shape>
+            <Disk2D innerRadius='5.5' outerRadius='8.5' solid='false'/>
+            <Appearance>
+              <Material diffuseColor='0.85 0.75 0.55' emissiveColor='0.2 0.15 0.05' transparency='0.35'/>
+            </Appearance>
+          </Shape>
+        </Transform>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='RingedClock' fromField='fraction_changed' toNode='RingedOrbit' toField='set_fraction'/>
+    <ROUTE fromNode='RingedOrbit' fromField='value_changed' toNode='RingedSpin' toField='rotation'/>
+
+    <!-- Planet 4: red planet, slow outer orbit -->
+    <TimeSensor DEF='RedClock' cycleInterval='45' loop='true'/>
+    <OrientationInterpolator DEF='RedOrbit' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0, 0 1 0 1.5708, 0 1 0 3.1416, 0 1 0 4.7124, 0 1 0 6.2832'/>
+    <Transform DEF='RedSpin'>
+      <Transform translation='52 0 0'>
+        <Shape>
+          <Sphere radius='2.4'/>
+          <Appearance>
+            <Material diffuseColor='0.8 0.25 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+    <ROUTE fromNode='RedClock' fromField='fraction_changed' toNode='RedOrbit' toField='set_fraction'/>
+    <ROUTE fromNode='RedOrbit' fromField='value_changed' toNode='RedSpin' toField='rotation'/>
+  </Scene>
+</X3D>

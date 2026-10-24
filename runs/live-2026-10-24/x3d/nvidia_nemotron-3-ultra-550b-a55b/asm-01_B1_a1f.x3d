@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <meta name="title" content="Simple House"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Simple House" position="0 2 10"/>
+    <Switch whichChoice="-1">
+      <Group DEF="Body">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0.6 0.4 0.2"/>
+          </Appearance>
+          <Box size="5 3 5"/>
+        </Shape>
+      </Group>
+      <Group DEF="Roof">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0.8 0.2 0.2"/>
+          </Appearance>
+          <IndexedFaceSet coordIndex="0 1 4 -1 1 2 4 -1 2 3 4 -1 3 0 4 -1">
+            <Coordinate point="-2.5 0 -2.5, 2.5 0 -2.5, 2.5 0 2.5, -2.5 0 2.5, 0 2.5 0"/>
+          </IndexedFaceSet>
+        </Shape>
+      </Group>
+      <Group DEF="Door">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0.4 0.2 0.1"/>
+          </Appearance>
+          <Box size="1 2 0.1"/>
+        </Shape>
+      </Group>
+      <Group DEF="Window1">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0.2 0.6 0.8" transparency="0.5"/>
+          </Appearance>
+          <Box size="1 1 0.1"/>
+        </Shape>
+      </Group>
+      <Group DEF="Window2">
+        <Shape>
+          <Appearance>
+            <Material diffuseColor="0.2 0.6 0.8" transparency="0.5"/>
+          </Appearance>
+          <Box size="1 1 0.1"/>
+        </Shape>
+      </Group>
+    </Switch>
+    <Transform>
+      <USE node="Body"/>
+      <Transform translation="0 1.5 0">
+        <USE node="Roof"/>
+      </Transform>
+      <Transform translation="0 -0.5 2.55">
+        <USE node="Door"/>
+      </Transform>
+      <Transform translation="-1.5 0.5 2.55">
+        <USE node="Window1"/>
+      </Transform>
+      <Transform translation="1.5 0.5 2.55">
+        <USE node="Window2"/>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,65 @@
+<X3D xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' profile='Immersive' version='4.0' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geospatial' level='1'/>
+    <component name='Shape' level='1'/>
+    <meta name='title' content='Three Campus Buildings'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Campus overview with three named building markers' position='0 0 100'/>
+    <GeoOrigin geoSystem='"GD" "WE"' geoCoords='40.0 -75.0 0'/>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='40.0 -75.0 0'>
+      <Transform translation='0 1 0'>
+        <Shape>
+          <Sphere radius='0.6'/>
+          <Appearance>
+            <UnlitMaterial emissiveColor='1 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.5 0'>
+        <Shape>
+          <Text string='Main Hall'>
+            <FontStyle size='0.8'/>
+          </Text>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='40.001 -75.001 10'>
+      <Transform translation='0 1 0'>
+        <Shape>
+          <Sphere radius='0.6'/>
+          <Appearance>
+            <UnlitMaterial emissiveColor='1 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.5 0'>
+        <Shape>
+          <Text string='Science Center'>
+            <FontStyle size='0.8'/>
+          </Text>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoLocation geoSystem='"GD" "WE"' geoCoords='39.999 -74.999 5'>
+      <Transform translation='0 1 0'>
+        <Shape>
+          <Sphere radius='0.6'/>
+          <Appearance>
+            <UnlitMaterial emissiveColor='1 0.2 0.2'/>
+          </Appearance>
+        </Shape>
+      </Transform>
+      <Transform translation='0 2.5 0'>
+        <Shape>
+          <Text string='Library'>
+            <FontStyle size='0.8'/>
+          </Text>
+        </Shape>
+      </Transform>
+    </GeoLocation>
+    <GeoViewpoint geoSystem='"GD" "WE"' position='40.0 -75.0 0' description='Main Hall' bound='true'/>
+    <GeoViewpoint geoSystem='"GD" "WE"' position='40.001 -75.001 10' description='Science Center' bound='false'/>
+    <GeoViewpoint geoSystem='"GD" "WE"' position='39.999 -74.999 5' description='Library' bound='false'/>
+  </Scene>
+</X3D>

@@ -1,0 +1,46 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+ <head>
+  <meta name='title' content='Planetarium'/>
+  <component name='Shape' level='1'/>
+ </head>
+ <Scene>
+  <Viewpoint description='Planetarium view of the Sun and four orbiting planets' position='0 0 22'/>
+  <PointLight intensity='1' color='1 1 1' location='0 0 0' radius='60'/>
+
+  <Transform>
+   <Shape>
+    <Sphere radius='1.5'/>
+    <Appearance>
+     <UnlitMaterial emissiveColor='1 1 0'/>
+    </Appearance>
+   </Shape>
+  </Transform>
+
+  <Transform DEF='orbitMercury' rotation='0 1 0 0'>
+   <Transform translation='4 0 0'>
+    <Shape>
+     <Sphere radius='0.4'/>
+     <Appearance>
+      <Material diffuseColor='0.8 0.8 0.8' specularColor='0.2 0.2 0.2' shininess='0.25'/>
+     </Appearance>
+    </Shape>
+   </Transform>
+  </Transform>
+  <TimeSensor DEF='tsMercury' cycleInterval='4' loop='true'/>
+  <OrientationInterpolator DEF='oiMercury' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.141592654 0 1 0 6.283185307'/>
+  <ROUTE fromNode='tsMercury' fromField='fraction_changed' toNode='oiMercury' toField='set_fraction'/>
+  <ROUTE fromNode='oiMercury' fromField='value_changed' toNode='orbitMercury' toField='rotation'/>
+
+  <Transform DEF='orbitVenus' rotation='0 1 0 0'>
+   <Transform translation='6 0 0'>
+    <Shape>
+     <Sphere radius='0.6'/>
+     <Appearance>
+      <Material diffuseColor='0.9 0.7 0.3' specularColor='0.3 0.2 0.1' shininess='0.3'/>
+     </Appearance>
+    </Shape>
+   </Transform>
+  </Transform>
+  <TimeSensor DEF='tsVenus' cycleInterval='7' loop='true'/>
+  <OrientationInterpolator DEF='oiVenus' key='0 0.5 1' keyValue='0 1 0 0 0 1 0 3.141592654 0 1 0 6.283185307'/>
+  <ROUTE fromNode='tsVenus' fromField='fraction_changed' toNode='oiVenus' toField='set

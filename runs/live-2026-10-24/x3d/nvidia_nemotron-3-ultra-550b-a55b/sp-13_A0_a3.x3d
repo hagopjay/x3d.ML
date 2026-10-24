@@ -1,0 +1,81 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Rocket Launch'/>
+    <meta name='description' content='Rocket on launch pad with gantry tower; rocket rises and shrinks into distance with flame.'/>
+  </head>
+  <Scene>
+    <Viewpoint position='0 20 50' description='Rocket launch view'/>
+    <!-- Ground / Launch Pad -->
+    <Transform DEF='Ground'>
+      <Shape>
+        <Appearance>
+          <PhysicalMaterial baseColor='0.3 0.3 0.3'/>
+        </Appearance>
+        <Box size='200 0.1 200'/>
+      </Shape>
+      <TouchSensor DEF='Touch'/>
+    </Transform>
+    <!-- Gantry Tower -->
+    <Group>
+      <Transform translation='-10 10 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.5 0.5 0.5'/>
+          </Appearance>
+          <Box size='2 20 2'/>
+        </Shape>
+      </Transform>
+      <Transform translation='10 10 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.5 0.5 0.5'/>
+          </Appearance>
+          <Box size='2 20 2'/>
+        </Shape>
+      </Transform>
+      <Transform translation='0 20 0'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='0.5 0.5 0.5'/>
+          </Appearance>
+          <Box size='22 2 2'/>
+        </Shape>
+      </Transform>
+    </Group>
+    <!-- Rocket with Flame -->
+    <Transform DEF='RocketTransform' translation='0 0 0'>
+      <Group>
+        <!-- Rocket Body -->
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='1 1 1'/>
+          </Appearance>
+          <Cylinder radius='1' height='20'/>
+        </Shape>
+        <!-- Nose Cone -->
+        <Transform translation='0 12.5 0'>
+          <Shape>
+            <Appearance>
+              <PhysicalMaterial baseColor='1 1 1'/>
+            </Appearance>
+            <Cone bottomRadius='1' height='5'/>
+          </Shape>
+        </Transform>
+        <!-- Flame -->
+        <Transform translation='0 -11.5 0'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial emissiveColor='1 0.5 0'/>
+            </Appearance>
+            <Cone bottomRadius='0.5' height='3'/>
+          </Shape>
+        </Transform>
+      </Group>
+    </Transform>
+    <!-- Animation -->
+    <TimeSensor DEF='TS' cycleInterval='10' loop='false' startTime='0'/>
+    <PositionInterpolator DEF='PI' key='0 1' keyValue='0 0 0 0 100 -200'/>
+    <ROUTE fromNode='PI' fromField='value_changed' toNode='RocketTransform' toField='set_translation'/>
+    <ROUTE fromNode='Touch' fromField='touchTime' toNode='TS' toField='startTime'/>
+  </Scene>
+</X3D>

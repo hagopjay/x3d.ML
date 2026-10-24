@@ -1,0 +1,29 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Shape' level='2'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Metallic Gold Ring' position='0 0 5'/>
+    <DirectionalLight direction='-0.6 -0.4 -1' intensity='2.2'/>
+    <DirectionalLight direction='0.8 -0.2 0.6' intensity='0.9' color='1 0.95 0.85'/>
+    <Transform rotation='1 0 0 -0.35'>
+      <Transform DEF='RingTransform'>
+        <Shape>
+          <Appearance>
+            <PhysicalMaterial baseColor='1.0 0.78 0.28' metallicFactor='1' roughnessFactor='0.18'/>
+          </Appearance>
+          <Extrusion
+            crossSection='0.3 0, 0.212 0.212, 0 0.3, -0.212 0.212, -0.3 0, -0.212 -0.212, 0 -0.3, 0.212 -0.212, 0.3 0'
+            spine='1.2 0 0, 0.849 0.849 0, 0 1.2 0, -0.849 0.849 0, -1.2 0 0, -0.849 -0.849 0, 0 -1.2 0, 0.849 -0.849 0, 1.2 0 0'
+            beginCap='false' endCap='false' creaseAngle='1.57' solid='true'/>
+        </Shape>
+        <TouchSensor DEF='RingTouch' description='Touch the ring to spin it'/>
+      </Transform>
+    </Transform>
+    <TimeSensor DEF='SpinClock' cycleInterval='4' loop='false'/>
+    <OrientationInterpolator DEF='SpinPath' key='0 0.5 1' keyValue='0 1 0 0, 0 1 0 3.14159, 0 1 0 6.28318'/>
+    <ROUTE fromNode='RingTouch' fromField='touchTime' toNode='SpinClock' toField='startTime'/>
+    <ROUTE fromNode='SpinClock' fromField='fraction_changed' toNode='SpinPath' toField='set_fraction'/>
+    <ROUTE fromNode='SpinPath' fromField='value_changed' toNode='RingTransform' toField='set_rotation'/>
+  </Scene>
+</X3D>

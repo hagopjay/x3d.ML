@@ -1,0 +1,29 @@
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='title' content='Highlight Box on Pointer Over'/>
+  </head>
+  <Scene>
+    <Viewpoint description='Box highlights yellow when pointer is over it' position='0 0 6'/>
+    <DirectionalLight intensity='1.0' color='1 1 1'/>
+    <Transform>
+      <Shape>
+        <Box size='2 2 2'/>
+        <Appearance>
+          <Material DEF='boxMat' diffuseColor='0.7 0.7 0.7' emissiveColor='0 0 0'/>
+        </Appearance>
+      </Shape>
+      <TouchSensor DEF='boxTouch'/>
+    </Transform>
+    <Script DEF='highlight' mustEvaluate='false'>
+      <field name='isOver' type='SFBool' accessType='inputOnly'/>
+      <field name='emissiveColor' type='SFColor' accessType='outputOnly'/>
+      <![CDATA[
+        function isOver(value) {
+          emissiveColor = value ? new SFColor(1, 1, 0) : new SFColor(0, 0, 0);
+        }
+      ]]>
+    </Script>
+    <ROUTE fromNode='boxTouch' fromField='isOver' toNode='highlight' toField='isOver'/>
+    <ROUTE fromNode='highlight' fromField='emissiveColor' toNode='boxMat' toField='set_emissiveColor'/>
+  </Scene>
+</X3D>
