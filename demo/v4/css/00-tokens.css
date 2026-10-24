@@ -1,0 +1,38 @@
+/* 00-tokens.css — SPEC-v4 §10 tokens. Dark is canonical on :root; light under the two guarded selectors (page contract).
+   Canvases read these through cssv() once per theme change. One hue per meaning: ok / warn / bad / info / acc / you. */
+:root{ color-scheme:dark;
+ --bg:#070a0f; --p0:#0b1017; --p1:#111821; --p2:#182230; --p3:#1f2b3a;
+ --line:#243245; --line2:#2f415a; --fg:#dfe8f2; --mute:#8a9db3; --dim:#56697e;
+ --ok:#52d38a; --warn:#f0b84a; --bad:#ff5c75; --info:#8f86ff; --acc:#38c8d4; --you:#ff9f43;
+ --lane-1:#38c8d4; --lane-2:#8f86ff; --lane-3:#52d38a; --lane-4:#f0b84a; --lane-5:#ff5c75; --lane-6:#c58cff; --lane-7:#5bb0ff; --lane-8:#ff8ad6; --lane-9:#9fd65b; --lane-10:#f7a35c; --lane-11:#7ee8e1;
+ --okbg:#52d38a1f; --warnbg:#f0b84a22; --badbg:#ff5c7524; --infobg:#8f86ff22; --accbg:#38c8d41f; --youbg:#ff9f4322;
+ --stage-bg:#03050a; --etch:#b8c7d8; --glass:rgba(11,16,23,.72);
+ --glow-ok:0 0 12px #52d38a80; --glow-bad:0 0 12px #ff5c7580; --glow-acc:0 0 14px #38c8d480;
+ --elev1:0 1px 0 #ffffff08 inset, 0 8px 24px #0008; --radius:6px; --dur:160ms; --dur-slow:600ms;
+ --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace; --disp:"Barlow Condensed","Arial Narrow",sans-serif;
+ /* type scale (px/line-height) */
+ --t-display:84px; --t-display-lh:.95; --t-title:64px; --t-h1:36px; --t-h2:20px; --t-clock:24px; --t-lead:16px; --t-body:14px; --t-data:12.5px; --t-chip:11px; --t-stamp:10.5px;
+ --gutter:max(16px,env(safe-area-inset-left,0px)); --gutter-r:max(16px,env(safe-area-inset-right,0px));
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+ color-scheme:light;
+ --bg:#eef2f6; --p0:#f7f9fb; --p1:#fff; --p2:#f1f5f9; --p3:#e7edf3; --line:#d3dce6; --line2:#bcc8d6; --fg:#15202b; --mute:#566a7e; --dim:#8a9bad;
+ --ok:#0f8a4b; --warn:#a56a00; --bad:#c4223c; --info:#5a4fd6; --acc:#0a7f89; --you:#c25e00;
+ --lane-1:#2da0aa; --lane-2:#726bcc; --lane-3:#42a96e; --lane-4:#c0933b; --lane-5:#cc4a5e; --lane-6:#9e70cc; --lane-7:#498dcc; --lane-8:#cc6eab; --lane-9:#7fab49; --lane-10:#c6824a; --lane-11:#65bab4;
+ --okbg:#0f8a4b1a; --warnbg:#a56a001a; --badbg:#c4223c1a; --infobg:#5a4fd61a; --accbg:#0a7f891a; --youbg:#c25e001a;
+ --stage-bg:#03050a; --etch:#3a4b5e; --glass:rgba(255,255,255,.78);
+ --glow-ok:none; --glow-bad:none; --glow-acc:none; --elev1:0 1px 2px #0002;
+}}
+:root[data-theme="light"]{
+ color-scheme:light;
+ --bg:#eef2f6; --p0:#f7f9fb; --p1:#fff; --p2:#f1f5f9; --p3:#e7edf3; --line:#d3dce6; --line2:#bcc8d6; --fg:#15202b; --mute:#566a7e; --dim:#8a9bad;
+ --ok:#0f8a4b; --warn:#a56a00; --bad:#c4223c; --info:#5a4fd6; --acc:#0a7f89; --you:#c25e00;
+ --lane-1:#2da0aa; --lane-2:#726bcc; --lane-3:#42a96e; --lane-4:#c0933b; --lane-5:#cc4a5e; --lane-6:#9e70cc; --lane-7:#498dcc; --lane-8:#cc6eab; --lane-9:#7fab49; --lane-10:#c6824a; --lane-11:#65bab4;
+ --okbg:#0f8a4b1a; --warnbg:#a56a001a; --badbg:#c4223c1a; --infobg:#5a4fd61a; --accbg:#0a7f891a; --youbg:#c25e001a;
+ --stage-bg:#03050a; --etch:#3a4b5e; --glass:rgba(255,255,255,.78);
+ --glow-ok:none; --glow-bad:none; --glow-acc:none; --elev1:0 1px 2px #0002;
+}
+html[data-fx="0"]{--dur:0ms;--dur-slow:0ms}
+@media (prefers-reduced-motion:reduce){:root{--dur:0ms;--dur-slow:0ms}}
+@media (max-width:1100px){:root{--t-display:56px}}
+@media (max-width:600px){:root{--t-display:44px;--t-title:40px;--t-h1:28px}}
