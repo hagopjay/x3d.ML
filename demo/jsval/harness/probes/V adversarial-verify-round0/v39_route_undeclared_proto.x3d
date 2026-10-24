@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<ProtoInstance DEF='PI' name='Unknown'/><Transform DEF='T'/><ROUTE fromNode='T' fromField='bogus' toNode='PI' toField='bogus'/><ROUTE fromNode='PI' fromField='bogus' toNode='T' toField='bogus'/><ProtoInstance DEF='PI2'/><ROUTE fromNode='PI2' fromField='a' toNode='T' toField='b'/>
+</Scene>
+</X3D>

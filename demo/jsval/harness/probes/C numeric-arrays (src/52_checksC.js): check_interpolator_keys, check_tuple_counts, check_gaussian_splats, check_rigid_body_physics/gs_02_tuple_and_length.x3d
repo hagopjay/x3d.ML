@@ -1,0 +1,3 @@
+<X3D profile='Full' version='4.1'><Scene>
+<GaussianSplats DEF='Bad' positions='0 0 0 1 1 1 2' scales='1 1 1' orientations='0 0 0 1 0 0 0 1 0 0 0 1' opacities='0.5 1 1' sphericalHarmonicsDegree0Coef0='1 0 0 0 1 0'/>
+</Scene></X3D>

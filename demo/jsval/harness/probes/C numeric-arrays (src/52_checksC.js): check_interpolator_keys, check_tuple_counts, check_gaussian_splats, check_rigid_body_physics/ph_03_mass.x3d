@@ -1,0 +1,16 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection>
+  <RigidBody DEF='Zero' mass='0'/>
+  <RigidBody DEF='ZeroFixed' mass='0' fixed='true'/>
+  <RigidBody DEF='ZeroFixedUpper' mass='0' fixed='TRUE'/>
+  <RigidBody DEF='Neg' mass='-2'/>
+  <RigidBody DEF='Two' mass='0 5'/>
+  <RigidBody DEF='Empty' mass=''/>
+  <RigidBody DEF='Alpha' mass='abc'/>
+  <RigidBody DEF='NegZero' mass='-0'/>
+  <RigidBody DEF='Pos' mass='0.001'/>
+  <RigidBody DEF='Nan' mass='nan'/>
+  <RigidBody USE='Zero'/>
+  <RigidBody mass='-1'/>
+</RigidBodyCollection>
+</Scene></X3D>

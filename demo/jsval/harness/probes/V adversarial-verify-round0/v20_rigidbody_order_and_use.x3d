@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Full' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<RigidBodyCollection DEF='W'><SingleAxisHingeJoint DEF='J' axis='0 1 0' containerField='joints'><RigidBody USE='Later' containerField='body1'/><RigidBody USE='Later' containerField='body2'/></SingleAxisHingeJoint><RigidBody DEF='Later' mass='1'/><RigidBody DEF='Later' mass='-3'/><RigidBody USE='Later' containerField='bodies'/></RigidBodyCollection><Group DEF='G'><RigidBodyCollection DEF='W2'><RigidBody DEF='Bx' mass='1'><Shape containerField='geometry'><Sphere/></Shape></RigidBody></RigidBodyCollection><BallJoint DEF='Jo'><RigidBody USE='Bx' containerField='body1'/><RigidBody USE='Bx' containerField='body2'/></BallJoint></Group>
+</Scene>
+</X3D>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Group><Scene><Shape><Box/></Shape></Scene></Group><Shape DEF='outer'><Sphere/></Shape>
+</Scene>
+</X3D>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="x.xsl"?>
+<!-- top comment -->
+<X3D profile='Interchange' version='4.0'><head><meta name='a' content='b'/></head><Scene><?pi here?><!-- c --><Transform DEF='A'><?inner?><Shape DEF='A'><Appearance/><Box/></Shape></Transform><Rectangle2D/></Scene></X3D>

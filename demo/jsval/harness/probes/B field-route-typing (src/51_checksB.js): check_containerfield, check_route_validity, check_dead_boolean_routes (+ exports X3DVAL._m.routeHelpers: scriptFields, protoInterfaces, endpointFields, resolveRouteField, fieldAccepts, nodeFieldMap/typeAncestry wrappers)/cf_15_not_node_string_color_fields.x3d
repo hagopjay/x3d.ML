@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Shape>
+  <Appearance>
+    <ImageTexture containerField='alphaMode' url='"a.png"'/>
+    <PhysicalMaterial>
+      <ImageTexture containerField='baseColor' url='"b.png"'/>
+      <ImageTexture containerField='metallic' url='"c.png"'/>
+    </PhysicalMaterial>
+  </Appearance>
+  <IndexedFaceSet coordIndex='0 1 2 -1'>
+    <Coordinate containerField='coordIndex' point='0 0 0 1 0 0 0 1 0'/>
+  </IndexedFaceSet>
+</Shape>
+</Scene>
+</X3D>

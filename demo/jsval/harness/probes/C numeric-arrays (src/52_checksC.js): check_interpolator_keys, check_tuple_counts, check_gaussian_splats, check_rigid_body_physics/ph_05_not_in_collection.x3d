@@ -1,0 +1,14 @@
+<X3D profile='Full' version='4.1'><Scene>
+<Group>
+  <RigidBody DEF='Loose'/>
+  <SingleAxisHingeJoint DEF='LooseJoint' axis='0 1 0'>
+    <RigidBody DEF='B1' containerField='body1'/>
+    <RigidBody DEF='B2' containerField='body2'/>
+    <RigidBody DEF='B3' containerField='geometry'/>
+  </SingleAxisHingeJoint>
+  <SingleAxisHingeJoint USE='LooseJoint'/>
+  <RigidBody USE='Loose'/>
+  <CollidableShape DEF='CS'/>
+</Group>
+<RigidBodyCollection DEF='World'><RigidBody DEF='In'/><RigidBodyCollection DEF='Nested'><RigidBody DEF='Deep'/></RigidBodyCollection></RigidBodyCollection>
+</Scene></X3D>

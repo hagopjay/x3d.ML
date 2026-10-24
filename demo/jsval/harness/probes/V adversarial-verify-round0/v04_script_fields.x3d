@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='T'><Shape><Box/></Shape></Transform><Script DEF='S'><field name='go' type='SFBool' accessType='inputOnly'/><field name='pos' type='SFVec3f' accessType='inputOutput'/><field type='SFInt32' accessType='outputOnly'/><field name='out' type='SFTime' accessType='outputOnly'/><field name='pos' type='SFColor' accessType='outputOnly'/><IS><connect nodeField='go' protoField='go'/></IS><![CDATA[ecmascript: function go(v){}]]></Script><ROUTE fromNode='S' fromField='pos_changed' toNode='T' toField='set_translation'/><ROUTE fromNode='S' fromField='set_go' toNode='T' toField='translation'/><ROUTE fromNode='S' fromField='out' toNode='S' toField='set_go'/><ROUTE fromNode='T' fromField='translation' toNode='S' toField='pos'/><ROUTE fromNode='S' fromField='url' toNode='S' toField='go'/>
+</Scene>
+</X3D>

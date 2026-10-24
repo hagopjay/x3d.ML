@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Shape>
+  <Appearance>
+    <ImageTexture containerField='material' url='"a.png"'/>
+    <PhysicalMaterial>
+      <ImageTexture containerField='baseTexture' url='"b.png"'/>
+      <ImageTexture containerField='metadata' url='"c.png"'/>
+      <TextureTransform/>
+    </PhysicalMaterial>
+  </Appearance>
+  <Box/>
+</Shape>
+</Scene>
+</X3D>

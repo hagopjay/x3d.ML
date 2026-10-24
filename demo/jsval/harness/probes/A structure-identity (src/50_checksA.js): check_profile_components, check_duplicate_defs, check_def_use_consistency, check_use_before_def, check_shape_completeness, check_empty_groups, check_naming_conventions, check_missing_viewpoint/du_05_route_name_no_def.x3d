@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Transform USE='Ghost'/><ROUTE fromNode='Ghost' fromField='x' toNode='Ghost' toField='y'/><EXPORT localDEF=''/><IMPORT inlineDEF='' importedDEF='x'/><Group DEF='Keep'><Shape><Appearance/><Box/></Shape></Group><ROUTE fromNode='' toNode='Keep'/></Scene></X3D>

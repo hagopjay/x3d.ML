@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform xmlns:z='urn:z' scale='1 2' z:translation='1 2' translation='1 2' center='1' xml:lang='en' rotation='1 2 3'><Shape><Box/></Shape></Transform><Coordinate point='1 2 3 4' DEF='C'/><Shape><LineSet vertexCount='2'><Coordinate point='1 2 3 4 5'/><Color color='1 2 3 4'/></LineSet></Shape>
+</Scene>
+</X3D>

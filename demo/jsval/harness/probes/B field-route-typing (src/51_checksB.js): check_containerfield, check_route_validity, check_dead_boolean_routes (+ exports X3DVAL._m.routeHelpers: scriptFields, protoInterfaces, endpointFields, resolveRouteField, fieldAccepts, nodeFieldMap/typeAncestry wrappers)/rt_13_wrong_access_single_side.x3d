@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform DEF='A'/>
+<Group DEF='G'/>
+<TouchSensor DEF='TS'/>
+<TimeSensor DEF='Clock'/>
+<Material DEF='M'/>
+<ROUTE fromNode='A' fromField='addChildren' toNode='G' toField='addChildren'/>
+<ROUTE fromNode='TS' fromField='isOver' toNode='TS' toField='isActive'/>
+<ROUTE fromNode='Clock' fromField='set_fraction' toNode='Clock' toField='startTime'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Clock' toField='fraction_changed'/>
+<ROUTE fromNode='M' fromField='transparency' toNode='A' toField='removeChildren'/>
+</Scene>
+</X3D>

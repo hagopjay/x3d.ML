@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><PhysicalMaterial DEF='PM'><ImageTexture url='"a.png"'/><ImageTexture url='"n.png"' containerField='normalTexture'/><TextureTransform/><ImageTexture url='"e.png"' containerField='emissive'/></PhysicalMaterial></Appearance><Box/></Shape><Shape><Material/><Box containerField='geometry'/></Shape><Shape><Material containerField='geometry'/><Sphere/></Shape><Transform><Box/><Material/></Transform><Shape><Appearance><Material containerField=''/></Appearance><Cone containerField=''/></Shape><Transform><MetadataString name='m' value='"x"'/><MetadataSet containerField='metadata'><MetadataString name='a' containerField='value'/><MetadataString name='b'/></MetadataSet></Transform>
+</Scene>
+</X3D>

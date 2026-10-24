@@ -1,0 +1,13 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection>
+  <RigidBody DEF='A'/><RigidBody DEF='B'/>
+  <Transform DEF='T'/>
+  <BallJoint DEF='None'/>
+  <BallJoint DEF='OnlyOne'><RigidBody USE='A' containerField='body1'/></BallJoint>
+  <BallJoint DEF='NotBody'><Transform USE='T' containerField='body1'/><Group containerField='body2'/></BallJoint>
+  <BallJoint DEF='Same'><RigidBody USE='A' containerField='body1'/><RigidBody USE='A' containerField='body2'/></BallJoint>
+  <BallJoint DEF='SameInline'><RigidBody DEF='X' containerField='body1'/><RigidBody USE='X' containerField='body2'/></BallJoint>
+  <BallJoint DEF='Undefined'><RigidBody USE='Nope' containerField='body1'/><RigidBody USE='Nope' containerField='body2'/></BallJoint>
+  <BallJoint DEF='Fine'><RigidBody USE='A' containerField='body1'/><RigidBody USE='B' containerField='body2'/></BallJoint>
+</RigidBodyCollection>
+</Scene></X3D>

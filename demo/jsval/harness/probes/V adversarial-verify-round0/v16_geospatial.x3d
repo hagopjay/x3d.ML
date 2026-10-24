@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<GeoViewpoint DEF='GV' position='0 0 10'/><GeoOrigin DEF='GO' geoCoords='0 0 0'/><GeoLocation DEF='GL' geoCoords='1 2 3'><Shape><Box/></Shape></GeoLocation><GeoLOD DEF='empty' center='0 0 0'/><GeoLOD DEF='nonempty' center='0 0 0' child1Url='"a.x3d"'><GeoOrigin USE='GO'/></GeoLOD><GeoPositionInterpolator DEF='GPI' key='0 1' keyValue='0 0 0 1 1'/><GeoCoordinate point='1 2 3 4' containerField='coord'/><GeoElevationGrid height='1 2 3' xDimension='2' zDimension='2'/>
+</Scene>
+</X3D>

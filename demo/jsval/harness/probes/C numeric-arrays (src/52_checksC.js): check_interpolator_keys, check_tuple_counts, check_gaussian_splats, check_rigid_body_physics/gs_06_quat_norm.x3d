@@ -1,0 +1,6 @@
+<X3D profile='Full' version='4.1'><Scene>
+<GaussianSplats DEF='Q' positions='0 0 0 1 1 1 2 2 2 3 3 3' orientations='0 0 0 0  0 0 0 2  0.7071 0 0 0.7071  0 0 0 1.0005' sphericalHarmonicsDegree0Coef0='1 0 0 0 1 0 0 0 1 1 1 1'/>
+<GaussianSplats DEF='Trail' positions='0 0 0' orientations='0 0 0 1 5' sphericalHarmonicsDegree0Coef0='1 0 0'/>
+<GaussianSplats DEF='Short' positions='0 0 0' orientations='1 0 0' sphericalHarmonicsDegree0Coef0='1 0 0'/>
+<GaussianSplats DEF='ZeroOnly' positions='0 0 0' orientations='0 0 0 0' sphericalHarmonicsDegree0Coef0='1 0 0'/>
+</Scene></X3D>

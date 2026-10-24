@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Shape DEF='geomOnly'><IndexedFaceSet/></Shape><Shape DEF='appOnly'><Appearance/><ProtoInstance name='Geom'/></Shape><Shape DEF='textOnly'><Text string='"a"'/></Shape><Shape DEF='splat'><GaussianSplats/></Shape><Shape DEF='nurbs'><NurbsPatchSurface/></Shape><Shape DEF='pg'><ParticleSystem/></Shape></Scene></X3D>

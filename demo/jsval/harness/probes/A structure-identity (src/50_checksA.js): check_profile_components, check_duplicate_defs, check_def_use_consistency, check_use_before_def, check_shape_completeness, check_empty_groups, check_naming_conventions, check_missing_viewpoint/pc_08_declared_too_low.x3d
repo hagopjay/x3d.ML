@@ -1,0 +1,1 @@
+<X3D profile='Interchange' version='4.0'><head><component name='Geometry2D' level='1'/><component name='Navigation' level='1'/></head><Scene><Viewpoint/><Polyline2D/><Arc2D/><Rectangle2D/><Billboard><Shape><Appearance/><Box/></Shape></Billboard><Collision/><LOD/></Scene></X3D>

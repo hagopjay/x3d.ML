@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<LayoutLayer><LayoutGroup DEF='LG'/><ScreenGroup/><Viewport/></LayoutLayer><EspduTransform DEF='E'/><ReceiverPdu/><SignalPdu/><TransmitterPdu/><EspduTransform DEF='E2'><Shape><Box/></Shape></EspduTransform>
+</Scene>
+</X3D>

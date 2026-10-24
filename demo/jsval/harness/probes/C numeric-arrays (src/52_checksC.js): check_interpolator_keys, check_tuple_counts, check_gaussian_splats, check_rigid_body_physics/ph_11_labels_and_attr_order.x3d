@@ -1,0 +1,8 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection>
+  <RigidBody linearVelocity='nan 0 0' mass='-1' angularVelocity='0 inf 0' orientation='0 0 0 1'/>
+  <RigidBody DEF='D' USE='U' mass='nan'/>
+  <SingleAxisHingeJoint USE='Z' axis='0 0 0'/>
+  <MotorJoint axis1Angle='nan'/>
+</RigidBodyCollection>
+</Scene></X3D>

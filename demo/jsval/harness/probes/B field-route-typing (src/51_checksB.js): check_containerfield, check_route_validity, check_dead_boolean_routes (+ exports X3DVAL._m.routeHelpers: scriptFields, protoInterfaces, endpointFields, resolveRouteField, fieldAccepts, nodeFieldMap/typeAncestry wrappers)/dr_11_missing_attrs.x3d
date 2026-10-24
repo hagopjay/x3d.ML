@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<BooleanFilter DEF='F'/>
+<BooleanToggle DEF='T'/>
+<ROUTE fromField='inputFalse' toNode='T' toField='set_boolean'/>
+<ROUTE fromNode='F' toNode='T' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='T'/>
+<ROUTE fromNode='nope' fromField='inputFalse' toNode='T' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='nope' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='T' toField='set_boolean'/>
+</Scene>
+</X3D>

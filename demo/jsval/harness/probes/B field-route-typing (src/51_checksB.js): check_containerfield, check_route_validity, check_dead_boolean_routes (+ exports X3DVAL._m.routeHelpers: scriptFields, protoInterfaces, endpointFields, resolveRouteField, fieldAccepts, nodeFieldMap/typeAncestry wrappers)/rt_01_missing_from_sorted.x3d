@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform DEF='b'/>
+<Transform DEF='B'/>
+<Transform DEF='a'/>
+<Transform DEF='_x'/>
+<Transform DEF='Ω'/>
+<ROUTE fromNode='nope' fromField='translation' toNode='a' toField='translation'/>
+<ROUTE fromNode='missing1' fromField='x' toNode='missing2' toField='y'/>
+<ROUTE fromNode='B' fromField='translation_changed' toNode='b' toField='set_translation'/>
+</Scene>
+</X3D>

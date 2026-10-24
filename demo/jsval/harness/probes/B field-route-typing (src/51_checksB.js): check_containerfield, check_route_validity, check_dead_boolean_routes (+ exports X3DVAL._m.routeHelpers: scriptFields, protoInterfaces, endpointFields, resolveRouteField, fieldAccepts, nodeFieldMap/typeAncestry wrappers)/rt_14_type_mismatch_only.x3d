@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<TimeSensor DEF='Clock'/>
+<Transform DEF='T'/>
+<TouchSensor DEF='TS'/>
+<Material DEF='M'/>
+<ColorInterpolator DEF='CI' key='0 1' keyValue='1 0 0 0 0 1'/>
+<CoordinateInterpolator DEF='CoI' key='0 1' keyValue='0 0 0 1 1 1'/>
+<Script DEF='S'><field name='init' type='SFFloat' accessType='initializeOnly' value='0'/></Script>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='T' toField='translation'/>
+<ROUTE fromNode='TS' fromField='isOver' toNode='M' toField='transparency'/>
+<ROUTE fromNode='CI' fromField='value_changed' toNode='M' toField='transparency'/>
+<ROUTE fromNode='CoI' fromField='value_changed' toNode='T' toField='translation'/>
+<ROUTE fromNode='CI' fromField='value_changed' toNode='M' toField='diffuseColor'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='S' toField='init'/>
+<ROUTE fromNode='S' fromField='init' toNode='M' toField='transparency'/>
+</Scene>
+</X3D>

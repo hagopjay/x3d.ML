@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape DEF='S'><Box/></Shape><Shape USE='S'><Sphere/></Shape><Shape><ProtoInstance name='Geo'/></Shape><Shape><Box/><Sphere/><Appearance/></Shape><Shape xmlns:q='urn:q'><q:Box/><Appearance/></Shape><Shape><Text string='"a" "b"'><FontStyle family='"SANS"'/></Text><Appearance><Material/></Appearance></Shape><Shape><Appearance USE='missingApp'/><IndexedQuadSet/></Shape><Shape><Polyline2D lineSegments='0 0 1 1 2'/></Shape><Shape><ParticleSystem/></Shape>
+</Scene>
+</X3D>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Core' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><Material/></Appearance><Box/></Shape><Transform><Group/></Transform><ROUTE fromNode='V' fromField='bindTime' toNode='V' toField='set_bind'/><ProtoDeclare name='P'><ProtoBody><Group/></ProtoBody></ProtoDeclare>
+</Scene>
+</X3D>

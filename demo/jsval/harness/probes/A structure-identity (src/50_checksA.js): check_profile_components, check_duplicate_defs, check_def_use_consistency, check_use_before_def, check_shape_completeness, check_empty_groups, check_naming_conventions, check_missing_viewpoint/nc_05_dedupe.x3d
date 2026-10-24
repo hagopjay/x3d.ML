@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Transform DEF='a-b'/><Transform DEF='a-b'/><Transform USE='a-b'/><Transform USE='a-b'/><Script DEF='sc'><field name='a-b' type='SFBool' accessType='inputOutput' value='true'/></Script><Group DEF='1z'/><Group DEF='1z'/></Scene></X3D>
