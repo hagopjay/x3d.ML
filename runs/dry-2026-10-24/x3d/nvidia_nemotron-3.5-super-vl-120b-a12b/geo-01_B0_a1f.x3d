@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" profile="Immersive" version="4.0" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Geospatial" level="1"/>
+    <component name="Shape" level="2"/>
+    <meta name="title" content="Virginia Tech Drillfield Flagpole"/>
+  </head>
+  <Scene>
+    <Viewpoint description="Virginia Tech Drillfield Flagpole" position="0 10 15"/>
+    <GeoLocation geoSystem="&quot;GD&quot; &quot;WE&quot;" geoCoords="37.2284 -80.4234 630"/>
+    <GeoViewpoint geoSystem="&quot;GD&quot; &quot;WE&quot;" position="37.2284 -80.4234 630" description="Virginia Tech Drillfield"/>
+    <Transform translation="0 5 0">
+      <Shape>
+        <Cylinder height="10" radius="0.1"/>
+        <Appearance>
+          <PhysicalMaterial baseColor="0.8 0.7 0.6"/>
+        </Appearance>
+      </Shape>
+      <Transform translation="0 5 0">
+        <Shape>
+          <Box size="2 1 0.1"/>
+          <Appearance>
+            <PhysicalMaterial baseColor="1 0 0"/>
+          </Appearance>
+        </Shape>
+      </Transform>
+    </Transform>
+  </Scene>
+</X3D>

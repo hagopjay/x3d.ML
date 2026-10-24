@@ -1,0 +1,154 @@
+{
+ "t_start": 1792872335.375333,
+ "validator": "8dd0d3e",
+ "max_attempts": 3,
+ "system_sha": "bb3836a7a7da",
+ "repair_autofix_sha": "13289c898819",
+ "cap_usd": 0.05,
+ "prompts": 2,
+ "models": [
+  {
+   "id": "gemini-3.8-flash",
+   "provider": "vertex",
+   "parallel": 8,
+   "temperature": 0.4,
+   "max_out": 12000
+  },
+  {
+   "id": "gemini-3.1-pro-preview",
+   "provider": "vertex",
+   "parallel": 4,
+   "temperature": null,
+   "max_out": 12000
+  },
+  {
+   "id": "gpt-6.1-sol",
+   "provider": "openai",
+   "parallel": 4,
+   "temperature": null,
+   "max_out": 12000
+  },
+  {
+   "id": "z-ai/glm-5.3",
+   "provider": "nvidia",
+   "parallel": 8,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "nvidia/nemotron-3-super-120b-a12b",
+   "provider": "nvidia",
+   "parallel": 3,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "nvidia/nemotron-3-ultra-550b-a55b",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000
+  },
+  {
+   "id": "minimaxai/minimax-m3.1-flash",
+   "provider": "nvidia",
+   "parallel": 2,
+   "temperature": 0.4,
+   "max_out": 8000
+  }
+ ],
+ "arms": [
+  "A"
+ ],
+ "samples": 1,
+ "segments": [
+  {
+   "start": 1792872335.375333,
+   "validator": "8dd0d3e",
+   "cap_usd": 0.05,
+   "lane_cap_usd": null,
+   "wall_min": 0.15,
+   "lane_wall_min": null,
+   "concurrency": null,
+   "arms": [
+    "A"
+   ],
+   "b_models": null,
+   "samples": 1,
+   "lanes": {
+    "nvidia/nemotron-3.5-super-vl-120b-a12b|A": {
+     "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "arm": "A",
+     "provider": "nvidia",
+     "parallel": 1,
+     "temperature": 0.4,
+     "max_out": 8000,
+     "cap_usd": 0.05,
+     "wall_min": null,
+     "stopped": null,
+     "spent_usd": 0.0,
+     "calls": 1,
+     "failed": 0,
+     "done": 0,
+     "cut": 1,
+     "not_started": 1
+    }
+   },
+   "parallel": {
+    "nvidia/nemotron-3.5-super-vl-120b-a12b|A": 1
+   },
+   "end": 1792872404.2368395,
+   "stopped_by": "wall 0.15 min",
+   "cut": [
+    {
+     "lane": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+     "arm": "A",
+     "sample": 0,
+     "prompt_id": "asm-01",
+     "after_attempt": 1,
+     "after_seq": 1,
+     "by": "wall 0.15 min"
+    }
+   ]
+  }
+ ],
+ "lanes": {
+  "nvidia/nemotron-3.5-super-vl-120b-a12b|A": {
+   "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "arm": "A",
+   "provider": "nvidia",
+   "parallel": 1,
+   "temperature": 0.4,
+   "max_out": 8000,
+   "cap_usd": 0.05,
+   "wall_min": null,
+   "stopped": null,
+   "spent_usd": 0.0,
+   "calls": 1,
+   "failed": 0,
+   "done": 0,
+   "cut": 1,
+   "not_started": 1
+  }
+ },
+ "cut": [
+  {
+   "lane": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+   "arm": "A",
+   "sample": 0,
+   "prompt_id": "asm-01",
+   "after_attempt": 1,
+   "after_seq": 1,
+   "by": "wall 0.15 min"
+  }
+ ],
+ "spent_usd_est": 0.0,
+ "stopped_by": "wall 0.15 min"
+}
