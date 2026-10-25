@@ -158,6 +158,8 @@ async def main():
         await pg2.wait_for_timeout(500)
         sw = await pg2.evaluate("[document.documentElement.scrollWidth,document.documentElement.clientWidth,document.getElementById('film').scrollWidth,document.getElementById('film').clientWidth]")
         fx.ok("390 px: no horizontal page scroll and the section does not widen", sw[0] <= sw[1] + 1 and sw[2] <= sw[3] + 1, sw)
+        await pg2.evaluate("document.getElementById('scopeCanvas').scrollIntoView({block:'center'})")   # IO drives visible: the scope sits below the transposed waterfall, so bring it in and let it draw
+        fx.ok("390 px: scope panel draws once in view", await fx.wait(pg2, "__panels.scope.visible===true&&__panels.scope.draws>0", 30000), await pg2.evaluate("[__panels.scope.visible,__panels.scope.draws]"))
         fx.ok("390 px: scope 80 px tall, minimap on the right edge", await pg2.evaluate("document.getElementById('scopeCanvas').getBoundingClientRect().height<=82&&document.getElementById('wfMini').getBoundingClientRect().left>document.getElementById('wfCanvas').getBoundingClientRect().right-2"), await pg2.evaluate("[document.getElementById('scopeCanvas').getBoundingClientRect().height,document.getElementById('wfMini').getBoundingClientRect().left,document.getElementById('wfCanvas').getBoundingClientRect().right]"))
         await fx.shot(pg2, "v4_film_phone.png", full=False)
         e2 = [e for e in fx.errors(pg2) if "parts/run24.txt" not in e]

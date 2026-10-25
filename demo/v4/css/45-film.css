@@ -33,7 +33,7 @@
 .scopeHead h3{font-size:14px;letter-spacing:.06em;color:var(--mute)}
 .scopeHead .sub{color:var(--dim);font:400 var(--t-stamp)/1.4 var(--mono)}
 .scopeNote{color:var(--mute);font-size:var(--t-chip);margin-left:auto;white-space:normal}
-.scopeCv canvas{width:100%;display:block}
+#film .scopeCv canvas{width:100%;height:140px;display:block}  /* the draw sets the exact height; before the first draw (panel off-screen, IO not yet visible) the canvas must not fall back to the 300×150 default aspect */
 /* spend meter (S6.4, private build only) */
 .spendWrap{display:flex;flex-direction:column;gap:4px}
 .spCv canvas{width:100%;height:28px;display:block}
@@ -47,4 +47,5 @@
  .mmCv{height:auto} .mmCv canvas{height:100%;width:36px}
  .wfCard{position:static;width:auto;max-width:none;grid-column:1 / -1}
  .scopeNote{margin-left:0}
+ #film .scopeCv canvas{height:80px}
 }
