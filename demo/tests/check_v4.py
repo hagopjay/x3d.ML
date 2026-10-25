@@ -30,8 +30,8 @@ async def main():
         # ---- clock ----
         fx.ok("window.S exists and the clock runs at x30", await fx.wait(pg, "S&&S.rate===30&&S.clk>5", 30000), await pg.evaluate("S&&[S.mode,S.rate,S.clk,S.scenes.length]"))
         fx.ok("S.scenes advancing", await fx.wait(pg, "S.scenes.length>=5", 30000), await pg.evaluate("[S.clk,S.scenes.length]"))
-        c1 = await pg.evaluate("S.clk"); await pg.wait_for_timeout(1000); c2 = await pg.evaluate("S.clk")
-        fx.ok("run clock advances about 30 run-seconds per wall second", 15 <= c2 - c1 <= 45, round(c2 - c1, 1))
+        c1 = await pg.evaluate("S.clk"); await pg.wait_for_timeout(3000); c2 = await pg.evaluate("S.clk")
+        fx.ok("run clock advances about 30 run-seconds per wall second (3 s window; one frame of slack either side, dt capped at 1 s)", 60 <= c2 - c1 <= 120, round(c2 - c1, 1))
         fx.ok("#clk shows the clock", re.match(r"\d\d:\d\d / 76:50", await fx.txt(pg, "#clk")), await fx.txt(pg, "#clk"))
         fx.ok("speed chip x30 is on", await pg.evaluate('document.querySelector("#speed button.on")?.dataset.r') == "30")
         fx.ok("every finished chain verifies", await pg.evaluate("S.scenes.every(s=>verify(s.xml).ok)"))

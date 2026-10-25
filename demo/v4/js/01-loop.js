@@ -10,7 +10,7 @@ const LOOP={bits,panels,paused:false,running:false,frames:0,now:0,last:0,dirtyBi
 const ft=[];let fi=0,fpsN=0,fpsT=0;
 function p95(a){if(!a.length)return 0;const s=a.slice().sort((x,y)=>x-y);return s[Math.min(s.length-1,Math.floor(s.length*.95))]}
 LOOP.register=function(p){if(!p||!p.name)throw new Error("LOOP.register needs a name");const r=Object.assign({always:false,budgetMs:4,visible:true,rateHz:0,lastDraw:0,draws:0,_t:[]},p);
-  if(r.el)IO.observe(r.el,v=>{r.visible=v;if(v)LOOP.dirtyBits|=r.bit||0},{rootMargin:"120px"});
+  if(r.el){r.visible=false;IO.observe(r.el,v=>{r.visible=v;if(v)LOOP.dirtyBits|=r.bit||0},{rootMargin:"120px"})}  /* a panel with an element waits for the observer's first report: no draw before it is near the viewport */
   panels.set(r.name,r);__panels[r.name]=r;LOOP.stats.panel[r.name]={last:0,p95:0,n:0,over:0};return r};
 LOOP.unregister=n=>{const r=panels.get(n);if(r&&r.el)IO.unobserve(r.el);panels.delete(n);delete __panels[n]};
 LOOP.dirty=b=>{LOOP.dirtyBits|=b};LOOP.dirtyAll=()=>{LOOP.dirtyBits=0x7fffffff};

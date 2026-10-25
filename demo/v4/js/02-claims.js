@@ -24,11 +24,11 @@ const CLAIMS={
     const t=performance.now();let v;try{v=await c.compute()}catch(e){c.status="bad";c.err=String(e);c.value=undefined;emit(id,"run");return{id,error:c.err,expected:c.expected}}
     c.ms=performance.now()-t;c.at=Date.now();c.runs++;c.value=v;c.ok=c.expected===undefined?null:c.eq(v,c.expected);c.status=c.ok===false?"bad":"earned";if(c.ok===false)console.warn("claim mismatch",id,"computed",v,"expected",c.expected);emit(id,"run");return{id,value:v,expected:c.expected,ok:c.ok,ms:c.ms,at:c.at}},
   async runAll(filter){const out=[];for(const c of map.values()){if(filter&&!filter(c))continue;if(c.compute&&CLAIMS.ready(c))out.push(await CLAIMS.run(c.id))}return out},
-  runReady(){CLAIMS.list().forEach(c=>{if(c.compute&&CLAIMS.ready(c)&&c.value===undefined)LOOP.idle(()=>CLAIMS.run(c.id))})}
+  runReady(){CLAIMS.list().forEach(c=>{if(c.compute&&CLAIMS.ready(c)&&c.value===undefined&&!c._queued){c._queued=true;LOOP.idle(()=>{c._queued=false;const k=CLAIMS.get(c.id);if(k&&k.value===undefined)CLAIMS.run(c.id)})}})}  /* re-checked at run time: a claim computed meanwhile is not run again */
 };
-function paint(b,c){const ok=c.status;b.className="claim "+ok+(b.dataset.size?" "+b.dataset.size:"");const v=b.querySelector(".v");
-  if(ok==="bad")txt(v,`computed ${face(Object.assign({},c,{text:c.text}))} · expected ${face(Object.assign({},c,{value:undefined}))}`);else txt(v,face(c));
-  b.title=`${c.label}${c.unit?" · "+c.unit:""} · ${ok==="known"?"known from the record":ok==="earned"?"recomputed in this view":ok==="bad"?"MISMATCH: computed differs from the record":"not yet computed"} · grade ${c.grade}`}
+function paint(b,c){const ok=c.status,cls="claim "+ok+(b.dataset.size?" "+b.dataset.size:"");if(b.className!==cls)b.className=cls;const v=b.querySelector(".v");   /* writes only on change: no DOM mutation while nothing moved */
+  const f=ok==="bad"?`computed ${face(Object.assign({},c,{text:c.text}))} · expected ${face(Object.assign({},c,{value:undefined}))}`:face(c);if(v&&v.textContent!==f)txt(v,f);
+  const t=`${c.label}${c.unit?" · "+c.unit:""} · ${ok==="known"?"known from the record":ok==="earned"?"recomputed in this view":ok==="bad"?"MISMATCH: computed differs from the record":"not yet computed"} · grade ${c.grade}`;if(b.title!==t)b.title=t}
 function claimChip(id,opts){opts=opts||{};const c=map.get(id)||CLAIMS.define(id,{});const b=el("button",{class:"claim "+c.status+(opts.size?" "+opts.size:""),type:"button",data:{claim:id,size:opts.size||""}});
   b.appendChild(el("b",{class:"v",text:face(c)}));const u=opts.label!==undefined?opts.label:(c.unit||c.label);if(u)b.appendChild(el("small",{class:"u",text:u}));
   b.addEventListener("click",()=>proofDrawer(id));CLAIMS.on(id,()=>paint(b,map.get(id)));paint(b,c);return b}
@@ -66,6 +66,6 @@ CLAIMS.define("c.canary",{label:"canary: bodies · flips",unit:"fork@8dd0d3e vs 
 CLAIMS.define("c.truncated",{label:"outputs cut at the token limit",unit:"finish reason length / max_tokens",needs:["live.core"],compute(){return LIVE.reduce((n,i)=>n+i.A.filter(a=>/length|max_tokens/i.test(a.fin||"")).length,0)}});
 CLAIMS.define("c.replay17",{label:"valid on the 11 Oct service, nothing drawn",unit:"of 91 · X_ITE 16.5.0",needs:["replay"],text:v=>v+" of "+(STATS.claims["c.replay17"].of||91),compute(){return REAL.filter(i=>i.x&&i.s&&!i.r.err&&(i.r.nb||0)<.005).length}});
 CLAIMS.define("c.lockstep",{label:"C14N lockstep",unit:"page hash vs repo C14N over 175 stamped heads",compute:null});
-if(self.DATA)DATA.on("*",()=>CLAIMS.runReady());
+/* the DATA '*' → runReady hook is registered once, by 99-boot (03-data loads after this file) */
 Object.assign(self,{CLAIMS,claimChip,proofDrawer,__claims:map});
 })();

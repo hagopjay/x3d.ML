@@ -11,7 +11,7 @@
 "use strict";
 const EMPTY="<X3D profile='Interchange' version='4.0'><Scene/></X3D>";
 const DROP_RE=/Unknown node type|Unknown named or imported node|Container field|insufficient component/i;
-const __stage={measure:{rigNodes:0,loads:0,last:null,ready:false,err:""},show:{staged:false,loads:0,lastHash:null,ready:false,err:"",frozen:false}};
+const __stage={measure:{rigNodes:0,loads:0,last:null,ready:false,err:"",pending:0},show:{staged:false,loads:0,lastHash:null,ready:false,err:"",frozen:false}};
 /* one console tap for the life of the page (v3 647): what X_ITE says about the load in flight */
 let SAID=null,tapped=false;
 function tapConsole(){if(tapped)return;tapped=true;const wrap=f=>(...a)=>{if(SAID&&SAID.length<6){const t=a.map(String).join(" ").replace(/\s+/g," ");if(!/font|stylesheet|mikktspace|Content Security|Fetch API/i.test(t))SAID.push(t.slice(0,260))}f.apply(console,a)};console.error=wrap(console.error);console.warn=wrap(console.warn)}
@@ -38,7 +38,7 @@ async function makeCanvas(mount,opts){if(!self.X3D)throw new Error("X_ITE not lo
 /* ---------- MEASURE ---------- */
 const M={ready:null,browser:null,canvas:null,busy:false,token:0,queue:Promise.resolve(),
   pixels:()=>pixelsOf(M.browser),
-  show(xml,opts){opts=opts||{};const tk=++M.token;const run=()=>measureNow(xml,opts,tk);const p=M.queue.then(run,run);M.queue=p.catch(()=>{});return p}};  /* FIFO: every caller gets its own R; a newer load never cancels an older one (integration: hero, raster, seven and the inspector all measure) */
+  show(xml,opts){opts=opts||{};const tk=++M.token;__stage.measure.pending=(__stage.measure.pending||0)+1;const run=()=>measureNow(xml,opts,tk);const p=M.queue.then(run,run);M.queue=p.catch(()=>{});p.finally(()=>{__stage.measure.pending--}).catch(()=>{});return p}};  /* __stage.measure.pending: loads queued or running (the perf gate waits for 0: each load is a SwiftShader shader compile) */  /* FIFO: every caller gets its own R; a newer load never cancels an older one (integration: hero, raster, seven and the inspector all measure) */
 async function measureNow(xml,opts,tk){
   if(!M.browser)await M.ready;if(!M.browser)return{err:"X_ITE not available: "+(__stage.measure.err||"no browser"),nb:null,frames:0,series:[],msgs:[],noFrame:true,ms:0};
   

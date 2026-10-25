@@ -32,7 +32,7 @@ async function load(n){
   return st.p}
 async function gzReadBytesInline(b64){const bytes=UTIL.b64ToBytes(b64);if(typeof DecompressionStream!=="undefined"){const ds=new DecompressionStream("gzip"),wr=ds.writable.getWriter();wr.write(bytes);wr.close();return new Uint8Array(await new Response(ds.readable).arrayBuffer())}throw new Error("no DecompressionStream for inline parts")}
 DATA.load=load;
-DATA.start=function(){const order=ORDER.filter(n=>!(DATA.phone&&n==="live.jpg"));(async()=>{for(const n of order){try{await load(n)}catch(e){}}})();return DATA.ready("live.core")};
+DATA.start=function(){const have=self.MANIFEST&&MANIFEST.parts;const order=ORDER.filter(n=>!(DATA.phone&&n==="live.jpg")&&(!have||have[n]));  /* a name absent from the manifest (run24 on a build without it) is never fetched */(async()=>{for(const n of order){try{await load(n)}catch(e){}}})();return DATA.ready("live.core")};
 /* ---------- fill rules ---------- */
 const codesOf=a=>{const c=[];if(!a.x)c.push("xsd");(a.se||[]).forEach(l=>{const m=/\*\*\[([\w-]+)\]\*\*/.exec(l);if(m&&!c.includes(m[1]))c.push(m[1])});return c};
 const findingOf=a=>{const l=(a.xe&&a.xe[0])||(a.se&&a.se[0])||"";return l.replace(/^-\s*/,"").replace(/\*\*/g,"").replace(/^Line \d+:\s*/,"").replace(/\{[^}]*\}/g,"").replace(/\s+/g," ").trim().slice(0,150)};

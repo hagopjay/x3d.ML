@@ -45,10 +45,10 @@ async def measure(pg, errs):
     t0 = time.time()
     while time.time() - t0 < 180:
         try:
-            if await pg.evaluate('!!(window.BOOT && BOOT.phase === "ready" && (BOOT.heroMeasure || (window.__stage && __stage.show && __stage.show.frozen) || performance.now() > 90000))'): break
+            if await pg.evaluate('!!(window.BOOT && BOOT.phase === "ready" && (BOOT.heroMeasure || (window.__stage && __stage.show && __stage.show.frozen) || performance.now() > 90000) && !(window.__stage && __stage.measure && __stage.measure.pending > 0))'): break
         except Exception: pass
         await pg.wait_for_timeout(500)
-    info('settle', f'BOOT.phase ready after {time.time() - t0:.1f} s wait, then {SETTLE_MS} ms')
+    info('settle', f'BOOT.phase ready, hero measured and the measure queue drained after {time.time() - t0:.1f} s wait (each queued load is a SwiftShader shader compile), then {SETTLE_MS} ms')
     await pg.wait_for_timeout(SETTLE_MS)
     fx = await pg.evaluate('document.documentElement.dataset.fx')
     ok('data-fx is "0" under SwiftShader + webdriver', fx == '0', f'data-fx={fx!r}')
