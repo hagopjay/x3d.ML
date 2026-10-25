@@ -87,11 +87,17 @@ function mount(sec){
   canvas.addEventListener("mousedown",e=>{drag={x0:e.offsetX,x:e.offsetX,moved:false}});canvas.addEventListener("mouseup",onUp);canvas.addEventListener("click",e=>{if(dragWasMove){dragWasMove=false;return}const r=rowAt(e.offsetX,e.offsetY);if(r)RASTER.select(r.key)});
   canvas.addEventListener("touchstart",e=>{const t=e.changedTouches[0],b=canvas.getBoundingClientRect();const r=rowAt(t.clientX-b.left,t.clientY-b.top);if(r){RASTER.select(r.key)}},{passive:true});
   canvas.addEventListener("dblclick",()=>{brush=null;txt(brushLine,"");P.forceDraw=true});
-  ["renders.series","renders.151","live.core","replay","live.bodies","live.jpg"].forEach(n=>DATA.on(n,()=>{build();P.builds++;P.forceDraw=true;if(n==="renders.series"||n==="replay")adoptBoot()}));
+  ["renders.series","renders.151","live.core","replay","live.bodies","live.jpg"].forEach(n=>DATA.on(n,()=>{build();P.builds++;P.forceDraw=true;hookBoot();if(n==="renders.series"||n==="replay")adoptBoot()}));
   THEME.onChange(()=>{P.forceDraw=true});addEventListener("resize",debounce(()=>{applySort();P.forceDraw=true},120));
   unitLine()}
 /* if 99-boot already measured the hero in this browser, its result becomes the live row without a second X_ITE load */
-function adoptBoot(){if(live||!self.BOOT||!BOOT.heroMeasure||!self.HERO||!HERO.items||!HERO.items[0])return;const key=HERO.items[0].key;if(byKey.has(key))RASTER.live(key,BOOT.heroMeasure,"boot hero measure")}
+function adoptBoot(){if(live||!self.BOOT||!BOOT.heroMeasure||BOOT.heroMeasure.cancelled||!self.HERO||!HERO.items||!HERO.items[0])return;const key=HERO.items[0].key;if(byKey.has(key))RASTER.live(key,BOOT.heroMeasure,"boot hero measure")}
+/* listen for the boot measure instead of polling: BOOT.heroMeasure becomes an accessor whose setter adopts the result the moment 99-boot stores it
+   (on a shared measure stage the hero measure can land after the raster's data, or not at all when a newer load cancelled it) */
+let bootHooked=false;
+function hookBoot(){if(bootHooked||!self.BOOT)return;bootHooked=true;let v=BOOT.heroMeasure;
+  try{Object.defineProperty(BOOT,"heroMeasure",{configurable:true,enumerable:true,get(){return v},set(x){v=x;adoptBoot()}})}catch(e){bootHooked=false}
+  if(v)adoptBoot()}
 /* ---------- geometry ---------- */
 let W=0,H=0,ctx=null,tmax=4500;
 const plotX0=()=>8,plotX1=()=>W-8;
@@ -117,7 +123,7 @@ function fillCard(r,x,y){if(!r){if(!sel)card.hidden=true;return}card.hidden=fals
 /* ---------- draw ---------- */
 function draw(now){
   if(!canvas||!wrap)return;const w=wrap.clientWidth||600,h=boxH();const sp=Math.max(0,rows.length*PITCH+AXIS_H-h)+"px";if(spacer&&spacer.style.height!==sp)spacer.style.height=sp;
-  if(!live&&rowsAll.length)adoptBoot();
+  if(!live&&rowsAll.length){hookBoot();adoptBoot()}
   const f=fitCanvas(canvas,w,h);ctx=f.ctx;W=w;H=h;const top=wrap.scrollTop;P.scrollTop=top;P.lastDraw=now;
   tmax=4500;rowsAll.forEach(r=>{if(r.a&&r.a.last>tmax)tmax=r.a.last;if(r.b&&r.b.last>tmax)tmax=r.b.last});if(live&&live.R&&live.R.last>tmax)tmax=live.R.last;tmax=Math.ceil(tmax/500)*500;
   const bg=cssv("--p0"),fg=cssv("--fg"),dim=cssv("--dim"),line=cssv("--line"),warn=cssv("--warn"),bad=cssv("--bad"),acc=cssv("--acc"),ok=cssv("--ok");

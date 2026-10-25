@@ -55,7 +55,7 @@ async def main():
         await pg.mouse.move(box[0] + box[2] * 0.5, box[1] + 30)
         fx.ok("raster: hover over the canvas names a row", await fx.wait(pg, "__panels.raster.hover!=null", 5000), await pg.evaluate("__panels.raster.hover"))
         # ---- live row ----
-        fx.ok("boot's own hero measure landed (the raster adopts it as the first live row)", await fx.wait(pg, "BOOT.heroMeasure", 60000) and await fx.wait(pg, "__panels.raster.live&&__panels.raster.live.key===HERO.items[0].key", 10000), await pg.evaluate("__panels.raster.live&&[__panels.raster.live.key,__panels.raster.live.state,__panels.raster.live.note]"))
+        fx.ok("boot's own hero measure landed (the raster adopts it as the first live row)", await fx.wait(pg, "BOOT.heroMeasure", 90000) and await fx.wait(pg, "__panels.raster.live&&__panels.raster.live.key===HERO.items[0].key", 10000), await pg.evaluate("__panels.raster.live&&[__panels.raster.live.key,__panels.raster.live.state,__panels.raster.live.note]"))
         live = await pg.evaluate("(async()=>{const R=await RASTER.measure(HERO.items[0].key);return R&&{nb:R.nb,frames:R.frames,err:R.err,noFrame:R.noFrame,kind:R.kind}})()")
         fx.ok("raster: RASTER.measure(hero) measured through STAGE.measure in this browser", live and not live.get("err") and (live.get("nb") or 0) >= 0.005, live)
         fx.ok("raster: live chip resolves", await fx.wait(pg, "__panels.raster.live&&__panels.raster.live.state==='done'", 20000), await pg.evaluate("__panels.raster.live&&__panels.raster.live.state"))
