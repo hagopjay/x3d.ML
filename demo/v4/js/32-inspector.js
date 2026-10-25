@@ -207,8 +207,8 @@ async function stageShow(sc,opts){opts=opts||{};const tk=++cur.v3Token;if(!sc)re
   if(!STAGE.measure.ok&&!STAGE.measure.ready){v3msg.textContent="the measure canvas is not up in this viewer; "+offlineLine(sc)+" · validators: "+validatorsLine(sc);return}
   v3msg.textContent="measuring "+sc.id+" in the hidden 192×144 canvas…";
   const R=await STAGE.measure.show(sc.xml,{expectNone:sc.drawKind==="nothing drawable",timeoutMs:12000});if(tk!==cur.v3Token)return;
-  if(R.cancelled){v3msg.textContent="the measure was superseded by a newer load; press MEASURE AGAIN. "+offlineLine(sc);return}
-  measureMemo.set(key,R);renderMeasure(sc,R)}
+  if(!R.cancelled)measureMemo.set(key,R);  /* 08-stage queues every caller and resolves each promise with its own R: no retry, no give-up; an uncached R is simply shown */
+  renderMeasure(sc,R)}
 /* ---------- events (ledger rows from the firehose: F-nnn failed calls, C-nnn cut chains) ---------- */
 function renderEvent(ev){const e=ev.ev,link=self.FH?FH.sceneOfEvent(ev):null;
   sub.innerHTML=`${esc(ev.id)} · <span class="pill ${ev.kind==="failed"?"p-bad":"p-warn"}">${ev.kind==="failed"?"FAILED CALL":"CUT CHAIN"}</span> · ${esc(disp(ev.m))} · ${esc(ev.p)}`;
@@ -261,7 +261,10 @@ function injectLocal(type,sc){let x=sc.xml;const all=readSteps(x);
   else if(type==="fliplast"){const st=all[all.length-1],j=JSON.parse(st[1]);if(j.verdict)j.verdict=j.verdict==="valid"?"invalid":"valid";else if(j.model)j.model=j.model+"-x";else j.note="edited";x=setStepJson(x,st[0],j)}
   sc.xml=x;sc.injured={t:performance.now(),type};sc.detected=false;sc.status="verified";S.inj++;
   if(self.logEv)logEv("inj",`${sc.id}: injected ${LABEL[type]} (${sc.sealed?"sealed":"unsealed"} chain)`);if(self.LOOP)LOOP.dirty(LOOP.bits.SCENE|LOOP.bits.VERIFY|LOOP.bits.SELECT)}
-function insCtl(type){const t=target(),sc=t.sc;if(!sc)return null;if(typeof self.inject==="function")self.inject(type,sc);else injectLocal(type,sc);if(self.FH)FH.update(sc.id);render(true);return sc}
+function insCtl(type){const t=target(),sc=t.sc;if(!sc)return null;const before=sc.xml;let done=false;
+  if(typeof self.inject==="function"){try{const r=self.inject(type,sc,{stage:false});done=!!(r&&(sc.injured||sc.tampered||sc.xml!==before))}catch(e){console.warn("inject (36-wall) failed, local edit instead:",e)}}  /* 36-wall inject(type,target,opts) sets sc.injured (edit/del/flipmid/fliplast) or sc.tampered */
+  if(!done)injectLocal(type,sc);
+  cur.sig="";if(self.FH)FH.update(sc.id);render(true);if(self.LOOP)LOOP.dirty(LOOP.bits.VERIFY|LOOP.bits.SELECT);return sc}
 /* ---------- mount ---------- */
 function mount(sec){section=sec;const sb=sec.querySelector(".sb");if($("inspector"))return;
   sub=el("span",{class:"sub",id:"insSub",text:"click a row, a bar, a thumbnail or a wall cell"});pinBtn=el("button",{type:"button",id:"insPin",text:"unpin",title:"follow the newest scene again",onclick:()=>{if(self.SIM)SIM.select(null);else{S.sel=null;render(true)}}});pinBtn.hidden=true;

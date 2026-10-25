@@ -144,7 +144,8 @@ async def main():
         await pg.evaluate("id=>SIM.select(id)", sid); await pg.wait_for_timeout(300)
         d0 = await pg.evaluate("S.detected")
         await pg.click("#insCtl button[data-t=edit]")
-        fx.ok("TAMPER THIS SCENE (coordinate edit) marks the scene injured and the inspector shows it", await pg.evaluate("id=>!!S.byId.get(id).injured", sid) and "INJ" in await pg.evaluate("id=>document.querySelector(`#fh tr[data-id=\"${id}\"]`)?.textContent||'INJ?'", sid))
+        tp = await pg.evaluate("id=>{FH.draw();const sc=S.byId.get(id);return {inj:!!sc.injured,type:sc.injured&&sc.injured.type,row:document.querySelector(`#fh tr[data-id=\"${id}\"]`)?.textContent||'(row not in the window)',sub:document.getElementById('insSub').textContent,wall:typeof inject}}", sid)
+        fx.ok("TAMPER THIS SCENE (coordinate edit) marks the scene injured (36-wall inject when present, local edit otherwise) and the row shows INJ", tp["inj"] and tp["type"] == "edit" and ("INJ" in tp["row"] or "not in the window" in tp["row"]), tp)
         fx.ok("the scrubber detects the edit (S.detected grows)", await fx.wait(pg, f"S.detected>{d0}", 60000), await pg.evaluate("[S.detected,S.alerts[0]&&S.alerts[0].msg]"))
         fx.ok("the tampered row's chain pill is no longer VERIFIED", await fx.wait(pg, f"document.querySelector('#fh tr[data-id=\"{sid}\"] td.chain .pill')?.textContent!=='VERIFIED'", 5000), await pg.evaluate(f"document.querySelector('#fh tr[data-id=\"{sid}\"] td.chain .pill')?.textContent"))
         # ---- paused: zero mutations under #fh ----
