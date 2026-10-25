@@ -5,7 +5,7 @@
    Globals: RASTER = {rows(), setSort(k), setAll(bool), select(key), measure(key) → Promise<R>, live(key, R), body(row), row(key), times(rec), cls(rec), panel}.
    Claims: raster.flips (paired bodies whose draws/blank/unparseable class differs between the patches; expected {pairs: MANIFEST rows of renders.151, flips: 0}),
            raster.rows (174 + 201 rows by default), raster.firstLight (median first light of the drawing rows, 16.5.0 offline; no baked expected: pending → earned).
-   Test hooks: __panels.raster.{rows, rowsAll, paired, flips, samples, hover, sel, live, sort, allAttempts, scrollTop, lastDraw, builds, visible, degraded}, RASTER.measure(key), RASTER.live(key, R).
+   Test hooks: __panels.raster.{rows, rowsAll, paired, flips, samples, hover, sel, live, sort, allAttempts, scrollTop, lastDraw, builds, layerSteps, lastStepMs, lastStepRows, slow, rowsVer, visible, degraded}, RASTER.measure(key), RASTER.live(key, R).
    v3 port: WORKPLAN §A assigns no v3 function to this module (the raster is a new instrument); the sample-time reconstruction below follows the v3/08 watcher rule
    (watchFrames, v3 lines 846–850: the first 8 frames, then at most one sample per 150 ms, 20 samples at most) because the passes recorded values, not timestamps.
    Honesty: every live number comes from STAGE.measure (rule 4); the live row is never counted; sample times are reconstructed from first, last, frames and say so. */
@@ -41,7 +41,7 @@ function applySort(){
   rows.sort(by);if(live&&byKey.has(live.key)){const i=rows.findIndex(r=>r.key===live.key);if(i>0)rows.unshift(rows.splice(i,1)[0]);else if(i<0&&byKey.get(live.key))rows.unshift(byKey.get(live.key))}
   P.rows=rows.length;P.rowsAll=rowsAll.length;P.paired=rows.filter(r=>r.b).length;P.flips=rowsAll.filter(r=>r.flip).length;P.sort=sortKey;P.allAttempts=allAttempts;
   const sig=sortKey+"|"+allAttempts+"|"+rows.map(r=>r.key+(r.b?1:0)+(r.flip?1:0)+r.cls0+r.cls1).join(",");if(sig!==P.rowsSig){P.rowsSig=sig;P.rowsVer=(P.rowsVer||0)+1}   /* the layer is rebuilt only when the row set, order or classes changed, not on every part arrival */
-  P.forceDraw=true;unitLine()}
+  wake();unitLine()}
 /* ---------- claims ---------- */
 CLAIMS.define("raster.flips",{label:"bodies whose draws / blank / unparseable class differs between X_ITE 16.5.0 and 16.5.1",unit:"of the paired bodies · 0.5 % line · viewAll(0) rig",needs:["renders.series","renders.151","live.core","replay"],
   expected:{pairs:(self.MANIFEST&&MANIFEST.parts&&MANIFEST.parts["renders.151"]&&MANIFEST.parts["renders.151"].rows)||null,flips:0},grade:"C",source:"MEASURED 24 Oct",validator:"none",renderer:"X_ITE 16.5.0 offline + 16.5.1 offline",
@@ -56,7 +56,10 @@ CLAIMS.define("raster.firstLight",{label:"median first light, drawing rows",unit
   compute(){if(!rowsAll.length)build();return UTIL.median(rowsAll.filter(r=>r.final&&r.cls0==="draws"&&r.fl0!=null).map(r=>r.fl0))}});
 /* ---------- DOM ---------- */
 let box=null,wrap=null,canvas=null,spacer=null,card=null,cardF={},liveChip=null,liveLine=null,sortBtns=null,allBtn=null,brushLine=null,unitEl=null;
+/* an off-screen panel is never forced to draw (a forced draw while another module mutates the DOM pays that frame's whole style+layout flush); the IO callback draws it when it comes near the viewport */
+const wake=()=>{if(P.visible)P.forceDraw=true};
 const P=LOOP.register({name:"raster",bit:LOOP.bits.DATA|LOOP.bits.THEME|LOOP.bits.RESIZE|LOOP.bits.HOVER|LOOP.bits.SELECT,budgetMs:4,draw,degrade(){P.degraded=true}});
+P.visible=false;   /* LOOP's rule for panels with an element: no draw before the observer's first report (the canvas is created at mount, so the flag is set here) */
 Object.assign(P,{rows:0,rowsAll:0,paired:0,flips:0,samples:0,hover:null,sel:null,live:null,sort:sortKey,allAttempts:false,scrollTop:0,degraded:false,builds:0,rowsVer:0,tmaxVer:-1});
 const boxH=()=>innerWidth<600?200:420;
 function unitLine(){if(!unitEl)return;txt(unitEl,`${fmt.int(rows.length)} rows${allAttempts?" (every live attempt)":" (201 live finals + 174 replay scenes)"} · 20 samples per pass · 16.5.0 above, 16.5.1 below · x = ms since load, linear to ${T_LIN} then log`)}
@@ -76,20 +79,21 @@ function mount(sec){
   card=el("div",{class:"rs-card card",hidden:""});["id","model","first","frames","best","cls","flip"].forEach(k=>{const d=el("div",{class:"rs-f",data:{f:k}});cardF[k]=d;card.appendChild(d)});
   const th=el("div",{class:"rs-th"});cardF.th=th;card.appendChild(th);
   const acts=el("div",{class:"row rs-acts"});cardF.stage=el("button",{text:"SHOW ON STAGE",onclick:()=>{const r=sel&&byKey.get(sel);const x=r&&RASTER.body(r);if(x&&self.STAGE)STAGE.show.load(x,{scene:{id:r.id,key:r.key,src:r.src,item:r.item}})}});
-  cardF.measure=el("button",{text:"RE-MEASURE HERE",onclick:()=>RASTER.measure(sel)});cardF.close=el("button",{text:"close",onclick:()=>{sel=null;P.sel=null;card.hidden=true;P.forceDraw=true}});acts.append(cardF.stage,cardF.measure,cardF.close);card.appendChild(acts);
+  cardF.measure=el("button",{text:"RE-MEASURE HERE",onclick:()=>RASTER.measure(sel)});cardF.close=el("button",{text:"close",onclick:()=>{sel=null;P.sel=null;card.hidden=true;wake()}});acts.append(cardF.stage,cardF.measure,cardF.close);card.appendChild(acts);
   box.appendChild(card);sb.appendChild(box);
   liveLine=el("div",{class:"rs-live row"});liveChip=el("span",{class:"pill p-mute rs-chip",text:"live row: press RE-MEASURE HERE"});liveLine.append(liveChip,el("span",{class:"note m rs-livenote"}));sb.appendChild(liveLine);
   brushLine=el("div",{class:"note m rs-brush"});sb.appendChild(brushLine);
   const find=el("div",{class:"rs-finding row"});find.append(gradeChip("C"),el("span",{class:"note",text:"Under this rig (viewer-default camera + viewAll(0), no Viewpoint bound) X_ITE 16.5.0 and 16.5.1 give the same class on every paired body: the flips chip above counts them."}),gradeChip("L"),el("span",{class:"note",text:"The 17 Oct report that 16.5.1 draws what 16.5.0 leaves blank (five Shroud exports) is not reproduced here; it most likely belongs to rigs that bind a scripted Viewpoint (the fly.mjs pattern), a different camera this page does not measure."}));
   sb.appendChild(find);
   P.el=canvas;IO.observe(canvas,v=>{P.visible=v;if(v)P.forceDraw=true},{rootMargin:"120px"});
-  wrap.addEventListener("scroll",()=>{P.scrollTop=wrap.scrollTop;P.forceDraw=true},{passive:true});
-  canvas.addEventListener("mousemove",onMove);canvas.addEventListener("mouseleave",()=>{if(!drag){hover=null;P.hover=null;if(!sel)card.hidden=true;P.forceDraw=true}});
+  if(LOOP.idle)LOOP.idle(()=>{try{const f=fitCanvas(canvas,wrap.clientWidth||600,boxH());f.ctx.font="500 10.5px "+cssv("--mono");f.ctx.fillText(" ",0,0);f.ctx.font="12px "+cssv("--mono");f.ctx.fillText(" ",0,0)}catch(e){}});   /* idle pre-warm: backing store + glyph cache, so the first visible draw is not the one that pays for them */
+  wrap.addEventListener("scroll",()=>{P.scrollTop=wrap.scrollTop;wake()},{passive:true});
+  canvas.addEventListener("mousemove",onMove);canvas.addEventListener("mouseleave",()=>{if(!drag){hover=null;P.hover=null;if(!sel)card.hidden=true;wake()}});
   canvas.addEventListener("mousedown",e=>{drag={x0:e.offsetX,x:e.offsetX,moved:false}});canvas.addEventListener("mouseup",onUp);canvas.addEventListener("click",e=>{if(dragWasMove){dragWasMove=false;return}const r=rowAt(e.offsetX,e.offsetY);if(r)RASTER.select(r.key)});
   canvas.addEventListener("touchstart",e=>{const t=e.changedTouches[0],b=canvas.getBoundingClientRect();const r=rowAt(t.clientX-b.left,t.clientY-b.top);if(r){RASTER.select(r.key)}},{passive:true});
-  canvas.addEventListener("dblclick",()=>{brush=null;txt(brushLine,"");P.forceDraw=true});
-  ["renders.series","renders.151","live.core","replay","live.bodies","live.jpg"].forEach(n=>DATA.on(n,()=>{build();P.builds++;P.forceDraw=true;hookBoot();if(n==="renders.series"||n==="replay")adoptBoot()}));
-  THEME.onChange(()=>{P.forceDraw=true});addEventListener("resize",debounce(()=>{applySort();P.forceDraw=true},120));
+  canvas.addEventListener("dblclick",()=>{brush=null;txt(brushLine,"");wake()});
+  ["renders.series","renders.151","live.core","replay","live.bodies","live.jpg"].forEach(n=>DATA.on(n,()=>{build();P.builds++;wake();hookBoot();if(n==="renders.series"||n==="replay")adoptBoot()}));
+  THEME.onChange(()=>{wake()});addEventListener("resize",debounce(()=>{applySort();wake()},120));
   unitLine()}
 /* if 99-boot already measured the hero in this browser, its result becomes the live row without a second X_ITE load */
 function adoptBoot(){if(live||!self.BOOT||!BOOT.heroMeasure||BOOT.heroMeasure.cancelled||!self.HERO||!HERO.items||!HERO.items[0])return;const key=HERO.items[0].key;if(byKey.has(key))RASTER.live(key,BOOT.heroMeasure,"boot hero measure")}
@@ -106,9 +110,9 @@ function X(t){const x0=plotX0(),x1=plotX1(),w=x1-x0,lin=.32*w;if(t==null)return 
 function Tof(x){const x0=plotX0(),x1=plotX1(),w=x1-x0,lin=.32*w;if(x-x0<=lin)return Math.max(0,(x-x0)/lin*T_LIN);return T_LIN*Math.pow(tmax/T_LIN,(x-x0-lin)/(w-lin))}
 function rowAt(x,y){if(y<AXIS_H)return null;const i=Math.floor((y-AXIS_H+(wrap?wrap.scrollTop:0))/PITCH);return rows[i]||null}
 let drag=null,dragWasMove=false;
-function onMove(e){if(drag){drag.x=e.offsetX;if(Math.abs(drag.x-drag.x0)>3)drag.moved=true;P.forceDraw=true;return}const r=rowAt(e.offsetX,e.offsetY);const k=r?r.key:null;if(k!==hover){hover=k;P.hover=k;if(!sel)fillCard(r,e.offsetX,e.offsetY);P.forceDraw=true}}
+function onMove(e){if(drag){drag.x=e.offsetX;if(Math.abs(drag.x-drag.x0)>3)drag.moved=true;wake();return}const r=rowAt(e.offsetX,e.offsetY);const k=r?r.key:null;if(k!==hover){hover=k;P.hover=k;if(!sel)fillCard(r,e.offsetX,e.offsetY);wake()}}
 function onUp(){if(!drag)return;if(drag.moved){const a=Tof(Math.min(drag.x0,drag.x)),b=Tof(Math.max(drag.x0,drag.x));brush={a,b};dragWasMove=true;const n=rows.filter(r=>r.fl0!=null&&r.fl0>=a&&r.fl0<=b).length,n1=rows.filter(r=>r.fl1!=null&&r.fl1>=a&&r.fl1<=b).length;
-    txt(brushLine,`brush ${fmt.ms(a)} – ${fmt.ms(b)}: ${fmt.int(n)} rows first-lit inside on 16.5.0, ${fmt.int(n1)} on 16.5.1 (double-click clears)`)}drag=null;P.forceDraw=true}
+    txt(brushLine,`brush ${fmt.ms(a)} – ${fmt.ms(b)}: ${fmt.int(n)} rows first-lit inside on 16.5.0, ${fmt.int(n1)} on 16.5.1 (double-click clears)`)}drag=null;wake()}
 function fillCard(r,x,y){if(!r){if(!sel)card.hidden=true;return}card.hidden=false;
   txt(cardF.id,`${r.id} · ${r.key}${r.onPage?"":" · body not on the page (attempt of a cut chain)"}`);
   txt(cardF.model,`${r.m}${r.mo?" · "+r.mo:""} · ${r.p} · ${r.c} · attempt ${r.k}${r.final?" (final)":""}`);
@@ -122,7 +126,7 @@ function fillCard(r,x,y){if(!r){if(!sel)card.hidden=true;return}card.hidden=fals
   cardF.stage.disabled=!RASTER.body(r);cardF.measure.disabled=!RASTER.body(r);cardF.stage.title=RASTER.body(r)?"load the raw bytes on the visible stage (STAGE.show)":"no body on the page";
   if(x!=null){const bw=box.clientWidth,cw=Math.min(380,bw-8);card.style.left=Math.max(0,Math.min(bw-cw,x+16))+"px";card.style.top=Math.min(boxH()-40,Math.max(0,y+12))+"px"}}
 /* ---------- draw ----------
-   The rows live in an offscreen layer (every row at its unscrolled y, built once per sort / width / theme / tmax change, in ≈ 1.6 ms chunks across frames,
+   The rows live in an offscreen layer (every row at its unscrolled y, built once per sort / width / theme / tmax change, in ≈ 1.5 ms idle steps (LOOP.idle) across frames,
    visible window first, rects bucketed by colour + 8-bit alpha so a row costs a handful of fills instead of forty state changes); a draw is bg + axis +
    brush + highlights + one blit of the visible window + the live row, and nothing at all when the signature of what is on screen has not changed. */
 let layer=null,lctx=null,lKey="",lDone=null,lLeft=0,lNext=0,lSig="",lDpr=1;
@@ -138,18 +142,28 @@ function rowToBuckets(rec,y,colour,base,fg,line,warn,stageBg,bad,G){
     if(!lit&&v>0){lit=true;add(2,base?colour:fg,255,x,y-1,1,4)}}}
 function flushBuckets(G){for(const g of G){for(const [k,arr] of g){const i=k.lastIndexOf("|");lctx.fillStyle=k.slice(0,i);lctx.globalAlpha=+k.slice(i+1)/255;lctx.beginPath();for(let j=0;j<arr.length;j+=4)lctx.rect(arr[j],arr[j+1],arr[j+2],arr[j+3]);lctx.fill()}g.clear()}lctx.globalAlpha=1}
 function layerFor(key,dpr){
-  if(layer&&lKey===key)return;lKey=key;lDpr=dpr;const hl=AXIS_H+rows.length*PITCH;
+  if(layer&&lKey===key)return;lKey=key;lDpr=dpr;const hl=AXIS_H+Math.max(rows.length,rowsAll.length)*PITCH;   /* sized for every attempt once, so a sort or Show-all never reallocates */
   if(!layer)layer=document.createElement("canvas");const LW=Math.max(1,Math.round(W*dpr)),LH=Math.max(1,Math.round(hl*dpr));
-  if(layer.width!==LW||layer.height!==LH){layer.width=LW;layer.height=LH}lctx=layer.getContext("2d");lctx.setTransform(dpr,0,0,dpr,0,0);   /* rows clear their own band as they are drawn: no full-layer clear */
+  if(layer.width<LW||layer.height<LH){layer.width=Math.max(layer.width,LW);layer.height=Math.max(layer.height,LH)}   /* grow only; rows clear their own band as they are drawn, no full-layer clear */
+  lctx=layer.getContext("2d");lctx.setTransform(dpr,0,0,dpr,0,0);
   lDone=new Uint8Array(rows.length);lLeft=rows.length;lNext=0}
-function buildLayer(i0,i1,deadline,T){
-  const G=[new Map(),new Map(),new Map()];let n=0;
-  const one=i=>{if(lDone[i])return;const r=rows[i],y=AXIS_H+i*PITCH;lDone[i]=1;lLeft--;n++;lctx.clearRect(0,y-1,W,PITCH);
+let cpu=.012;   /* ms per cost unit (a 2×2 rect = 1 unit, wider rects by area), measured on every step: software canvas pays per pixel, not per row */
+const unitsOf=G=>{let u=0;for(const g of G)for(const arr of g.values())for(let j=0;j<arr.length;j+=4)u+=1+arr[j+2]*arr[j+3]/8;return u};
+function buildLayer(i0,i1,budgetMs,T){
+  const ts=performance.now();const G=[new Map(),new Map(),new Map()];let n=0,units=0;const maxUnits=Math.max(8,budgetMs/cpu);
+  const rowUnits=r=>{const a=r.a&&r.a.series?r.a.series.length:1,b=r.b&&r.b.series?r.b.series.length:1;return a+b+2+((r.a&&cls(r.a)==="blank")||(r.b&&cls(r.b)==="blank")?W/4:0)};
+  const one=i=>{if(lDone[i])return;const r=rows[i],y=AXIS_H+i*PITCH;lDone[i]=1;lLeft--;n++;units+=rowUnits(r)+W/8;lctx.clearRect(0,y-1,W,PITCH);
     if(r.flip)G[0].set(T.bad+"|"+LVL(.25),(G[0].get(T.bad+"|"+LVL(.25))||[]).concat([0,y-1,4,PITCH]));
     rowToBuckets(r.a,y,T.fg,null,T.fg,T.line,T.warn,T.stageBg,T.bad,G);rowToBuckets(r.b,y+3,T.fg,null,T.fg,T.line,T.warn,T.stageBg,T.bad,G)};
-  for(let i=i0;i<i1&&i<rows.length;i++){one(i);if(n>=8&&performance.now()>deadline)break}   /* the visible window first (a first paint may finish it next frame) */
-  while(lLeft>0&&lNext<rows.length&&(n<8||performance.now()<deadline)){one(lNext++)}
-  flushBuckets(G)}
+  for(let i=i0;i<i1&&i<rows.length&&units<maxUnits;i++)one(i);                     /* the visible window first, then the rest in order, a cost budget per step */
+  while(lLeft>0&&lNext<rows.length&&units<maxUnits){one(lNext++)}
+  flushBuckets(G);const el=performance.now()-ts;lastStep=performance.now();P.layerSteps=(P.layerSteps||0)+1;P.lastStepMs=el;P.lastStepRows=n;
+  if(units>0&&el>.05)cpu=Math.max(.002,Math.min(.2,cpu*.5+.5*el/units))}             /* learn the real per-unit cost of this machine */
+/* the layer is built as idle work (LOOP.idle, ≈ 1.5 ms per step), never inside the panel's draw time; a draw only blits what is built and asks for another
+   step. If the loop has no idle room for half a second (a busy page), the draw itself takes one 1.5 ms step so the raster still completes. */
+let buildQueued=false,lastStep=0,bld={i0:0,i1:0,T:null};
+function stepBuild(){buildQueued=false;if(!layer||lLeft<=0||!bld.T)return;buildLayer(bld.i0,bld.i1,1.5,bld.T);wake();if(lLeft>0)scheduleBuild()}
+function scheduleBuild(){if(buildQueued||!self.LOOP||!LOOP.idle)return;buildQueued=true;LOOP.idle(stepBuild)}
 function draw(now){
   if(!canvas||!wrap)return;const t0=performance.now();const w=wrap.clientWidth||600,h=boxH();const sp=Math.max(0,rows.length*PITCH+AXIS_H-h)+"px";if(spacer&&spacer.style.height!==sp)spacer.style.height=sp;
   if(!live&&rowsAll.length){hookBoot();adoptBoot()}
@@ -161,10 +175,10 @@ function draw(now){
   const i0=Math.max(0,Math.floor(top/PITCH)),i1=Math.min(rows.length,Math.ceil((top+h-AXIS_H)/PITCH)+1);
   const sig=[key,h,top,hover,sel,brush&&brush.a,brush&&brush.b,drag&&drag.x,live&&live.key,live&&live.state,live&&live.R&&live.R.frames,rows.length].join("|");
   W=w;H=h;
-  if(rows.length){layerFor(key,dpr);if(lLeft>0)buildLayer(i0,i1,t0+1.6,{fg,line,warn,bad,stageBg})}
-  const complete=!rows.length||lLeft<=0;
-  if(sig===lSig&&complete)return;                                               /* nothing on screen changed: the canvas keeps its pixels */
-  lSig=complete?sig:"";if(!complete)P.forceDraw=true;
+  const keyChanged=key!==lKey;if(rows.length){layerFor(key,dpr);bld={i0,i1,T:{fg,line,warn,bad,stageBg}};if(lLeft>0){if(t0-lastStep>500)buildLayer(i0,i1,1.5,bld.T);if(lLeft>0)scheduleBuild()}}
+  const complete=!rows.length||lLeft<=0;const tB=performance.now();
+  if(sig===lSig&&complete){slow(t0,tB,tB,keyChanged,"skip");return}                                               /* nothing on screen changed: the canvas keeps its pixels */
+  lSig=complete?sig:"";if(!complete)wake();
   const f=fitCanvas(canvas,w,h);ctx=f.ctx;
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
   /* axis */
@@ -176,7 +190,7 @@ function draw(now){
   let samples=0;
   for(let i=i0;i<i1;i++){const r=rows[i],y=AXIS_H+i*PITCH-top;samples+=(r.a&&r.a.series?r.a.series.length:0)+(r.b&&r.b.series?r.b.series.length:0);
     const isSel=sel===r.key,isHov=hover===r.key;if(isSel||isHov){ctx.fillStyle=isSel?acc:fg;ctx.globalAlpha=isSel?.14:.07;ctx.fillRect(0,y-1,W,PITCH);ctx.globalAlpha=1}}
-  if(rows.length&&i1>i0){const sy=AXIS_H+i0*PITCH-1,dy=sy-top,sh=Math.min(layer.height/lDpr-sy,H-dy);if(sh>0)ctx.drawImage(layer,0,sy*lDpr,Math.round(W*lDpr),Math.round(sh*lDpr),0,dy,W,sh)}
+  if(rows.length&&i1>i0){const sy=AXIS_H+i0*PITCH-1,dy=sy-top,sh=Math.min(AXIS_H+rows.length*PITCH+1-sy,layer.height/lDpr-sy,H-dy);   /* never blit stale bands beyond the current rows */if(sh>0)ctx.drawImage(layer,0,sy*lDpr,Math.round(W*lDpr),Math.round(sh*lDpr),0,dy,W,sh)}
   const dotRow=(rec,y,colour,base)=>{if(!rec){ctx.fillStyle=line;ctx.globalAlpha=.5;ctx.fillRect(plotX0(),y,2,2);ctx.globalAlpha=1;return}
     const c=cls(rec);
     if(c==="unparseable"){ctx.strokeStyle=bad;ctx.globalAlpha=.45;ctx.lineWidth=1;for(let x=plotX0();x<plotX1();x+=6){ctx.beginPath();ctx.moveTo(x,y+2);ctx.lineTo(x+2,y);ctx.stroke()}ctx.globalAlpha=1;return}
@@ -189,7 +203,10 @@ function draw(now){
     if(live.R&&!live.R.err&&live.R.series){const rec={series:live.R.series,first:live.R.first,last:live.R.last,frames:live.R.frames,nb:live.R.nb};ctx.fillStyle=bg;ctx.globalAlpha=.55;ctx.fillRect(plotX0(),y-1,plotX1()-plotX0(),PITCH-1);ctx.globalAlpha=1;dotRow(r.a,y,dim,dim);dotRow(rec,y,acc,acc);dotRow(r.b,y+3,dim,dim)}
     ctx.fillStyle=acc;ctx.fillRect(0,y-1,3,PITCH);ctx.font="600 10.5px "+mono;ctx.textAlign="right";ctx.fillText(live.state==="done"?"LIVE · this browser":live.state==="measuring"?"measuring…":"live: "+live.state,W-6,y-1);ctx.textAlign="left"}}
   P.samples=samples;
-  if(!rows.length){ctx.fillStyle=dim;ctx.font="12px "+mono;ctx.fillText(DATA.status["renders.series"]&&DATA.status["renders.series"].state==="refused"?"part renders.series refused: nothing to draw":"waiting for parts renders.series, renders.151, live.core, replay…",12,AXIS_H+12)}}
+  if(!rows.length){ctx.fillStyle=dim;ctx.font="12px "+mono;ctx.fillText(DATA.status["renders.series"]&&DATA.status["renders.series"].state==="refused"?"part renders.series refused: nothing to draw":"waiting for parts renders.series, renders.151, live.core, replay…",12,AXIS_H+12)}
+  slow(t0,tB,performance.now(),keyChanged,complete?"blit":"blit-partial")}
+/* __panels.raster.slow: the costliest draw so far, split into the layer/alloc+build phase and the screen phase (test / perf diagnostics) */
+function slow(t0,tB,tE,keyChanged,kind){const ms=tE-t0;if(!P.slow||ms>P.slow.ms)P.slow={ms:+ms.toFixed(2),layer:+(tB-t0).toFixed(2),screen:+(tE-tB).toFixed(2),keyChanged,kind,rows:rows.length,W,H,steps:P.layerSteps||0,at:Math.round(t0)}}
 /* ---------- live row ---------- */
 const RASTER={panel:P,rows:()=>rows,row:k=>byKey.get(k)||null,times,cls,
   setSort(k){sortKey=k;if(sortBtns)[...sortBtns.children].forEach(b=>b.classList.toggle("on",b.dataset.k===k));applySort()},
@@ -197,7 +214,7 @@ const RASTER={panel:P,rows:()=>rows,row:k=>byKey.get(k)||null,times,cls,
   body(r){if(!r)return null;if(r.src==="real")return r.item&&r.item.b||null;return r.item&&r.item.B&&r.item.B[r.k-1]||null},
   thumb(r){if(!r||r.src!=="live"||!r.item)return null;const a=r.item.A[r.k-1];return a&&a.r&&a.r.jpg||null},
   select(key){const r=byKey.get(key);if(!r)return null;sel=key;P.sel=key;fillCard(r,null,null);card.style.left="8px";card.style.top="8px";card.hidden=false;const i=rows.indexOf(r);if(i>=0&&wrap){const y=i*PITCH;if(y<wrap.scrollTop||y>wrap.scrollTop+boxH()-AXIS_H-PITCH)wrap.scrollTop=Math.max(0,y-boxH()/2)}
-    P.forceDraw=true;if(self.SIM&&r.item){const sc=(self.S&&S.scenes||[]).find(s=>s.item===r.item);if(sc)SIM.select(sc.id)}return r},
+    wake();if(self.SIM&&r.item){const sc=(self.S&&S.scenes||[]).find(s=>s.item===r.item);if(sc)SIM.select(sc.id)}return r},
   /* a measurement made elsewhere (12-hero, 40-sheet, 99-boot) becomes the live row: R is STAGE.measure.show's result for this body */
   live(key,R,note){const r=byKey.get(key);if(!r||!R||R.cancelled)return null;live={key,R,state:R.err?"X_ITE refused":R.noFrame?"no frame yet":"done",note:note||""};P.live=live;verdict(r);applySort();if(wrap)wrap.scrollTop=0;return live},
   async measure(key){key=key||(self.HERO&&HERO.items&&HERO.items[0]&&HERO.items[0].key);const r=byKey.get(key);if(!r){txt(liveChip,"live row: no such row "+key);return null}

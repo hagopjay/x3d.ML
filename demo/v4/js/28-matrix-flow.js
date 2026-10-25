@@ -67,6 +67,9 @@ Object.assign(PM,{cells:0,filled:0,cut:0,failed:0,rows:0,cols:0,filtered:0,hover
 const PF=LOOP.register({name:"flow",bit:LOOP.bits.DATA|LOOP.bits.THEME|LOOP.bits.RESIZE|LOOP.bits.HOVER|LOOP.bits.SELECT|LOOP.bits.MODE,rateHz:10,budgetMs:5,draw:drawFlow});
 Object.assign(PF,{ribbons:0,nodes:0,total:0,hover:null,lastDraw:0});
 const PX=LOOP.register({name:"field2d",bit:LOOP.bits.THEME|LOOP.bits.RESIZE,budgetMs:6,draw:drawField});
+/* off-screen panels are never forced to draw (see 26-raster): the IO callbacks draw them when they come near the viewport */
+PM.visible=PF.visible=PX.visible=false;   /* no draw before the observers' first report (canvases are created at mount) */
+const wakeM=()=>{if(PM.visible)PM.forceDraw=true},wakeF=()=>{if(PF.visible)PF.forceDraw=true},wakeX=()=>{if(PX.visible)PX.forceDraw=true};
 let mx=null,mxCard=null,mxF={},tabs=null,pager=null,cmp=null,cmpTitle=null,fl=null,flCard=null,flF={},filterChip=null,field=null,field2d=null,unitEl=null,fieldLegend=null;
 const isPhone=()=>innerWidth<600;
 const visibleRows=()=>{let rs=prompts.map((p,i)=>({p,i}));if(facet!=="all")rs=rs.filter(r=>r.p.c===facet);const ps=isPhone()?10:Infinity;if(rs.length>ps){const np=Math.ceil(rs.length/ps);page=Math.min(page,np-1);rs=rs.slice(page*ps,(page+1)*ps)}return rs};
@@ -91,16 +94,17 @@ function mount(sec){
   flCard=el("div",{class:"fl-card card",hidden:""});["a","b","c"].forEach(k=>{flF[k]=el("div",{class:"fl-f"});flCard.appendChild(flF[k])});flbox.appendChild(flCard);
   fieldLegend=el("div",{class:"legend fl-lanes"});right.appendChild(fieldLegend);
   grid.appendChild(right);sb.appendChild(grid);
-  PM.el=mx;IO.observe(mx,v=>{PM.visible=v;if(v)PM.forceDraw=true},{rootMargin:"120px"});PF.el=fl;IO.observe(fl,v=>{PF.visible=v;PX.visible=v;if(v){PF.forceDraw=true;PX.forceDraw=true}},{rootMargin:"120px"});
-  mx.addEventListener("mousemove",e=>{const c=MATRIX.cellAt(e.offsetX,e.offsetY);const k=c?c.row+"|"+c.col:null;if(k!==(hover&&hover.row+"|"+hover.col)){hover=c;PM.hover=k;fillMxCard(c,e.offsetX,e.offsetY);PM.forceDraw=true}});
-  mx.addEventListener("mouseleave",()=>{hover=null;PM.hover=null;if(!sel)mxCard.hidden=true;PM.forceDraw=true});
-  mx.addEventListener("click",e=>{const c=MATRIX.cellAt(e.offsetX,e.offsetY);if(!c)return;sel=c;PM.sel=c.row+"|"+c.col;fillMxCard(c,e.offsetX,e.offsetY);MATRIX.compare(c.p.id,c.lane?c.lane.id:null);PM.forceDraw=true});
-  fl.addEventListener("mousemove",e=>{const r=ribbonAt(e.offsetX,e.offsetY);const k=r?r.key:null;if(k!==(PF.hover)){PF.hover=k;fillFlCard(r,e.offsetX,e.offsetY);PF.forceDraw=true}});
-  fl.addEventListener("mouseleave",()=>{PF.hover=null;flCard.hidden=true;PF.forceDraw=true});
+  PM.el=mx;IO.observe(mx,v=>{PM.visible=v;if(v)PM.forceDraw=true},{rootMargin:"120px"});
+  if(LOOP.idle)LOOP.idle(()=>{try{const f=fitCanvas(mx,300,HEAD_H+CELL_H);f.ctx.font="500 10.5px "+cssv("--mono");f.ctx.fillText(" ",0,0);const g=fitCanvas(fl,fl.parentNode.clientWidth||400,isPhone()?340:420);g.ctx.font="500 10.5px "+cssv("--mono");g.ctx.fillText(" ",0,0)}catch(e){}});   /* idle pre-warm of both canvases' backing stores and the glyph cache */PF.el=fl;IO.observe(fl,v=>{PF.visible=v;PX.visible=v;if(v){PF.forceDraw=true;PX.forceDraw=true}},{rootMargin:"120px"});
+  mx.addEventListener("mousemove",e=>{const c=MATRIX.cellAt(e.offsetX,e.offsetY);const k=c?c.row+"|"+c.col:null;if(k!==(hover&&hover.row+"|"+hover.col)){hover=c;PM.hover=k;fillMxCard(c,e.offsetX,e.offsetY);wakeM()}});
+  mx.addEventListener("mouseleave",()=>{hover=null;PM.hover=null;if(!sel)mxCard.hidden=true;wakeM()});
+  mx.addEventListener("click",e=>{const c=MATRIX.cellAt(e.offsetX,e.offsetY);if(!c)return;sel=c;PM.sel=c.row+"|"+c.col;fillMxCard(c,e.offsetX,e.offsetY);MATRIX.compare(c.p.id,c.lane?c.lane.id:null);wakeM()});
+  fl.addEventListener("mousemove",e=>{const r=ribbonAt(e.offsetX,e.offsetY);const k=r?r.key:null;if(k!==(PF.hover)){PF.hover=k;fillFlCard(r,e.offsetX,e.offsetY);wakeF()}});
+  fl.addEventListener("mouseleave",()=>{PF.hover=null;flCard.hidden=true;wakeF()});
   fl.addEventListener("click",e=>{const r=ribbonAt(e.offsetX,e.offsetY);if(!r)return;const f=self.S&&S.flags.filter;if(f&&f.code===r.code&&f.outcome===r.outcome&&f.lane===(r.lane||null))FLOW.clear();else FLOW.filter(r.code,r.outcome,r.lane||null)});
-  if(self.SIM){SIM.on("mode",()=>{sel=null;PM.sel=null;cmp.textContent="";txt(cmpTitle,"cross-model compare: click a prompt row");PM.forceDraw=true;PF.forceDraw=true;unitLine()});SIM.on("reset",()=>{PM.forceDraw=true});SIM.on("filter",()=>{PM.forceDraw=true;PF.forceDraw=true})}
-  DATA.on("live.core",()=>{TAX=null;taxonomy();PM.forceDraw=true;PF.forceDraw=true;unitLine()});DATA.on("events",()=>{PM.forceDraw=true});DATA.on("live.jpg",refreshThumbs);DATA.on("live.bodies",()=>{if(cmpId)MATRIX.compare(cmpId,null,{noLoad:true})});
-  THEME.onChange(()=>{PM.forceDraw=true;PF.forceDraw=true;PX.forceDraw=true});FX.onChange(()=>{PX.forceDraw=true});addEventListener("resize",debounce(()=>{PM.forceDraw=true;PF.forceDraw=true;PX.forceDraw=true},120));
+  if(self.SIM){SIM.on("mode",()=>{sel=null;PM.sel=null;cmp.textContent="";txt(cmpTitle,"cross-model compare: click a prompt row");wakeM();wakeF();unitLine()});SIM.on("reset",()=>{wakeM()});SIM.on("filter",()=>{wakeM();wakeF()})}
+  DATA.on("live.core",()=>{TAX=null;taxonomy();wakeM();wakeF();unitLine()});DATA.on("events",()=>{wakeM()});DATA.on("live.jpg",refreshThumbs);DATA.on("live.bodies",()=>{if(cmpId)MATRIX.compare(cmpId,null,{noLoad:true})});
+  THEME.onChange(()=>{wakeM();wakeF();wakeX()});FX.onChange(()=>{wakeX()});addEventListener("resize",debounce(()=>{wakeM();wakeF();wakeX()},120));
   unitLine()}
 function unitLine(){if(!unitEl)return;const L=lanes(),n=self.S&&S.mode==="replay11"?(self.REAL||[]).length:(self.LIVE||[]).length;txt(unitEl,`${prompts.length} prompts × ${L.length} lanes · ${fmt.int(n)} chains · first-try codes → fate after each repair${self.BUILD&&BUILD.has_run24?" · 24 Oct arms included":""}`)}
 /* ---------- matrix geometry ---------- */
@@ -113,7 +117,7 @@ function evMaps(){const F=new Map(),C=new Map();if(self.EVENTS){EVENTS.failed.fo
 function hatch(ctx,x,y,w,h,colour){ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.strokeStyle=colour;ctx.globalAlpha=.6;ctx.lineWidth=1;for(let k=-h;k<w;k+=4){ctx.beginPath();ctx.moveTo(x+k,y+h);ctx.lineTo(x+k+h,y);ctx.stroke()}ctx.restore()}
 /* the matrix keeps an offscreen layer (column heads, row labels, every cell) and repaints only the cells whose state code changed since the last draw;
    a draw is bg + row highlights + one blit + the hover outline, and nothing at all when the signature (geometry, theme, cell codes, hover, selection) is unchanged */
-let mxLayer=null,mlctx=null,mlKey="",mlCodes=null,mlSig="";
+let mxLayer=null,mlctx=null,mlKey="",mlCodes=null,mlSig="",mlLabelNext=0;
 function drawMatrix(now){
   if(!mx)return;const t0=performance.now();const mode=self.S?S.mode:"live17",wrapW=(mx.parentNode.parentNode||mx.parentNode).clientWidth||300;layout(isPhone()?wrapW:Math.min(wrapW,LABEL_W+lanes().length*60+2));
   const cw=Math.max(geo.W,isPhone()?wrapW:geo.W),cwS=cw+"px";if(mx.style.width!==cwS)mx.style.width=cwS;PM.lastDraw=now;
@@ -145,13 +149,15 @@ function drawMatrix(now){
   if(sig===mlSig&&mxLayer)return;                                                     /* nothing on screen changed */
   /* pass 2: the layer — heads and labels once per geometry / theme, cells only when their code changed */
   if(!mxLayer||mlKey!==key){mlKey=key;if(!mxLayer)mxLayer=document.createElement("canvas");const LW=Math.max(1,Math.round(cw*dpr)),LH=Math.max(1,Math.round(geo.H*dpr));
-    if(mxLayer.width!==LW||mxLayer.height!==LH){mxLayer.width=LW;mxLayer.height=LH}mlctx=mxLayer.getContext("2d");mlctx.setTransform(dpr,0,0,dpr,0,0);mlctx.clearRect(0,0,cw,geo.H);mlCodes=new Array(info.length).fill(null);
+    if(mxLayer.width<LW||mxLayer.height<LH){mxLayer.width=Math.max(mxLayer.width,LW);mxLayer.height=Math.max(mxLayer.height,LH)}mlctx=mxLayer.getContext("2d");mlctx.setTransform(dpr,0,0,dpr,0,0);mlctx.clearRect(0,0,cw,geo.H);mlCodes=new Array(info.length).fill(null);   /* grow only */
     const L=mlctx;L.font="500 10.5px "+mono;L.textBaseline="middle";
     /* lane names run up at 55° from each column's foot so long model ids never overlap (the hover card carries the full id) */
     geo.cols.forEach(c=>{L.save();L.translate(c.x+geo.cellW/2+4,HEAD_H-5);L.rotate(-Math.PI*55/180);L.fillStyle=laneHue(c.lane);L.textAlign="left";L.textBaseline="middle";const nm=c.lane.viewer?"you":String(c.lane.id).replace(/^.*\//,"").slice(0,24);L.fillText(nm,0,0);L.restore()});
-    geo.rows.forEach(r=>{L.fillStyle=mute;L.textAlign="left";L.fillText(r.p.id,4,r.y+CELL_H/2)})}
+    mlLabelNext=0}
   const L=mlctx;L.font="500 10.5px "+mono;L.textBaseline="middle";
-  for(let i=0;i<info.length;i++){const o=info[i];if(mlCodes[i]===o.code)continue;mlCodes[i]=o.code;const {x,y,w,h}=o;
+  let partial=false;const cellDeadline=t0+1.5;
+  L.fillStyle=mute;L.textAlign="left";while(mlLabelNext<geo.rows.length&&performance.now()<cellDeadline){const r=geo.rows[mlLabelNext++];L.fillText(r.p.id,4,r.y+CELL_H/2)}if(mlLabelNext<geo.rows.length)partial=true;   /* row labels within the same budget (fillText is the slow call under software canvas) */   /* cells repaint within ≈ 1.5 ms per draw; the rest follow next frame (only a first paint or a theme change touches them all) */
+  for(let i=0;i<info.length;i++){const o=info[i];if(mlCodes[i]===o.code)continue;if(performance.now()>cellDeadline){partial=true;break}mlCodes[i]=o.code;const {x,y,w,h}=o;
     L.clearRect(x,y,w,h);L.fillStyle=p2;L.fillRect(x,y,w,h);
     if(o.kind===1){const dimmed=o.dimmed;
       L.fillStyle=o.finOk?ok:bad;L.globalAlpha=(o.att>=3?1:o.att===2?.68:.38)*(dimmed?.25:1);L.fillRect(x,y,w,h);L.globalAlpha=dimmed?.25:1;
@@ -163,7 +169,7 @@ function drawMatrix(now){
     else if(o.stopped){L.strokeStyle=line;L.setLineDash([2,2]);L.strokeRect(x+.5,y+.5,w-1,h-1);L.setLineDash([])}
     if(o.cut)hatch(L,x,y,w,h,dim);
     if(o.ff){L.strokeStyle=bad;L.lineWidth=1.2;for(let k=0;k<Math.min(3,o.ff);k++){const cx=x+3+k*5,cy=y+h-4;L.beginPath();L.moveTo(cx-2,cy-2);L.lineTo(cx+2,cy+2);L.moveTo(cx+2,cy-2);L.lineTo(cx-2,cy+2);L.stroke()}L.lineWidth=1}}
-  mlSig=sig;
+  mlSig=partial?"":sig;if(partial)wakeM();
   /* pass 3: the screen — bg, row highlights under, one blit, the hover outline over */
   const {ctx}=fitCanvas(mx,cw,geo.H);
   ctx.fillStyle=bg;ctx.fillRect(0,0,cw,geo.H);
@@ -272,11 +278,11 @@ function drawField(now){if(!field2d||!field)return;const W=field.clientWidth||40
 const FLOW={panel:PF,taxonomy,
   filter(code,outcome,lane){if(!self.S)return null;const t=taxonomy();const f={kind:"taxonomy",code,outcome:outcome||null,lane:lane||null,label:`${code}${outcome?" → "+outcome:""}${lane?" · "+lane:""}`,
     test(sc){if(!sc||sc.src!=="live"||!sc.item||!sc.item.A)return false;const cs=sc.item.A.map(codesOf);if(!cs[0].includes(code))return false;if(lane&&sc.item.m!==lane)return false;return !outcome||fateOf(cs,code)===outcome||(outcome==="still there"&&fateOf(cs,code)!=="gone after repair 1")}};
-    S.flags.filter=f;if(filterChip){filterChip.hidden=false;txt(filterChip,"filter: "+f.label+" ×")}if(self.SIM)SIM.emit("filter",f);LOOP.dirty(LOOP.bits.SCENE|LOOP.bits.SELECT|LOOP.bits.MODE);PM.forceDraw=true;PF.forceDraw=true;return f},
-  clear(){if(!self.S)return;S.flags.filter=null;if(filterChip)filterChip.hidden=true;if(self.SIM)SIM.emit("filter",null);LOOP.dirty(LOOP.bits.SCENE|LOOP.bits.SELECT|LOOP.bits.MODE);PM.forceDraw=true;PF.forceDraw=true}};
+    S.flags.filter=f;if(filterChip){filterChip.hidden=false;txt(filterChip,"filter: "+f.label+" ×")}if(self.SIM)SIM.emit("filter",f);LOOP.dirty(LOOP.bits.SCENE|LOOP.bits.SELECT|LOOP.bits.MODE);wakeM();wakeF();return f},
+  clear(){if(!self.S)return;S.flags.filter=null;if(filterChip)filterChip.hidden=true;if(self.SIM)SIM.emit("filter",null);LOOP.dirty(LOOP.bits.SCENE|LOOP.bits.SELECT|LOOP.bits.MODE);wakeM();wakeF()}};
 const MATRIX={panel:PM,compare,lanes,cellAt,prompts,
-  facet(k){facet=k;page=0;if(tabs)[...tabs.children].forEach(b=>b.classList.toggle("on",b.dataset.f===k));PM.forceDraw=true},
-  page(n){page=Math.max(0,n|0);PM.forceDraw=true},
+  facet(k){facet=k;page=0;if(tabs)[...tabs.children].forEach(b=>b.classList.toggle("on",b.dataset.f===k));wakeM()},
+  page(n){page=Math.max(0,n|0);wakeM()},
   fieldSlot(){return field},
   fieldUniforms(){const sc=(self.S&&S.scenes)||[];const n=sc.filter(s=>s.src==="live").length,bad=sc.filter(s=>s.src==="live"&&s.verdict!=="valid").length;return{u_thr:BLANK,u_bad:n?bad/n:0,u_det:(self.S&&S.detected)||0}}};
 SECTIONS.register({id:"matrix",part:"live.core",
