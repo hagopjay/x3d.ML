@@ -90,6 +90,12 @@ async def main():
         fx.ok("morph loaded the final into its instance", await fx.wait(pg, "__morph.loads>=1", 90000), await pg.evaluate("[__morph.loads,__morph.snapshot]"))
         fx.ok("DIFF.diffHtml port returns html/add/del/base", await pg.evaluate("(()=>{const it=LIVE[MODES.get('live17').order()[2]];const r=DIFF.diffHtml(it.B[0],it.B[1]);return r.add===1&&r.del===1&&r.base>0&&r.html.includes('class=\"a\"')})()"))
         fx.ok("diff worker answers a ping-sized job (or the main thread took over honestly)", await pg.evaluate("(async()=>{const r=await DIFF.diffAsync('<a/><b/>','<a/><c/>');return r.add===1&&r.del===1&&(r.via==='main'||r.via==='worker')})()"))
+        # ---- the lazy-instance race (director rate >= 4 / a fast tour click): dispose during a pending load must defer, never throw ----
+        race = await pg.evaluate("""(async()=>{const ids=MODES.get('live17').order();MORPH.open(ids[3]);const d0=__morph.dispose();const p0=__morph.pending;await later(6000);
+          return{deferred:d0===false,pending0:p0,pendingNow:__morph.pending,botAlive:!!__morph.inst.bot,visible:__morph.visible}})()""")
+        fx.ok("morph: dispose() during a pending load is deferred (returns false), the load settles, the instance survives while visible", race["deferred"] and race["pending0"] >= 1 and race["pendingNow"] == 0 and race["botAlive"], race)
+        fx.ok("plus-your-N: tiles print '+ your N' only while S.flags.includeMine is on", await pg.evaluate("""(()=>{const t=()=>Array.from(document.querySelectorAll('#hero .ttile .mine')).map(m=>[m.hidden,m.textContent]);const a=t();S.flags.includeMine=true;__hero.updateMine();const b=t();S.flags.includeMine=false;__hero.updateMine();const c=t();
+          return a.length===3&&a.every(x=>x[0]===true)&&b.every(x=>x[0]===false&&/^\\+ your \\d/.test(x[1]))&&c.every(x=>x[0]===true)})()"""))
         # ---- S4: the dark seven ----
         await pg.evaluate("document.getElementById('seven').scrollIntoView({block:'start'})")
         fx.ok("7 tiles", await fx.wait(pg, "document.querySelectorAll('#seven .sstrip button.th').length===7", 20000), await pg.evaluate("document.querySelectorAll('#seven .sstrip button.th').length"))
@@ -110,6 +116,8 @@ async def main():
         fx.ok("hanim-01 loaded", await fx.wait(pg, "__seven.loaded===__seven.cur&&__seven.cur.includes('hanim-01')", 90000), await pg.evaluate("__seven.loaded"))
         await pg.evaluate("SEVEN.findIt()")
         fx.ok("hanim-01 prints 0 shapes placed and the honest line", await fx.wait(pg, "document.getElementById('seven').innerText.includes('0 shapes placed')", 20000) and "passes by saying less" in await fx.txt(pg, "#seven .sstage"), await fx.txt(pg, "#seven .smsg"))
+        race2 = await pg.evaluate("""(async()=>{SEVEN.open(0);const d0=__seven.dispose();const p0=__seven.pending;await later(6000);return{deferred:d0===false,pending0:p0,pendingNow:__seven.pending,alive:!!__seven.inst}})()""")
+        fx.ok("seven: dispose() during a pending load is deferred and the instance survives while visible", race2["deferred"] and race2["pending0"] >= 1 and race2["pendingNow"] == 0 and race2["alive"], race2)
         fx.ok("the hero stage stayed MEASURED (__stage.show.staged false) and the seven instance never staged", await pg.evaluate("__stage.show.staged===false&&__seven.staged===false&&!!__seven.inst&&__seven.inst.staged===false"))
         fx.ok("cards: BLANKWHY, X_ITE lines, verdict pills, pass pills, warning text", await pg.evaluate("(()=>{const t=document.querySelector('#seven .scard').textContent.toLowerCase();return t.includes('valid on fork@eb4b4b4')&&t.includes('js-port-of-8dd0d3e')&&t.includes('16.5.0 blank')&&t.includes('16.5.1')&&t.includes('proposed warning')})()"), (await fx.txt(pg, "#seven .scard"))[:200])
         # ---- hygiene ----

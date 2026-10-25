@@ -17,8 +17,8 @@ const WARNTXT={geospatial:"Proposed warning [geo-no-local-viewpoint]: a GeoLocat
   interaction:"Proposed warning [dark-until-proximity]: every light in the scene is switched by a ProximitySensor ROUTE and the headlight is off; until the viewer enters the sensor box the frame is black. Suggested text: \"All lights depend on a ProximitySensor; the scene opens dark.\"",
   hanim:"Proposed warning [hanim-unreached-geometry]: Shape nodes sit in an HAnimSegment that no HAnimJoint of the skeleton references, so the humanoid places no geometry. Suggested text: \"HAnimSegment with geometry is attached to no joint: nothing is drawn.\""};
 const V={sub:(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]],add:(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]],scale:(a,s)=>[a[0]*s,a[1]*s,a[2]*s],len:a=>Math.hypot(a[0],a[1],a[2]),norm:a=>{const l=Math.hypot(a[0],a[1],a[2])||1;return[a[0]/l,a[1]/l,a[2]/l]},cross:(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]};
-const E={},ST={list:[],cur:null,inst:null,loaded:null,loading:false,loads:0,gen:0,visible:false,leave:null,finding:false,moving:false,find:null,pose0:null,ratio:null,samples:0,port:new Map(),sec:null};
-const __seven={list:[],ids:[],cur:null,loaded:null,loads:0,inst:null,staged:false,find:null,ratio:null,samples:0,plan:null};
+const E={},ST={pending:0,disposeWanted:false,list:[],cur:null,inst:null,loaded:null,loading:false,loads:0,gen:0,visible:false,leave:null,finding:false,moving:false,find:null,pose0:null,ratio:null,samples:0,port:new Map(),sec:null};
+const __seven={pending:0,list:[],ids:[],cur:null,loaded:null,loads:0,inst:null,staged:false,find:null,ratio:null,samples:0,plan:null};
 const short=m=>String(m).replace(/^.*\//,"");
 const share=()=>!!(self.BUILD&&BUILD.share);
 const laneName=m=>{if(!share())return short(m);const paid=(((self.LM||(self.STATS&&STATS.meta))||{}).models||[]).filter(x=>x.prov!=="nvidia").map(x=>x.id);const i=paid.indexOf(m);return i>=0?"closed-"+"ABCDEF"[i]:"open lane"};
@@ -40,10 +40,13 @@ function build(){const ids=statIds(),ord=k=>{const i=ids.indexOf(k);return i<0?1
   if(ST.cur){const again=list.find(x=>x.key===ST.cur.key);if(again){ST.cur=again;__seven.cur=again.key;renderCard(again)}}else if(list.length&&E.strip)SEVEN.open(0,{noLoad:true})}
 /* ---------- the stage instance ---------- */
 function ensureInst(){if(ST.inst||!self.STAGE||!STAGE.show2||!self.X3D||!E.host)return false;ST.inst=STAGE.show2(E.host,{name:"seven"});__seven.inst=ST.inst;txt(E.badge,"MEASURED · raw bytes · own/default viewpoint · headlight · creating the X_ITE instance…");if(ST.cur)loadCur();return true}
-function disposeInst(){if(ST.inst)try{ST.inst.dispose()}catch(e){}ST.inst=null;__seven.inst=null;ST.loaded=null;__seven.loaded=null;txt(E.badge,"stage disposed off screen · MEASURED mode is forced here")}
-async function loadCur(){const x=ST.cur,inst=ST.inst;if(!x||!inst)return;const body=bodyOf(x);if(!body){say("the body arrives with part live.bodies");return}const gen=++ST.gen;ST.loading=true;ST.loaded=null;__seven.loaded=null;counter("—","loading");ratio(null,"loading…");say("");
-  const r=await inst.load(body,{staged:false,scene:"seven"});if(gen!==ST.gen)return;ST.loading=false;if(!r.ok){say(r.err?"X_ITE refused this scene: "+r.err:"load failed");return}
-  ST.loaded=x.key;__seven.loaded=x.key;ST.loads++;__seven.loads=ST.loads;ST.pose0=inst.pose();txt(E.badge,inst.label());counter("—","FIND IT moves the camera to the geometry");await later(700);if(gen!==ST.gen)return;await sampleOnce()}
+/* deferred while a load is pending (see 14-morph): the IO leave must never null the instance a loadCur is awaiting */
+function disposeInst(){if(ST.pending>0){ST.disposeWanted=true;return false}ST.disposeWanted=false;if(ST.inst)try{ST.inst.dispose()}catch(e){}ST.inst=null;__seven.inst=null;ST.loaded=null;__seven.loaded=null;txt(E.badge,"stage disposed off screen · MEASURED mode is forced here");return true}
+async function loadCur(){const x=ST.cur,inst=ST.inst;if(!x||!inst)return;const body=bodyOf(x);if(!body){say("the body arrives with part live.bodies");return}const gen=++ST.gen;ST.pending++;__seven.pending=ST.pending;
+  try{await loadInner(x,inst,body,gen)}finally{ST.pending--;__seven.pending=ST.pending;if(ST.pending===0&&ST.disposeWanted&&!ST.visible)disposeInst()}}
+async function loadInner(x,inst,body,gen){const stale=()=>gen!==ST.gen||ST.inst!==inst;ST.loading=true;ST.loaded=null;__seven.loaded=null;counter("—","loading");ratio(null,"loading…");say("");
+  const r=await inst.load(body,{staged:false,scene:"seven"});if(stale()){if(gen===ST.gen)ST.loading=false;return}ST.loading=false;if(!r.ok){say(r.err?"X_ITE refused this scene: "+r.err:"load failed");return}
+  ST.loaded=x.key;__seven.loaded=x.key;ST.loads++;__seven.loads=ST.loads;ST.pose0=inst.pose();txt(E.badge,inst.label());counter("—","FIND IT moves the camera to the geometry");await later(700);if(stale())return;await sampleOnce()}
 function say(s){txt(E.msg,s)}
 function line(s){txt(E.line,s)}
 function counter(v,small){txt(E.cnum,typeof v==="number"?fmtDist(v):String(v));txt(E.csmall,small||"")}
@@ -131,5 +134,5 @@ function mount(sec){ST.sec=sec;sectionHeader(sec,headerSpec());const sb=sec.quer
 function onData(name){if(name==="live.core"||name==="live.bodies"||name==="live.jpg"||name==="renders.151")build()}
 const SEVEN={get list(){return ST.list},ids:()=>ST.list.map(x=>x.key),open,findIt,reset,measure,cur:()=>ST.cur,state:ST};
 SECTIONS.register({id:"seven",part:"live.bodies",mount(sec){try{mount(sec)}catch(e){console.error("seven mount",e);if(self.BOOT)BOOT.error(e,"seven mount")}},onData});
-Object.assign(self,{SEVEN,BLANKWHY,__seven});
+__seven.dispose=disposeInst;Object.assign(self,{SEVEN,BLANKWHY,__seven});
 })();

@@ -112,7 +112,9 @@ function open(i,opts){opts=opts||{};const items=H();if(!items.length)return null
 function toggle(mode){const it=H()[ST.cur];if(!it)return null;const staged=mode==null?!(self.__stage&&__stage.show.staged):mode==="staged";ST.want=staged;
   return show(it,staged,{reload:!staged})}
 /* ---------- tiles ---------- */
-function tile(id,sub){const c=CLAIMS.get(id)||{};const k=el("div",{class:"kpi ttile",data:{claim:id}});k.appendChild(claimChip(id,{size:"tile",label:""}));k.appendChild(sub);
+/* "+ your N": when S.flags.includeMine is on (18-lane drives it and emits SIM "flags"), every tile adds the viewer's own scenes (S.viewer with src "viewer") — a count, never folded into the record's number */
+function updateMine(){if(!E.mine)return;const on=!!(self.S&&S.flags&&S.flags.includeMine),n=on?((self.S&&S.viewer)||[]).filter(sc=>sc&&sc.src==="viewer").length:0;E.mine.forEach(m=>{m.hidden=!on;if(on)txt(m,`+ your ${fmt.int(n)}`)});__hero.mine=on?n:null}
+function tile(id,sub){const c=CLAIMS.get(id)||{};const k=el("div",{class:"kpi ttile",data:{claim:id}});k.appendChild(claimChip(id,{size:"tile",label:""}));const mine=el("span",{class:"mine",hidden:""});k.appendChild(mine);E.mine.push(mine);k.appendChild(sub);
   const st=el("div",{class:"st"});[stampOk("source",c.source),stampOk("validator",c.validator),stampOk("renderer",c.renderer)].forEach(s=>{if(s)st.appendChild(s)});st.appendChild(gradeChip(c.grade));k.appendChild(st);return k}
 function ratesSub(){const sub=el("div",{class:"sub"});E.lanes=el("div");const paint=()=>{const c=CLAIMS.get("c.rates"),v=(c&&(c.value||c.expected))||[];E.lanes.textContent="";
     sub.firstChild&&txt(sub.firstChild,`% valid, first try → end of loop · three paid lanes (${v.map(x=>x.n).join("/")} scenes) · ${c&&c.status==="earned"?"recomputed from LIVE":"from the record"}`);
@@ -161,7 +163,7 @@ function mount(sec){ST.sec=sec;const view=$("stageView"),band=$("hero");if(!view
   view.appendChild(el("div",{class:"sov thesis"},[el("h1",{text:THESIS.h1}),el("h2",{text:THESIS.h2}),el("p",{text:THESIS.p})]));
   view.appendChild(measuredCard.build());view.appendChild(plaque.build());view.appendChild(rail.build());
   view.addEventListener("dblclick",e=>{if(e.target.closest(".sov"))return;if(self.STAGE&&STAGE.show&&STAGE.show.reset)STAGE.show.reset()});
-  const tiles=el("div",{class:"tiles"},[tile("c.rates",ratesSub()),tile("c.seven",sevenSub()),tile("c.ratio",ratioSub())]);
+  E.mine=[];const tiles=el("div",{class:"tiles"},[tile("c.rates",ratesSub()),tile("c.seven",sevenSub()),tile("c.ratio",ratioSub())]);
   const legend=el("div",{class:"legend tiles-legend",text:"two-tone rule: grey = known from the record (stats.json) · bright = recomputed in this view from the loaded parts · red = computed and recorded disagree, both printed · click a tile for the proof drawer"});
   band.textContent="";band.appendChild(el("div",{class:"band cols-7-5"},[el("div",null,[tiles,legend]),spine.build()]));
   open(0,{noLoad:true});spine.update();
@@ -170,7 +172,8 @@ function mount(sec){ST.sec=sec;const view=$("stageView"),band=$("hero");if(!view
      replace a LOOP panel's own `el:sec` observer (the panel would then never see the viewport) — so the panel below has no el and reads ST.visible */
   IO.observe(view,v=>{ST.visible=v;__hero.visible=v;if(v){rail.arm();if(self.LOOP)LOOP.dirty(LOOP.bits.CLOCK|LOOP.bits.DATA)}else if(ST.auto){ST.auto();ST.auto=null;__hero.auto=false}},{rootMargin:"0px"});
   if(self.FX)FX.onChange(()=>{rail.arm();if(ST.want==null&&self.__stage&&__stage.show.ready){ST.stagedApplied=false}});
-  LOOP.register({name:"hero",bit:LOOP.bits.CLOCK|LOOP.bits.DATA|LOOP.bits.SCENE|LOOP.bits.VERIFY,rateHz:2,budgetMs:2,draw(){if(!ST.visible)return;const it=H()[ST.cur];if(!it)return;
+  if(self.SIM&&SIM.on){SIM.on("flags",updateMine);SIM.on("viewer",updateMine);SIM.on("fresh",updateMine)}updateMine();
+  LOOP.register({name:"hero",bit:LOOP.bits.CLOCK|LOOP.bits.DATA|LOOP.bits.SCENE|LOOP.bits.VERIFY,rateHz:2,budgetMs:2,draw(){updateMine();if(!ST.visible)return;const it=H()[ST.cur];if(!it)return;
     if(self.S&&E.lanes)E.lanes.querySelectorAll(".arrow").forEach(a=>{const ln=ST.lanes.find(l=>l.id===a.dataset.m);a.classList.toggle("on",!!ln&&S.clk>=ln.last)});
     plaque.tick(it);
     const R=ST.measured.get(it.idx);if(!R||R.wait){measureFor(it);measuredCard.live(it)}
@@ -181,5 +184,5 @@ function onData(name){if(name==="live.core"){lanesFromLive();spine.update();plaq
 const HEROUI={open,toggle,stagedManifest,stagedLines,select(key){const i=H().findIndex(it=>it.key===key||it.p===key||it.idx===key);return i>=0?open(i):null},mode:()=>ST.mode,measuredCard,plaque,spine,cur:()=>H()[ST.cur]||null,items:H,hero_spine_pick,state:ST};
 SECTIONS.register({id:"stage",part:"live.core",header:header(),mount(sec){try{mount(sec)}catch(e){console.error("hero mount",e);if(self.BOOT)BOOT.error(e,"hero mount")}},onData});
 if(self.HERO&&typeof HERO==="object")Object.assign(HERO,{open,select:HEROUI.select,plaque,spine,measuredCard});
-__hero.stagedLines=stagedLines;Object.assign(self,{HEROUI,hero_spine_pick,__hero});
+__hero.updateMine=updateMine;__hero.stagedLines=stagedLines;Object.assign(self,{HEROUI,hero_spine_pick,__hero});
 })();

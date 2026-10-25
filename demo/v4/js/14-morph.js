@@ -65,8 +65,8 @@ const RIBBON={make(host,opts){opts=opts||{};const root=el("div",{class:"ribbon"}
     stamp(i){R.cur=i;R.tiles.forEach((tl,k)=>{tl.classList.toggle("cur",k===i);if(k<=i)tl.classList.add("on")})}};
   return R}};
 /* ---------- the section ---------- */
-const E={},ST={cur:null,t:0,mode:"wipe",lock:true,top:null,bot:null,gen:0,loads:0,snapshot:null,diff:null,steps:[],sc:null,replay:null,pulses:0,visible:false,leave:null,items:[],order:[],stats:null,per:null,bbox:null,pulsed:false,shapes:null,active:"top",drag:false,port:null};
-const __morph={cur:null,t:0,mode:"wipe",lock:true,items:0,order:[],diff:null,steps:[],inst:{top:null,bot:null},snapshot:null,pulses:0,loads:0,stats:null,replay:null,visible:false,via:null};
+const E={},ST={pending:0,disposeWanted:false,cur:null,t:0,mode:"wipe",lock:true,top:null,bot:null,gen:0,loads:0,snapshot:null,diff:null,steps:[],sc:null,replay:null,pulses:0,visible:false,leave:null,items:[],order:[],stats:null,per:null,bbox:null,pulsed:false,shapes:null,active:"top",drag:false,port:null};
+const __morph={pending:0,cur:null,t:0,mode:"wipe",lock:true,items:0,order:[],diff:null,steps:[],inst:{top:null,bot:null},snapshot:null,pulses:0,loads:0,stats:null,replay:null,visible:false,via:null};
 let RIB=null,sec=null;
 const short=m=>String(m).replace(/^.*\//,"");
 const laneName=m=>{if(!(self.BUILD&&BUILD.share))return short(m);const paid=((self.LM||STATS.meta||{}).models||[]).filter(x=>x.prov!=="nvidia").map(x=>x.id);const i=paid.indexOf(m);return i>=0?"closed-"+"ABCDEF"[i]:"open-"+(((self.LM||STATS.meta||{}).models||[]).findIndex(x=>x.id===m)+1)};
@@ -88,18 +88,21 @@ function ensureInst(){if(!self.STAGE||!STAGE.show2||!self.X3D)return false;let m
   if(!ST.bot){ST.bot=STAGE.show2(E.bot,{name:"morph-final"});__morph.inst.bot=ST.bot;made=true}
   if(twoUp()&&!ST.top){ST.top=STAGE.show2(E.top,{name:"morph-a1"});__morph.inst.top=ST.top;E.top.hidden=false;made=true}
   if(made&&ST.cur)loadCur();return made}
-function disposeInst(){[ST.top,ST.bot].forEach(i=>{if(i)try{i.dispose()}catch(e){}});ST.top=ST.bot=null;__morph.inst.top=__morph.inst.bot=null;ST.shapes=null;ST.bbox=null;E.top.hidden=true;E.snap.hidden=true;ST.snapshot=null;__morph.snapshot=null;txt(E.tagC,"stage disposed off screen")}
+/* dispose is deferred while a load is pending (ST.pending > 0): the IO leave fires 2.5 s off screen, a SwiftShader load can take longer, and
+   an awaited load must never find its instance nulled (the director at rate ≥ 4 / a fast tour click reproduced "Cannot read properties of null") */
+function disposeInst(){if(ST.pending>0){ST.disposeWanted=true;return false}ST.disposeWanted=false;[ST.top,ST.bot].forEach(i=>{if(i)try{i.dispose()}catch(e){}});ST.top=ST.bot=null;__morph.inst.top=__morph.inst.bot=null;ST.shapes=null;ST.bbox=null;E.top.hidden=true;E.snap.hidden=true;ST.snapshot=null;__morph.snapshot=null;txt(E.tagC,"stage disposed off screen");return true}
 const bodies=it=>it&&it.B&&it.B.length>=it.A.length?{a:it.B[0],b:it.B[it.B.length-1]}:null;
-async function loadCur(){const it=ST.cur,bb=bodies(it);if(!it||!bb||!ST.bot)return;const gen=++ST.gen;ST.bbox=null;ST.shapes=null;txt(E.note,"");
-  if(ST.top){const [r1,r0]=await Promise.all([ST.bot.load(bb.b,{staged:true,orbit:false,scene:"morph-final"}),ST.top.load(bb.a,{staged:true,orbit:false,scene:"morph-a1"})]);if(gen!==ST.gen)return;
-    ST.loads++;__morph.loads=ST.loads;txt(E.tagC,ST.bot.label());if(!r1.ok||!r0.ok)txt(E.note,(r0.err||r1.err||"")+"");ST.bbox=ST.bot.bbox();hookActive();return}
+async function loadCur(){const it=ST.cur,bb=bodies(it);if(!it||!bb||!ST.bot)return;const gen=++ST.gen;ST.pending++;__morph.pending=ST.pending;try{await loadCurInner(it,bb,gen)}finally{ST.pending--;__morph.pending=ST.pending;if(ST.pending===0&&ST.disposeWanted&&!ST.visible)disposeInst()}}
+async function loadCurInner(it,bb,gen){const stale=()=>gen!==ST.gen||!ST.bot;ST.bbox=null;ST.shapes=null;txt(E.note,"");
+  if(ST.top){const bot=ST.bot,top=ST.top;const [r1,r0]=await Promise.all([bot.load(bb.b,{staged:true,orbit:false,scene:"morph-final"}),top.load(bb.a,{staged:true,orbit:false,scene:"morph-a1"})]);if(stale()||ST.top!==top||ST.bot!==bot)return;
+    ST.loads++;__morph.loads=ST.loads;txt(E.tagC,bot.label());if(!r1.ok||!r0.ok)txt(E.note,(r0.err||r1.err||"")+"");ST.bbox=bot.bbox();hookActive();return}
   /* one instance: the final stays loaded; attempt 1 is a snapshot of the same instance (the measured frame, scaled, until it renders) */
   const a0=it.A[0],jpg=a0.r&&a0.r.jpg;E.snap.hidden=false;ST.snapshot=jpg?"measured":null;__morph.snapshot=ST.snapshot;
   if(jpg)E.snap.src="data:image/jpeg;base64,"+jpg;else E.snap.removeAttribute("src");
   txt(E.note,"attempt 1 shown as its measured 192×144 frame (scaled) while the live snapshot renders · one X_ITE instance at fx 0");
-  const r0=await ST.bot.load(bb.a,{staged:false,scene:"morph-a1"});if(gen!==ST.gen)return;
-  if(r0.ok){await later(700);if(gen!==ST.gen)return;const url=await ST.bot.snapshot("image/jpeg");if(gen!==ST.gen)return;if(url){E.snap.src=url;ST.snapshot="live";__morph.snapshot="live";txt(E.note,"attempt 1: a live snapshot of this instance (raw bytes, no rig) · final: live · one X_ITE instance at fx 0")}}
-  const r1=await ST.bot.load(bb.b,{staged:false,scene:"morph-final"});if(gen!==ST.gen)return;ST.loads++;__morph.loads=ST.loads;txt(E.tagC,ST.bot.label());if(!r1.ok)txt(E.note,r1.err||"");ST.bbox=ST.bot.bbox()}
+  const bot=ST.bot;const r0=await bot.load(bb.a,{staged:false,scene:"morph-a1"});if(stale()||ST.bot!==bot)return;
+  if(r0.ok){await later(700);if(stale()||ST.bot!==bot)return;const url=await bot.snapshot("image/jpeg");if(stale()||ST.bot!==bot)return;if(url){E.snap.src=url;ST.snapshot="live";__morph.snapshot="live";txt(E.note,"attempt 1: a live snapshot of this instance (raw bytes, no rig) · final: live · one X_ITE instance at fx 0")}}
+  const r1=await bot.load(bb.b,{staged:false,scene:"morph-final"});if(stale()||ST.bot!==bot)return;ST.loads++;__morph.loads=ST.loads;txt(E.tagC,bot.label());if(!r1.ok)txt(E.note,r1.err||"");ST.bbox=bot.bbox()}
 function hookActive(){[["top",E.top],["bot",E.bot]].forEach(([k,host])=>{if(host.dataset.hooked)return;host.dataset.hooked="1";host.addEventListener("pointerdown",()=>{ST.active=k},{passive:true})})}
 /* ---- the wipe / crossfade ---- */
 function applyT(){const t=ST.t;__morph.t=t;txt(E.tv,Math.round(t*100)+"%");if(+E.range.value!==t)E.range.value=String(t);
@@ -223,5 +226,5 @@ function mount(s){sec=s;sectionHeader(sec,headerSpec());const sb=sec.querySelect
 function onData(name){if(name==="live.core"||name==="live.bodies"||name==="live.jpg"||name==="renders.151"){buildPicker();if(ST.cur){renderPins();if(!ST.diff&&bodies(ST.cur))open(ST.cur)}if(name==="live.bodies"||name==="live.core")computeStats()}
   if(name==="live.core"&&sec)sectionHeader(sec,headerSpec())}
 SECTIONS.register({id:"morph",part:"live.bodies",mount(s){try{mount(s)}catch(e){console.error("morph mount",e);if(self.BOOT)BOOT.error(e,"morph mount")}},onData});
-Object.assign(self,{MORPH,DIFF,RIBBON,OPCOL,__morph});
+__morph.dispose=disposeInst;Object.assign(self,{MORPH,DIFF,RIBBON,OPCOL,__morph});
 })();

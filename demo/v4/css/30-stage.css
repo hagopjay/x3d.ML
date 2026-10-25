@@ -38,6 +38,7 @@
 .plaque .pl b{font-weight:600}
 .plaque .pl .ok{color:var(--ok)} .plaque .pl .bad{color:var(--bad)} .plaque .pl .mute{opacity:.75}
 .plaque .pl.l4{font-size:var(--t-chip);opacity:.85;white-space:normal}
+.ttile .mine{display:block;font:var(--t-chip)/1.3 var(--mono);color:var(--acc)}
 .plaque .cyc{font:var(--t-chip)/1.3 var(--mono);color:var(--mute)}
 /* hero rail */
 .hrail{right:14px;bottom:14px;width:min(560px,38%);display:flex;gap:6px;align-items:flex-end}
