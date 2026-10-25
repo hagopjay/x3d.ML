@@ -31,7 +31,9 @@ function corpus(){const out=[];
   if(LEDGER.text)out.push({id:"ledger",src:"ledger",xml:LEDGER.text,steps:null});
   return out}
 const missingCut=()=>{const E=self.EVENTS;if(!E||!E.cut)return 0;return E.cut.reduce((n,c)=>n+Math.max(0,(c.calls||0)-((c.bodies&&c.bodies.length)||0)),0)};
-WALL.corpus=corpus;WALL.missingCut=missingCut;
+/* recorded empty answers among the cut bodies (0 chars: the model returned nothing before the cut): bodies in the canary set, but nothing to chain */
+const emptyCut=()=>{const E=self.EVENTS;if(!E||!E.cut)return 0;return E.cut.reduce((n,c)=>n+((c.bodies||[]).filter(b=>!(typeof b==="string"?b:b&&b.xml)).length),0)};
+WALL.corpus=corpus;WALL.missingCut=missingCut;WALL.emptyCut=emptyCut;WALL.ledger=LEDGER;
 /* ---------- section ---------- */
 function headerSpec(){const m=self.S&&S.mode==="replay11";return{title:"Integrity wall + tamper arena",unit:`one cell per stored chain · the scrubber re-verifies every head meta, all the time · ${m?"174 replay chains":"201 live chains"}`,
   stamps:{source:m?"RECORDED 11 Oct":"RECORDED 17 Oct",validator:m?"svc@11Oct recorded":"fork@eb4b4b4 recorded",renderer:"none"},grade:"C",
@@ -204,10 +206,10 @@ async function reverifyAll(){const RV=WALL.reverify;if(RV.busy)return RV.p;RV.bu
     for(let i=0;i<n;i+=96){const st=await HASH.batch(ids.slice(i,i+96),xmls.slice(i,i+96));st.forEach((r,j)=>{const it=items[i+j];if(isStamped(it)){if(r.ok||r.status==="stale")stampedLinked++;else bad.push(ids[i+j]+":"+r.status)}else if(r.ok)ok++;else bad.push(ids[i+j]+":"+r.status)});prog(Math.min(n,i+96),"verifying")}
     const ms=performance.now()-t0,stamped=items.filter(isStamped),nBuilt=n-stamped.length,led=items.find(it=>it.id==="ledger");let repo="";
     if(led){const steps=readSteps(led.xml),head=steps.length?JSON.parse(steps[steps.length-1][1]):null;repo=head?` (physics ledger, ${steps.length} steps: links intact, repo C14N hash ${String(head.output_sha256||"").slice(0,12)}… beside page hash ${contentHash(led.xml).slice(0,12)}…, byte equality not claimed)`:""}
-    const exp=(self.MANIFEST&&MANIFEST.canary&&MANIFEST.canary.bodies)||null,miss=missingCut();
-    const line=`${ok} of ${nBuilt} page-built chains verified in ${fmt.ms(ms)} · page-normalised hash (${HASH.mode}) · ${stampedLinked} of ${stamped.length} repo-stamped head${stamped.length===1?"":"s"} linked${repo}${exp?` · manifest canary set ${exp} bodies, ${ok+stampedLinked} accounted for here`:""}${miss?` · ${miss} cut-chain bodies absent from the events part (not on this page)`:""}${bad.length?` · NOT verified: ${bad.slice(0,6).join(", ")}`:""}`;
-    RV.last={n,ok,built:nBuilt,stampedLinked,ms,bad,stamped:stamped.length,expected:exp,missing:miss,line};txt("rvLine",line);if(bar)bar.style.width="100%";
-    CLAIMS.define("w.reverify",{label:"chains re-verified in this page",unit:"one chain per body on the page (the repo-stamped ledger: links checked, head hash is the repo's)",expected:exp,compute:()=>RV.last?RV.last.ok+RV.last.stampedLinked:undefined,source:"RE-RUN HERE",validator:"none",renderer:"none",grade:miss?"S":"C",files:["parts/live.bodies.txt","parts/replay.txt","parts/events.txt","data/physics-ledger.x3d"],fields:["generate + validate from the record per body, addStep in the hash worker, verify there; the ledger carries its own 29 steps"],why:miss?`${miss} cut-chain bodies are in the manifest canary set but not in the events part on this page`:null});
+    const exp=(self.MANIFEST&&MANIFEST.canary&&MANIFEST.canary.bodies)||null,miss=missingCut(),empty=emptyCut();
+    const line=`${ok} of ${nBuilt} page-built chains verified in ${fmt.ms(ms)} · page-normalised hash (${HASH.mode}) · ${stampedLinked} of ${stamped.length} repo-stamped head${stamped.length===1?"":"s"} linked${repo}${exp?` · manifest canary set ${exp} bodies, ${ok+stampedLinked} accounted for here`:""}${miss?` · ${miss} cut-chain bodies absent from the events part (not on this page)`:""}${empty?` · ${empty} cut bodies are recorded empty answers (0 chars): nothing to chain`:""}${bad.length?` · NOT verified: ${bad.slice(0,6).join(", ")}`:""}`;
+    RV.last={n,ok,built:nBuilt,stampedLinked,ms,bad,stamped:stamped.length,expected:exp,missing:miss,empty,line};txt("rvLine",line);if(bar)bar.style.width="100%";
+    CLAIMS.define("w.reverify",{label:"chains re-verified in this page",unit:"one chain per body on the page (the repo-stamped ledger: links checked, head hash is the repo's)",expected:exp==null?undefined:exp-empty,compute:()=>RV.last?RV.last.ok+RV.last.stampedLinked:undefined,source:"RE-RUN HERE",validator:"none",renderer:"none",grade:miss?"S":"C",files:["parts/live.bodies.txt","parts/replay.txt","parts/events.txt","data/physics-ledger.x3d"],fields:["generate + validate from the record per body, addStep in the hash worker, verify there; the ledger carries its own 29 steps"],why:[miss?`${miss} cut-chain bodies are in the manifest canary set but not in the events part on this page`:"",empty?`${empty} of the ${exp} canary bodies are recorded empty answers (0 chars), nothing to chain: expected = ${exp} − ${empty}`:""].filter(Boolean).join(" · ")||null});
     await CLAIMS.run("w.reverify");const host=$("rvClaim");if(host){host.textContent="";host.appendChild(claimChip("w.reverify",{size:"m"}));host.appendChild(el("span",{class:"note",text:"expected = manifest canary set; the chip goes red when fewer bodies are on the page than the manifest names"}))}
     logEv("sys",line);RV.busy=false;if(btn)btn.disabled=false;LOOP.dirty(BITS.VERIFY);return RV.last})().catch(e=>{RV.busy=false;if(btn)btn.disabled=false;txt("rvLine","RE-VERIFY ALL failed: "+String(e&&e.message||e));throw e});
   return RV.p}
@@ -256,5 +258,5 @@ function genSyn(){const R=GAP.R,rr=(a,b)=>a+R()*(b-a),pick=a=>a[(R()*a.length)|0
   if(v.verdict==="valid"){M.valid++;const blank=drawsNothing(t),nb=blank?0:+rr(.08,.6).toFixed(3);sc.nb=nb;sc.blank=blank;sc.drawKind=blank?"nothing drawable":"draws";
     x=addStep(x,{op:"render",renderer:"modeled from the scene's defects (no renderer ran)",load_ok:true,nodes:t.shp.length,nonblank_ratio:nb,no_frame:blank?1:0,unknown_nodes:blank?t.shp.length:0,ms:Math.round(rr(900,2600)),ms_src:"modeled"},x,false)}
   sc.xml=x;sc.nsteps=readSteps(x).length;sc.vref=V.ref;sc.verdict=v.verdict;sc.status=verify(x).status;GAP.scenes.push(sc);return sc}
-Object.assign(self,{WALL,inject,GAP,LEDGER});
+Object.assign(self,{WALL,inject,GAP});if(!self.LEDGER)self.LEDGER=LEDGER;   /* 42-suite owns the LEDGER global on the combined page; mine is WALL.ledger */
 })();
