@@ -85,7 +85,7 @@ async def main():
         await pg.set_viewport_size({"width": 1500, "height": 1000})
         # gutter cost: the cached layer repaints only on a state change; 30 scrolled frames must stay under the 4 ms budget at p95
         gp = await pg.evaluate("(async()=>{await BENCH.loadHero();const ta=document.getElementById('benchTa'),p=__panels.benchGutter;for(let i=0;i<30;i++){ta.scrollTop=(i*37)%Math.max(1,ta.scrollHeight-ta.clientHeight);p.forceDraw=true;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))}const t=p._t.slice(-30).sort((a,b)=>a-b);return {n:t.length,p95:t[Math.floor(t.length*.95)]||t[t.length-1],max:t[t.length-1],stat:LOOP.stats.panel.benchGutter,draws:p.draws,rateHz:p.rateHz}})()")
-        fx.ok("benchGutter draw p95 under its 4 ms budget over 30 scrolled repaints (cached layer; identical visuals)", gp["n"] >= 20 and gp["p95"] < 4, gp)
+        fx.ok("benchGutter draw p95 under its 4 ms budget over 30 scrolled repaints, and the whole-session p95 (LOOP.stats, incl. the chunked layer repaints after load/APPLY) under 4 ms", gp["n"] >= 20 and gp["p95"] < 4 and gp["stat"]["p95"] < 4, gp)
         fx.ok("an unchanged bench state draws nothing (second draw of the same key costs < 0.5 ms)", await pg.evaluate("(async()=>{const p=__panels.benchGutter;p.forceDraw=true;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));p.forceDraw=true;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));return LOOP.stats.panel.benchGutter.last<0.5})()"), await pg.evaluate("LOOP.stats.panel.benchGutter.last"))
         errs = fx.errors(pg)
         fx.ok("no page errors", not errs, errs[:5])

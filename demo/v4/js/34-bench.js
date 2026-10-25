@@ -110,29 +110,43 @@ function build(sb){sb.textContent="";
   E.rep.addEventListener("click",e=>{const a=e.target.closest(".repApply");if(a){BENCH.apply(a.dataset.fix);return}const l=e.target.closest("[data-line]");if(l)gotoLine(+l.dataset.line)});
   E.fixList.addEventListener("click",e=>{const a=e.target.closest("button[data-fix]");if(a)BENCH.apply(a.dataset.fix);const all=e.target.closest("#benchApplyAll");if(all)BENCH.applyAll()});
   E.auto.checked=!!(self.FX&&FX.level>0);
+  try{E.gut.getContext("2d",{willReadFrequently:true})}catch(e){}
   gutter=LOOP.register({name:"benchGutter",bit:LOOP.bits.VAL|LOOP.bits.THEME|LOOP.bits.RESIZE,el:E.gut,rateHz:self.FX&&FX.level>0?30:15,budgetMs:3,draw:drawGutter,degrade(ms){if(gutter.rateHz>8)gutter.rateHz=Math.max(8,gutter.rateHz-5)}});gutter.marks=0;
   LOOP.register({name:"benchSeries",bit:LOOP.bits.VAL|LOOP.bits.THEME|LOOP.bits.RESIZE,el:E.series,rateHz:4,draw:drawSeries});
   setNotch(B.notch);paintStatus()}
 function gotoLine(n){const t=E.ta.value;const i=lineStart(t,n);if(i<0)return;const lh=lineH();E.ta.focus();E.ta.setSelectionRange(i,i);E.ta.scrollTop=Math.max(0,(n-4)*lh);if(gutter)gutter.forceDraw=true}
-const lineH=()=>{const v=parseFloat(getComputedStyle(E.ta).lineHeight);return isFinite(v)&&v>0?v:17};
-/* gutter: a cached offscreen layer holding the WHOLE document's gutter (numbers + marks), repainted only when text, marks, dpr or theme change;
-   a scroll or resize just blits the visible slice (one drawImage). An unchanged key draws nothing (the canvas keeps its pixels). Line metrics are
-   read from computed style only on a layer repaint. Documents taller than LAYER_MAX css px fall back to a windowed repaint of the visible lines. */
-const GL={lkey:"",bkey:"",off:null,text:null,textDirty:true,n:1,lh:17,pad:6,windowed:false,top:0,h:0},LAYER_MAX=12000;
+const lineH=()=>LINE_H;
+/* gutter: a cached offscreen layer holding the WHOLE document's gutter (numbers + marks), repainted only when its layer key changes (text, marks, dpr,
+   theme) and painted in CHUNKS: each draw paints at most CHUNK_MS of line numbers (phase 1) then mark dots (phase 2), blits whatever is ready and asks
+   LOOP for the next frame, so no single draw exceeds the panel budget; requests landing within one frame coalesce (the key is compared at draw time).
+   A scroll or editor resize is one drawImage blit of the visible slice; an unchanged blit key draws nothing. No layout reads inside the draw: scrollTop
+   comes from the passive scroll listener, the height from a ResizeObserver, the text is re-read only after paintSrc flags it. Documents taller than
+   LAYER_MAX css px fall back to a windowed repaint of the visible lines. */
+/* #benchTa metrics are fixed by 60-bench.css (font var(--t-data)/17px, padding 6px 8px): constants here, so the draw never calls getComputedStyle (a forced layout of the whole page can cost 100 ms under SwiftShader). */
+const LINE_H=17,PAD_T=6;
+const GL={lkey:"",bkey:"",off:null,text:null,textDirty:true,n:1,lh:17,pad:6,windowed:false,top:0,h:0,job:null,marks:null},LAYER_MAX=12000,CHUNK_MS=1;
 function gutterLines(){if(!GL.textDirty&&GL.text!=null)return GL.n;GL.textDirty=false;const t=E.ta.value;if(t!==GL.text){GL.text=t;let n=1;for(let i=t.indexOf("\n");i>=0;i=t.indexOf("\n",i+1))n++;GL.n=n}return GL.n}
-function paintGutterLines(ctx,w,first,last,yOf,lh,pad){ctx.font="500 10.5px "+cssv("--mono");ctx.textAlign="right";ctx.textBaseline="middle";const marks=new Map();B.marks.forEach(m=>{const t=marks.get(m.line);if(!t||t==="warn"&&m.tone==="bad"||t==="ok"&&m.tone!=="ok")marks.set(m.line,m.tone)});gutter.marks=B.marks.length;
-  const bg={bad:cssv("--badbg"),warn:cssv("--warnbg"),ok:cssv("--okbg")},fgs={bad:cssv("--bad"),warn:cssv("--warn"),ok:cssv("--ok")},fg=cssv("--fg"),dim=cssv("--dim");
-  for(let l=first;l<=last;l++){const y=yOf(l);const tone=marks.get(l);if(tone){ctx.fillStyle=bg[tone];ctx.fillRect(0,y-lh/2,w,lh);ctx.fillStyle=fgs[tone];ctx.beginPath();ctx.arc(w-6,y,2.5,0,Math.PI*2);ctx.fill()}
-    ctx.fillStyle=tone?fg:dim;ctx.fillText(String(l),w-13,y)}}
-function drawGutter(){if(!E.gut||!E.ta)return;if(!GL.h){GL.h=E.ta.clientHeight;GL.top=E.ta.scrollTop}const h=GL.h||200,top=GL.top,dpr=Math.min(3,window.devicePixelRatio||1),theme=cssv("--p0")+cssv("--fg"),n=gutterLines();
-  const lkey=[GL.text.length,n,B.marks,dpr,theme].join("|"),bkey=lkey+"|"+top+"|"+h;if(bkey===GL.bkey)return;
-  if(lkey!==GL.lkey){const cs=getComputedStyle(E.ta);const v=parseFloat(cs.lineHeight);GL.lh=isFinite(v)&&v>0?v:17;GL.pad=parseFloat(cs.paddingTop)||6;GL.lkey=lkey;GL.windowed=GL.pad*2+n*GL.lh>LAYER_MAX;
-    if(!GL.windowed){if(!GL.off)GL.off=document.createElement("canvas");const H=Math.ceil(GL.pad*2+n*GL.lh),{ctx,w}=fitCanvas(GL.off,GUT_W,H);ctx.clearRect(0,0,w,H);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,H);
-      paintGutterLines(ctx,w,1,n,l=>GL.pad+(l-1)*GL.lh+GL.lh/2,GL.lh,GL.pad);ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,H)}}
-  GL.bkey=bkey;const lh=GL.lh,pad=GL.pad,o=fitCanvas(E.gut,GUT_W,h);o.ctx.clearRect(0,0,o.w,o.h);
-  if(!GL.windowed){o.ctx.fillStyle=cssv("--p0");o.ctx.fillRect(0,0,o.w,o.h);const sy=Math.round(top*o.dpr),sh=Math.min(GL.off.height-sy,Math.round(h*o.dpr));if(sh>0)o.ctx.drawImage(GL.off,0,sy,GL.off.width,sh,0,0,o.w,sh/o.dpr);return}
-  const ctx=o.ctx,w=o.w;ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,h);const first=Math.max(1,Math.floor((top-pad)/lh)+1),last=Math.min(n,first+Math.ceil(h/lh)+1);
-  paintGutterLines(ctx,w,first,last,l=>pad+(l-1)*lh-top+lh/2,lh,pad);ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,h)}
+function markMap(){const marks=new Map();B.marks.forEach(m=>{const t=marks.get(m.line);if(!t||t==="warn"&&m.tone==="bad"||t==="ok"&&m.tone!=="ok")marks.set(m.line,m.tone)});gutter.marks=B.marks.length;return marks}
+function gutterStyle(ctx){ctx.font="500 10.5px "+cssv("--mono");ctx.textAlign="right";ctx.textBaseline="middle";return{bg:{bad:cssv("--badbg"),warn:cssv("--warnbg"),ok:cssv("--okbg")},fgs:{bad:cssv("--bad"),warn:cssv("--warn"),ok:cssv("--ok")},fg:cssv("--fg"),dim:cssv("--dim")}}
+/* phase 1: background + number for lines [from, to]; phase 2: the mark dots. yOf maps a line to its centre y. */
+function paintNumbers(ctx,w,from,to,yOf,lh,marks,st){for(let l=from;l<=to;l++){const y=yOf(l),tone=marks.get(l);if(tone){ctx.fillStyle=st.bg[tone];ctx.fillRect(0,y-lh/2,w,lh)}ctx.fillStyle=tone?st.fg:st.dim;ctx.fillText(String(l),w-13,y)}}
+function paintDots(ctx,w,lines,yOf,marks,st){lines.forEach(l=>{ctx.fillStyle=st.fgs[marks.get(l)];ctx.beginPath();ctx.arc(w-6,yOf(l),2.5,0,Math.PI*2);ctx.fill()})}
+/* the chunked layer job: returns true when the layer is complete */
+function layerStep(){const J=GL.job;if(!J)return true;const t0=performance.now(),{ctx,w,n,yOf,lh,marks,st}=J;
+  while(J.line<=n){const to=Math.min(n,J.line+7);paintNumbers(ctx,w,J.line,to,yOf,lh,marks,st);J.line=to+1;if(performance.now()-t0>CHUNK_MS)return false}
+  while(J.dots.length){paintDots(ctx,w,J.dots.splice(0,12),yOf,marks,st);if(performance.now()-t0>CHUNK_MS)return false}
+  ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,J.H);GL.job=null;return true}
+function drawGutter(){if(!E.gut||!E.ta)return;const T0=performance.now();if(!GL.h){gutter.forceDraw=true;return}   /* the ResizeObserver reports the height; no layout read here */
+  const h=GL.h,top=GL.top,dpr=Math.min(3,window.devicePixelRatio||1),theme=cssv("--p0")+cssv("--fg"),n=gutterLines();
+  const lkey=[GL.text.length,n,B.marks,dpr,theme].join("|"),bkey=lkey+"|"+top+"|"+h;if(bkey===GL.bkey&&!GL.job)return;
+  if(lkey!==GL.lkey){GL.lh=LINE_H;GL.pad=PAD_T;GL.lkey=lkey;GL.windowed=GL.pad*2+n*GL.lh>LAYER_MAX;GL.marks=markMap();GL.job=null;
+    if(!GL.windowed){if(!GL.off){GL.off=document.createElement("canvas");try{GL.off.getContext("2d",{willReadFrequently:true})}catch(e){}}const H=Math.ceil(GL.pad*2+n*GL.lh),{ctx,w}=fitCanvas(GL.off,GUT_W,H);ctx.clearRect(0,0,w,H);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,H);
+      const pad=GL.pad,lh=GL.lh;GL.job={ctx,w,H,n,lh,marks:GL.marks,st:gutterStyle(ctx),yOf:l=>pad+(l-1)*lh+lh/2,line:1,dots:[...GL.marks.keys()].sort((a,b)=>a-b),fresh:true}}}
+  GL.bkey=bkey;const lh=GL.lh,pad=GL.pad;
+  if(!GL.windowed){if(GL.job&&GL.job.fresh){GL.job.fresh=false;gutter.forceDraw=true;gutter.prof={alloc:performance.now()-T0};return}const done=layerStep();const o=fitCanvas(E.gut,GUT_W,h);o.ctx.clearRect(0,0,o.w,o.h);o.ctx.fillStyle=cssv("--p0");o.ctx.fillRect(0,0,o.w,o.h);
+    const T1=performance.now(),sy=Math.round(top*o.dpr),sh=Math.min(GL.off.height-sy,Math.round(h*o.dpr));if(sh>0)o.ctx.drawImage(GL.off,0,sy,GL.off.width,sh,0,0,o.w,sh/o.dpr);gutter.prof={chunk:T1-T0,blit:performance.now()-T1,done};if(!done)gutter.forceDraw=true;return}
+  const o=fitCanvas(E.gut,GUT_W,h),ctx=o.ctx,w=o.w;ctx.clearRect(0,0,w,h);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,h);const first=Math.max(1,Math.floor((top-pad)/lh)+1),last=Math.min(n,first+Math.ceil(h/lh)+1),st=gutterStyle(ctx),yOf=l=>pad+(l-1)*lh-top+lh/2;
+  paintNumbers(ctx,w,first,last,yOf,lh,GL.marks,st);paintDots(ctx,w,[...GL.marks.keys()].filter(l=>l>=first&&l<=last),yOf,GL.marks,st);ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,h)}
 function drawSeries(){if(!E.series)return;const W=E.series.clientWidth||300,H=44,{ctx,w,h}=fitCanvas(E.series,W,H);ctx.clearRect(0,0,w,h);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,h);const m=B.measured;
   ctx.font="500 10.5px "+cssv("--mono");ctx.fillStyle=cssv("--dim");ctx.textBaseline="top";
   if(!m||!m.series||!m.series.length){ctx.fillText(m&&m.err?"X_ITE refused: "+m.err.slice(0,60):m&&m.noFrame?"no frame yet":"nonblank per sampled frame · press DRAWS?",6,4);return}
