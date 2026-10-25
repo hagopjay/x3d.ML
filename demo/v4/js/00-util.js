@@ -80,8 +80,10 @@ function sectionHeader(section,spec){
   if(spec.honesty){const hl=sec.querySelector(":scope > .hl")||sec.appendChild(el("div",{class:"hl"}));hl.textContent=spec.honesty}
   return sh}
 /* one IntersectionObserver per rootMargin key */
-const IO=(()=>{const obs=new Map(),cb=new WeakMap();const get=k=>{if(!obs.has(k)){obs.set(k,new IntersectionObserver(es=>es.forEach(e=>{const f=cb.get(e.target);if(f)f(e.isIntersecting,e)}),{rootMargin:k==="0"?"0px":k,threshold:0}))}return obs.get(k)};
-  return{observe(e,fn,opts){const k=(opts&&opts.rootMargin)||"0";cb.set(e,fn);get(k).observe(e);e.__ioKey=k},unobserve(e){const k=e.__ioKey||"0";if(obs.has(k))obs.get(k).unobserve(e);cb.delete(e)}}})();
+const IO=(()=>{const obs=new Map(),cb=new WeakMap();   /* callbacks keyed by element AND rootMargin: several observers may watch one element (RAIL's section highlight and a LOOP panel's visibility), each with its own callbacks */
+  const get=k=>{if(!obs.has(k)){obs.set(k,new IntersectionObserver(es=>es.forEach(e=>{const m=cb.get(e.target),fs=m&&m.get(k);if(fs)fs.slice().forEach(f=>f(e.isIntersecting,e))}),{rootMargin:k==="0"?"0px":k,threshold:0}))}return obs.get(k)};
+  return{observe(e,fn,opts){const k=(opts&&opts.rootMargin)||"0";let m=cb.get(e);if(!m){m=new Map();cb.set(e,m)}if(!m.has(k))m.set(k,[]);m.get(k).push(fn);get(k).observe(e)},
+    unobserve(e,fn,opts){const m=cb.get(e);if(!m)return;const keys=opts&&opts.rootMargin?[opts.rootMargin]:[...m.keys()];keys.forEach(k=>{const fs=m.get(k);if(!fs)return;const left=fn?fs.filter(f=>f!==fn):[];if(left.length)m.set(k,left);else{m.delete(k);if(obs.has(k))obs.get(k).unobserve(e)}});if(!m.size)cb.delete(e)}}})();
 /* theme */
 const THEME=(()=>{const fns=[];let cur=null;const sys=()=>matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";
   const apply=t=>{cur=t;document.documentElement.dataset.theme=t;cssCache=new Map();fns.forEach(f=>{try{f(t)}catch(e){console.warn("theme listener",e)}})};
