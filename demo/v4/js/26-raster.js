@@ -40,6 +40,7 @@ function applySort(){
   const by={first:(x,y)=>flOrder(x)-flOrder(y)||x.key.localeCompare(y.key),model:(x,y)=>x.m.localeCompare(y.m)||x.p.localeCompare(y.p)||x.k-y.k,category:(x,y)=>x.c.localeCompare(y.c)||flOrder(x)-flOrder(y)}[sortKey];
   rows.sort(by);if(live&&byKey.has(live.key)){const i=rows.findIndex(r=>r.key===live.key);if(i>0)rows.unshift(rows.splice(i,1)[0]);else if(i<0&&byKey.get(live.key))rows.unshift(byKey.get(live.key))}
   P.rows=rows.length;P.rowsAll=rowsAll.length;P.paired=rows.filter(r=>r.b).length;P.flips=rowsAll.filter(r=>r.flip).length;P.sort=sortKey;P.allAttempts=allAttempts;
+  const sig=sortKey+"|"+allAttempts+"|"+rows.map(r=>r.key+(r.b?1:0)+(r.flip?1:0)+r.cls0+r.cls1).join(",");if(sig!==P.rowsSig){P.rowsSig=sig;P.rowsVer=(P.rowsVer||0)+1}   /* the layer is rebuilt only when the row set, order or classes changed, not on every part arrival */
   P.forceDraw=true;unitLine()}
 /* ---------- claims ---------- */
 CLAIMS.define("raster.flips",{label:"bodies whose draws / blank / unparseable class differs between X_ITE 16.5.0 and 16.5.1",unit:"of the paired bodies · 0.5 % line · viewAll(0) rig",needs:["renders.series","renders.151","live.core","replay"],
@@ -55,8 +56,8 @@ CLAIMS.define("raster.firstLight",{label:"median first light, drawing rows",unit
   compute(){if(!rowsAll.length)build();return UTIL.median(rowsAll.filter(r=>r.final&&r.cls0==="draws"&&r.fl0!=null).map(r=>r.fl0))}});
 /* ---------- DOM ---------- */
 let box=null,wrap=null,canvas=null,spacer=null,card=null,cardF={},liveChip=null,liveLine=null,sortBtns=null,allBtn=null,brushLine=null,unitEl=null;
-const P=LOOP.register({name:"raster",bit:LOOP.bits.DATA|LOOP.bits.THEME|LOOP.bits.RESIZE|LOOP.bits.HOVER|LOOP.bits.SELECT,budgetMs:6,draw,degrade(){P.degraded=true}});
-Object.assign(P,{rows:0,rowsAll:0,paired:0,flips:0,samples:0,hover:null,sel:null,live:null,sort:sortKey,allAttempts:false,scrollTop:0,degraded:false,builds:0});
+const P=LOOP.register({name:"raster",bit:LOOP.bits.DATA|LOOP.bits.THEME|LOOP.bits.RESIZE|LOOP.bits.HOVER|LOOP.bits.SELECT,budgetMs:4,draw,degrade(){P.degraded=true}});
+Object.assign(P,{rows:0,rowsAll:0,paired:0,flips:0,samples:0,hover:null,sel:null,live:null,sort:sortKey,allAttempts:false,scrollTop:0,degraded:false,builds:0,rowsVer:0,tmaxVer:-1});
 const boxH=()=>innerWidth<600?200:420;
 function unitLine(){if(!unitEl)return;txt(unitEl,`${fmt.int(rows.length)} rows${allAttempts?" (every live attempt)":" (201 live finals + 174 replay scenes)"} · 20 samples per pass · 16.5.0 above, 16.5.1 below · x = ms since load, linear to ${T_LIN} then log`)}
 function mount(sec){
@@ -120,38 +121,75 @@ function fillCard(r,x,y){if(!r){if(!sel)card.hidden=true;return}card.hidden=fals
   else cardF.th.appendChild(el("span",{class:"legend",text:r.src==="live"&&!DATA.loaded("live.jpg")?"thumbnail: live.jpg not loaded yet":"no thumbnail recorded for this body"}));
   cardF.stage.disabled=!RASTER.body(r);cardF.measure.disabled=!RASTER.body(r);cardF.stage.title=RASTER.body(r)?"load the raw bytes on the visible stage (STAGE.show)":"no body on the page";
   if(x!=null){const bw=box.clientWidth,cw=Math.min(380,bw-8);card.style.left=Math.max(0,Math.min(bw-cw,x+16))+"px";card.style.top=Math.min(boxH()-40,Math.max(0,y+12))+"px"}}
-/* ---------- draw ---------- */
+/* ---------- draw ----------
+   The rows live in an offscreen layer (every row at its unscrolled y, built once per sort / width / theme / tmax change, in ≈ 1.6 ms chunks across frames,
+   visible window first, rects bucketed by colour + 8-bit alpha so a row costs a handful of fills instead of forty state changes); a draw is bg + axis +
+   brush + highlights + one blit of the visible window + the live row, and nothing at all when the signature of what is on screen has not changed. */
+let layer=null,lctx=null,lKey="",lDone=null,lLeft=0,lNext=0,lSig="",lDpr=1;
+const LVL=a=>Math.max(0,Math.min(255,Math.round(a*255)));
+function rowToBuckets(rec,y,colour,base,fg,line,warn,stageBg,bad,G){
+  const add=(g,col,lvl,x,yy,w,h)=>{const k=col+"|"+lvl;let arr=G[g].get(k);if(!arr)G[g].set(k,arr=[]);arr.push(x,yy,w,h)};
+  if(!rec){add(0,line,LVL(.5),plotX0(),y,2,2);return}
+  const c=cls(rec);
+  if(c==="unparseable"){lctx.strokeStyle=bad;lctx.globalAlpha=.45;lctx.lineWidth=1;for(let x=plotX0();x<plotX1();x+=6){lctx.beginPath();lctx.moveTo(x,y+2);lctx.lineTo(x+2,y);lctx.stroke()}lctx.globalAlpha=1;return}
+  if(c==="blank"){add(0,stageBg,255,plotX0(),y,plotX1()-plotX0(),2);add(0,warn,LVL(.5),plotX0(),y+1,plotX1()-plotX0(),1)}
+  const ts=times(rec),s=rec.series||[];let lit=false;
+  for(let k=0;k<s.length;k++){const v=s[k]||0,x=Math.round(X(ts[k]))-1;add(1,base||colour,LVL(v>0?Math.min(1,.18+.82*Math.min(1,v/.5)):.14),x,y,2,2);
+    if(!lit&&v>0){lit=true;add(2,base?colour:fg,255,x,y-1,1,4)}}}
+function flushBuckets(G){for(const g of G){for(const [k,arr] of g){const i=k.lastIndexOf("|");lctx.fillStyle=k.slice(0,i);lctx.globalAlpha=+k.slice(i+1)/255;lctx.beginPath();for(let j=0;j<arr.length;j+=4)lctx.rect(arr[j],arr[j+1],arr[j+2],arr[j+3]);lctx.fill()}g.clear()}lctx.globalAlpha=1}
+function layerFor(key,dpr){
+  if(layer&&lKey===key)return;lKey=key;lDpr=dpr;const hl=AXIS_H+rows.length*PITCH;
+  if(!layer)layer=document.createElement("canvas");const LW=Math.max(1,Math.round(W*dpr)),LH=Math.max(1,Math.round(hl*dpr));
+  if(layer.width!==LW||layer.height!==LH){layer.width=LW;layer.height=LH}lctx=layer.getContext("2d");lctx.setTransform(dpr,0,0,dpr,0,0);   /* rows clear their own band as they are drawn: no full-layer clear */
+  lDone=new Uint8Array(rows.length);lLeft=rows.length;lNext=0}
+function buildLayer(i0,i1,deadline,T){
+  const G=[new Map(),new Map(),new Map()];let n=0;
+  const one=i=>{if(lDone[i])return;const r=rows[i],y=AXIS_H+i*PITCH;lDone[i]=1;lLeft--;n++;lctx.clearRect(0,y-1,W,PITCH);
+    if(r.flip)G[0].set(T.bad+"|"+LVL(.25),(G[0].get(T.bad+"|"+LVL(.25))||[]).concat([0,y-1,4,PITCH]));
+    rowToBuckets(r.a,y,T.fg,null,T.fg,T.line,T.warn,T.stageBg,T.bad,G);rowToBuckets(r.b,y+3,T.fg,null,T.fg,T.line,T.warn,T.stageBg,T.bad,G)};
+  for(let i=i0;i<i1&&i<rows.length;i++){one(i);if(n>=8&&performance.now()>deadline)break}   /* the visible window first (a first paint may finish it next frame) */
+  while(lLeft>0&&lNext<rows.length&&(n<8||performance.now()<deadline)){one(lNext++)}
+  flushBuckets(G)}
 function draw(now){
-  if(!canvas||!wrap)return;const w=wrap.clientWidth||600,h=boxH();const sp=Math.max(0,rows.length*PITCH+AXIS_H-h)+"px";if(spacer&&spacer.style.height!==sp)spacer.style.height=sp;
+  if(!canvas||!wrap)return;const t0=performance.now();const w=wrap.clientWidth||600,h=boxH();const sp=Math.max(0,rows.length*PITCH+AXIS_H-h)+"px";if(spacer&&spacer.style.height!==sp)spacer.style.height=sp;
   if(!live&&rowsAll.length){hookBoot();adoptBoot()}
-  const f=fitCanvas(canvas,w,h);ctx=f.ctx;W=w;H=h;const top=wrap.scrollTop;P.scrollTop=top;P.lastDraw=now;
-  tmax=4500;rowsAll.forEach(r=>{if(r.a&&r.a.last>tmax)tmax=r.a.last;if(r.b&&r.b.last>tmax)tmax=r.b.last});if(live&&live.R&&live.R.last>tmax)tmax=live.R.last;tmax=Math.ceil(tmax/500)*500;
-  const bg=cssv("--p0"),fg=cssv("--fg"),dim=cssv("--dim"),line=cssv("--line"),warn=cssv("--warn"),bad=cssv("--bad"),acc=cssv("--acc"),ok=cssv("--ok");
+  const top=wrap.scrollTop;P.scrollTop=top;P.lastDraw=now;
+  if(P.tmaxVer!==P.rowsVer){tmax=4500;rowsAll.forEach(r=>{if(r.a&&r.a.last>tmax)tmax=r.a.last;if(r.b&&r.b.last>tmax)tmax=r.b.last});if(live&&live.R&&live.R.last>tmax)tmax=live.R.last;tmax=Math.ceil(tmax/500)*500;P.tmaxVer=P.rowsVer}
+  const bg=cssv("--p0"),fg=cssv("--fg"),dim=cssv("--dim"),line=cssv("--line"),warn=cssv("--warn"),bad=cssv("--bad"),acc=cssv("--acc"),stageBg=cssv("--stage-bg"),mono=cssv("--mono");
+  const dpr=Math.min(3,window.devicePixelRatio||1);
+  const key=[P.rowsVer,w,tmax,dpr,bg,fg,line,warn,bad,stageBg].join("|");
+  const i0=Math.max(0,Math.floor(top/PITCH)),i1=Math.min(rows.length,Math.ceil((top+h-AXIS_H)/PITCH)+1);
+  const sig=[key,h,top,hover,sel,brush&&brush.a,brush&&brush.b,drag&&drag.x,live&&live.key,live&&live.state,live&&live.R&&live.R.frames,rows.length].join("|");
+  W=w;H=h;
+  if(rows.length){layerFor(key,dpr);if(lLeft>0)buildLayer(i0,i1,t0+1.6,{fg,line,warn,bad,stageBg})}
+  const complete=!rows.length||lLeft<=0;
+  if(sig===lSig&&complete)return;                                               /* nothing on screen changed: the canvas keeps its pixels */
+  lSig=complete?sig:"";if(!complete)P.forceDraw=true;
+  const f=fitCanvas(canvas,w,h);ctx=f.ctx;
   ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
   /* axis */
-  ctx.font="500 10.5px "+cssv("--mono");ctx.fillStyle=dim;ctx.textBaseline="top";ctx.strokeStyle=line;ctx.lineWidth=1;
+  ctx.font="500 10.5px "+mono;ctx.fillStyle=dim;ctx.textBaseline="top";ctx.strokeStyle=line;ctx.lineWidth=1;
   [0,50,100,200,500,1000,2000,4000].concat(tmax>4500?[tmax]:[]).forEach(t=>{if(t>tmax)return;const x=Math.round(X(t))+.5;ctx.beginPath();ctx.moveTo(x,AXIS_H-3);ctx.lineTo(x,H);ctx.globalAlpha=t===T_LIN?.6:.25;ctx.stroke();ctx.globalAlpha=1;ctx.fillText(t>=1000?(t/1000)+" s":t+(t===0?" ms":""),x+2,1)});
   ctx.fillStyle=dim;ctx.textAlign="right";ctx.fillText("lin → log",W-6,1);ctx.textAlign="left";
   if(brush){ctx.fillStyle=acc;ctx.globalAlpha=.08;ctx.fillRect(X(brush.a),AXIS_H,X(brush.b)-X(brush.a),H-AXIS_H);ctx.globalAlpha=1}
-  /* rows in the visible window */
-  const i0=Math.max(0,Math.floor(top/PITCH)),i1=Math.min(rows.length,Math.ceil((top+H-AXIS_H)/PITCH)+1);let samples=0;
+  /* rows in the visible window: highlights under, one blit of the layer, the live row over */
+  let samples=0;
+  for(let i=i0;i<i1;i++){const r=rows[i],y=AXIS_H+i*PITCH-top;samples+=(r.a&&r.a.series?r.a.series.length:0)+(r.b&&r.b.series?r.b.series.length:0);
+    const isSel=sel===r.key,isHov=hover===r.key;if(isSel||isHov){ctx.fillStyle=isSel?acc:fg;ctx.globalAlpha=isSel?.14:.07;ctx.fillRect(0,y-1,W,PITCH);ctx.globalAlpha=1}}
+  if(rows.length&&i1>i0){const sy=AXIS_H+i0*PITCH-1,dy=sy-top,sh=Math.min(layer.height/lDpr-sy,H-dy);if(sh>0)ctx.drawImage(layer,0,sy*lDpr,Math.round(W*lDpr),Math.round(sh*lDpr),0,dy,W,sh)}
   const dotRow=(rec,y,colour,base)=>{if(!rec){ctx.fillStyle=line;ctx.globalAlpha=.5;ctx.fillRect(plotX0(),y,2,2);ctx.globalAlpha=1;return}
     const c=cls(rec);
     if(c==="unparseable"){ctx.strokeStyle=bad;ctx.globalAlpha=.45;ctx.lineWidth=1;for(let x=plotX0();x<plotX1();x+=6){ctx.beginPath();ctx.moveTo(x,y+2);ctx.lineTo(x+2,y);ctx.stroke()}ctx.globalAlpha=1;return}
-    if(c==="blank"){ctx.fillStyle=cssv("--stage-bg");ctx.fillRect(plotX0(),y,plotX1()-plotX0(),2);ctx.fillStyle=warn;ctx.globalAlpha=.5;ctx.fillRect(plotX0(),y+1,plotX1()-plotX0(),1);ctx.globalAlpha=1}
+    if(c==="blank"){ctx.fillStyle=stageBg;ctx.fillRect(plotX0(),y,plotX1()-plotX0(),2);ctx.fillStyle=warn;ctx.globalAlpha=.5;ctx.fillRect(plotX0(),y+1,plotX1()-plotX0(),1);ctx.globalAlpha=1}
     const ts=times(rec),s=rec.series||[];let lit=false;
-    for(let k=0;k<s.length;k++){const v=s[k]||0,x=X(ts[k]);ctx.fillStyle=base||colour;ctx.globalAlpha=v>0?Math.min(1,.18+.82*Math.min(1,v/.5)):.14;ctx.fillRect(Math.round(x)-1,y,2,2);samples++;
+    for(let k=0;k<s.length;k++){const v=s[k]||0,x=X(ts[k]);ctx.fillStyle=base||colour;ctx.globalAlpha=v>0?Math.min(1,.18+.82*Math.min(1,v/.5)):.14;ctx.fillRect(Math.round(x)-1,y,2,2);
       if(!lit&&v>0){lit=true;ctx.globalAlpha=1;ctx.fillStyle=base?colour:fg;ctx.fillRect(Math.round(x)-1,y-1,1,4)}}
     ctx.globalAlpha=1};
-  for(let i=i0;i<i1;i++){const r=rows[i],y=AXIS_H+i*PITCH-top;
-    const isLive=live&&live.key===r.key,isSel=sel===r.key,isHov=hover===r.key;
-    if(isSel||isHov){ctx.fillStyle=isSel?acc:fg;ctx.globalAlpha=isSel?.14:.07;ctx.fillRect(0,y-1,W,PITCH);ctx.globalAlpha=1}
-    if(r.flip){ctx.fillStyle=bad;ctx.globalAlpha=.25;ctx.fillRect(0,y-1,4,PITCH);ctx.globalAlpha=1}
-    dotRow(r.a,y,fg);dotRow(r.b,y+3,fg);
-    if(isLive&&live.R&&!live.R.err&&live.R.series){const rec={series:live.R.series,first:live.R.first,last:live.R.last,frames:live.R.frames,nb:live.R.nb};ctx.fillStyle=cssv("--p0");ctx.globalAlpha=.55;ctx.fillRect(plotX0(),y-1,plotX1()-plotX0(),PITCH-1);ctx.globalAlpha=1;dotRow(r.a,y,dim,dim);dotRow(rec,y,acc,acc);dotRow(r.b,y+3,dim,dim)}
-    if(isLive){ctx.fillStyle=acc;ctx.fillRect(0,y-1,3,PITCH);ctx.fillStyle=acc;ctx.font="600 10.5px "+cssv("--mono");ctx.textAlign="right";ctx.fillText(live.state==="done"?"LIVE · this browser":live.state==="measuring"?"measuring…":"live: "+live.state,W-6,y-1);ctx.textAlign="left"}}
+  if(live){const i=rows.findIndex(r=>r.key===live.key);if(i>=i0&&i<i1){const r=rows[i],y=AXIS_H+i*PITCH-top;
+    if(live.R&&!live.R.err&&live.R.series){const rec={series:live.R.series,first:live.R.first,last:live.R.last,frames:live.R.frames,nb:live.R.nb};ctx.fillStyle=bg;ctx.globalAlpha=.55;ctx.fillRect(plotX0(),y-1,plotX1()-plotX0(),PITCH-1);ctx.globalAlpha=1;dotRow(r.a,y,dim,dim);dotRow(rec,y,acc,acc);dotRow(r.b,y+3,dim,dim)}
+    ctx.fillStyle=acc;ctx.fillRect(0,y-1,3,PITCH);ctx.font="600 10.5px "+mono;ctx.textAlign="right";ctx.fillText(live.state==="done"?"LIVE · this browser":live.state==="measuring"?"measuring…":"live: "+live.state,W-6,y-1);ctx.textAlign="left"}}
   P.samples=samples;
-  if(!rows.length){ctx.fillStyle=dim;ctx.font="12px "+cssv("--mono");ctx.fillText(DATA.status["renders.series"]&&DATA.status["renders.series"].state==="refused"?"part renders.series refused: nothing to draw":"waiting for parts renders.series, renders.151, live.core, replay…",12,AXIS_H+12)}}
+  if(!rows.length){ctx.fillStyle=dim;ctx.font="12px "+mono;ctx.fillText(DATA.status["renders.series"]&&DATA.status["renders.series"].state==="refused"?"part renders.series refused: nothing to draw":"waiting for parts renders.series, renders.151, live.core, replay…",12,AXIS_H+12)}}
 /* ---------- live row ---------- */
 const RASTER={panel:P,rows:()=>rows,row:k=>byKey.get(k)||null,times,cls,
   setSort(k){sortKey=k;if(sortBtns)[...sortBtns.children].forEach(b=>b.classList.toggle("on",b.dataset.k===k));applySort()},

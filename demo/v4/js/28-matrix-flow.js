@@ -15,7 +15,7 @@
    Claims: flow.profile_component (first-try profile-component codes gone after repair 1), flow.xsd_gone (xsd gone after repair 1), flow.xsd_stayed (xsd still there after
      repair 1: gone after repair 2 + gave up); expected values are STATS.sankey (claims.py), never typed (the WORKPLAN's ids profile_component_58 / xsd_gone_76 / xsd_stayed_55
      carried SPEC-prose numbers; stats.json wins: 54 / 63 / 34).
-   Test hooks: __panels.matrix.{cells, filled, cut, failed, rows, cols, filtered, hover, sel, facet, page, lastDraw, visible, degraded}, __panels.flow.{ribbons, nodes, total, source, hover, lastDraw, visible},
+   Test hooks: __panels.matrix.{cells, filled, cut, failed, rows, cols, filtered, hover, sel, facet, page, lastDraw, drawMs, visible, degraded}, __panels.flow.{ribbons, nodes, total, source, hover, lastDraw, visible},
      __panels.field2d.{visible, lastDraw}, MATRIX.compare / cellAt / page, FLOW.filter / clear.
    v3 port: WORKPLAN §A assigns no v3 function here (the matrix and the taxonomy flow are new); codesOf/findingOf (03-data) supply the codes as v3 did (lines 228–229). */
 (function(){
@@ -111,41 +111,67 @@ function layout(width){const rs=visibleRows(),L=lanes();const avail=Math.max(60,
 function cellAt(x,y){const r=geo.rows.find(o=>y>=o.y&&y<o.y+CELL_H);if(!r)return null;const c=geo.cols.find(o=>x>=o.x&&x<o.x+geo.cellW);return{row:r.i,col:c?geo.cols.indexOf(c):-1,p:r.p,lane:c?c.lane:null}}
 function evMaps(){const F=new Map(),C=new Map();if(self.EVENTS){EVENTS.failed.forEach(f=>{const k=f.p+"|"+f.m;(F.get(k)||F.set(k,[]).get(k)).push(f)});EVENTS.cut.forEach(c=>C.set(c.p+"|"+c.m,c))}return{F,C}}
 function hatch(ctx,x,y,w,h,colour){ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.strokeStyle=colour;ctx.globalAlpha=.6;ctx.lineWidth=1;for(let k=-h;k<w;k+=4){ctx.beginPath();ctx.moveTo(x+k,y+h);ctx.lineTo(x+k+h,y);ctx.stroke()}ctx.restore()}
+/* the matrix keeps an offscreen layer (column heads, row labels, every cell) and repaints only the cells whose state code changed since the last draw;
+   a draw is bg + row highlights + one blit + the hover outline, and nothing at all when the signature (geometry, theme, cell codes, hover, selection) is unchanged */
+let mxLayer=null,mlctx=null,mlKey="",mlCodes=null,mlSig="";
 function drawMatrix(now){
-  if(!mx)return;const mode=self.S?S.mode:"live17",wrapW=(mx.parentNode.parentNode||mx.parentNode).clientWidth||300;layout(isPhone()?wrapW:Math.min(wrapW,LABEL_W+lanes().length*60+2));
-  const cw=Math.max(geo.W,isPhone()?wrapW:geo.W),cwS=cw+"px";if(mx.style.width!==cwS)mx.style.width=cwS;const {ctx}=fitCanvas(mx,cw,geo.H);PM.lastDraw=now;
-  const bg=cssv("--p0"),fg=cssv("--fg"),mute=cssv("--mute"),dim=cssv("--dim"),line=cssv("--line"),ok=cssv("--ok"),bad=cssv("--bad"),warn=cssv("--warn"),acc=cssv("--acc"),p2=cssv("--p2");
-  ctx.fillStyle=bg;ctx.fillRect(0,0,mx.width,mx.height);ctx.font="500 10.5px "+cssv("--mono");ctx.textBaseline="middle";
+  if(!mx)return;const t0=performance.now();const mode=self.S?S.mode:"live17",wrapW=(mx.parentNode.parentNode||mx.parentNode).clientWidth||300;layout(isPhone()?wrapW:Math.min(wrapW,LABEL_W+lanes().length*60+2));
+  const cw=Math.max(geo.W,isPhone()?wrapW:geo.W),cwS=cw+"px";if(mx.style.width!==cwS)mx.style.width=cwS;PM.lastDraw=now;
+  const bg=cssv("--p0"),fg=cssv("--fg"),mute=cssv("--mute"),dim=cssv("--dim"),line=cssv("--line"),ok=cssv("--ok"),bad=cssv("--bad"),warn=cssv("--warn"),acc=cssv("--acc"),p2=cssv("--p2"),stageBg=cssv("--stage-bg"),you=cssv("--you"),mono=cssv("--mono");
   const chains=chainsFor(mode),rel=released(mode),{F,C}=evMaps(),clk=self.S?S.clk:0,tmaxNow=self.SIM?SIM.tmax():0,filter=self.S&&S.flags.filter;
   let cells=0,filled=0,cut=0,failed=0,filtered=0;const R151l=self.R151&&R151.live;const byItem=filter&&filter.test?new Map((self.S&&S.scenes||[]).map(s=>[s.item,s])):null;
-  /* column heads */
-  /* lane names run up at 55° from each column's foot so long model ids never overlap (the hover card carries the full id) */
-  geo.cols.forEach(c=>{ctx.save();ctx.translate(c.x+geo.cellW/2+4,HEAD_H-5);ctx.rotate(-Math.PI*55/180);ctx.fillStyle=laneHue(c.lane);ctx.textAlign="left";ctx.textBaseline="middle";const nm=c.lane.viewer?"you":String(c.lane.id).replace(/^.*\//,"").slice(0,24);ctx.fillText(nm,0,0);ctx.restore()});
-  geo.rows.forEach(r=>{
-    const hovRow=hover&&hover.row===r.i,selRow=sel&&sel.row===r.i;
-    if(hovRow||selRow){ctx.fillStyle=selRow?acc:fg;ctx.globalAlpha=selRow?.12:.06;ctx.fillRect(0,r.y,geo.W,CELL_H);ctx.globalAlpha=1}
-    ctx.fillStyle=mute;ctx.textAlign="left";ctx.fillText(r.p.id,4,r.y+CELL_H/2);
-    geo.cols.forEach((c,ci)=>{cells++;const x=c.x+1,y=r.y+1,w=geo.cellW-2,h=CELL_H-2;const key=r.p.id+"|"+c.lane.id,ch=chains.get(key);
-      ctx.fillStyle=p2;ctx.fillRect(x,y,w,h);
-      let dimmed=false;
+  /* pass 1: the state of every cell as data (no canvas) */
+  const info=[];
+  geo.rows.forEach(r=>{geo.cols.forEach((c,ci)=>{cells++;const x=c.x+1,y=r.y+1,w=geo.cellW-2,h=CELL_H-2;const key=r.p.id+"|"+c.lane.id,ch=chains.get(key);
+      const o={x,y,w,h,kind:0,finOk:false,att:0,firstOk:false,blank:false,dimmed:false,stopped:!!c.lane.stopped,cut:false,ff:0};
       if(ch&&ch.src!=="viewer"){const it=ch.it,isRel=mode==="live17"?rel(it.i):rel(it);
         if(isRel){filled++;const A=it.A||null,att=A?A.length:(it.at||1),finOk=A?!!A[A.length-1].ok:!!(it.x&&it.s),nb=A?(A[A.length-1].r&&A[A.length-1].r.nb)||0:(it.r&&it.r.nb)||0,err=A?!!(A[A.length-1].r&&A[A.length-1].r.err):!!(it.r&&it.r.err);
           let blank=!err&&nb<BLANK;if(blank&&A&&R151l){const r1=R151l[keyOf(it.m,it.p,A.length)];if(r1&&!r1.err&&(r1.nb||0)>=BLANK)blank=false}if(blank&&!A&&it.r&&it.r.nb151!=null&&it.r.nb151>=BLANK)blank=false;
-          if(byItem){const sc=byItem.get(it);const m=sc?filter.test(sc):false;if(m)filtered++;else dimmed=true}
+          let dimmed=false;if(byItem){const sc=byItem.get(it);const m=sc?filter.test(sc):false;if(m)filtered++;else dimmed=true}
           const firstOk=A?!!A[0].ok:(it.at===1?finOk:!!(it.earlier&&it.earlier[0]&&it.earlier[0][0]&&it.earlier[0][1]));
-          ctx.fillStyle=finOk?ok:bad;ctx.globalAlpha=(att>=3?1:att===2?.68:.38)*(dimmed?.25:1);ctx.fillRect(x,y,w,h);ctx.globalAlpha=dimmed?.25:1;
-          ctx.fillStyle=firstOk?ok:bad;ctx.fillRect(x,y,3,h);ctx.fillStyle=cssv("--p0");ctx.globalAlpha*=.9;ctx.fillRect(x+3,y,1,h);ctx.globalAlpha=1;  /* left stripe = first try, fill = final */
-          if(blank&&!dimmed){ctx.fillStyle=warn;ctx.beginPath();ctx.moveTo(x+w-6,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w,y+6);ctx.closePath();ctx.fill()}
-          if(att>1&&geo.cellW>=30){ctx.fillStyle=cssv("--stage-bg");ctx.globalAlpha=.8;ctx.textAlign="right";ctx.fillText(String(att),x+w-2,y+h/2);ctx.globalAlpha=1}}
-        else{ctx.fillStyle=line;ctx.globalAlpha=.6;ctx.fillRect(x,y,w,h);ctx.globalAlpha=1}}
-      else if(ch&&ch.src==="viewer"){if(self.S&&S.flags.includeMine)filled++;ctx.fillStyle=cssv("--you");ctx.globalAlpha=.7;ctx.fillRect(x,y,w,h);ctx.globalAlpha=1}
-      else if(c.lane.stopped){ctx.strokeStyle=line;ctx.setLineDash([2,2]);ctx.strokeRect(x+.5,y+.5,w-1,h-1);ctx.setLineDash([])}
-      if(mode==="live17"){const cc=C.get(key);if(cc&&clk>=Math.min(cc.t1||0,tmaxNow)){cut++;hatch(ctx,x,y,w,h,dim)}  /* three glm time boxes fired after the last page attempt: they land when the run clock ends */
-        const ff=(F.get(key)||[]).filter(f=>clk>=(f.t1||0));if(ff.length){failed+=ff.length;ctx.strokeStyle=bad;ctx.lineWidth=1.2;for(let k=0;k<Math.min(3,ff.length);k++){const cx=x+3+k*5,cy=y+h-4;ctx.beginPath();ctx.moveTo(cx-2,cy-2);ctx.lineTo(cx+2,cy+2);ctx.moveTo(cx+2,cy-2);ctx.lineTo(cx-2,cy+2);ctx.stroke()}ctx.lineWidth=1}}
-      if(hover&&hover.row===r.i&&hover.col===ci){ctx.strokeStyle=fg;ctx.strokeRect(x+.5,y+.5,w-1,h-1)}})});
-  /* facets are the prompt-id prefixes (obj, asm, anim, int, hanim, geo, sp); the gap between facets is the only extra mark */
+          Object.assign(o,{kind:1,finOk,att,firstOk,blank,dimmed})}
+        else o.kind=2}
+      else if(ch&&ch.src==="viewer"){if(self.S&&S.flags.includeMine)filled++;o.kind=3}
+      if(mode==="live17"){const cc=C.get(key);if(cc&&clk>=Math.min(cc.t1||0,tmaxNow)){cut++;o.cut=true}  /* three glm time boxes fired after the last page attempt: they land when the run clock ends */
+        const ff=(F.get(key)||[]).filter(f=>clk>=(f.t1||0));if(ff.length){failed+=ff.length;o.ff=ff.length}}
+      o.code=o.kind+""+(o.finOk?1:0)+Math.min(9,o.att)+(o.firstOk?1:0)+(o.blank?1:0)+(o.dimmed?1:0)+(o.stopped?1:0)+(o.cut?1:0)+Math.min(9,o.ff);
+      info.push(o)})});
   Object.assign(PM,{cells,filled,cut,failed,rows:geo.rows.length,cols:geo.cols.length,filtered:filter?filtered:0,facet,page});
-  if(pager){const rs=facet==="all"?prompts:prompts.filter(p=>p.c===facet),ps=isPhone()?10:Infinity,np=Math.ceil(rs.length/ps);pager.hidden=!(np>1);if(np>1)txt(pager.querySelector(".mx-pageinfo"),`rows ${page*ps+1}–${Math.min(rs.length,(page+1)*ps)} of ${rs.length}`)}}
+  if(pager){const rs=facet==="all"?prompts:prompts.filter(p=>p.c===facet),ps=isPhone()?10:Infinity,np=Math.ceil(rs.length/ps);pager.hidden=!(np>1);if(np>1)txt(pager.querySelector(".mx-pageinfo"),`rows ${page*ps+1}–${Math.min(rs.length,(page+1)*ps)} of ${rs.length}`)}
+  const dpr=Math.min(3,window.devicePixelRatio||1);
+  const key=[cw,geo.H,geo.cellW,dpr,geo.rows.map(r=>r.p.id+":"+r.y).join(","),geo.cols.map(c=>c.lane.id).join(","),bg,fg,mute,dim,line,ok,bad,warn,p2,stageBg,you,mono].join("|");
+  let codes="";for(let i=0;i<info.length;i++)codes+=info[i].code;
+  const hk=hover?hover.row+"|"+hover.col:"",sk=sel?sel.row+"|"+sel.col:"";const sig=key+"#"+codes+"#"+hk+"#"+sk;
+  if(sig===mlSig&&mxLayer)return;                                                     /* nothing on screen changed */
+  /* pass 2: the layer — heads and labels once per geometry / theme, cells only when their code changed */
+  if(!mxLayer||mlKey!==key){mlKey=key;if(!mxLayer)mxLayer=document.createElement("canvas");const LW=Math.max(1,Math.round(cw*dpr)),LH=Math.max(1,Math.round(geo.H*dpr));
+    if(mxLayer.width!==LW||mxLayer.height!==LH){mxLayer.width=LW;mxLayer.height=LH}mlctx=mxLayer.getContext("2d");mlctx.setTransform(dpr,0,0,dpr,0,0);mlctx.clearRect(0,0,cw,geo.H);mlCodes=new Array(info.length).fill(null);
+    const L=mlctx;L.font="500 10.5px "+mono;L.textBaseline="middle";
+    /* lane names run up at 55° from each column's foot so long model ids never overlap (the hover card carries the full id) */
+    geo.cols.forEach(c=>{L.save();L.translate(c.x+geo.cellW/2+4,HEAD_H-5);L.rotate(-Math.PI*55/180);L.fillStyle=laneHue(c.lane);L.textAlign="left";L.textBaseline="middle";const nm=c.lane.viewer?"you":String(c.lane.id).replace(/^.*\//,"").slice(0,24);L.fillText(nm,0,0);L.restore()});
+    geo.rows.forEach(r=>{L.fillStyle=mute;L.textAlign="left";L.fillText(r.p.id,4,r.y+CELL_H/2)})}
+  const L=mlctx;L.font="500 10.5px "+mono;L.textBaseline="middle";
+  for(let i=0;i<info.length;i++){const o=info[i];if(mlCodes[i]===o.code)continue;mlCodes[i]=o.code;const {x,y,w,h}=o;
+    L.clearRect(x,y,w,h);L.fillStyle=p2;L.fillRect(x,y,w,h);
+    if(o.kind===1){const dimmed=o.dimmed;
+      L.fillStyle=o.finOk?ok:bad;L.globalAlpha=(o.att>=3?1:o.att===2?.68:.38)*(dimmed?.25:1);L.fillRect(x,y,w,h);L.globalAlpha=dimmed?.25:1;
+      L.fillStyle=o.firstOk?ok:bad;L.fillRect(x,y,3,h);L.fillStyle=bg;L.globalAlpha*=.9;L.fillRect(x+3,y,1,h);L.globalAlpha=1;  /* left stripe = first try, fill = final */
+      if(o.blank&&!dimmed){L.fillStyle=warn;L.beginPath();L.moveTo(x+w-6,y);L.lineTo(x+w,y);L.lineTo(x+w,y+6);L.closePath();L.fill()}
+      if(o.att>1&&geo.cellW>=30){L.fillStyle=stageBg;L.globalAlpha=.8;L.textAlign="right";L.fillText(String(o.att),x+w-2,y+h/2);L.globalAlpha=1}}
+    else if(o.kind===2){L.fillStyle=line;L.globalAlpha=.6;L.fillRect(x,y,w,h);L.globalAlpha=1}
+    else if(o.kind===3){L.fillStyle=you;L.globalAlpha=.7;L.fillRect(x,y,w,h);L.globalAlpha=1}
+    else if(o.stopped){L.strokeStyle=line;L.setLineDash([2,2]);L.strokeRect(x+.5,y+.5,w-1,h-1);L.setLineDash([])}
+    if(o.cut)hatch(L,x,y,w,h,dim);
+    if(o.ff){L.strokeStyle=bad;L.lineWidth=1.2;for(let k=0;k<Math.min(3,o.ff);k++){const cx=x+3+k*5,cy=y+h-4;L.beginPath();L.moveTo(cx-2,cy-2);L.lineTo(cx+2,cy+2);L.moveTo(cx+2,cy-2);L.lineTo(cx-2,cy+2);L.stroke()}L.lineWidth=1}}
+  mlSig=sig;
+  /* pass 3: the screen — bg, row highlights under, one blit, the hover outline over */
+  const {ctx}=fitCanvas(mx,cw,geo.H);
+  ctx.fillStyle=bg;ctx.fillRect(0,0,cw,geo.H);
+  geo.rows.forEach(r=>{const hovRow=hover&&hover.row===r.i,selRow=sel&&sel.row===r.i;if(hovRow||selRow){ctx.fillStyle=selRow?acc:fg;ctx.globalAlpha=selRow?.12:.06;ctx.fillRect(0,r.y,geo.W,CELL_H);ctx.globalAlpha=1}});
+  ctx.drawImage(mxLayer,0,0,mxLayer.width,mxLayer.height,0,0,cw,geo.H);
+  if(hover&&hover.col>=0){const r=geo.rows.find(o=>o.i===hover.row),c=geo.cols[hover.col];if(r&&c){ctx.strokeStyle=fg;ctx.strokeRect(c.x+1.5,r.y+1.5,geo.cellW-3,CELL_H-3)}}
+  /* facets are the prompt-id prefixes (obj, asm, anim, int, hanim, geo, sp); the gap between facets is the only extra mark */
+  PM.drawMs=performance.now()-t0}
 function fillMxCard(c,x,y){if(!c){if(!sel)mxCard.hidden=true;return}mxCard.hidden=false;const mode=self.S?S.mode:"live17";
   txt(mxF.prompt,`${c.p.id} · ${c.p.c} · ${c.p.text}`);
   const ch=c.lane?chainsFor(mode).get(c.p.id+"|"+c.lane.id):null;txt(mxF.render,"");
@@ -217,7 +243,10 @@ function flowLayout(W,H){const t=taxonomy(),total=Math.max(1,t.total),pad=18,gap
 function bandPath(ctx,b){const xm=(b.x0+b.x1)/2;ctx.beginPath();ctx.moveTo(b.x0,b.y0);ctx.bezierCurveTo(xm,b.y0,xm,b.y1,b.x1,b.y1);ctx.lineTo(b.x1,b.y1+b.h);ctx.bezierCurveTo(xm,b.y1+b.h,xm,b.y0+b.h,b.x0,b.y0+b.h);ctx.closePath()}
 function bandYAt(b,x){if(x<b.x0||x>b.x1)return null;const xm=(b.x0+b.x1)/2;let lo=0,hi=1;for(let i=0;i<24;i++){const t=(lo+hi)/2,xt=b.x0*(1-t)**3+3*xm*(1-t)**2*t+3*xm*(1-t)*t*t+b.x1*t**3;if(xt<x)lo=t;else hi=t}const t=(lo+hi)/2,y=b.y0*(1-t)**3+3*b.y0*(1-t)**2*t+3*b.y1*(1-t)*t*t+b.y1*t**3;return[y,y+b.h]}
 function ribbonAt(x,y){for(let i=bands.length-1;i>=0;i--){const r=bandYAt(bands[i],x);if(r&&y>=r[0]&&y<=r[1])return bands[i]}return null}
-function drawFlow(now){if(!fl)return;const W=fl.parentNode.clientWidth||400,H=isPhone()?340:420;const {ctx}=fitCanvas(fl,W,H);PF.lastDraw=now;ctx.clearRect(0,0,W,H);
+let flSig="";
+function drawFlow(now){if(!fl)return;const W=fl.parentNode.clientWidth||400,H=isPhone()?340:420;PF.lastDraw=now;
+  {const f=self.S&&S.flags.filter,t=taxonomy();const sig=[W,H,f&&f.label,PF.hover,t.source,t.n,t.total,cssv("--fg"),cssv("--p3"),cssv("--mute"),(self.LM&&LM.models||[]).length].join("|");if(sig===flSig)return;flSig=sig}   /* unchanged: keep the pixels */
+  const {ctx}=fitCanvas(fl,W,H);PF.lastDraw=now;ctx.clearRect(0,0,W,H);
   const lay=flowLayout(W,H);bands=lay.bands;nodesDrawn=lay.nodes;const t=lay.t,filter=self.S&&S.flags.filter,hov=PF.hover;
   const fg=cssv("--fg"),mute=cssv("--mute"),dim=cssv("--dim"),p3=cssv("--p3"),L=((self.LM&&LM.models)||STATS.meta.models);
   ctx.font="500 10.5px "+cssv("--mono");ctx.textBaseline="top";ctx.fillStyle=dim;ctx.fillText("first-try codes",8,4);ctx.textAlign="center";ctx.fillText("after repair 1",W/2,4);ctx.textAlign="right";ctx.fillText("after repair 2",W-8,4);ctx.textAlign="left";
