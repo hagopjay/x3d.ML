@@ -1,0 +1,118 @@
+/* 50-firehose.css — S9 firehose + inspector (SPEC S9, §11 phone rules). Every colour from a token (00-tokens.css).
+   #fh is the fixed child of #stream .sb: 30-firehose fills it with ONE <table> (thead + tbody: spacer row, ≤ 40 pool rows, spacer row) and
+   scrolls it; the toolbar sits before it, the inspector (32-inspector) after it. Row height is fixed (--fh-row) so the window maths holds. */
+#stream .sb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto;gap:6px 12px;align-items:start;min-width:0}
+#stream .sb>.fhBar{grid-column:1;grid-row:1} #stream .sb>#fh{grid-column:1;grid-row:2} #stream .sb>.fhStat{grid-column:1;grid-row:3} #stream .sb>.ins{grid-column:2;grid-row:1/4;align-self:stretch}
+@media (max-width:1100px){#stream .sb{grid-template-columns:minmax(0,1fr)} #stream .sb>.ins{grid-column:1;grid-row:4}}
+:root{--fh-row:24px}
+/* toolbar */
+.fhBar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font:500 var(--t-chip)/1.3 var(--mono);color:var(--mute)}
+.fhBar label{color:var(--dim);font:600 var(--t-stamp)/1.3 var(--mono);letter-spacing:.06em;text-transform:uppercase;gap:4px}
+.fhBar select{font:500 11.5px/1.3 var(--mono);padding:3px 6px;max-width:180px}
+.fhBar .fchip{display:inline-flex;gap:6px;align-items:center;color:var(--acc);background:var(--accbg);border:1px solid var(--acc);border-radius:3px;padding:2px 6px}
+.fhBar .fchip button{padding:0 4px;font-size:11px;line-height:1.2;border:0;background:transparent;color:var(--acc)}
+.fhBar .fchip[hidden]{display:none}
+.fhStat{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font:500 var(--t-chip)/1.4 var(--mono);color:var(--mute)}
+.fhStat .claim .v{font-size:12px}
+/* the table */
+#fh{overflow:auto;max-height:min(520px,62vh);border:1px solid var(--line);border-radius:3px;background:var(--p1);min-width:0;position:relative;overscroll-behavior:contain;contain:content}
+#fh table{display:table;width:100%;table-layout:auto;border-collapse:collapse;font:var(--t-data)/1.4 var(--mono)}
+#fh thead th{position:sticky;top:0;z-index:2;background:var(--p1);font:500 var(--t-stamp)/1.3 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--dim);padding:5px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+#fh tbody tr.r{cursor:pointer;height:var(--fh-row)}
+#fh tbody tr.r td{height:var(--fh-row);padding:0 6px;line-height:var(--fh-row);white-space:nowrap;border-bottom:1px solid var(--p2);vertical-align:middle;overflow:hidden;text-overflow:ellipsis;max-width:220px}
+#fh tbody tr.r:hover,#fh tbody tr.r.hov{background:var(--accbg)}
+#fh tbody tr.r.sel{background:var(--accbg);box-shadow:inset 2px 0 0 var(--acc)}
+#fh tbody tr.r:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+#fh tbody tr.r[hidden]{display:none}
+#fh tbody tr.sp td{padding:0;border:0;height:0;line-height:0}
+#fh tr.r.in1{animation:fhIn1 var(--dur) ease-out both} #fh tr.r.in2{animation:fhIn2 var(--dur) ease-out both}
+@keyframes fhIn1{from{transform:translateX(-10px);opacity:.2}to{transform:none;opacity:1}}
+@keyframes fhIn2{from{transform:translateX(-10px);opacity:.2}to{transform:none;opacity:1}}
+#fh td.t{color:var(--mute)} #fh td.id{font-weight:600} #fh td.id .pill{margin-left:4px} #fh td.steps,#fh td.vref{color:var(--mute)}
+#fh td.model .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--lane,var(--dim));margin-right:6px;vertical-align:middle}
+#fh td.strip{padding:0 6px} #fh td.strip canvas{width:64px;height:10px;display:inline-block;vertical-align:middle;border-radius:1px;background:var(--p0)}
+#fh td.render .pill{margin-right:3px} #fh td.render .pill:last-child{margin-right:0}
+#fh tr.ev td{color:var(--mute)} #fh tr.ev-failed td.id{color:var(--bad)} #fh tr.ev-cut td.id{color:var(--warn)}
+#fh tr.ev td.t::before{content:"";display:inline-block;width:6px;height:6px;border:1.5px solid var(--bad);border-radius:1px;margin-right:5px;vertical-align:middle}
+#fh tr.ev-cut td.t::before{border-color:var(--warn);border-style:dashed;border-radius:0}
+#fh tr.inj td.id{color:var(--bad)}
+.pill.p-you{color:var(--you);background:var(--youbg)}
+.pill.p-dim{color:var(--dim);background:var(--p2)}
+/* inspector */
+.ins{display:flex;flex-direction:column;gap:6px;min-width:0;background:var(--p1);border:1px solid var(--line);border-radius:var(--radius);padding:10px}
+.ins>header{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
+.ins>header h3{font-size:14px;letter-spacing:.06em;color:var(--mute)}
+.ins .sub{color:var(--dim);font:400 var(--t-chip)/1.4 var(--mono);min-width:0;overflow-wrap:anywhere}
+.ins .sub .pill{margin:0 2px}
+.ins .insR{margin-left:auto;display:flex;gap:6px}
+.ins .insR button{padding:2px 7px;font-size:11px}
+#tabs button{padding:4px 8px;font:500 11.5px/1.3 var(--sans)}
+.insBody{padding:8px;max-height:min(520px,62vh);overflow:auto;background:var(--p0);min-width:0}
+.insBody[hidden]{display:none}
+.insBody .note{color:var(--mute);font:var(--t-data)/1.5 var(--mono)} .insBody .note b{color:var(--fg)}
+.insBody a[data-go],.insBody a[data-bench]{color:var(--acc);cursor:pointer;text-decoration:underline dotted}
+.insBody table{font:11.5px/1.4 var(--mono)} .insBody td{white-space:normal;overflow-wrap:anywhere;vertical-align:top}
+.insBody .okc{color:var(--ok)} .insBody .badc{color:var(--bad)} .insBody .warnc{color:var(--warn)} .insBody .mutec{color:var(--mute)} .insBody .accc{color:var(--acc)}
+/* chain */
+.chain{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:92px 1fr;gap:8px;position:relative;padding:5px 0}
+.step:not(:last-child)::after{content:"";position:absolute;left:45px;top:30px;bottom:-4px;width:1px;background:var(--acc)}
+.step .op{font:600 var(--t-stamp)/1 var(--mono);text-align:center;padding:4px 0;border-radius:2px;height:20px;letter-spacing:.04em}
+.step .b{font:11.5px/1.5 var(--mono);min-width:0;overflow-wrap:anywhere}
+.step .b i{font-style:normal;color:var(--mute)} .step .b em{font-style:normal;color:var(--acc)}
+/* tether */
+.tt{display:flex;flex-direction:column;gap:10px}
+.tt .att{border:1px solid var(--line);border-radius:3px;background:var(--p1);padding:7px 8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px}
+.tt .att h4{margin:0;font:600 11.5px/1.4 var(--mono);color:var(--fg);text-transform:none;letter-spacing:0;overflow-wrap:anywhere}
+.tt .att .th2{grid-row:1/span 2;grid-column:2;width:112px;height:84px;border:1px solid var(--line);border-radius:2px;background:var(--stage-bg);object-fit:cover;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--warn);font:600 9px/1.3 var(--mono);image-rendering:pixelated}
+.tt .rep{font:11px/1.5 var(--mono);color:var(--mute);overflow-wrap:anywhere} .tt .rep b{color:var(--bad)} .tt .rep i{font-style:normal;color:var(--ok)}
+.tt .df{font:11px/1.45 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;grid-column:1/-1;border-top:1px dashed var(--line);padding-top:5px;max-height:240px;overflow:auto}
+.tt .df .a{color:var(--ok);background:var(--okbg)} .tt .df .d{color:var(--bad);background:var(--badbg)} .tt .df .c{color:var(--dim)} .tt .df .g{color:var(--info)}
+.tt .arrow{font:600 var(--t-stamp)/1.4 var(--mono);color:var(--acc);text-align:center;letter-spacing:.08em}
+/* report */
+.repList{display:flex;flex-direction:column;gap:8px}
+.repList .rep{border:1px solid var(--line);border-radius:3px;background:var(--p1);padding:7px 8px;font:11.5px/1.5 var(--mono);color:var(--mute);overflow-wrap:anywhere}
+.repList .rep h4{margin:0 0 3px;font:600 11.5px/1.4 var(--mono);color:var(--fg);text-transform:none;letter-spacing:0}
+.repList .rep b{color:var(--bad)} .repList .rep i{font-style:normal;color:var(--ok)}
+.repList .port{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:11.5px/1.5 var(--mono);color:var(--mute)}
+/* trace */
+.trace svg{display:block;width:100%;height:auto} .trace svg text{font:10.5px var(--mono);fill:var(--mute)}
+.trace .legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.trace .legend span::before{content:"";display:inline-block;width:8px;height:8px;margin-right:4px;border-radius:1px;background:var(--c)}
+/* verify / receipt */
+.vtab td:nth-child(3),.vtab td:nth-child(4){font-size:11px;white-space:nowrap}
+.receipt td:first-child{color:var(--fg);white-space:nowrap} .receipt td .src{color:var(--dim);font-size:10.5px}
+.receipt button{padding:1px 6px;font-size:10.5px}
+.receipt .stamp{display:inline-block}
+/* stage card (the measured frame of the selected scene; the 3D view is the hero stage) */
+#view3d{position:relative;display:grid;grid-template-columns:200px minmax(0,1fr);gap:10px;background:var(--p0);border:1px solid var(--line2);border-radius:3px;padding:8px;min-height:160px}
+#view3d[hidden]{display:none}
+#view3d .frame{position:relative;width:192px;height:144px;background:var(--stage-bg);border:1px solid var(--line2);overflow:hidden}
+#view3d .frame img{display:block;width:192px;height:144px;image-rendering:pixelated}
+#v3msg{font:11.5px/1.5 var(--mono);color:var(--fg);overflow-wrap:anywhere;min-width:0}
+#v3msg b{color:var(--warn)}
+#v3none{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:8px;text-align:center;background:repeating-linear-gradient(135deg,var(--p0) 0 10px,var(--p2) 10px 20px);color:var(--warn);font:600 11px/1.4 var(--mono)}
+#v3none[hidden]{display:none}
+#v3none b{font:700 16px/1 var(--disp);letter-spacing:.06em}
+#v3none i{font-style:normal;color:var(--mute);font-weight:400;max-width:24ch}
+#view3d .v3ctl{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:11px/1.4 var(--mono);color:var(--dim)}
+/* tamper controls */
+#insCtl{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+#insCtl b{font:600 var(--t-chip)/1.3 var(--mono);color:var(--mute);letter-spacing:.06em}
+#insCtl button{padding:3px 8px;font-size:11px}
+/* event (ledger row) card */
+.ledgerRow{display:grid;grid-template-columns:110px 1fr;gap:3px 10px;font:11.5px/1.5 var(--mono)}
+.ledgerRow dt{color:var(--dim)} .ledgerRow dd{margin:0;overflow-wrap:anywhere}
+/* phone: two-line-ish rows by hiding the secondary columns; the table scrolls inside #fh only */
+@media (max-width:600px){
+ #stream .sb{display:flex;flex-direction:column}
+ #fh{max-height:360px}
+ #fh table{display:table}
+ #fh th.steps,#fh td.steps,#fh th.vref,#fh td.vref,#fh th.port,#fh td.port,#fh th.strip,#fh td.strip,#fh th.mode,#fh td.mode{display:none}
+ #fh tbody tr.r td{max-width:140px}
+ .fhBar select{max-width:120px}
+ .insBody{max-height:380px}
+ #view3d{grid-template-columns:1fr}
+ .tt .att{grid-template-columns:1fr} .tt .att .th2{grid-row:auto;grid-column:auto}
+ .step{grid-template-columns:70px 1fr}
+}
