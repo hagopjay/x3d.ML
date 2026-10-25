@@ -22,7 +22,7 @@ function tick(now){
   const once=LOOP._once;LOOP._once=[];once.forEach(f=>{try{f(now)}catch(e){console.error("onFrame",e)}});
   const d=LOOP.dirtyBits;LOOP.dirtyBits=0;
   for(const p of panels.values()){
-    if(!p.visible&&(!p.forceDraw||p.el))continue;   /* an off-screen panel with an element keeps its forceDraw for the frame it comes into view: a forced draw off-screen pays the frame's style+layout flush for nothing */const want=p.always||(d&(p.bit||0))||p.forceDraw;if(!want){continue}
+    if(!p.visible&&!p.forceDraw)continue;const want=p.always||(d&(p.bit||0))||p.forceDraw;if(!want){continue}
     if(p.rateHz&&now-p.lastDraw<1000/p.rateHz){LOOP.dirtyBits|=d&(p.bit||0);continue}  /* keep the bit for the next allowed frame */
     p.forceDraw=false;const t=performance.now();try{p.draw(now,dt)}catch(e){console.error("draw",p.name,e);if(self.BOOT)BOOT.error(e,"draw "+p.name)}
     const ms=performance.now()-t,st=LOOP.stats.panel[p.name];p.lastDraw=now;p.draws++;st.last=ms;st.n++;p._t.push(ms);if(p._t.length>60)p._t.shift();st.p95=p95(p._t);
