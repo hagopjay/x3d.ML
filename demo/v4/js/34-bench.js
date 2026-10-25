@@ -106,21 +106,33 @@ function build(sb){sb.textContent="";
   const draw=el("div",{class:"panel benchDraw"},[el("header",null,[el("h3",{text:"Draws?"}),el("span",{class:"sub",text:"STAGE.measure · 192×144 · MEASURED here"})]),el("div",{class:"row"},[E.bMeasure,el("label",null,[E.auto,"after edits"]),E.bShow]),E.series,E.drawOut,
     el("div",{class:"row benchStampRow"},[E.bStamp,E.stampNote]),E.receipt]);
   sb.append(E.bar,E.status,el("div",{class:"benchGrid"},[ed,rep,draw]));
-  E.ta.addEventListener("input",onInput);E.ta.addEventListener("scroll",()=>{if(gutter)gutter.forceDraw=true});E.ta.addEventListener("keydown",e=>{if(e.key==="Tab"&&!e.shiftKey&&!B.readOnly){e.preventDefault();const s=E.ta.selectionStart,t=E.ta.value;E.ta.value=t.slice(0,s)+"  "+t.slice(E.ta.selectionEnd);E.ta.selectionStart=E.ta.selectionEnd=s+2;onInput()}});
+  E.ta.addEventListener("input",onInput);E.ta.addEventListener("scroll",()=>{GL.top=E.ta.scrollTop;if(gutter)gutter.forceDraw=true},{passive:true});if(typeof ResizeObserver!=="undefined")new ResizeObserver(es=>{for(const e of es)GL.h=Math.round(e.contentRect.height);if(gutter)gutter.forceDraw=true}).observe(E.ta);E.ta.addEventListener("keydown",e=>{if(e.key==="Tab"&&!e.shiftKey&&!B.readOnly){e.preventDefault();const s=E.ta.selectionStart,t=E.ta.value;E.ta.value=t.slice(0,s)+"  "+t.slice(E.ta.selectionEnd);E.ta.selectionStart=E.ta.selectionEnd=s+2;onInput()}});
   E.rep.addEventListener("click",e=>{const a=e.target.closest(".repApply");if(a){BENCH.apply(a.dataset.fix);return}const l=e.target.closest("[data-line]");if(l)gotoLine(+l.dataset.line)});
   E.fixList.addEventListener("click",e=>{const a=e.target.closest("button[data-fix]");if(a)BENCH.apply(a.dataset.fix);const all=e.target.closest("#benchApplyAll");if(all)BENCH.applyAll()});
   E.auto.checked=!!(self.FX&&FX.level>0);
-  gutter=LOOP.register({name:"benchGutter",bit:LOOP.bits.VAL|LOOP.bits.THEME|LOOP.bits.RESIZE,el:E.gut,rateHz:30,budgetMs:3,draw:drawGutter});gutter.marks=0;
+  gutter=LOOP.register({name:"benchGutter",bit:LOOP.bits.VAL|LOOP.bits.THEME|LOOP.bits.RESIZE,el:E.gut,rateHz:self.FX&&FX.level>0?30:15,budgetMs:3,draw:drawGutter,degrade(ms){if(gutter.rateHz>8)gutter.rateHz=Math.max(8,gutter.rateHz-5)}});gutter.marks=0;
   LOOP.register({name:"benchSeries",bit:LOOP.bits.VAL|LOOP.bits.THEME|LOOP.bits.RESIZE,el:E.series,rateHz:4,draw:drawSeries});
   setNotch(B.notch);paintStatus()}
 function gotoLine(n){const t=E.ta.value;const i=lineStart(t,n);if(i<0)return;const lh=lineH();E.ta.focus();E.ta.setSelectionRange(i,i);E.ta.scrollTop=Math.max(0,(n-4)*lh);if(gutter)gutter.forceDraw=true}
 const lineH=()=>{const v=parseFloat(getComputedStyle(E.ta).lineHeight);return isFinite(v)&&v>0?v:17};
-function drawGutter(){if(!E.gut||!E.ta)return;const h=E.ta.clientHeight||200,{ctx,w}=fitCanvas(E.gut,GUT_W,h);ctx.clearRect(0,0,w,h);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,h);
-  const lh=lineH(),pad=parseFloat(getComputedStyle(E.ta).paddingTop)||6,top=E.ta.scrollTop,first=Math.max(1,Math.floor((top-pad)/lh)+1),last=first+Math.ceil(h/lh)+1,n=E.ta.value.split("\n").length;
-  ctx.font="500 10.5px "+cssv("--mono");ctx.textAlign="right";ctx.textBaseline="middle";const marks=new Map();B.marks.forEach(m=>{const t=marks.get(m.line);if(!t||t==="warn"&&m.tone==="bad"||t==="ok"&&m.tone!=="ok")marks.set(m.line,m.tone)});gutter.marks=B.marks.length;
-  for(let l=first;l<=Math.min(n,last);l++){const y=pad+(l-1)*lh-top+lh/2;if(y<-lh||y>h+lh)continue;const tone=marks.get(l);if(tone){ctx.fillStyle=cssv(tone==="bad"?"--badbg":tone==="warn"?"--warnbg":"--okbg");ctx.fillRect(0,y-lh/2,w,lh);ctx.fillStyle=cssv(tone==="bad"?"--bad":tone==="warn"?"--warn":"--ok");ctx.beginPath();ctx.arc(w-6,y,2.5,0,Math.PI*2);ctx.fill()}
-    ctx.fillStyle=tone?cssv("--fg"):cssv("--dim");ctx.fillText(String(l),w-13,y)}
-  ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,h)}
+/* gutter: a cached offscreen layer holding the WHOLE document's gutter (numbers + marks), repainted only when text, marks, dpr or theme change;
+   a scroll or resize just blits the visible slice (one drawImage). An unchanged key draws nothing (the canvas keeps its pixels). Line metrics are
+   read from computed style only on a layer repaint. Documents taller than LAYER_MAX css px fall back to a windowed repaint of the visible lines. */
+const GL={lkey:"",bkey:"",off:null,text:null,textDirty:true,n:1,lh:17,pad:6,windowed:false,top:0,h:0},LAYER_MAX=12000;
+function gutterLines(){if(!GL.textDirty&&GL.text!=null)return GL.n;GL.textDirty=false;const t=E.ta.value;if(t!==GL.text){GL.text=t;let n=1;for(let i=t.indexOf("\n");i>=0;i=t.indexOf("\n",i+1))n++;GL.n=n}return GL.n}
+function paintGutterLines(ctx,w,first,last,yOf,lh,pad){ctx.font="500 10.5px "+cssv("--mono");ctx.textAlign="right";ctx.textBaseline="middle";const marks=new Map();B.marks.forEach(m=>{const t=marks.get(m.line);if(!t||t==="warn"&&m.tone==="bad"||t==="ok"&&m.tone!=="ok")marks.set(m.line,m.tone)});gutter.marks=B.marks.length;
+  const bg={bad:cssv("--badbg"),warn:cssv("--warnbg"),ok:cssv("--okbg")},fgs={bad:cssv("--bad"),warn:cssv("--warn"),ok:cssv("--ok")},fg=cssv("--fg"),dim=cssv("--dim");
+  for(let l=first;l<=last;l++){const y=yOf(l);const tone=marks.get(l);if(tone){ctx.fillStyle=bg[tone];ctx.fillRect(0,y-lh/2,w,lh);ctx.fillStyle=fgs[tone];ctx.beginPath();ctx.arc(w-6,y,2.5,0,Math.PI*2);ctx.fill()}
+    ctx.fillStyle=tone?fg:dim;ctx.fillText(String(l),w-13,y)}}
+function drawGutter(){if(!E.gut||!E.ta)return;if(!GL.h){GL.h=E.ta.clientHeight;GL.top=E.ta.scrollTop}const h=GL.h||200,top=GL.top,dpr=Math.min(3,window.devicePixelRatio||1),theme=cssv("--p0")+cssv("--fg"),n=gutterLines();
+  const lkey=[GL.text.length,n,B.marks,dpr,theme].join("|"),bkey=lkey+"|"+top+"|"+h;if(bkey===GL.bkey)return;
+  if(lkey!==GL.lkey){const cs=getComputedStyle(E.ta);const v=parseFloat(cs.lineHeight);GL.lh=isFinite(v)&&v>0?v:17;GL.pad=parseFloat(cs.paddingTop)||6;GL.lkey=lkey;GL.windowed=GL.pad*2+n*GL.lh>LAYER_MAX;
+    if(!GL.windowed){if(!GL.off)GL.off=document.createElement("canvas");const H=Math.ceil(GL.pad*2+n*GL.lh),{ctx,w}=fitCanvas(GL.off,GUT_W,H);ctx.clearRect(0,0,w,H);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,H);
+      paintGutterLines(ctx,w,1,n,l=>GL.pad+(l-1)*GL.lh+GL.lh/2,GL.lh,GL.pad);ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,H)}}
+  GL.bkey=bkey;const lh=GL.lh,pad=GL.pad,o=fitCanvas(E.gut,GUT_W,h);o.ctx.clearRect(0,0,o.w,o.h);
+  if(!GL.windowed){o.ctx.fillStyle=cssv("--p0");o.ctx.fillRect(0,0,o.w,o.h);const sy=Math.round(top*o.dpr),sh=Math.min(GL.off.height-sy,Math.round(h*o.dpr));if(sh>0)o.ctx.drawImage(GL.off,0,sy,GL.off.width,sh,0,0,o.w,sh/o.dpr);return}
+  const ctx=o.ctx,w=o.w;ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,h);const first=Math.max(1,Math.floor((top-pad)/lh)+1),last=Math.min(n,first+Math.ceil(h/lh)+1);
+  paintGutterLines(ctx,w,first,last,l=>pad+(l-1)*lh-top+lh/2,lh,pad);ctx.fillStyle=cssv("--line");ctx.fillRect(w-1,0,1,h)}
 function drawSeries(){if(!E.series)return;const W=E.series.clientWidth||300,H=44,{ctx,w,h}=fitCanvas(E.series,W,H);ctx.clearRect(0,0,w,h);ctx.fillStyle=cssv("--p0");ctx.fillRect(0,0,w,h);const m=B.measured;
   ctx.font="500 10.5px "+cssv("--mono");ctx.fillStyle=cssv("--dim");ctx.textBaseline="top";
   if(!m||!m.series||!m.series.length){ctx.fillText(m&&m.err?"X_ITE refused: "+m.err.slice(0,60):m&&m.noFrame?"no frame yet":"nonblank per sampled frame · press DRAWS?",6,4);return}
@@ -132,7 +144,7 @@ function paintStatus(){if(!E.status)return;const mode=self.VAL?VAL.mode:"unloade
   else if(mode==="none")t=`READ-ONLY · exact validator not available in this viewer: ${VAL.reason} · recorded reports shown where the body is recorded; the fixes cannot be applied`;
   else t=`validator loading in this browser (${st&&st.phase||"…"}${st&&st.note?": "+st.note:""}; the XSD compiles in a worker, about 3 s) · the editor is live, the report follows`;
   txt(E.status,t);E.status.dataset.mode=mode;E.status.classList.toggle("ro",B.readOnly)}
-function paintSrc(){const s=B.src;txt(E.src,s?`loaded: ${s.label}${B.applied.length?" · "+B.applied.length+" fix"+(B.applied.length===1?"":"es")+" applied here":""}${B.text()!==s.xml0?" · EDITED":""}`:"nothing loaded");
+function paintSrc(){GL.textDirty=true;const s=B.src;txt(E.src,s?`loaded: ${s.label}${B.applied.length?" · "+B.applied.length+" fix"+(B.applied.length===1?"":"es")+" applied here":""}${B.text()!==s.xml0?" · EDITED":""}`:"nothing loaded");
   const n=E.ta.value.split("\n").length;txt(E.edSub,`${n} lines · ${fmt.int(E.ta.value.length)} chars${B.src&&B.text()!==B.src.xml0?" · edited in this browser":""}`);__bench.src=s?{label:s.label,kind:s.kind,k:s.k}:null}
 function paintReport(){const res=B.res;if(!res){E.rep.textContent="";E.rep.appendChild(el("div",{class:"placeholder",text:B.readOnly?"no recorded report for this body in this viewer":"the report appears 700 ms after the last keystroke"}));txt(E.repSub,"");return}
   const fixes=new Map();B.fixes.forEach(f=>{if(!f.noApply)fixes.set(f.key,f)});E.rep.innerHTML=reportHtml(res,{fixes});   /* built from data through esc() on a user event, never on a timer */
