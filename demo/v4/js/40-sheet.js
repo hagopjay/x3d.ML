@@ -12,9 +12,9 @@
    STAGED manifest (demo/v4/data/staged.json, keys = ledgerKey(item) exactly): read from an inline `STAGED` global when the build bakes one,
    else fetched from data/staged.json when BUILD.staged is set or ?staged=1 (test rig); otherwise no slot is drawn (never a placeholder).
    url is null everywhere in this build: the slot reads "STAGED · in the Cycles ledger · not uploaded" and lights up when a url exists.
-   Blank stills (physics-ledger vp and staged, geo-04_vp, hanim-02_vp) are detected by the identical-bytes rule — a still whose sha256 equals
-   another scene's still rendered nothing of its scene — plus any explicit `blank: true`; they read "did not render in Blender" and are never
-   shown as a staged render.
+   Blank stills are read from the manifest's measured blank flag (cycles_manifest.py: < 0.5 % of pixels differ from the dominant colour by > 48/255;
+   never a list in this file); the identical-bytes rule (same sha256 as another scene's still) is the fallback only for a manifest without flags.
+   A blank still reads "did not render in Blender" beside the measured frame and is never shown as a staged render.
    Globals: SHEET, STAGEDM (the loaded manifest or null), BLANKWHY. SHEET.ledgerKey(it) is a shim: 03-data's ledgerKey returns it.k when present and
    LIVE items carry k = prompt kind ("bench" | "showpiece"), so it answers "bench" for a live body; the shim answers keyOf(m, p, A.length) (requested as a core fix).
    No STAGE.measure.show call site here (hover uses STAGE.show.load only; thumbnails are the recorded offline pass), so the raster group's RASTER.live hook has no place yet. Claims: sheet.live, sheet.replay, sheet.jpg, sheet.agree, sheet.staged,
@@ -46,8 +46,11 @@ let STAGEDM=null,stagedBlank=new Set(),stagedP=null;
 function stagedEntries(){const out=[];if(!STAGEDM)return out;Object.entries(STAGEDM.turntables||{}).forEach(([k,v])=>out.push({key:k,kind:"turntable",v}));
   Object.entries(STAGEDM.stills||{}).forEach(([k,o])=>Object.entries(o||{}).forEach(([cam,v])=>out.push({key:k,kind:cam,v})));return out}
 /* identical-bytes rule: a still whose file sha256 equals another scene's still rendered nothing of its scene (an empty frame is the same picture for every scene) */
-function detectBlank(){stagedBlank=new Set();const by=new Map();stagedEntries().forEach(e=>{if(e.kind==="turntable")return;const h=e.v&&e.v.sha256;if(!h)return;if(!by.has(h))by.set(h,new Set());by.get(h).add(e.key);if(e.v.blank===true)stagedBlank.add(e.key+"|"+e.kind)});
-  stagedEntries().forEach(e=>{if(e.kind==="turntable")return;const h=e.v&&e.v.sha256;if(h&&by.get(h).size>1)stagedBlank.add(e.key+"|"+e.kind)})}
+function detectBlank(){stagedBlank=new Set();const es=stagedEntries().filter(e=>e.kind!=="turntable");SHEET.blankRule="manifest";
+  /* the manifest's measured flag (cycles_manifest.py: blank = under 0.5 % of pixels differ from the dominant colour by more than 48/255) is the rule; the identical-bytes rule is only the fallback for a manifest without flags */
+  if(es.some(e=>e.v&&typeof e.v.blank==="boolean")){es.forEach(e=>{if(e.v&&e.v.blank===true)stagedBlank.add(e.key+"|"+e.kind)});return}
+  SHEET.blankRule="identical-bytes";const by=new Map();es.forEach(e=>{const h=e.v&&e.v.sha256;if(!h)return;if(!by.has(h))by.set(h,new Set());by.get(h).add(e.key)});
+  es.forEach(e=>{const h=e.v&&e.v.sha256;if(h&&by.get(h).size>1)stagedBlank.add(e.key+"|"+e.kind)})}
 function stagedOf(key){if(!STAGEDM)return null;const t=STAGEDM.turntables&&STAGEDM.turntables[key],s=STAGEDM.stills&&STAGEDM.stills[key];if(!t&&!s)return null;
   const cams=s?Object.keys(s).map(cam=>({cam,v:s[cam],blank:stagedBlank.has(key+"|"+cam)})):[];return{key,turntable:t||null,stills:cams,anyUrl:!!((t&&t.url)||cams.some(c=>c.v.url&&!c.blank)),allBlank:!t&&cams.length>0&&cams.every(c=>c.blank)}}
 function loadStaged(){if(stagedP)return stagedP;stagedP=(async()=>{
@@ -66,7 +69,7 @@ CLAIMS.define("sheet.agree",{label:"16.5.0 and 16.5.1 agree",unit:"draw / blank 
   compute(){let n=0,agree=0;LIVE.forEach(it=>it.A.forEach((a,k)=>{const p=passClass(it,k+1);if(p.c0&&p.c1){n++;if(p.c0===p.c1)agree++}}));return{n,agree}}});
 CLAIMS.define("sheet.staged",{label:"bodies with a Cycles render in the ledger",unit:"demo/v4/data/staged.json keys matched to tiles",grade:"L",source:"BAKED: Blender Cycles",validator:"none",renderer:"Cycles 5.2.2 baked",text:v=>v?`${v.matched} of ${v.entries}`:"—",fields:["turntables + stills keys of staged.json that equal ledgerKey(item) of a tile (the physics ledger key lives in S14)"],
   compute(){if(!STAGEDM)return null;const keys=new Set([...Object.keys(STAGEDM.turntables||{}),...Object.keys(STAGEDM.stills||{})]);let matched=0;keys.forEach(k=>{if(SHEET.tiles.has(k))matched++});return{entries:keys.size,matched}}});
-CLAIMS.define("sheet.blankStaged",{label:"stills that did not render in Blender",unit:"identical-bytes rule over the stills (or an explicit blank flag)",grade:"C",source:"BAKED: Blender Cycles",validator:"none",renderer:"Cycles 5.2.2 baked",text:v=>v==null?"—":v+" stills",fields:["stills whose file sha256 equals another scene's still: an empty frame is the same picture for every scene"],compute(){return STAGEDM?stagedBlank.size:null}});
+CLAIMS.define("sheet.blankStaged",{label:"stills that did not render in Blender",unit:"manifest blank flag (measured: < 0.5 % of pixels differ from the dominant colour by > 48/255)",grade:"C",source:"BAKED: Blender Cycles",validator:"none",renderer:"Cycles 5.2.2 baked",text:v=>v==null?"—":v+" stills",fields:["stills with blank:true in staged.json (measured pixel rule); identical-bytes fallback only when the manifest has no flags"],compute(){return STAGEDM?stagedBlank.size:null}});
 /* ---------- state ---------- */
 const SHEET={ledgerKey:lkey,tiles:new Map(),list:[],staged:false,filterName:"all",lane:"",cat:"",onStage:null,stagedSource:null,hoverMs:400,panel:null,vnvTiles:[],el:null,
   hoverLoad,select,lightbox,closeLightbox,refresh,filter,setStaged,setLane,setCat,loadStaged,stagedOf,placeholder,isBlankStill:(key,cam)=>stagedBlank.has(key+"|"+cam)};
@@ -99,7 +102,7 @@ function stagedSlot(t){const s=stagedOf(t.key);if(!s)return;let slot=t.el.queryS
   const lit=s.anyUrl;slot.classList.toggle("has",lit);slot.classList.toggle("noblender",s.allBlank);
   txt(slot,s.allBlank?"did not render in Blender":lit?"STAGED":"STAGED · no url");
   const cams=(s.turntable?["turntable: "+(s.turntable.url?"render":"recorded, no url")]:[]).concat(s.stills.map(c=>c.cam+": "+(c.blank?"did not render in Blender":c.v.url?"render":"recorded, no url"))).join(" · ");
-  slot.title=(s.allBlank?"Blender Cycles: every staged still is an empty frame (identical bytes to other scenes' stills); never shown as a staged render":lit?"STAGED · Blender Cycles render in the ledger · open":"STAGED · Blender Cycles render recorded in the ledger (sha "+((s.turntable&&s.turntable.sha256)||(s.stills[0]&&s.stills[0].v.sha256)||"").slice(0,8)+") · not uploaded in this build")+" · "+cams;
+  slot.title=(s.allBlank?"Blender Cycles: every staged still is a blank frame by the measured pixel rule; never shown as a staged render":lit?"STAGED · Blender Cycles render in the ledger · open":"STAGED · Blender Cycles render recorded in the ledger (sha "+((s.turntable&&s.turntable.sha256)||(s.stills[0]&&s.stills[0].v.sha256)||"").slice(0,8)+") · not uploaded in this build")+" · "+cams;
   if(hasCycles()&&lit&&!slot.querySelector(".cycles"))slot.appendChild(el("i",{class:"cycles",text:" · Cycles"}))}
 /* ---------- build ---------- */
 function buildGroup(which){
@@ -152,7 +155,7 @@ function lightbox(key){const t=SHEET.tiles.get(key);if(!t)return null;if(!lb){lb
     el("figcaption",{class:"m"},[el("b",{class:"measured-tag",text:"MEASURED"}),el("span",{text:` · X_ITE 16.5.0 offline, software GL · nonblank ${pct(pi.nb0)}${t.it.r&&t.it.r.frames&&t.final?" · "+t.it.r.frames+" frames, last at "+t.it.r.last+" ms":""} · 16.5.1 offline ${pct(pi.nb1)}${r1&&r1.frames?" · "+r1.frames+" frames":""} · ${pi.agree===null?"second pass: no record":pi.agree?"both passes agree on the 0.5 % line":"the passes DISAGREE on the 0.5 % line"} · ${t.kind}`})])]);
   const stage=el("div",{class:"lbStage"},[measured]);
   if(s){const entries=(s.turntable?[{v:s.turntable,cam:"turntable",blank:false}]:[]).concat(s.stills);
-    entries.slice(0,3).forEach(pick=>{const cap=pick.blank?"did not render in Blender: the staged still is an empty frame (identical bytes to other scenes' stills) · camera "+pick.cam:`STAGED · ${pick.v.blender||"Blender"} · ${pick.v.engine||"Cycles"} · importer ${pick.v.importer||"x3d-blender-io"} · a baked picture, not the live renderer · same bytes, hash ${hash?hash.slice(0,16):"—"} · ${pick.cam==="turntable"?pick.v.frames+" frames":"camera: "+(pick.v.camera||pick.cam)} · WorldInfo dropped on import (documented)`;
+    entries.slice(0,3).forEach(pick=>{const cap=pick.blank?"did not render in Blender: the staged still is a blank frame by the measured pixel rule · camera "+pick.cam:`STAGED · ${pick.v.blender||"Blender"} · ${pick.v.engine||"Cycles"} · importer ${pick.v.importer||"x3d-blender-io"} · a baked picture, not the live renderer · same bytes, hash ${hash?hash.slice(0,16):"—"} · ${pick.cam==="turntable"?pick.v.frames+" frames":"camera: "+(pick.v.camera||pick.cam)} · WorldInfo dropped on import (documented)`;
       const fig=el("figure",{class:"lbPane staged"+(pick.blank?" noblender":""),data:{cam:pick.cam}},[pick.v.url&&!pick.blank?el("img",{alt:"staged render",src:pick.v.url}):el("div",{class:"stgEmpty",text:pick.blank?"did not render in Blender":"STAGED · recorded in the Cycles ledger (sha "+String(pick.v.sha256||"").slice(0,12)+") · not uploaded in this build"}),
         el("figcaption",{class:"m"},[el("b",{class:"staged-tag",text:pick.blank?"BLANK STAGED FRAME":"STAGED"}),el("span",{text:" · "+cap})])]);stage.appendChild(fig);
       if(hasCycles()&&pick.v.url&&!pick.blank&&!stage.classList.contains("wipe")){const wipe=el("input",{type:"range",min:"0",max:"100",value:"50","aria-label":"wipe: Cycles still over the X_ITE measured frame",class:"cycles wipe"});const sImg=fig.querySelector("img");sImg.style.clipPath="inset(0 50% 0 0)";wipe.addEventListener("input",()=>{sImg.style.clipPath=`inset(0 ${100-wipe.value}% 0 0)`});stage.classList.add("wipe");fig.appendChild(wipe);
