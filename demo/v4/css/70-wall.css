@@ -1,0 +1,83 @@
+/* 70-wall.css — S11 integrity wall + tamper arena (36-wall) and S12 validator ladder (38-ladder). Every colour is a token; dark first (tokens flip under the two guarded selectors in 00-tokens.css).
+   Phone (≤ 600 px): wall cells shrink to 10 px in JS, the console buttons wrap, the braid is 220 px, the slider stays a range. */
+#wall .wallKpis{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:6px}
+#wall .kpi .v{font-size:36px;line-height:1.05}
+#wall .legend{margin:0 0 10px}
+.wallPanel{margin-bottom:12px}
+.wallCv{padding:0}
+.wallCv canvas{cursor:pointer;display:block}
+.wallCv canvas:focus-visible{outline-offset:-2px}
+.excLbl{margin-left:auto}
+.wallLegend{display:flex;flex-wrap:wrap;gap:4px 14px}
+.lg{display:inline-flex;align-items:center;gap:5px}
+.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;border:1px solid var(--line2)}
+.wallPop{position:absolute;pointer-events:none;background:var(--glass);border:1px solid var(--line2);border-radius:4px;padding:6px;font:500 var(--t-chip)/1.4 var(--mono);color:var(--fg);display:flex;gap:8px;z-index:5;white-space:pre-line;max-width:230px;text-transform:none;letter-spacing:0}
+.wallPop[hidden]{display:none}
+.wallPop img{width:96px;height:72px;image-rendering:pixelated;background:var(--stage-bg);border:1px solid var(--line);flex:none}
+.wallPop img[hidden]{display:none}
+.wallGrid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:12px;margin-bottom:12px}
+.injRow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.injRow button.inj{text-align:left;padding:7px 9px;font:500 12px/1.3 var(--sans);white-space:normal}
+.injRow button.inj:nth-child(5),.injRow button.inj:nth-child(6){border-color:var(--info)}
+.sealNote{flex:1 1 200px;font-size:11px}
+#bSeal.on{border-color:var(--ok);color:var(--ok);background:var(--okbg)}
+#injStatus,#portSays{font-size:var(--t-chip);color:var(--mute);min-height:1.4em}
+#portSays:empty{display:none}
+.alerts{max-height:190px;overflow:auto;font:var(--t-data)/1.45 var(--mono);background:var(--p0);border:1px solid var(--line);border-radius:3px;padding:6px 8px;display:flex;flex-direction:column;gap:1px}
+.alerts .al{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--mute)}
+.alerts .al.det{color:var(--bad)}
+.alerts .al.inj{color:var(--warn)}
+.alerts .al.sys{color:var(--mute)}
+.alerts:empty::before{content:"no events yet";color:var(--dim)}
+.ttdWrap{margin-top:6px}
+.ttdWrap canvas{height:48px;display:block}
+.reverify{margin:4px 0 8px}
+.reverify .bar{display:inline-block;flex:0 0 160px;width:160px;height:4px;background:var(--p2);border-radius:2px;overflow:hidden}
+.reverify .bar b{display:block;height:4px;width:0;background:var(--acc);transition:width var(--dur) linear}
+.reverify .note{flex:1 1 320px;font-size:var(--t-chip)}
+#rvClaim{margin-bottom:10px}
+#rvClaim:empty{display:none}
+/* the simulated drawer is framed amber and says so */
+.drawer.modeled{border-color:var(--warn);background:var(--p1)}
+.drawer.modeled summary{color:var(--warn)}
+.drawer.modeled[open] summary{border-bottom-color:var(--warn)}
+.warnNote{color:var(--warn);font-size:var(--t-chip);flex:1 1 300px}
+.gapGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin:8px 0}
+.gapFh{max-height:200px}
+#gapWall{display:block}
+#gapLog{max-height:120px}
+#gapSeed{width:72px;font:500 12px var(--mono);background:var(--p1);color:var(--fg);border:1px solid var(--line);border-radius:4px;padding:4px}
+/* ladder */
+.ladderChips{margin-bottom:10px;gap:8px 18px}
+.braidPanel header label{margin-left:auto}
+.braidWrap canvas{height:320px;display:block}
+.valChip{text-transform:none;letter-spacing:.02em;white-space:normal;max-width:100%}
+.valChip.deg{color:var(--warn);border-color:var(--warn);background:var(--warnbg)}
+.sliderPanel{margin-top:12px}
+#commitSlider{width:100%;max-width:100%;margin:4px 0 0}
+.notches{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:2px}
+.notch{font:500 10.5px/1.2 var(--mono);padding:3px 2px;border-radius:3px;white-space:normal;overflow-wrap:anywhere;color:var(--mute)}
+.notch.on{background:var(--accbg);border-color:var(--acc);color:var(--acc)}
+.portPanel{margin-top:12px}
+.ring canvas{display:block;width:56px;height:56px}
+.hist{display:flex;flex-direction:column;gap:2px;margin:6px 0}
+.hist:empty{display:none}
+.hrow{display:grid;grid-template-columns:200px minmax(0,1fr) 40px;gap:8px;align-items:center;font:500 var(--t-chip)/1.3 var(--mono);color:var(--mute)}
+.hrow .bar{display:block;height:8px;background:var(--info);border-radius:2px;min-width:2px}
+.hrow .n{text-align:right;color:var(--fg)}
+.portOut{display:flex;flex-direction:column;gap:6px}
+.flipList{display:flex;flex-direction:column;gap:3px;font:var(--t-data)/1.4 var(--mono);max-height:220px;overflow:auto}
+.flip{display:flex;flex-wrap:wrap;gap:6px;align-items:center;color:var(--bad)}
+.flip b{color:var(--fg)}
+@media (max-width:900px){.wallGrid{grid-template-columns:1fr}.notches{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (max-width:600px){
+ #wall .wallKpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #wall .kpi .v{font-size:28px}
+ .injRow{grid-template-columns:1fr}
+ .braidWrap canvas{height:220px}
+ .gapGrid{grid-template-columns:1fr}
+ .hrow{grid-template-columns:120px minmax(0,1fr) 36px}
+ .wallPop{max-width:180px}
+ .wallPop img{width:64px;height:48px}
+ .reverify .bar{flex-basis:100px;width:100px}
+}
