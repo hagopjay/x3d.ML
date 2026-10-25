@@ -41,6 +41,14 @@ async def measure(pg, errs):
     try: await pg.wait_for_function('typeof window.LOOP === "object" && window.LOOP', timeout=15000)
     except Exception:
         print('SKIP check_v4_perf: the page has no window.LOOP after 15 s (01-loop not built yet, or not a v4 page):', await pg.evaluate('location.href')); return 2
+    # settle: the window opens after BOOT.phase === 'ready' and the boot hero measure (SwiftShader shader compiles are multi-second main-thread tasks), then SETTLE_MS more
+    t0 = time.time()
+    while time.time() - t0 < 180:
+        try:
+            if await pg.evaluate('!!(window.BOOT && BOOT.phase === "ready" && (BOOT.heroMeasure || (window.__stage && __stage.show && __stage.show.frozen) || performance.now() > 90000))'): break
+        except Exception: pass
+        await pg.wait_for_timeout(500)
+    info('settle', f'BOOT.phase ready after {time.time() - t0:.1f} s wait, then {SETTLE_MS} ms')
     await pg.wait_for_timeout(SETTLE_MS)
     fx = await pg.evaluate('document.documentElement.dataset.fx')
     ok('data-fx is "0" under SwiftShader + webdriver', fx == '0', f'data-fx={fx!r}')
@@ -89,7 +97,7 @@ async def own_browser():
 
 async def with_fixture():
     from v4fixture import Fixture
-    fx = Fixture(build_dir=os.environ.get('BUILD_DIR', os.path.join(REPO, 'demo', 'build', 'v4')), csp=CSP)
+    fx = Fixture(build_dir=os.environ.get('BUILD_DIR') or os.environ.get('V4_BUILD') or os.path.join(REPO, 'demo', 'build', 'v4'), csp=CSP)
     async with fx.browser() as b:
         pg = await fx.page(b, width=1500, height=1000); await fx.goto(pg)
         code = await measure(pg, [])          # the fixture collects errors itself; measure() sees none through this list

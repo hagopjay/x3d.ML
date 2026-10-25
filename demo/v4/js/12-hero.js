@@ -5,7 +5,7 @@
    hash, the credit line); the hero rail (HERO's measured JPEGs only, never a staged snapshot; auto-advance 14 s at fx ≥ 1 unless hovered, never under webdriver);
    the three claim tiles (c.rates, c.seven, c.ratio from 02-claims: known from the record first, earned when live.core lands; lane arrows brighten as the run clock
    passes each lane's last scene); the legend; the report spine (attempt 1 frame → the validator's first finding → "the model was sent its own report" → final frame,
-   the diff line through DIFF, a 36 px scrub crossfade, Open the morph); a labelled Cycles slot that reads STAGED when BUILD.has_cycles (dormant otherwise, never a placeholder).
+   the diff line through DIFF, a 36 px scrub crossfade, Open the morph); a labelled Cycles slot that reads STAGED when BUILD.HAS_CYCLES (dormant otherwise, never a placeholder).
    Globals: HEROUI {open(i, opts), select(key), toggle(mode), mode(), measuredCard, plaque, spine, cur(), items()}, hero_spine_pick; HERO (the inline data object) gains
    open / select / plaque / spine / measuredCard so the WORKPLAN names resolve. Claims: hero.valid_finals (expected STATS.claims['c.seven'].of), hero.seven151 (expected
    STATS.claims['c.seven'].expected), hero.ratio_x (expected STATS.claims['c.ratio'].expected.x).
@@ -61,8 +61,8 @@ const plaque={
     txt(E.p3,`content hash ${bodyHash(it).slice(0,6)}… · ${c.head} · x3dprov/0.1 · page-normalised hash · Confirmed for this scene`);plaque.cycles(it)},
   tick(it){if(!it)return;const c=chainLine(it);const sp=E.p2.lastChild;if(sp&&sp.nodeType===1){if(txt(sp,c.steps))sp.className=c.id?"":"mute";}
     const s3=`content hash ${bodyHash(it).slice(0,6)}… · ${c.head} · x3dprov/0.1 · page-normalised hash · Confirmed for this scene`;txt(E.p3,s3)},
-  /* the Cycles slot: reads STAGED (baked only when BUILD.has_cycles); nothing is shown otherwise */
-  cycles(it){const S2=self.BUILD&&BUILD.has_cycles&&self.STAGED&&(STAGED[it.key]||(STAGED.turntables&&STAGED.turntables[it.key]));if(!S2||!S2.url){E.cyc.hidden=true;E.cyc.textContent="";return}
+  /* the Cycles slot: reads STAGED (baked only when BUILD.HAS_CYCLES); nothing is shown otherwise */
+  cycles(it){const S2=self.BUILD&&BUILD.HAS_CYCLES&&self.STAGED&&(STAGED[it.key]||(STAGED.turntables&&STAGED.turntables[it.key]));if(!S2||!S2.url){E.cyc.hidden=true;E.cyc.textContent="";return}
     E.cyc.hidden=false;E.cyc.textContent="";E.cyc.append(`Cycles ${S2.blender||"5.2.2"} CPU · x3d-blender-io ${S2.importer||""} · a baked picture, not the live renderer · same bytes, hash ${contentHash(it.body).slice(0,8)} · WorldInfo dropped on import (documented) · `,el("a",{href:S2.url,target:"_blank",rel:"noopener",text:`turntable ${S2.frames||""} frames`}))}};
 /* ---------- rail ---------- */
 const rail={

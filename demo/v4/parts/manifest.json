@@ -1,5 +1,5 @@
 {
- "built": "2026-10-24T22:02:30Z",
+ "built": "2026-10-25T05:23:39Z",
  "parts": {
   "live.core": {
    "bytes_raw": 336481,
@@ -54,10 +54,10 @@
    "file": "parts/replay.txt"
   },
   "events": {
-   "bytes_raw": 14018,
-   "bytes_gz": 2744,
-   "bytes_b64": 3660,
-   "sha256": "11937f73560866b93219f97668b9e6cde9c5947af51154cf45dcef17b4e656fa",
+   "bytes_raw": 43837,
+   "bytes_gz": 6880,
+   "bytes_b64": 9176,
+   "sha256": "8c8a6945e04193d485c773e6e86728a2d5f7bd55a14a104ac3ad4d9b24355d6b",
    "rows": 125,
    "source": "RECORDED 17 Oct",
    "recorded": "2026-10-17",
@@ -143,6 +143,19 @@
    "xite": null,
    "source_file": "demo/jsval/data/schemas/x3d-4.1.xsd",
    "file": "parts/xsd41.txt"
+  },
+  "run24": {
+   "bytes_raw": 4132659,
+   "bytes_gz": 912207,
+   "bytes_b64": 1216276,
+   "sha256": "f126968ab9bb2ea87c9c71a603bbfdddbb6c80a529fcfa68ed261b2c6792ecc6",
+   "rows": 273,
+   "source": "RECORDED 24 Oct",
+   "recorded": "2026-10-24",
+   "validator": "fork@8dd0d3e",
+   "xite": "16.5.0",
+   "source_file": "demo/data/live2.json",
+   "file": "parts/run24.txt"
   }
  },
  "canary": {
@@ -155,7 +168,7 @@
   }
  },
  "HAS_CYCLES": false,
- "HAS_RUN2": false,
+ "HAS_RUN2": true,
  "validator_recorded": [
   "fork@eb4b4b4",
   "fork@8dd0d3e"

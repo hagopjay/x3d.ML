@@ -59,7 +59,9 @@ const VAL={label:"js-port-of-8dd0d3e",recorded:"fork@8dd0d3e",vendor:"libxml2-wa
 const uniq=a=>[...new Set(a)].sort();
 /* the body behind a recorded-verdict key: live-2026-10-17/x3d/<model_>/<p>_a<k>.x3d → LIVE[].B[k-1]; replay/<k> → REAL[].b */
 function bodyFor(k){let m=/^live-[\d-]+\/x3d\/(.+?)\/([\w-]+)_a(\d+)\.x3d$/.exec(k);
-  if(m){const it=(self.LIVE||[]).find(i=>i.m.replace("/","_")===m[1]&&i.p===m[2]);const b=it&&it.B&&it.B[+m[3]-1];return typeof b==="string"?{xml:b,group:"live"}:null}   /* "" = a recorded empty answer (fin length, 0 chars): validated too */
+  if(m){const it=(self.LIVE||[]).find(i=>i.m.replace("/","_")===m[1]&&i.p===m[2]);const b=it&&it.B&&it.B[+m[3]-1];if(typeof b==="string")return{xml:b,group:"live"}   /* "" = a recorded empty answer (fin length, 0 chars): validated too */
+    const key=m[1]+"/"+m[2]+"_a"+m[3]+".x3d";for(const c of (self.EVENTS&&EVENTS.cut)||[])for(const cb of c.bodies||[])if(cb&&cb.k===key&&typeof cb.xml==="string")return{xml:cb.xml,group:"live"};   /* the 25 cut-chain bodies ride in EVENTS.cut[].bodies */
+    return null}
   m=/^replay\/(.+)$/.exec(k);if(m){const it=(self.REAL||[]).find(i=>i.k===m[1]);return it&&it.b?{xml:it.b,group:"replay"}:null}return null}
 /* ENV settles the wasm question within a second; the worker probes may take 12 s, so poll the field rather than wait for ENV.ready */
 async function envSettled(){if(!self.ENV)return false;const t0=performance.now();while(ENV.wasmInstantiate===null&&!ENV.done&&performance.now()-t0<ENV_MS)await later(100);return true}

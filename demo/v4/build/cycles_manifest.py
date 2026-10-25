@@ -114,6 +114,14 @@ def entry(kind_label, slug, e, img_key, dirpath):
         "blender": e.get("blender"), "engine": e.get("engine"), "importer": e.get("importer"), "res": e.get("res"), "kind": e.get("kind"),
         "url": None, "src_sha256": e.get("src_sha256"), "meshes": e.get("meshes"), "triangles": e.get("triangles"), "scene_lights": e.get("scene_lights"),
         "render_s": e.get("render_s"), "cat": e.get("cat"), "sweep_hits": sum(hits.values()), "ledger_sha_ok": (ledger_sha == sha) if ledger_sha else None}
+    if img_key == "png":   # a blank still (Blender drew nothing of the scene) is flagged here so the page never shows it as a staged render
+        try:
+            from PIL import Image, ImageChops
+            im = Image.open(src).convert("RGB"); dom = max(im.getcolors(im.width * im.height) or [(0, (0, 0, 0))])[1]
+            d = ImageChops.difference(im, Image.new("RGB", im.size, dom)).split(); m = ImageChops.lighter(ImageChops.lighter(d[0], d[1]), d[2]).point(lambda v: 255 if v > 48 else 0)
+            frac = m.histogram()[255] / max(1, im.width * im.height)
+            rec["nonblank"] = round(frac, 4); rec["blank"] = frac < 0.005
+        except Exception as ex: rec["blank"] = None; rec["blank_err"] = str(ex)[:100]
     if "camera" in e: rec["camera"] = e["camera"]
     if "staged_lights" in e: rec["staged_lights"] = e["staged_lights"]
     clean_note = ""

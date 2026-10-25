@@ -38,23 +38,23 @@ async function makeCanvas(mount,opts){if(!self.X3D)throw new Error("X_ITE not lo
 /* ---------- MEASURE ---------- */
 const M={ready:null,browser:null,canvas:null,busy:false,token:0,queue:Promise.resolve(),
   pixels:()=>pixelsOf(M.browser),
-  show(xml,opts){opts=opts||{};const tk=++M.token;const run=()=>measureNow(xml,opts,tk);const p=M.queue.then(run,run);M.queue=p.catch(()=>{});return p}};
+  show(xml,opts){opts=opts||{};const tk=++M.token;const run=()=>measureNow(xml,opts,tk);const p=M.queue.then(run,run);M.queue=p.catch(()=>{});return p}};  /* FIFO: every caller gets its own R; a newer load never cancels an older one (integration: hero, raster, seven and the inspector all measure) */
 async function measureNow(xml,opts,tk){
   if(!M.browser)await M.ready;if(!M.browser)return{err:"X_ITE not available: "+(__stage.measure.err||"no browser"),nb:null,frames:0,series:[],msgs:[],noFrame:true,ms:0};
-  if(tk!==M.token)return{cancelled:true};
+  
   const B=M.browser,t0=performance.now(),said=[],w=watchFrames(B,M.pixels);SAID=said;tapConsole();M.busy=true;__stage.measure.loads++;
   const R={nb:null,frames:0,series:[],first:null,last:null,msgs:said,err:null,noFrame:false,slow:false,ms:0,nodes:null,cancelled:false,renderer:self.ENV?ENV.renderer:null};
-  try{await clearView(B);if(tk!==M.token)return{cancelled:true};
-    const scn=await B.createX3DFromString(stripProv(xml));if(tk!==M.token)return{cancelled:true};
+  try{await clearView(B);
+    const scn=await B.createX3DFromString(stripProv(xml));
     w.start();await B.replaceWorld(scn);try{B.getActiveLayer().viewAll(0)}catch(e){}
-    await later(650);if(tk!==M.token)return{cancelled:true};
+    await later(650);
     let px=await self.sampleFrame(w);const drop=said.some(t=>DROP_RE.test(t)),expectNone=!!opts.expectNone;let nf=px.err==="no frame";
     /* no frame is only read as "nothing drawable" when something says so (dropped nodes, or the record); otherwise the renderer may just be slow here, so wait longer */
-    if(nf&&!expectNone&&!drop){px=await self.sampleFrame(w,opts.timeoutMs||12000);if(tk!==M.token)return{cancelled:true};nf=px.err==="no frame";R.slow=nf}
+    if(nf&&!expectNone&&!drop){px=await self.sampleFrame(w,opts.timeoutMs||12000);nf=px.err==="no frame";R.slow=nf}
     R.noFrame=nf;R.ms=Math.round(performance.now()-t0);try{R.nodes=B.currentScene.rootNodes.length}catch(e){}
     if(!nf){R.nb=px.nonblank;R.frames=px.frames;R.series=px.series}R.first=w.first;R.last=w.last;R.frames=w.n;R.dropped=drop;
     R.kind=nf&&R.slow?"no frame yet":nf||(R.nb<.005&&drop)?"nothing drawable":R.nb<.005?"blank frame":"draws"}
-  catch(e){if(tk!==M.token)return{cancelled:true};R.err=String(e&&e.message||e).replace(/'http[^']*'/,"the string").slice(0,200);R.kind="unparseable";R.ms=Math.round(performance.now()-t0);try{await B.replaceWorld(await B.createX3DFromString(EMPTY))}catch(_){}}
+  catch(e){R.err=String(e&&e.message||e).replace(/'http[^']*'/,"the string").slice(0,200);R.kind="unparseable";R.ms=Math.round(performance.now()-t0);try{await B.replaceWorld(await B.createX3DFromString(EMPTY))}catch(_){}}
   finally{w.stop();if(SAID===said)SAID=null;M.busy=false}
   R.msgs=said.map(t=>t.replace(/^XML Parser:\s*/,"").replace(/\.?\s*You probably have insufficient.*$/,""));__stage.measure.last=R;return R}
 /* ---------- SHOW (plain loader in wave 1; M3 stages it) ---------- */

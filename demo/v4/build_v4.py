@@ -119,7 +119,7 @@ except Exception:
     sha = "unknown"
 BUILD = {"sha": sha, "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "share": False,
          "validator_recorded": manifest.get("validator_recorded", ["fork@eb4b4b4", "fork@8dd0d3e"]), "port": "js-port-of-8dd0d3e", "xite": "16.5.0", "passes": ["16.5.0", "16.5.1"],
-         "HAS_CYCLES": bool(manifest.get("HAS_CYCLES")), "HAS_RUN2": bool(manifest.get("HAS_RUN2")), "has_cycles": bool(manifest.get("HAS_CYCLES")), "has_run24": bool(manifest.get("HAS_RUN2")),
+         "HAS_CYCLES": bool(manifest.get("HAS_CYCLES")), "HAS_RUN2": bool(manifest.get("HAS_RUN2")), "has_cycles": bool(manifest.get("HAS_CYCLES")), "has_run24": bool(manifest.get("HAS_RUN2")), "staged": os.path.isfile(os.path.join(HERE, "data", "staged.json")),
          "versions": VERSIONS, "title": "Tether Firehose 4", "monolith": "--monolith" in flags, "parts": len(manifest["parts"]), "canary": manifest.get("canary")}
 
 # ---------- bake ----------
@@ -193,6 +193,8 @@ ledger = read(os.path.join(REPO, "runs", "suite-physics-2026-10-17", "physics-st
 ledger = re.sub(r"<!DOCTYPE[^>]*>\s*", "", ledger, count=1)
 open(os.path.join(OUT, "data", "physics-ledger.x3d"), "w", encoding="utf-8").write(ledger)
 shutil.copyfile(os.path.join(HERE, "data", "rigok.json"), os.path.join(OUT, "data", "rigok.json"))
+STAGED_SRC = os.path.join(HERE, "data", "staged.json"); HAS_STAGED = os.path.isfile(STAGED_SRC)
+if HAS_STAGED: shutil.copyfile(STAGED_SRC, os.path.join(OUT, "data", "staged.json"))   # 40-sheet fetches data/staged.json when BUILD.staged (urls null until the assets are uploaded)
 if "--no-xite" not in flags:
     xsrc = os.path.join(DEMO, "build", "xite")
     if os.path.isdir(xsrc):

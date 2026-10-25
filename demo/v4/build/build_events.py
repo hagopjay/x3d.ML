@@ -83,6 +83,15 @@ for k, calls in by.items():
     assert not calls[-1]["valid"] and max(e["attempt"] for e in calls) < meta["max_attempts"], k   # anything finished would be on the page
     cut.append({"m": k[0], "p": k[1], "k": max(e["attempt"] for e in calls), "calls": len(calls), "t1": clk(max(e["v1"] for e in calls)), "reason": REASON(notes.get(k[0]))})
 cut.sort(key=lambda c: c["t1"])
+# the cut chains' bodies (recorded under runs/live-2026-10-17/x3d/<model_dir>/<prompt>_a<k>.x3d) ride with the rows so the page holds every body the
+# canary names (358 live + 174 replay + 25 cut + 1 ledger = 558); key = the renders / canary key shape `<model_dir>/<prompt>_a<k>.x3d`
+n_bodies = 0
+for c in cut:
+    mdir = c["m"].replace("/", "_"); c["bodies"] = []
+    for k in range(1, c["k"] + 1):
+        f = os.path.join(RUN, "x3d", mdir, f"{c['p']}_a{k}.x3d")
+        if os.path.isfile(f): c["bodies"].append({"k": f"{mdir}/{c['p']}_a{k}.x3d", "xml": open(f, encoding="utf-8").read()}); n_bodies += 1
+    assert len(c["bodies"]) == c["calls"], (c["m"], c["p"], c["calls"], len(c["bodies"]))
 
 # ---- probes (every ledger probe row; the 24 Oct roster probes sit far right of the run), error text reduced to a code
 probes = [{"m": r["model"], "dt": round(r["t"] - T0, 1), "utc": r["utc"], "ok": not r.get("err"), "code": None if not r.get("err") else code_of(r["err"]), "ms": r.get("ms")}
@@ -121,6 +130,7 @@ out = {"run": "live-2026-10-17", "validator": "fork@eb4b4b4", "failed": failed, 
        "kinds": dict(collections.Counter(f["kind"] for f in failed)), "cut_reasons": dict(collections.Counter(c["reason"] for c in cut)),
        "collapse_rule": f"intervals (t0, v1) of the {on_page} attempts on the page, sorted; a stretch with nothing in flight longer than {MIN_GAP:.0f} s is cut to {GAP:.0f} s; identical to demo/build_live.py",
        "idle_collapsed_s": round(removed, 1), "t_total": live["meta"]["t_total"], "reconcile": reconcile}
+out["cut_bodies"] = n_bodies; out["cut_bodies_empty"] = sum(1 for c in cut for b in c["bodies"] if not b["xml"].strip())   # recorded empty answers (0 chars): in the canary set, nothing to chain
 json.dump(out, open(OUT, "w"), separators=(",", ":"), ensure_ascii=False)
 s = open(OUT).read()
 assert not re.search(r"Function '|account '|insufficient_quota|platform\.openai|Too Many Requests|upstream request", s), "an error string leaked into events.json"

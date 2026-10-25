@@ -46,7 +46,10 @@ PARTS = [  # name, raw bytes, rows, provenance
  ("xsd41", open(ROOT + "/demo/jsval/data/schemas/x3d-4.1.xsd", "rb").read(), None, dict(source="Web3D X3D 4.1 schema", recorded=None, validator=None, xite=None, source_file="demo/jsval/data/schemas/x3d-4.1.xsd")),
 ]
 if RUN2:   # the 24 Oct run, once build_live.py has written its live2.json (tolerates arm, sample, tft_ms, stream[], autofix rows); never run against a recording directory
-    l2 = J(RUN2); PARTS.append(("live2", enc(l2), len(l2["items"]), dict(source="RECORDED 24 Oct", recorded=l2["meta"].get("date", "2026-10-24"), validator=l2["meta"].get("validator", "fork@8dd0d3e"), xite="16.5.0", source_file=RUN2)))
+    l2 = J(RUN2); m2 = l2["meta"]
+    for m in m2.get("models", []): m["arms"] = sorted({r["arm"] for r in m2.get("lane_list", []) if r["m"] == m["id"]} | {it["arm"] for it in l2["items"] if it["m"] == m["id"] and it.get("arm")})
+    m2.setdefault("wall_min", 150); m2.setdefault("wall_src", "docs/LIVE-RUN-2-FINDINGS.md: 150 min wall, cap 1 USD unused")   # the run's own facts, not retyped numbers
+    PARTS.append(("run24", enc(l2), len(l2["items"]), dict(source="RECORDED 24 Oct", recorded=m2.get("date", "2026-10-24"), validator=m2.get("validator", "fork@8dd0d3e"), xite="16.5.0", source_file=RUN2)))
 assert len(bodies) == len(core["items"]) and sum(len(b) for b in bodies) == sum(len(it["A"]) for it in core["items"]) == 358
 assert b"/9j/" not in PARTS[0][1] and not any("jpg" in a["r"] for it in core["items"] for a in it["A"]), "a thumbnail stayed in live.core"
 assert b'"B":' not in PARTS[0][1], "a body stayed in live.core"

@@ -1,5 +1,5 @@
 {
- "built": "2026-10-24T23:37:09Z",
+ "built": "2026-10-25T05:16:08Z",
  "schema": "turntables[k] and stills[k][vp|staged]: file, bytes, frames, sha256 (of file), render_sha256, blender, engine, importer, res, kind, url (null until uploaded), src_sha256 (the X3D bytes rendered), sweep_hits; k = ledger scene key",
  "sources": {
   "turn": "/tmp/claude-0/-home-user/d1db4f4e-b69c-59c1-8b63-a13c27f16e5d/scratchpad/turn/out/ledger.json",
@@ -255,6 +255,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.2078,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -284,6 +286,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0411,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -315,6 +319,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0956,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -344,6 +350,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0924,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -375,6 +383,8 @@
     "cat": "assembly",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1474,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -404,6 +414,8 @@
     "cat": "assembly",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.2458,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -435,6 +447,8 @@
     "cat": "geospatial",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1745,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -464,6 +478,8 @@
     "cat": "geospatial",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0,
+    "blank": true,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -495,6 +511,8 @@
     "cat": "object",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0833,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -524,6 +542,8 @@
     "cat": "object",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0007,
+    "blank": true,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 0,
     "clean_chunks": "IHDR IDATx5 IEND"
@@ -555,6 +575,8 @@
     "cat": "ledger",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0,
+    "blank": true,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -584,6 +606,8 @@
     "cat": "ledger",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0,
+    "blank": true,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -615,6 +639,8 @@
     "cat": "assembly",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1149,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -644,6 +670,8 @@
     "cat": "assembly",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.02,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -675,6 +703,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1503,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -704,6 +734,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1588,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -735,6 +767,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0959,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -764,6 +798,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0,
+    "blank": true,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx2 IEND"
@@ -795,6 +831,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.2083,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -824,6 +862,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.2051,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -855,6 +895,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1774,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -884,6 +926,8 @@
     "cat": "interaction",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0,
+    "blank": true,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 0,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -915,6 +959,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1385,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -944,6 +990,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.1344,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -975,6 +1023,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.2046,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -1004,6 +1054,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0396,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -1035,6 +1087,8 @@
     "cat": "hanim",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0836,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -1064,6 +1118,8 @@
     "cat": "hanim",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0,
+    "blank": true,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -1095,6 +1151,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0959,
+    "blank": false,
     "camera": "auto 3/4 framing",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"
@@ -1124,6 +1182,8 @@
     "cat": "animation",
     "sweep_hits": 0,
     "ledger_sha_ok": true,
+    "nonblank": 0.0157,
+    "blank": false,
     "camera": "scene Viewpoint (author framing)",
     "staged_lights": 3,
     "clean_chunks": "IHDR IDATx6 IEND"

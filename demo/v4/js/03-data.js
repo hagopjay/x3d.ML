@@ -4,7 +4,7 @@
    Test hooks: DATA.status[name], DATA.loaded(name), the globals. A refused part prints `part <name> refused: hash mismatch` through DATA.messages (46-footer shows it in #under). */
 (function(){
 "use strict";
-const ORDER=["live.core","events","live.bodies","replay","renders.series","renders.151","drift","suite","live.jpg"];
+const ORDER=["live.core","events","live.bodies","replay","renders.series","renders.151","drift","suite","run24","live.jpg"];  /* run24 only when the manifest has it */
 const status={},memo=new Map(),waiters=new Map(),listeners=new Map(),texts=new Map(),messages=[];
 const LIVE=[],REAL=[];let EVENTS=null,R150=null,R151=null,DRIFT=null,SUITE=null,RUN24=null;
 Object.keys((self.MANIFEST&&MANIFEST.parts)||{}).forEach(n=>{status[n]={state:"idle",bytes:(MANIFEST.parts[n].bytes_b64||0),got:0,sha:null,ms:0,err:null}});
@@ -42,7 +42,7 @@ const DROP_RE=/Unknown node type|Unknown named or imported node|Container field|
 const keyOf=(m,p,k)=>`${String(m).replace("/","_")}/${p}_a${k}.x3d`;
 /* ledgerKey(item): the key the Cycles ledger (demo/v4/data/staged.json turntables/stills) and renders.151 use for an item — LIVE items
    `${m}/${p}_a${attempts}.x3d` (= keyOf), REAL items their recorded `it.k` = `${m}/${mo}/${p}.x3d`. Scene records: ledgerKey(sc.item). */
-const ledgerKey=it=>!it?null:it.k?it.k:keyOf(it.m,it.p,(it.A&&it.A.length)||1);
+const ledgerKey=it=>!it?null:Array.isArray(it.A)?keyOf(it.m,it.p,it.A.length||1):(it.k||null);  /* LIVE items carry k = prompt kind, so the A[] shape is tested first */
 const renderOf=(it,k)=>{k=k||it.A.length;const key=keyOf(it.m,it.p,k);return{key,r150:R150&&R150.live[key]||null,r151:R151&&R151.live[key]||null}};
 function fill(n,obj){
   if(n==="live.core"){LIVE.length=0;obj.items.forEach((it,i)=>{it.i=i;const f=it.A[it.A.length-1];it.r=f.r;it.ok=f.ok;it.B=it.B||[];LIVE.push(it)});LIVE.meta=obj.meta;self.LM=obj.meta;recompute()}

@@ -12,7 +12,7 @@ D, V4 = os.path.join(ROOT, "demo/data"), os.path.join(ROOT, "demo/v4/data")
 OUT = os.path.join(V4, "stats.json")
 TREE = sys.argv[sys.argv.index("--tree") + 1] if "--tree" in sys.argv else os.environ.get("X3D_MCP_TREE")
 live = json.load(open(D + "/live.json")); LIVE, LM = live["items"], live["meta"]; REAL = json.load(open(D + "/replay.json"))
-EV = json.load(open(V4 + "/events.json")); R151 = json.load(open(V4 + "/renders.151.json")); BASE = json.load(open(os.path.join(ROOT, "drift/verdicts-8dd0d3e.json")))
+EV = json.load(open(V4 + "/events.json")); R151 = json.load(open(V4 + "/renders.151.json")); R150 = json.load(open(V4 + "/renders.series.json")); RUNJ = json.load(open(os.path.join(ROOT, "runs/live-2026-10-17/run.json"))); BASE = json.load(open(os.path.join(ROOT, "drift/verdicts-8dd0d3e.json")))
 slug = lambda m: m.replace("/", "_")
 for it in LIVE: f = it["A"][-1]; it["r"] = f["r"]; it["ok"] = f["ok"]; it["key"] = f"{slug(it['m'])}/{it['p']}_a{len(it['A'])}.x3d"
 
@@ -124,8 +124,19 @@ claims = {
  "c.replay17": {"expected": f[0]["nodraw"], "of": f[0]["valid"], "rule": "replay scenes the 11 Oct service called valid (x and s set) whose X_ITE 16.5.0 frame is under 0.5 %", "grade": "C", "source": "RECORDED 11 Oct", "validator": "svc@11Oct recorded", "renderer": "X_ITE 16.5.0 offline"},
  "c.lockstep": {"expected": None, "rule": "page text-normalised hash vs repo lxml C14N hash over the 175 stamped heads; prints n/175 until module 04_c14n ships (SPEC section 9)", "grade": "S", "source": "not built", "validator": "none", "renderer": "none"},
 }
+# ---- c.flips151: the 16.5.1 pass re-measured every renders row; a flip is a row whose draw verdict (nb >= 0.005 and no error) differs from the 16.5.0 pass
+draw = lambda r: bool(r) and not r.get("err") and (r.get("nb") or 0) >= 0.005
+pairs151 = len(R151["live"]) + len(R151["replay"])
+LIVE_R150 = {it["key"]: it["r"] for it in LIVE}   # the 16.5.0 pass is the item's own r (renders.series carries the frame series, not the verdict)
+flips151 = [k for k, r in R151["live"].items() if k in LIVE_R150 and draw(r) != draw(LIVE_R150[k])]
+REAL_R150 = {i["k"]: i.get("r") for i in REAL}   # the replay's 16.5.0 record rides on each item
+flips151 += [k for k, r in R151["replay"].items() if k in REAL_R150 and draw(r) != draw(REAL_R150[k])]
+claims["c.flips151"] = {"expected": {"pairs": pairs151, "flips": len(flips151)}, "flipped": flips151, "text": f"{pairs151} rows re-measured on X_ITE 16.5.1 · {len(flips151)} draw-verdict flips",
+                        "rule": "renders.151 rows (live + replay) whose draw verdict (nonblank >= 0.5 % and no parse error) differs between the 16.5.0 pass (renders.series / replay r) and the 16.5.1 pass",
+                        "grade": "C", "source": "MEASURED 24 Oct", "validator": "none", "renderer": "X_ITE 16.5.0 offline + 16.5.1 offline"}
 STATS = {"built_from": ["demo/data/live.json", "demo/data/replay.json", "demo/v4/data/events.json", "demo/v4/data/renders.151.json", "drift/verdicts-8dd0d3e.json"], "claims": claims, "LIVESTATS": LIVESTATS, "REALSTATS": REALSTATS,
-         "lanes": per, "sankey": sankey, "seven": seven, "canary": canary, "meta": {k: LM[k] for k in ("models", "lanes", "validator", "t_total", "idle_collapsed_s", "n_prompts", "max_attempts", "failed_calls", "date", "gaps") if k in LM}}
+         "lanes": per, "sankey": sankey, "seven": seven, "canary": canary, "meta": {**{k: LM[k] for k in ("models", "lanes", "validator", "t_total", "idle_collapsed_s", "n_prompts", "max_attempts", "failed_calls", "date", "gaps") if k in LM},
+                  "cap_usd": RUNJ.get("cap_usd"), "spent_usd_est": RUNJ.get("spent_usd_est"), "spend_src": "runs/live-2026-10-17/run.json (list-price estimate at run time)"}}
 json.dump(STATS, open(OUT, "w"), separators=(",", ":"), ensure_ascii=False)
 
 for cid, c in claims.items(): print(f"{cid:12} {c['grade']}  expected {json.dumps(c['expected'])}" + (f"  → {c['text']}" if c.get("text") else ""))
