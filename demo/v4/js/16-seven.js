@@ -89,6 +89,8 @@ function renderCard(x){const c=E.card;c.textContent="";if(!x)return;const L=x.li
   c.appendChild(el("h4",{text:`${x.p} · ${x.c} · ${laneName(x.m)}${x.calls?" · "+x.calls+" call"+(x.calls>1?"s":""):""}`}));
   c.appendChild(el("div",{class:"why",text:BLANKWHY[x.c]||"opened and read by hand: the scene says less than the validator can see"}));
   c.appendChild(el("div",{class:"k",text:"X_ITE said (offline pass console)"}));c.appendChild(el("div",{class:"v",text:x.msgs&&x.msgs.length?x.msgs.join(" · "):"X_ITE said nothing: no console line recorded for this load"}));
+  /* Blender stills from the STAGED manifest, when it holds this key: the blank flag is read from the manifest (12-hero's reader), never a list here */
+  const SL=self.HEROUI&&HEROUI.stagedLines?HEROUI.stagedLines(x.key):[];if(SL.length){c.appendChild(el("div",{class:"k",text:"Blender, from the STAGED manifest (not a browser frame)"}));c.appendChild(el("div",{class:"v"},SL.map(l=>el("div",{class:l.blank?"bad":"",text:l.text}))))}
   c.appendChild(el("div",{class:"k",text:"the record's render step"}));
   c.appendChild(el("div",{class:"v"},[el("b",{text:`nonblank ${fmt.pct(x.nb,2)} (ratio ${x.nb})`}),` · ${x.nodes!=null?fmt.int(x.nodes)+" nodes · ":""}${x.frames!=null?fmt.int(x.frames)+" frames":""}${x.last!=null?" · last "+fmt.int(x.last)+" ms":""} · x_ite@16.5.0 headless swiftshader (offline, after the run)`]));
   c.appendChild(el("div",{class:"k",text:"verdicts"}));const pills=el("div",{class:"pills"});c.appendChild(pills);
@@ -107,7 +109,7 @@ function open(ref,opts){opts=opts||{};const x=typeof ref==="number"?ST.list[ref]
 function headerSpec(){const sc=(self.STATS&&STATS.claims&&STATS.claims["c.seven"])||{};return{title:"The dark seven",unit:`${sc.expected!=null?fmt.int(sc.expected):"?"} of ${sc.of!=null?fmt.int(sc.of):"?"} valid finals draw nothing in X_ITE 16.5.0 and 16.5.1 · the stage is MEASURED only here`,
   stamps:{source:"RECORDED 17 Oct",validator:"fork@eb4b4b4 recorded",renderer:"X_ITE 16.5.0 offline + 16.5.1 offline"},grade:"C",
   honesty:"raw bytes, no staging in this section · counted frames X_ITE 16.5.0 and 16.5.1 offline · live frame this browser (not counted) · 7 of 178, each opened and read by hand · Confirmed for these scenes, the H-Anim pattern Suspected (one case)"}}
-function mount(sec){ST.sec=sec;sectionHeader(sec,headerSpec());const sb=sec.querySelector(".sb");if(!sb)return;sb.textContent="";
+function mount(sec){ST.sec=sec;sectionHeader(sec,headerSpec());const sb=sec.querySelector(".sb");if(!sb)return;sb.textContent="";if(self.HEROUI&&HEROUI.stagedManifest)HEROUI.stagedManifest().then(m=>{if(m&&ST.cur)renderCard(ST.cur)});
   E.ph=el("div",{class:"ph legend"});E.strip=el("div",{class:"sstrip"});
   E.host=el("div",{class:"shost",style:{position:"absolute",inset:"0"}});E.badge=el("div",{class:"sbadge m",text:"MEASURED · raw bytes · own/default viewpoint · headlight · the X_ITE instance is created when this section scrolls into view"});
   E.cnum=el("span",{text:"—"});E.csmall=el("small",{text:""});E.counter=el("div",{class:"scounter"},[E.cnum,E.csmall]);
@@ -119,7 +121,7 @@ function mount(sec){ST.sec=sec;sectionHeader(sec,headerSpec());const sb=sec.quer
   sb.append(E.ph,E.strip,el("div",{class:"sgrid"},[el("div",null,[E.stage,E.ctl]),E.card]));
   /* observed on the stage box, not the section: IO keeps one callback per element and the LOOP panel below observes the section */
   IO.observe(E.stage,v=>{ST.visible=v;if(v){if(ST.leave){ST.leave();ST.leave=null}ensureInst()}else{if(ST.leave)ST.leave();ST.leave=later(()=>{ST.leave=null;if(!ST.visible)disposeInst()},2500)}},{rootMargin:"64px"});
-  LOOP.register({name:"seven",bit:LOOP.bits.DATA,always:true,rateHz:4,budgetMs:1,el:sec,draw(){if(ST.visible&&!ST.inst&&self.X3D)ensureInst()}});
+  LOOP.register({name:"seven",bit:LOOP.bits.DATA,always:true,rateHz:4,budgetMs:1,draw(){if(ST.visible&&!ST.inst&&self.X3D)ensureInst()}});   /* no el: see 14-morph (RAIL.init observes every section; IO keeps one callback per element) */
   CLAIMS.define("seven.ids",{label:"the dark seven, by key",unit:"finals valid on fork@eb4b4b4 whose X_ITE 16.5.0 frame is under 0.5% nonblank",needs:["live.core"],expected:statIds().sort(),grade:"C",source:"RECORDED 17 Oct",validator:"fork@eb4b4b4 recorded",renderer:"X_ITE 16.5.0 offline",text:v=>`${v.length} scenes`,
     compute(){return LIVE.filter(rule150).map(i=>keyOf(i.m,i.p,i.A.length)).sort()}});
   CLAIMS.define("seven.pass151",{label:"of those, blank in the 16.5.1 pass too",unit:"renders.151 nonblank under 0.5%",needs:["live.core","renders.151"],expected:self.STATS&&STATS.claims&&STATS.claims["c.seven"]?STATS.claims["c.seven"].expected:undefined,grade:"C",source:"RECORDED 17 Oct",validator:"fork@eb4b4b4 recorded",renderer:"X_ITE 16.5.1 offline",

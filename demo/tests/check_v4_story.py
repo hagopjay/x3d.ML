@@ -60,6 +60,15 @@ async def main():
         fx.ok("toggle STAGED at fx 0: rig applied without a reload (lights only), hash unchanged", await fx.wait(pg, "__stage.show.staged===true", 20000) and await pg.evaluate("__stage.show.lastHash") == h0 and await pg.evaluate("__stage.show.rig&&__stage.show.rig.lightsOnly===true"), await pg.evaluate("JSON.stringify(__stage.show.rig)"))
         await pg.evaluate("HEROUI.toggle('measured')")
         fx.ok("toggle MEASURED: a fresh load of the raw bytes, prints fresh load, hash identical", await fx.wait(pg, "__stage.show.staged===false&&document.getElementById('stageMsg').textContent.includes('fresh load')", 40000) and await pg.evaluate("__stage.show.lastHash") == h0, await fx.txt(pg, "#stageMsg"))
+        # ---- the STAGED manifest: blank flags read from data/staged.json, never a hard-coded list ----
+        sm = await pg.evaluate("""HEROUI.stagedManifest().then(m=>{if(!m)return null;const ents=[];Object.entries(m.turntables||{}).forEach(([k,v])=>ents.push([k,v]));Object.entries(m.stills||{}).forEach(([k,o])=>Object.values(o||{}).forEach(v=>ents.push([k,v])));
+          const keys=[...new Set(ents.map(e=>e[0]))],lines=keys.flatMap(k=>HEROUI.stagedLines(k));const blank=ents.filter(e=>e[1]&&e[1].blank===true).length;
+          const said=lines.filter(l=>l.blank&&/did not render in Blender/.test(l.text)).length,wrong=lines.filter(l=>(l.blank&&/baked picture/.test(l.text))||(!l.blank&&/did not render/.test(l.text))||(l.blank&&l.url)).length;
+          const cur=HEROUI.cur(),cl=cur?HEROUI.stagedLines(cur.key):[],cyc=document.querySelector('#stageView .plaque .cyc');
+          return{ents:ents.length,lines:lines.length,blank,said,wrong,curLines:cl.length,cycHidden:cyc?cyc.hidden:null,cycText:cyc?cyc.textContent:null,first:cl[0]?cl[0].text:null}})""")
+        fx.ok("STAGED manifest read (BUILD.staged → data/staged.json) with entries and measured blank flags", bool(sm) and sm["ents"] > 0 and sm["blank"] > 0, sm)
+        fx.ok("every blank entry reads 'did not render in Blender', none presented as a render or linked", bool(sm) and sm["lines"] == sm["ents"] and sm["said"] == sm["blank"] and sm["wrong"] == 0, sm)
+        fx.ok("plaque Cycles slot follows the manifest for the current hero (shown iff it has entries, text from stagedLines)", bool(sm) and ((sm["curLines"] == 0 and sm["cycHidden"] is True) or (sm["curLines"] > 0 and sm["cycHidden"] is False and sm["first"] in (sm["cycText"] or ""))), sm)
         fx.ok("HERO gains the WORKPLAN names (open, select, plaque, spine, measuredCard)", await pg.evaluate("typeof HERO.open==='function'&&typeof HERO.select==='function'&&!!HERO.plaque&&!!HERO.spine&&!!HERO.measuredCard"))
         # ---- S3: the morph ----
         await pg.evaluate("document.getElementById('morph').scrollIntoView({block:'start'})")
@@ -95,7 +104,7 @@ async def main():
         await pg.evaluate("SEVEN.findIt()")
         found = await fx.wait(pg, "(()=>{const t=document.querySelector('#seven .sratio').textContent;const m=/this browser: (\\d+\\.\\d+)%/.exec(t);return (m&&+m[1]>0.5)||/renderer could not/.test(t)})()", 30000)
         fx.ok("FIND IT on geo-02 ends with this browser > 0.5 % or an honest 'renderer could not'", found, await pg.evaluate("[document.querySelector('#seven .sratio').textContent,JSON.stringify(__seven.plan),document.querySelector('#seven .scounter').textContent]"))
-        fx.ok("counter travelled a geocentric distance (km)", await fx.wait(pg, "/arrived · travelled [\\d,.]+ km/.test(document.querySelector('#seven .scounter').textContent)", 15000), await fx.txt(pg, "#seven .scounter"))
+        fx.ok("counter travelled a geocentric distance (m or km: the GeoViewpoint's bind transition advances only while rendering, so the start varies at fx 0)", await fx.wait(pg, "/arrived · travelled [\\d,.]+ (m|km)$/.test(document.querySelector('#seven .scounter').textContent)", 15000), await fx.txt(pg, "#seven .scounter"))
         han = await pg.evaluate("(()=>{const k=__seven.list.find(k=>k.includes('hanim-01'));return k&&SEVEN.open(k)&&k})()")
         fx.ok("open hanim-01", bool(han) and "hanim-01" in han, han)
         fx.ok("hanim-01 loaded", await fx.wait(pg, "__seven.loaded===__seven.cur&&__seven.cur.includes('hanim-01')", 90000), await pg.evaluate("__seven.loaded"))
@@ -106,6 +115,7 @@ async def main():
         # ---- hygiene ----
         fx.ok("no .stamp-unknown in the three sections", await pg.evaluate("document.querySelectorAll('#stage .stamp-unknown,#morph .stamp-unknown,#seven .stamp-unknown').length") == 0, await pg.evaluate("[...document.querySelectorAll('.stamp-unknown')].map(e=>e.textContent)"))
         fx.ok("three section headers with honesty lines", await pg.evaluate("['stage','morph','seven'].every(id=>document.querySelector('#'+id+' .sh h2')&&document.querySelector('#'+id+' > .hl').textContent.length>40)"))
+        fx.ok("story panels own their visibility (no el: RAIL.init observes every section and IO keeps one callback per element)", await pg.evaluate("['hero','morph','seven'].every(n=>__panels[n]&&!__panels[n].el)&&typeof __hero.visible==='boolean'&&__panels.hero.draws>0"), await pg.evaluate("JSON.stringify({v:__hero.visible,d:__panels.hero.draws})"))   # the page sits at #seven here, so the view itself is off screen
         fx.ok("LOOP panels registered: hero, morph, seven, stageRig lazily", await pg.evaluate("!!(__panels.hero&&__panels.morph&&__panels.seven)"))
         await fx.shot(pg, "v4_story.png", full=False)
         errs = fx.errors(pg)

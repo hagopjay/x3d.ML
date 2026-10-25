@@ -5,7 +5,9 @@
    hash, the credit line); the hero rail (HERO's measured JPEGs only, never a staged snapshot; auto-advance 14 s at fx ≥ 1 unless hovered, never under webdriver);
    the three claim tiles (c.rates, c.seven, c.ratio from 02-claims: known from the record first, earned when live.core lands; lane arrows brighten as the run clock
    passes each lane's last scene); the legend; the report spine (attempt 1 frame → the validator's first finding → "the model was sent its own report" → final frame,
-   the diff line through DIFF, a 36 px scrub crossfade, Open the morph); a labelled Cycles slot that reads STAGED when BUILD.HAS_CYCLES (dormant otherwise, never a placeholder).
+   the diff line through DIFF, a 36 px scrub crossfade, Open the morph); a labelled Cycles slot that reads the STAGED manifest (data/staged.json via BUILD.staged, or
+   an inline STAGED when BUILD.HAS_CYCLES bakes one): blank:true stills read "did not render in Blender", links only when url is set, nothing when there is no entry.
+   Hooks: HEROUI.stagedManifest() (promise → manifest|null), HEROUI.stagedLines(key) / __hero.stagedLines, __hero.manifest {turntables,stills}.
    Globals: HEROUI {open(i, opts), select(key), toggle(mode), mode(), measuredCard, plaque, spine, cur(), items()}, hero_spine_pick; HERO (the inline data object) gains
    open / select / plaque / spine / measuredCard so the WORKPLAN names resolve. Claims: hero.valid_finals (expected STATS.claims['c.seven'].of), hero.seven151 (expected
    STATS.claims['c.seven'].expected), hero.ratio_x (expected STATS.claims['c.ratio'].expected.x).
@@ -45,6 +47,19 @@ const measuredCard={
   seg(){const staged=!!(self.__stage&&__stage.show.staged);E.segS.classList.toggle("on",staged);E.segM.classList.toggle("on",!staged);ST.mode=staged?"staged":"measured";__hero.mode=ST.mode;__hero.staged=staged}};
 /* ---------- plaque ---------- */
 /* memoised per scene: readSteps + sha run once per chain, never per tick; the status is the scrubber's (20-sim), "?" prints VERIFYING */
+/* ---------- the STAGED manifest (demo/v4/data/staged.json): read, never a hard-coded list ----------
+   source order: self.STAGEDM (40-sheet already fetched it) → an inline STAGED global (a build that bakes one) → fetch data/staged.json when BUILD.staged
+   (or ?staged=1). Every entry carries the manifest's measured flag (cycles_manifest.py: blank = under 0.5 % of pixels differ from the dominant colour by
+   more than 48/255): blank:true reads "did not render in Blender" and is never presented as a render; a picture or link appears only when url is set. */
+let SM=null,smP=null;
+function stagedManifest(){if(smP)return smP;smP=(async()=>{try{if(self.STAGEDM&&typeof STAGEDM==="object")SM=STAGEDM;else if(typeof STAGED!=="undefined"&&STAGED&&typeof STAGED==="object")SM=STAGED;
+  else if((self.BUILD&&BUILD.staged)||UTIL.qs("staged")==="1"){const r=await fetch(self.BUILD&&typeof BUILD.staged==="string"?BUILD.staged:"data/staged.json");if(r.ok)SM=await r.json()}}catch(e){__hero.stagedErr=String(e&&e.message||e)}
+  __hero.manifest=SM?{turntables:Object.keys(SM.turntables||{}).length,stills:Object.keys(SM.stills||{}).length}:null;return SM})();return smP}
+/* stagedLines(key): one labelled line per baked picture the manifest holds for a ledger key (turntable, then each still camera); [] when none */
+function stagedLines(key){if(!SM||!key)return[];const out=[];const one=(kind,v)=>{if(!v||typeof v!=="object")return;const eng=`${v.engine||"Cycles"} · Blender ${v.blender||"?"} · ${v.importer||"x3d-blender-io"}`;
+    if(v.blank===true)out.push({kind,blank:true,url:null,text:`${kind}: did not render in Blender (nonblank ${v.nonblank!=null?fmt.pct(v.nonblank,2):"—"} under the measured pixel rule, a blank frame) · ${eng}`});
+    else out.push({kind,blank:false,url:v.url||null,text:`${kind}: STAGED, a baked picture, not the live renderer${v.nonblank!=null?` · nonblank ${fmt.pct(v.nonblank,2)}`:""}${v.frames>1?` · ${v.frames} frames`:""} · ${eng}${v.url?"":" · not yet uploaded"}`})};
+  one("Cycles turntable",SM.turntables&&SM.turntables[key]);const st=SM.stills&&SM.stills[key];if(st&&typeof st==="object")Object.keys(st).forEach(cam=>one(`Cycles still (${cam})`,st[cam]));return out}
 const CH=new Map(),HH=new Map();const bodyHash=it=>{let h=HH.get(it.idx);if(!h){h=contentHash(it.body);HH.set(it.idx,h)}return h};
 function chainLine(it){const L=liveOf(it),id=self.S&&S.liveIds&&S.liveIds.get(it.idx),sc=id&&S.byId.get(id);
   if(!sc){const T=L?fmt.clock(L.T):null;return{steps:`chain ${2*it.calls+1} steps · builds when the run clock reaches ${T||"this scene"}`,head:"head: pending",id:null}}
@@ -61,9 +76,9 @@ const plaque={
     txt(E.p3,`content hash ${bodyHash(it).slice(0,6)}… · ${c.head} · x3dprov/0.1 · page-normalised hash · Confirmed for this scene`);plaque.cycles(it)},
   tick(it){if(!it)return;const c=chainLine(it);const sp=E.p2.lastChild;if(sp&&sp.nodeType===1){if(txt(sp,c.steps))sp.className=c.id?"":"mute";}
     const s3=`content hash ${bodyHash(it).slice(0,6)}… · ${c.head} · x3dprov/0.1 · page-normalised hash · Confirmed for this scene`;txt(E.p3,s3)},
-  /* the Cycles slot: reads STAGED (baked only when BUILD.HAS_CYCLES); nothing is shown otherwise */
-  cycles(it){const S2=self.BUILD&&BUILD.HAS_CYCLES&&self.STAGED&&(STAGED[it.key]||(STAGED.turntables&&STAGED.turntables[it.key]));if(!S2||!S2.url){E.cyc.hidden=true;E.cyc.textContent="";return}
-    E.cyc.hidden=false;E.cyc.textContent="";E.cyc.append(`Cycles ${S2.blender||"5.2.2"} CPU · x3d-blender-io ${S2.importer||""} · a baked picture, not the live renderer · same bytes, hash ${contentHash(it.body).slice(0,8)} · WorldInfo dropped on import (documented) · `,el("a",{href:S2.url,target:"_blank",rel:"noopener",text:`turntable ${S2.frames||""} frames`}))}};
+  /* the Cycles slot: every line the STAGED manifest holds for this key (blank flag read from the manifest); hidden when the manifest has nothing */
+  cycles(it){const L=stagedLines(it.key);if(!L.length){E.cyc.hidden=true;E.cyc.textContent="";if(!SM)stagedManifest().then(()=>{if(SM&&H()[ST.cur]===it)plaque.cycles(it)});return}
+    E.cyc.hidden=false;E.cyc.textContent="";L.forEach((l,i)=>{if(i)E.cyc.append(" · ");if(l.url&&!l.blank)E.cyc.append(el("a",{href:l.url,target:"_blank",rel:"noopener",text:l.text}));else E.cyc.append(el("span",{class:l.blank?"bad":"",text:l.text}))})}};
 /* ---------- rail ---------- */
 const rail={
   build(){E.strip=el("div",{class:"strip",role:"listbox","aria-label":"hero scenes"});E.cap=el("div",{class:"cap m"});
@@ -142,7 +157,7 @@ const spine={
 /* ---------- mount ---------- */
 function header(){return{title:"The stage",unit:`${H().length} hero scenes · the counted frame pinned · the thesis in three numbers · the repair spine`,stamps:{source:"RECORDED 17 Oct",validator:"fork@eb4b4b4 recorded",renderer:"X_ITE 16.5.0 offline + 16.5.1 offline"},grade:"C",
   honesty:"staged render (lights, ground, camera at render time, nothing written) · counted frame: X_ITE 16.5.0 swiftshader offline, pinned top-right, 16.5.1 twin printed · verdict fork@eb4b4b4 · Confirmed for this scene"}}
-function mount(sec){ST.sec=sec;const view=$("stageView"),band=$("hero");if(!view||!band)return;defineClaims();
+function mount(sec){ST.sec=sec;const view=$("stageView"),band=$("hero");if(!view||!band)return;defineClaims();stagedManifest();
   view.appendChild(el("div",{class:"sov thesis"},[el("h1",{text:THESIS.h1}),el("h2",{text:THESIS.h2}),el("p",{text:THESIS.p})]));
   view.appendChild(measuredCard.build());view.appendChild(plaque.build());view.appendChild(rail.build());
   view.addEventListener("dblclick",e=>{if(e.target.closest(".sov"))return;if(self.STAGE&&STAGE.show&&STAGE.show.reset)STAGE.show.reset()});
@@ -151,10 +166,11 @@ function mount(sec){ST.sec=sec;const view=$("stageView"),band=$("hero");if(!view
   band.textContent="";band.appendChild(el("div",{class:"band cols-7-5"},[el("div",null,[tiles,legend]),spine.build()]));
   open(0,{noLoad:true});spine.update();
   document.addEventListener("keydown",e=>{if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if((e.key==="m"||e.key==="M")&&ST.visible)toggle()});
-  /* observed on the view, not the section: IO keeps one callback per element and the LOOP panel below observes the section */
-  IO.observe(view,v=>{ST.visible=v;if(v)rail.arm();else if(ST.auto){ST.auto();ST.auto=null;__hero.auto=false}},{rootMargin:"0px"});
+  /* visibility is owned here (IO on the view): IO keeps ONE callback per element and 10-curtain-mast's RAIL.init observes every main section, which would
+     replace a LOOP panel's own `el:sec` observer (the panel would then never see the viewport) — so the panel below has no el and reads ST.visible */
+  IO.observe(view,v=>{ST.visible=v;__hero.visible=v;if(v){rail.arm();if(self.LOOP)LOOP.dirty(LOOP.bits.CLOCK|LOOP.bits.DATA)}else if(ST.auto){ST.auto();ST.auto=null;__hero.auto=false}},{rootMargin:"0px"});
   if(self.FX)FX.onChange(()=>{rail.arm();if(ST.want==null&&self.__stage&&__stage.show.ready){ST.stagedApplied=false}});
-  LOOP.register({name:"hero",bit:LOOP.bits.CLOCK|LOOP.bits.DATA|LOOP.bits.SCENE|LOOP.bits.VERIFY,rateHz:2,budgetMs:2,el:sec,draw(){const it=H()[ST.cur];if(!it)return;
+  LOOP.register({name:"hero",bit:LOOP.bits.CLOCK|LOOP.bits.DATA|LOOP.bits.SCENE|LOOP.bits.VERIFY,rateHz:2,budgetMs:2,draw(){if(!ST.visible)return;const it=H()[ST.cur];if(!it)return;
     if(self.S&&E.lanes)E.lanes.querySelectorAll(".arrow").forEach(a=>{const ln=ST.lanes.find(l=>l.id===a.dataset.m);a.classList.toggle("on",!!ln&&S.clk>=ln.last)});
     plaque.tick(it);
     const R=ST.measured.get(it.idx);if(!R||R.wait){measureFor(it);measuredCard.live(it)}
@@ -162,8 +178,8 @@ function mount(sec){ST.sec=sec;const view=$("stageView"),band=$("hero");if(!view
       else if(!ST.stagedApplied&&__stage.show.loads>=1&&wantStaged()&&!__stage.show.staged&&STAGE.show.ok){ST.stagedApplied=true;show(it,true)}
       measuredCard.seg()}}})}
 function onData(name){if(name==="live.core"){lanesFromLive();spine.update();plaque.update(H()[ST.cur])}else if(name==="live.jpg"||name==="live.bodies"||name==="renders.151")spine.update()}
-const HEROUI={open,toggle,select(key){const i=H().findIndex(it=>it.key===key||it.p===key||it.idx===key);return i>=0?open(i):null},mode:()=>ST.mode,measuredCard,plaque,spine,cur:()=>H()[ST.cur]||null,items:H,hero_spine_pick,state:ST};
+const HEROUI={open,toggle,stagedManifest,stagedLines,select(key){const i=H().findIndex(it=>it.key===key||it.p===key||it.idx===key);return i>=0?open(i):null},mode:()=>ST.mode,measuredCard,plaque,spine,cur:()=>H()[ST.cur]||null,items:H,hero_spine_pick,state:ST};
 SECTIONS.register({id:"stage",part:"live.core",header:header(),mount(sec){try{mount(sec)}catch(e){console.error("hero mount",e);if(self.BOOT)BOOT.error(e,"hero mount")}},onData});
 if(self.HERO&&typeof HERO==="object")Object.assign(HERO,{open,select:HEROUI.select,plaque,spine,measuredCard});
-Object.assign(self,{HEROUI,hero_spine_pick,__hero});
+__hero.stagedLines=stagedLines;Object.assign(self,{HEROUI,hero_spine_pick,__hero});
 })();

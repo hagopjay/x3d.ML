@@ -209,8 +209,9 @@ function mount(s){sec=s;sectionHeader(sec,headerSpec());const sb=sec.querySelect
   IO.observe(E.stage,v=>{ST.visible=v;__morph.visible=v;if(v){if(ST.leave){ST.leave();ST.leave=null}ensureInst()}else{if(ST.leave)ST.leave();ST.leave=later(()=>{ST.leave=null;if(!ST.visible)disposeInst()},2500)}},{rootMargin:"64px"});
   document.addEventListener("keydown",e=>{if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if((e.key==="r"||e.key==="R")&&ST.visible&&ST.cur)MORPH.replay()});
   if(self.FX)FX.onChange(()=>{if(ST.visible&&ST.bot){disposeInst();ensureInst()}});
-  LOOP.register({name:"morph",bit:LOOP.bits.CLOCK,always:true,rateHz:30,budgetMs:3,el:sec,draw(now){
-    if(ST.visible&&!ST.bot&&self.X3D)ensureInst();
+  /* no `el`: RAIL.init (10-curtain-mast) observes every section and IO keeps one callback per element, so a panel's own el:sec observer would be replaced; ST.visible comes from the IO above */
+  LOOP.register({name:"morph",bit:LOOP.bits.CLOCK,always:true,rateHz:30,budgetMs:3,draw(now){if(!ST.visible)return;
+    if(!ST.bot&&self.X3D)ensureInst();
     if(ST.replay){const t=Math.min(1,(now-ST.replay.t0)/ST.replay.ms);ST.t=t;applyT();if(t>=1){ST.replay=null;__morph.replay=null}}
     if(ST.lock&&ST.top&&ST.bot&&ST.top.ok&&ST.bot.ok){const act=ST.active==="top"?ST.top:ST.bot,oth=act===ST.top?ST.bot:ST.top;const p=act.pose();if(p)oth.setPose(p.position,p.q)}
     if(ST.cur&&!ST.sc&&self.S&&S.liveIds&&S.liveIds.get(ST.cur.i)){ST.steps=stepsOf(ST.cur);__morph.steps=ST.steps;RIB.set(ST.steps)}
