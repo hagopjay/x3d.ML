@@ -43,7 +43,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,tr:focus-visible,c
 button.on{background:var(--accbg);border-color:var(--acc);color:var(--acc)}
 button.bad{border-color:var(--bad);color:var(--bad)} button.bad:hover:not(:disabled){background:var(--badbg)}
 button.warn{border-color:var(--warn);color:var(--warn)} button.warn:hover:not(:disabled){background:var(--warnbg)}
-button.primary{background:var(--acc);color:#03050a;border-color:var(--acc);font-weight:600}
+button.primary{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:600}
 .seg{display:inline-flex} .seg button{border-radius:0;margin-left:-1px} .seg button:first-child{border-radius:4px 0 0 4px;margin-left:0} .seg button:last-child{border-radius:0 4px 4px 0}
 input[type=range]{accent-color:var(--acc);width:160px;margin:0}
 label{color:var(--mute);font-size:12px;display:inline-flex;gap:6px;align-items:center}
