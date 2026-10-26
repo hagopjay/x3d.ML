@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape><Appearance><PhysicalMaterial/></Appearance><VolumeData dimensions="1 1 1"><ImageTexture3D url='"vol.nrrd"'/><OpacityMapVolumeStyle/></VolumeData></Shape>
+    <Shape><Box/></Shape>
+  </Scene>
+</X3D>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+<head><component name="Shape" level="2"/></head>
+<Scene>
+<Transform translation="0 0 0"><Shape><Appearance><PhysicalMaterial/></Appearance><Sphere/></Shape></Transform>
+<Transform translation="10 0 0"><Shape><Appearance><Material/></Appearance><Box/></Shape></Transform>
+<Transform translation="20 0 0"><Shape><Appearance><UnlitMaterial/></Appearance><Cylinder/></Shape></Transform>
+<Transform translation="30 0 0"><Shape><Appearance><Material/></Appearance><Cone/></Shape></Transform>
+<Transform translation="40 0 0"><Shape><Appearance><Material/></Appearance><Rectangle2D/></Shape></Transform>
+<Transform translation="50 0 0"><Shape><Appearance><Material/></Appearance><Disk2D/></Shape></Transform>
+</Scene></X3D>

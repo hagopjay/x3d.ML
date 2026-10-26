@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'><head><component name='Shape' level='2'/></head><Scene>
+<NavigationInfo headlight='false' type='"NONE"'/><Background skyColor='0 0 0'/>
+<OrthoViewpoint position='0 0 10' fieldOfView='-1 -1 1 1'/>
+<Shape><Appearance><UnlitMaterial><ImageTexture containerField='emissiveTexture' url='"red128.png"'/></UnlitMaterial></Appearance><Rectangle2D size='1 1'/></Shape>
+</Scene></X3D>

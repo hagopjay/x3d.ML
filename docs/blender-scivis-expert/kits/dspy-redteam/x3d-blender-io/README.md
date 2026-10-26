@@ -1,0 +1,178 @@
+# X3D Blender I/O — X3D 4.0/4.1 fork of the Web3D X3D/VRML2 add-on
+
+This repository is HagopJay's working fork of the Blender extension
+[Web3D X3D/VRML2 format](https://extensions.blender.org/add-ons/web3d-x3d-vrml2-format)
+(upstream: [projects.blender.org/extensions/io_scene_x3d](https://projects.blender.org/extensions/io_scene_x3d)).
+Its purpose is to bring the exporter and importer up to **X3D 4.0** (ISO/IEC 19775-1:2023)
+so Blender can trade physically based scenes with X3D 4 browsers (X_ITE, X3DOM, Castle, FreeWRL)
+and with AI tooling built on the Web3D Consortium's validated encodings. Everything upstream
+still works unchanged; the new path is opt-in.
+
+**Installs alongside the official extension.** Since 2.6.0 this fork ships under its own extension id
+`x3d_blender_io` (name "X3D Blender I/O") instead of upstream's `web3d_x3d_vrml2_format`, so Blender
+no longer treats the two as one extension and an upstream update cannot replace it. Both register the
+`import_scene.x3d` / `export_scene.x3d` operators, so enable one of them at a time.
+
+## What the fork adds (Milestones 1 to 4: PBR materials, scene structure, animation, HAnim, asset bridge)
+
+Export dialog, **Include** panel, new **X3D Version** selector:
+
+| Option | What you get |
+| --- | --- |
+| **X3D 3.3 (Material, classic)** — default | The upstream exporter, unchanged: Phong `Material`, lights, cameras, hierarchy, text, curves. |
+| **X3D 4.0 (PhysicalMaterial, PBR)** | Principled BSDF → `PhysicalMaterial` (baseColor, metallic, roughness, emissiveColor, transparency, normalScale, occlusionStrength) with glTF-style `baseTexture` / `metallicRoughnessTexture` / `normalTexture` / `emissiveTexture` / `occlusionTexture` children; Emission-only trees → `UnlitMaterial`; `Appearance alphaMode="BLEND|MASK"`; `IndexedFaceSet` with `Coordinate`, `Normal` (when *Normals* is on), `TextureCoordinate` (active UV map) and `ColorRGBA` (active colour attribute); one `Shape` per material slot; `solid` from *Backface Culling*; `creaseAngle` from smooth shading; modifiers and triangulation honoured; shared mesh data and materials written once with `DEF` and reused with `USE`; texture paths follow the *Path Mode* setting exactly as the 3.3 exporter does. Nested `Transform` hierarchy (*Hierarchy* on) or flat world transforms; lights as `PointLight` / `SpotLight` / `DirectionalLight` (headlight off when present); cameras as `Viewpoint`; curves, surfaces and text objects as meshes; world colour as `Background`; optional **Animation** sampling of object transforms over the frame range into one `TimeSensor` with `PositionInterpolator` / `OrientationInterpolator` nodes and `ROUTE`s. Object types the path cannot write yet are listed in `<meta name="info">`. |
+
+| **X3D 4.1 draft (GaussianSplats)** | Everything the 4.0 option writes, plus Gaussian-splat objects as the draft `GaussianSplats` node (component `GaussianSplats` level 1): `positions`, `scales`, `orientations`, `opacities` and the `sphericalHarmonicsDegree*Coef*` arrays. With the 4.0 option the same objects degrade to a coloured `PointSet` and a `<meta name="info">` says so. X_ITE 16.4.3 renders the node, including a 500,000-splat scene written by this exporter. Blender 5.3's native splat PointClouds (what its PLY, SPZ, glTF and USD importers create) export the same way, and on 5.3+ the importer reads the node back into one. |
+
+Import: `PhysicalMaterial` and `UnlitMaterial` now become Principled BSDF node trees
+(metallic/roughness texture split into G and B channels, normal map with strength, occlusion kept as a labelled node,
+`alphaMode` → *Blended* / *Dithered* with an alpha-cutoff node; an `UnlitMaterial`'s `emissiveTexture` is multiplied by
+its `emissiveColor` in a Mix node, as X_ITE draws it; the colour texture's alpha times `1 - transparency` feeds *Alpha*,
+with the default `alphaMode` AUTO only when the image has a pixel that is not opaque), `solid` → *Backface Culling*,
+and object and mesh names survive the round trip (`OB_` / `ME_` / `MA_` prefixes are stripped).
+
+The X3D 4.0 writer validates its own output: XML well-formedness always, and field types and
+ranges through the Web3D `x3d` Python package when it is installed (`pip install x3d`).
+The header declares `<component name="Shape" level="2" />` whenever it writes PhysicalMaterial or UnlitMaterial:
+X3D 4.0 Table E.2 gives Immersive Shape level 2, but the Table E.3 node list and X3DUOM leave both nodes out, and the
+statement is correct under either reading.
+
+### Inline bridge: glTF, Gaussian splats and other X3D files
+
+An **Empty** with a custom property `x3d_inline_url` (for example `parts/wheel.glb`, `cloud.ply`, `room.x3d`) exports as an
+`<Inline url=…>` inside its `Transform`; nothing under it is re-exported. On import an `Inline` becomes such an Empty with the
+referenced asset loaded underneath it: `.x3d` / `.x3dv` / `.wrl` go through this importer recursively, `.gltf` / `.glb` through
+Blender's glTF importer, and `.ply` / `.splat` Gaussian-splat files become splat meshes. The Empty's local frame is Blender's
+(Z-up), so the asset sits under it exactly as Blender's own importer would place it; the Inline's `Transform` carries the Y-up
+rotation so an X3D browser sees the asset in its native frame. Everything loaded from an Inline is tagged `x3d_inline_source`
+and stays behind the reference when the scene is exported again, so a file that inlines other files round-trips as references.
+
+A **splat mesh** is an ordinary mesh with only vertices, the custom property `x3d_gaussian_splats`, and per-point attributes
+`splat_scale` (linear, per axis), `splat_rotation` (quaternion), `splat_opacity` (0..1), `splat_sh0_0` (the DC colour
+coefficient) and optional `splat_sh1_0` … `splat_sh3_6`; a `Color` attribute carries the reconstructed base colour for the
+viewport. `source/splat_io.py` reads and writes the reference 3DGS PLY layout and the 32-byte `.splat` layout without `bpy`,
+`tools/splat_fixture.py` builds a test helix. Quaternions are written as `x y z w`, the glTF `KHR_gaussian_splatting` order the
+draft node mirrors. The draft text does not state the order; X_ITE 16.4.3 reads `x y z w`, and the same data written
+`w x y z` renders as streaks. Blender 5.3's native splat objects are not read yet (that API is still in alpha).
+
+### X3D fields kept as custom properties
+
+Some X3D fields have no Blender setting. The importer keeps them as custom properties, and the X3D 4.0 and 4.1 export
+writes them back, so an imported scene keeps them through export (the X3D 3.3 writer does not use them):
+
+| Property | On | Holds | Written back as |
+|---|---|---|---|
+| `x3d_head_meta` | scene | every `<head>` `meta` name/content pair of the imported file, in order, repeated names such as two `reference` entries included | `meta` after the export's own `generator` and `filename`; a title, creator, description, keywords or licence set in the export dialog replaces the imported one, a dialog reference is added to the imported ones |
+| `x3d_background` | scene | the first Background's `skyColor`, `skyAngle`, `groundColor`, `groundAngle` and `transparency` | that Background, in place of one made from the world colour (delete the property to get the world colour back) |
+| `x3d_metadata` | object | the Shape's `Metadata*` node: nested `node`, `name`, `reference` and `value` (the field's X3D text, or the member list of a MetadataSet) | the `metadata` field of the object's first Shape |
+| `x3d_viewpoint_description` | camera object | the Viewpoint `description` | `description` (the camera name when there is none) |
+| `x3d_ambient_intensity`, `x3d_shadow_intensity` | light data | the light's `ambientIntensity` and `shadowIntensity` | the same fields |
+| `x3d_intensity` | light data | the light's `intensity` in the file; it marks the light as imported | nothing by itself: the light's energy is written as `intensity` without the cap at 1 that lights made in Blender get |
+
+Two fields map onto Blender settings instead: a light's `shadows` (X3D default `false`) is its *Cast Shadow* switch, and a
+Shape's `castShadow` is the object's shadow visibility. A light imported from X3D keeps an `intensity` above 1 on the
+X3D 4.0 path, whose schema sets no upper limit. A light made in Blender is still capped at 1 (1.75 W for point and spot
+lights, strength 1 for a sun): watts have no fixed X3D scale and the writer emits no attenuation, so Blender's default
+1000 W point light would otherwise white out the scene. The X3D 3.3 writer caps every light at 1, as the 3.x schemas require.
+
+An X3D `Switch` imports every child, so nothing is lost, but shows only the one its `whichChoice` names, as an X3D
+browser does: the others are hidden in the viewport and the render and tagged `x3d_switch_hidden` (-1, the default,
+shows none). The export does not write a Switch back yet: by default it writes every child as a sibling, and with
+*Visible Only* only the chosen one.
+
+### Tests
+
+```
+cd tests
+python -m unittest test_emit_x3d40 test_parse_x3d40 test_material_analysis   # no Blender needed
+python -m unittest test_roundtrip_bpy   # needs Blender's `bpy` module (pip install bpy) or run inside Blender
+```
+
+Armatures export as **HAnim 2.0**: each armature becomes an `HAnimHumanoid` (inside its object Transform), every bone an `HAnimJoint` nested like the bone hierarchy with `center` at the bone head, meshes deformed by the armature (Armature modifier or armature parenting) become `skin` Shapes sharing one `skinCoord` Coordinate in armature space, and vertex groups become `skinCoordIndex` / `skinCoordWeight`. With *Animation* on, posed bones get `OrientationInterpolator` (and `PositionInterpolator` for translated bones) nodes routed to the joints' `set_rotation` / `set_translation`, computed relative to the rest pose so the skin follows exactly. `tools/hanim_fixture.py` builds the two-bone test arm. Importing HAnim goes the other way: an `HAnimHumanoid` becomes an armature (each `HAnimJoint` a bone whose head sits at the joint `center`, tail toward its children), `skin` Shapes become meshes parented to the armature with an Armature modifier and one vertex group per joint from `skinCoordIndex` / `skinCoordWeight` (coincident skin points with identical weights are welded back into one vertex), and `OrientationInterpolator` / `PositionInterpolator` ROUTEs into joints become pose-bone keyframes, so a rigged, animated arm round-trips.
+
+`tools/scene_fixture.py` builds a parented cube, three lights, a camera, a text object and a keyframed cube; its round-trip test checks nesting, light types, viewpoint, text geometry, interpolators and ROUTEs, and that everything lands back in world space on import. On import, XML `ROUTE` chains (TimeSensor → PositionInterpolator / OrientationInterpolator / scale → Transform) become linear keyframes on every object under the animated Transform, in world space, so animated files round-trip; the TimeSensor `loop` flag is not turned into a cycle modifier.
+
+`tools/swatch_book.py` builds the seven-swatch fixture scene (dielectric, metal, glass, unlit, textured,
+two-material smooth sphere with vertex colours, shared-mesh cubes) that the round-trip test exports,
+validates, and reimports. Verified on Blender 5.2 (`bpy` wheel). Blender 4.2 is the minimum.
+
+### Architecture of the 4.0 path
+
+`extract.py` (Blender → IR) → `ir.py` (plain dataclasses, no `bpy`) → `emit_x3d40.py` (IR → XML) → `validate.py`.
+The legacy exporter is untouched; `export_pipeline.py` chooses the writer from the version option.
+Planning notes live in `docs/planning/`.
+
+## Upstream README
+
+
+## Features & Documentation
+see [Web3D X3D/VRML2 Documentation](https://projects.blender.org/extensions/io_scene_x3d/wiki)
+
+### Import file formats
+- .x3d
+- .x3dz
+- .x3dv
+- .wrl
+
+### Export file formats
+- .x3d
+- .x3dz (compression enabled)
+
+## Guides
+
+This add-on was part of [Blender 4.1 bundled add-ons](https://docs.blender.org/manual/en/4.1/addons/). This is now available as an extension on the [Extensions platform](https://extensions.blender.org/add-ons/web3d-x3d-vrml2-format).
+
+To build a new version of the extension:
+* `<path_to_blender.exe> --command extension build --source-dir=./source --output-dir=./output`
+
+For more information about building extensions refer to the [documentation](https://docs.blender.org/manual/en/4.2/advanced/extensions/index.html).
+
+## Contribute
+
+This add-on is offered as it is and maintained by @Bujus_Krachus and the community, no support expected.
+
+Contributions in form of [bug reports/feature requests](https://projects.blender.org/extensions/io_scene_x3d/issues), bug fixes, improvements, new features, etc. are always welcome as I don't have the time to do or know it all.
+
+Code contributions:
+- fork the repository, do your changes and create a Pull-Request to https://projects.blender.org/extensions/io_scene_x3d/src/branch/main. 
+- It is best practice to keep the fork up-to-date with the main repo, follow the guidelines in ["Step-by-Step Workflow for merging two repos"](https://projects.blender.org/extensions/io_scene_x3d/issues/42) to do so.
+- Describe as detailed as possible what this PR does and why it's good to have. Ideally include sample files for testing and demonstrating. Also make sure, that a merge of the PR does not break other features. 
+- Code contributions by contributors with write permissions can also be done directly on the main branch of the main repo or for larger changes on a seperate branch inside the main repo.
+- Pull Requests shall be created as early as possible as a WIP PR. Communication regarding the implemenation will happen there.
+
+Checklist for PRs to get accpeted:
+- The code follows the general python guidelines as much as possible: [Pep-8](https://peps.python.org/pep-0008/)
+- The code shall be well documented, use docstrings where possible, add comments if needed and add as much details as possible to the PR message.
+- Dead/commented out code shall be avoided or documented on when it shall be uncommented.
+- Simplify the code. This improves readability and can imporve performance as well.
+- The code has to be well tested, it should throw no python errors and work under different circumstances. Other code parts shall not break.
+- Known limitations and future tasks should get mentioned.
+- The newest blender version should work with the suggested changes. If a eralier version (4.2+) breaks, document it.
+- And last but not least: keep the users in mind. As engineers we tend to overcomplicate, keep it simple, keep it straight-forward.
+
+Fellow active maintainers are also always very welcome. If you're interested, reach out.
+
+Releases will happen regularly after some code changes are done. We try to follow semantic versioning as much as possible.
+
+Original authors: Campbell Barton, Bart, Bastien Montagne, Seva Alekseyev
+
+## Specifications
+For deeper understanding of both file formats supported by this extension, refer to:
+- [VRML (.wrl)](https://graphcomp.com/info/specs/sgi/vrml/)
+- [X3D (.x3d)](https://www.web3d.org/specifications/) and [X3D V3.3(.x3d)](https://www.web3d.org/documents/specifications/19775-1/V3.3/index.html)
+- [TODO: X3D V4.0](https://www.web3d.org/documents/specifications/19775-1/V4.0/index.html)
+
+Comparison software:
+- [FreeWRL](https://freewrl.sourceforge.io/)
+- [x3dom](https://www.x3dom.org/)
+- [x_ite](https://create3000.github.io/x_ite/)
+- [Castle Engine/Castle Model Viewer](https://castle-engine.io/castle-model-viewer) by @Michalis-Kamburelis
+
+## Test Files
+- [Import: Demo Files by Web3D Consortium](https://www.web3d.org/x3d/content/examples/Basic/index.html)
+- [Import: Castle Engine Demo Models - X3D/VRML folder by Michalis-Kamburelis](https://castle-engine.io/demo_models.php)
+- [Export: Blender Tests by Michalis-Kamburelis](https://github.com/michaliskambi/x3d-tests/tree/master/blender_tests)
+- Export: TODO
+
+## License
+[GPL-3.0](LICENSE.txt)

@@ -1,0 +1,3 @@
+# Blender scientific-visualization expert: knowledge base and fixture kits
+
+Private. Built 24-26 Oct 2026. KNOWLEDGE-BASE-v1.md (+ v1.1 addendum) is the distilled base; FLYWHEEL-SYNERGY-v1.md is the x3d.flywheel synergy map with 18 graded bridges; workflow-result-wf_6a9e68d8.json is the raw 52-agent result (digests, catalog, verifier verdicts); kits/ holds the scripts and small results the readers produced, by slice. Numbers in kits/ come from session scratch and have not all been re-run; grades in the flywheel doc already account for that. Pins: bpy 5.2.3 LTS, x3d-blender-io 482741b, validator commits named in each doc.

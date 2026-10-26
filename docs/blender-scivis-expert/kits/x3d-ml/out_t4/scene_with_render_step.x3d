@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D version="4.0" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2" />
+    <meta name="generator" content="X3D Blender I/O v2.6.1" />
+    <meta name="filename" content="B_out.x3d" />
+    <meta name="title" content="sci point cloud A" />
+    <meta name="reference" content="data sha256 63eadcbc3ef7eef8 (synthetic temperature field)" />
+    <meta name="license" content="CC0 synthetic" />
+    <meta name="info" content="Object 'T' has no exportable faces." /><meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;agent&quot;:&quot;t2_roundtrip.py&quot;,&quot;agent_ref&quot;:&quot;scratch&quot;,&quot;data_bytes&quot;:58,&quot;data_sha256&quot;:&quot;63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9&quot;,&quot;input_sha256&quot;:&quot;8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74&quot;,&quot;op&quot;:&quot;ingest&quot;,&quot;output_sha256&quot;:&quot;8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;}"/><meta name="x3dprov.step.2" content="{&quot;input_sha256&quot;:&quot;8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74&quot;,&quot;op&quot;:&quot;validate&quot;,&quot;output_sha256&quot;:&quot;8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74&quot;,&quot;prev&quot;:&quot;4e4c666facd3c16dbbc6122b7fdc21dc167b638dbf7206f3188099e399cad60a&quot;,&quot;validator&quot;:&quot;x3d_mcp fork&quot;,&quot;validator_ref&quot;:&quot;8dd0d3e&quot;,&quot;verdict&quot;:&quot;valid&quot;,&quot;xsd&quot;:&quot;4.0&quot;,&quot;xsd_valid&quot;:true}"/><meta name="x3dprov.step.3" content="{&quot;agent_ref&quot;:&quot;482741b&quot;,&quot;detail&quot;:&quot;bpy 5.2.3 LTS import+export X3D40&quot;,&quot;input_sha256&quot;:&quot;8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74&quot;,&quot;op&quot;:&quot;transform&quot;,&quot;output_sha256&quot;:&quot;f02041fd68c16fb67843e1f5f994679c6e143a34bb6a3fb6af98c0d541aee416&quot;,&quot;prev&quot;:&quot;cbc5ed852e5ed3a86d32afa25c9cec65751924dbe527cf9c2d2a64656d72b650&quot;,&quot;tool&quot;:&quot;x3d-blender-io&quot;}"/><meta name="x3dprov.step.4" content="{&quot;agent&quot;:&quot;blender&quot;,&quot;agent_ref&quot;:&quot;5.2.3 LTS e13b728c6880&quot;,&quot;device&quot;:&quot;CPU&quot;,&quot;embedded_chain_head&quot;:&quot;b904b067ce6e18ed79df3906792e54ca0b172d53264a24b77d40788b5ca9312e&quot;,&quot;engine&quot;:&quot;CYCLES&quot;,&quot;input_sha256&quot;:&quot;f02041fd68c16fb67843e1f5f994679c6e143a34bb6a3fb6af98c0d541aee416&quot;,&quot;op&quot;:&quot;render&quot;,&quot;output_file&quot;:&quot;fig.exr&quot;,&quot;output_file_sha256&quot;:&quot;0fad3512fe339989fe7a97b1349fa2307a6d7b8aebbb43eba5fce7ca006e4ec8&quot;,&quot;output_sha256&quot;:&quot;f02041fd68c16fb67843e1f5f994679c6e143a34bb6a3fb6af98c0d541aee416&quot;,&quot;prev&quot;:&quot;b904b067ce6e18ed79df3906792e54ca0b172d53264a24b77d40788b5ca9312e&quot;,&quot;renderer&quot;:&quot;blender-cycles&quot;,&quot;resolution&quot;:&quot;128x128&quot;,&quot;samples&quot;:4,&quot;script_sha256&quot;:&quot;63496d0ad482d52363edc56046acbdb3555c52406e50911dae57b163a9cabd84&quot;,&quot;view_transform&quot;:&quot;Standard&quot;}"/></head>
+  <Scene>
+    <NavigationInfo headlight="true" type='"EXAMINE" "ANY"' />
+    <Transform DEF="OB_T" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+    </Transform>
+    <Transform DEF="OB_M" translation="3.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+      <Shape>
+        <MetadataSet containerField="metadata" name="sci" reference="units-v0">
+          <MetadataString name="units" value='"K"' />
+          <MetadataString name="colormap" value='"viridis"' />
+          <MetadataString name="data_sha256" value='"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9"' />
+          <MetadataDouble name="vmin" value="290.1" />
+          <MetadataDouble name="vmax" value="301.4" />
+        </MetadataSet>
+        <Appearance DEF="APP_M">
+          <PhysicalMaterial DEF="MA_M" baseColor="0.200000 0.500000 0.800000" metallic="0.000000" roughness="0.800000" />
+        </Appearance>
+        <IndexedFaceSet DEF="ME_M_Box" coordIndex="0 1 2 3 -1 4 5 1 6 -1 7 8 9 10 -1 11 12 13 2 -1 14 15 16 17 -1 5 18 19 11 -1" solid="false">
+          <Coordinate point="0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 -0.500000 -0.500000 0.500000" />
+          <TextureCoordinate point="1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 1.000000 1.000000 0.000000 1.000000" />
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

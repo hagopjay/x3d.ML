@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D version="4.0" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="HAnim" level="1" />
+    <meta name="generator" content="X3D Blender I/O v2.6.1" />
+    <meta name="filename" content="rig_loa1.x3d" />
+    <meta name="title" content="H-Anim LOA1 from X3DUOM 4.1" />
+    <meta name="creator" content="bridge probe" />
+  </head>
+  <Scene>
+    <NavigationInfo headlight="true" type='"EXAMINE" "ANY"' />
+    <Transform DEF="OB_HAnimRig" translation="0.000000 0.000000 0.000000" rotation="-1.000000 0.000000 0.000000 1.570796" scale="1.000000 1.000000 1.000000">
+      <HAnimHumanoid DEF="hanim_HAnimRig" name="HAnimRig" version="2.0" skeletalConfiguration="BLENDER" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+        <HAnimJoint DEF="hanim_HAnimRig_humanoid_root" name="humanoid_root" center="0.000000 -0.027700 0.824000" containerField="skeleton">
+          <HAnimJoint DEF="hanim_HAnimRig_sacroiliac" name="sacroiliac" center="0.000000 -0.001600 0.914900">
+            <HAnimJoint DEF="hanim_HAnimRig_l_hip" name="l_hip" center="0.096100 0.000100 0.912400">
+              <HAnimJoint DEF="hanim_HAnimRig_l_knee" name="l_knee" center="0.104000 -0.030800 0.486700">
+                <HAnimJoint DEF="hanim_HAnimRig_l_talocrural" name="l_talocrural" center="0.110100 0.073600 0.065600">
+                  <HAnimJoint DEF="hanim_HAnimRig_l_metatarsophalangeal_2" name="l_metatarsophalangeal_2" center="0.108600 -0.036800 0.000100" />
+                </HAnimJoint>
+              </HAnimJoint>
+            </HAnimJoint>
+            <HAnimJoint DEF="hanim_HAnimRig_r_hip" name="r_hip" center="-0.095000 -0.002900 0.917100">
+              <HAnimJoint DEF="hanim_HAnimRig_r_knee" name="r_knee" center="-0.086700 -0.031800 0.491300">
+                <HAnimJoint DEF="hanim_HAnimRig_r_talocrural" name="r_talocrural" center="-0.080100 0.076600 0.071200">
+                  <HAnimJoint DEF="hanim_HAnimRig_r_metatarsophalangeal_2" name="r_metatarsophalangeal_2" center="-0.080100 -0.036800 0.000000" />
+                </HAnimJoint>
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+          <HAnimJoint DEF="hanim_HAnimRig_vl5" name="vl5" center="0.002800 0.077600 1.056800">
+            <HAnimJoint DEF="hanim_HAnimRig_skullbase" name="skullbase" center="0.004400 -0.023600 1.620900" />
+            <HAnimJoint DEF="hanim_HAnimRig_l_shoulder" name="l_shoulder" center="0.202900 0.038700 1.437600">
+              <HAnimJoint DEF="hanim_HAnimRig_l_elbow" name="l_elbow" center="0.201400 0.068200 1.135700">
+                <HAnimJoint DEF="hanim_HAnimRig_l_radiocarpal" name="l_radiocarpal" center="0.198400 0.058300 0.866300" />
+              </HAnimJoint>
+            </HAnimJoint>
+            <HAnimJoint DEF="hanim_HAnimRig_r_shoulder" name="r_shoulder" center="-0.190700 0.032500 1.440700">
+              <HAnimJoint DEF="hanim_HAnimRig_r_elbow" name="r_elbow" center="-0.194900 0.062000 1.138800">
+                <HAnimJoint DEF="hanim_HAnimRig_r_radiocarpal" name="r_radiocarpal" center="-0.195900 0.052100 0.869400" />
+              </HAnimJoint>
+            </HAnimJoint>
+          </HAnimJoint>
+        </HAnimJoint>
+        <HAnimJoint USE="hanim_HAnimRig_humanoid_root" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_sacroiliac" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_hip" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_knee" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_talocrural" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_metatarsophalangeal_2" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_hip" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_knee" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_talocrural" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_metatarsophalangeal_2" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_vl5" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_skullbase" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_shoulder" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_elbow" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_l_radiocarpal" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_shoulder" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_elbow" containerField="joints" />
+        <HAnimJoint USE="hanim_HAnimRig_r_radiocarpal" containerField="joints" />
+      </HAnimHumanoid>
+    </Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <GeoTransform geoCenter="38.9 -77.0 0" geoSystem='"GD" "WE"' translation="10 0 0"><Shape><Box/></Shape></GeoTransform>
+  </Scene>
+</X3D>

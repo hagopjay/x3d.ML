@@ -1,0 +1,93 @@
+{
+ "blender": "5.2.3 LTS",
+ "fork": "8dd0d3e",
+ "importer": "482741b",
+ "v0": {
+  "verdict": "pass",
+  "errors": 0,
+  "warnings": 0,
+  "checks": [],
+  "first": []
+ },
+ "v0_head_meta": [
+  [
+   "generator",
+   "X3D Blender I/O v2.6.1"
+  ],
+  [
+   "filename",
+   "v0_blender_lane.x3d"
+  ]
+ ],
+ "v0_loss_audit": [
+  [
+   "procedural-input-lost",
+   "Marble",
+   "Base Color<-ShaderNodeTexNoise"
+  ],
+  [
+   "emission-strength-lost",
+   "Red",
+   5.0
+  ],
+  [
+   "light-intensity-clamped",
+   "Sun",
+   3.0
+  ]
+ ],
+ "stamped_verify": {
+  "ok": true,
+  "status": "verified",
+  "steps": 4,
+  "problems": []
+ },
+ "stamped_still_valid": {
+  "verdict": "pass",
+  "errors": 0,
+  "warnings": 0,
+  "checks": [],
+  "first": []
+ },
+ "import_kept_head_meta_names": [
+  "generator",
+  "filename",
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2",
+  "x3dprov.step.3",
+  "x3dprov.step.4"
+ ],
+ "roundtrip_head_meta_names": [
+  "generator",
+  "filename",
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2",
+  "x3dprov.step.3",
+  "x3dprov.step.4"
+ ],
+ "roundtrip_verify_unrecorded": {
+  "ok": false,
+  "status": "stale",
+  "steps": 4,
+  "problems": [
+   "file content differs from last recorded output (edited after the last step, untracked)"
+  ]
+ },
+ "roundtrip_verify_recorded": {
+  "ok": true,
+  "status": "verified",
+  "steps": 5,
+  "problems": []
+ },
+ "roundtrip_valid": {
+  "verdict": "pass",
+  "errors": 0,
+  "warnings": 0,
+  "checks": [],
+  "first": []
+ },
+ "export_deterministic_content_hash": false,
+ "audit_after_roundtrip": []
+}

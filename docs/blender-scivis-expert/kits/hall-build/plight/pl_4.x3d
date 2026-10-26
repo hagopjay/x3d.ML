@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'><head><component name='Shape' level='2'/></head><Scene>
+<NavigationInfo headlight='false' type='"NONE"'/><Background skyColor='0 0 0'/>
+<OrthoViewpoint position='0 0 10' fieldOfView='-1 -1 1 1'/>
+<PointLight location='0 0 2' intensity='4' color='1 1 1' radius='100' global='true'/>
+<Shape><Appearance><PhysicalMaterial baseColor='0.5 0.5 0.5' metallic='0' roughness='1'/></Appearance><Rectangle2D size='8 8'/></Shape>
+</Scene></X3D>

@@ -1,0 +1,34 @@
+{
+ "bpy": "5.2.3 LTS",
+ "objects_after_import": [
+  [
+   "Helix",
+   "MESH",
+   true
+  ]
+ ],
+ "head_prov_survived_names": [
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2"
+ ],
+ "stamped_xsd": {
+  "valid": true,
+  "schema": "4.1"
+ },
+ "out_xsd": true,
+ "verify_unrecorded": "stale",
+ "verify_after_transform_step": "verified",
+ "splat_attr_max_abs_drift_first_vs_second_export": {
+  "positions": 0.0,
+  "scales": 0.0,
+  "orientations": 0.0,
+  "opacities": 0.0,
+  "sphericalHarmonicsDegree0Coef0": 0.0,
+  "sphericalHarmonicsDegree1Coef0": 0.0,
+  "sphericalHarmonicsDegree1Coef1": 0.0,
+  "sphericalHarmonicsDegree1Coef2": 0.0
+ },
+ "n_splats": 48,
+ "gaussian_nodes_in_out": 1
+}

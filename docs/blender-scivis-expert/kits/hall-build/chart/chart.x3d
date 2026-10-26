@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head><component name='Shape' level='2'/><meta name='title' content='colour chart'/></head><Scene>
+<NavigationInfo headlight='false' type='"NONE"'/>
+<Background skyColor='0 0 0'/>
+<DirectionalLight DEF='L' direction='0 0 -1' intensity='1.0' color='1 1 1' global='true'/>
+<OrthoViewpoint DEF='V' position='6 -2 10' fieldOfView='-7 -3 7 3' description='chart'/>
+<Transform translation='0.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.02000 0.02000 0.02000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='1.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.05000 0.05000 0.05000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='2.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.10000 0.10000 0.10000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='3.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.18000 0.18000 0.18000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='4.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.30000 0.30000 0.30000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='5.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.40000 0.40000 0.40000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='6.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.50000 0.50000 0.50000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='7.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.60000 0.60000 0.60000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='8.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.70000 0.70000 0.70000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='9.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.80000 0.80000 0.80000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='10.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.90000 0.90000 0.90000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='11.0 0.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='1.00000 1.00000 1.00000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='0.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.96000 0.84500 0.69000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='1.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.83529 0.63137 0.40392'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='2.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.62353 0.57647 0.53725'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='3.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.45000 0.58000 0.90000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='4.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.45337 0.61859 0.79866'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='5.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='1.00000 0.45000 0.20000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='6.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='1.00000 0.00000 0.00000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='7.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.00000 1.00000 0.00000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='8.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.00000 0.00000 1.00000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='9.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.50000 0.50000 0.50000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='10.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.80000 0.80000 0.80000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='11.0 -1.0 0'><Shape><Appearance><UnlitMaterial emissiveColor='0.20000 0.30000 0.40000'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='0.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.02000 0.02000 0.02000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='1.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.05000 0.05000 0.05000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='2.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.10000 0.10000 0.10000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='3.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.18000 0.18000 0.18000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='4.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.30000 0.30000 0.30000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='5.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.40000 0.40000 0.40000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='6.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.50000 0.50000 0.50000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='7.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.60000 0.60000 0.60000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='8.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.70000 0.70000 0.70000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='9.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.80000 0.80000 0.80000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='10.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.90000 0.90000 0.90000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='11.0 -2.0 0'><Shape><Appearance><PhysicalMaterial baseColor='1.00000 1.00000 1.00000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='0.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.96000 0.84500 0.69000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='1.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.83529 0.63137 0.40392' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='2.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.62353 0.57647 0.53725' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='3.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.45000 0.58000 0.90000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='4.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.45337 0.61859 0.79866' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='5.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='1.00000 0.45000 0.20000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='6.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='1.00000 0.00000 0.00000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='7.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.00000 1.00000 0.00000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='8.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.00000 0.00000 1.00000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='9.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.50000 0.50000 0.50000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='10.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.80000 0.80000 0.80000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+<Transform translation='11.0 -3.0 0'><Shape><Appearance><PhysicalMaterial baseColor='0.20000 0.30000 0.40000' metallic='0' roughness='1'/></Appearance><Rectangle2D size='0.9 0.9'/></Shape></Transform>
+</Scene></X3D>

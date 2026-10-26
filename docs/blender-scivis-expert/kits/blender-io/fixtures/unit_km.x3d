@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head><unit category="length" name="kilometre" conversionFactor="1000"/><meta name="title" content="t"/></head>
+  <Scene>
+    <Shape><Box size="1 1 1"/></Shape>
+  </Scene>
+</X3D>

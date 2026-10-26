@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape><IndexedFaceSet coordIndex="0 1 2 -1"><GeoCoordinate geoSystem='"GD" "WE"' point="38 -77 0  38.1 -77 0  38 -76.9 0"/></IndexedFaceSet></Shape>
+  </Scene>
+</X3D>

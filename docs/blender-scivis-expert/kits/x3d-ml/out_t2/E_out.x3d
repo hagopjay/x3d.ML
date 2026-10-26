@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D version="4.0" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2" />
+    <meta name="generator" content="X3D Blender I/O v2.6.1" />
+    <meta name="filename" content="E_out.x3d" />
+    <meta name="title" content="sci point cloud A" />
+    <meta name="reference" content="data sha256 63eadcbc3ef7eef8 (synthetic temperature field)" />
+    <meta name="license" content="CC0 synthetic" />
+    <meta name="x3dprov.version" content="x3dprov/0.1" />
+    <meta name="x3dprov.step.1" content='{"agent":"t2_roundtrip.py","agent_ref":"scratch","data_bytes":58,"data_sha256":"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9","input_sha256":"8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74","op":"ingest","output_sha256":"8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74","prev":"0000000000000000000000000000000000000000000000000000000000000000"}' />
+    <meta name="x3dprov.step.2" content='{"input_sha256":"8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74","op":"validate","output_sha256":"8fc0aebd976adc3d4aee52e9ebe4b5a473d810c4619c7801e03a4009929d8a74","prev":"4e4c666facd3c16dbbc6122b7fdc21dc167b638dbf7206f3188099e399cad60a","validator":"x3d_mcp fork","validator_ref":"8dd0d3e","verdict":"valid","xsd":"4.0","xsd_valid":true}' />
+    <meta name="info" content="Object 'T' has no exportable faces." />
+    <meta name="info" content="Object 'T.001' has no exportable faces." />
+  </head>
+  <Scene>
+    <NavigationInfo headlight="true" type='"EXAMINE" "ANY"' />
+    <Transform DEF="OB_T" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+    </Transform>
+    <Transform DEF="OB_M" translation="3.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+      <Shape>
+        <MetadataSet containerField="metadata" name="sci" reference="units-v0">
+          <MetadataString name="units" value='"K"' />
+          <MetadataString name="colormap" value='"viridis"' />
+          <MetadataString name="data_sha256" value='"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9"' />
+          <MetadataDouble name="vmin" value="290.1" />
+          <MetadataDouble name="vmax" value="301.4" />
+        </MetadataSet>
+        <Appearance DEF="APP_M">
+          <PhysicalMaterial DEF="MA_M" baseColor="0.200000 0.500000 0.800000" metallic="0.000000" roughness="0.800000" />
+        </Appearance>
+        <IndexedFaceSet DEF="ME_M_Box" coordIndex="0 1 2 3 -1 4 5 1 6 -1 7 8 9 10 -1 11 12 13 2 -1 14 15 16 17 -1 5 18 19 11 -1" solid="false">
+          <Coordinate point="0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 -0.500000 -0.500000 0.500000" />
+          <TextureCoordinate point="1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 1.000000 1.000000 0.000000 1.000000" />
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+    <Transform DEF="OB_T_001" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+    </Transform>
+    <Transform DEF="OB_M_001" translation="3.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+      <Shape>
+        <MetadataSet containerField="metadata" name="sci" reference="units-v0">
+          <MetadataString name="units" value='"K"' />
+          <MetadataString name="colormap" value='"viridis"' />
+          <MetadataString name="data_sha256" value='"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9"' />
+          <MetadataDouble name="vmin" value="290.1" />
+          <MetadataDouble name="vmax" value="301.4" />
+        </MetadataSet>
+        <Appearance DEF="APP_M_001">
+          <PhysicalMaterial DEF="MA_M_001" baseColor="0.200000 0.500000 0.800000" metallic="0.000000" roughness="0.800000" />
+        </Appearance>
+        <IndexedFaceSet DEF="ME_M_Box_001" coordIndex="0 1 2 3 -1 4 5 1 6 -1 7 8 9 10 -1 11 12 13 2 -1 14 15 16 17 -1 5 18 19 11 -1" solid="false">
+          <Coordinate point="0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 -0.500000 0.500000 -0.500000 0.500000 0.500000 -0.500000 -0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 0.500000 0.500000 -0.500000 0.500000 -0.500000 -0.500000 0.500000" />
+          <TextureCoordinate point="1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 0.000000 1.000000 0.000000 1.000000 1.000000 0.000000 1.000000 1.000000 1.000000 0.000000 1.000000" />
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

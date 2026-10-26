@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D version="4.0" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2" />
+    <meta name="generator" content="X3D Blender I/O v2.6.1" />
+    <meta name="filename" content="rt_patched.x3d" />
+  </head>
+  <Scene>
+    <NavigationInfo headlight="true" type='"EXAMINE" "ANY"' />
+    <Transform DEF="OB_T_CRGB" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+      <Shape>
+        <Appearance DEF="APP_T_CRGB">
+          <PhysicalMaterial DEF="MA_T_CRGB" baseColor="0.800000 0.800000 0.800000" metallic="1.000000" roughness="1.000000" />
+        </Appearance>
+        <IndexedFaceSet DEF="ME_CRGB" coordIndex="0 1 2 -1" solid="false">
+          <Coordinate point="0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 1.000000 0.000000" />
+          <Normal vector="0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000" />
+          <TextureCoordinate point="0.000000 0.000000 1.000000 0.000000 0.000000 1.000000" />
+          <ColorRGBA color="0.214041 0.214041 0.214041 1.000000 0.214041 0.214041 0.214041 1.000000 0.214041 0.214041 0.214041 1.000000" />
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+    <Transform DEF="OB_T_CRGBA" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+      <Shape>
+        <Appearance USE="APP_T_CRGB" />
+        <IndexedFaceSet DEF="ME_CRGBA" coordIndex="0 1 2 -1" solid="false">
+          <Coordinate point="0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 1.000000 0.000000" />
+          <Normal vector="0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000" />
+          <TextureCoordinate point="0.000000 0.000000 1.000000 0.000000 0.000000 1.000000" />
+          <ColorRGBA color="0.214041 0.214041 0.214041 1.000000 0.214041 0.214041 0.214041 1.000000 0.214041 0.214041 0.214041 1.000000" />
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+    <Transform DEF="OB_T_CFACE" translation="0.000000 0.000000 0.000000" rotation="0.000000 0.000000 1.000000 0.000000" scale="1.000000 1.000000 1.000000">
+      <Shape>
+        <Appearance USE="APP_T_CRGB" />
+        <IndexedFaceSet DEF="ME_CFACE" coordIndex="0 1 2 -1" solid="false">
+          <Coordinate point="0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 1.000000 0.000000" />
+          <Normal vector="0.000000 0.000000 1.000000 0.000000 0.000000 1.000000 0.000000 0.000000 1.000000" />
+          <TextureCoordinate point="0.000000 0.000000 1.000000 0.000000 0.000000 1.000000" />
+          <ColorRGBA color="0.214041 0.214041 0.214041 1.000000 0.214041 0.214041 0.214041 1.000000 0.214041 0.214041 0.214041 1.000000" />
+        </IndexedFaceSet>
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

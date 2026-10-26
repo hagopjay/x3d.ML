@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape>
+      <Appearance><UnlitMaterial emissiveColor="0.96 0.845 0.69" transparency="0.25"/></Appearance>
+      <Box size="1 1 1"/>
+    </Shape>
+  </Scene>
+</X3D>
