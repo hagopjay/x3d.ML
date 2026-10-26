@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gobbler 3 · PolyXandria</title><meta name="description" content="A knowledge graph of the X3D community and its flywheel loops, growing out of the gobbler's neck."><link rel="stylesheet" href="vendor/x_ite/x_ite.css"><link rel="stylesheet" href="common.css"><style>
+.ex{display:grid;grid-template-columns:minmax(260px,330px) 1fr minmax(260px,360px);gap:22px;align-items:start}
+@media(max-width:980px){.ex{grid-template-columns:1fr}}
+.ex h3{font-size:15px;margin:0 0 8px;color:var(--gold)}
+.ex input[type=search]{width:100%;padding:10px 12px;background:var(--bg2);border:1px solid var(--rule);border-radius:8px;color:var(--ink);font:15px var(--sans)}
+.ex .grp{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.ex .chip{cursor:pointer}
+.sw{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+.list{max-height:560px;overflow:auto;border:1px solid var(--rule);border-radius:8px;background:var(--bg2)}
+.list button{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--rule);color:var(--ink);padding:8px 10px;font:14px var(--sans);cursor:pointer}
+.list button:hover,.list button.on{background:#1a1620}
+.list small{color:var(--ink3);font:11px var(--mono)}
+.card{border:1px solid var(--rule);border-radius:10px;background:var(--bg2);padding:16px;position:sticky;top:12px}
+.card h4{font:500 20px var(--font);margin:0 0 4px}
+.card .meta{font:12px var(--mono);color:var(--ink3);margin-bottom:10px}
+.card blockquote{margin:10px 0;padding:8px 12px;border-left:2px solid var(--gold2);color:var(--ink2);font:14px/1.45 var(--font)}
+.card ul{margin:6px 0 0;padding:0;list-style:none}
+.card li{padding:3px 0;font-size:13.5px;color:var(--ink2)}
+.card li a{cursor:pointer}
+.tag{font:11px var(--mono);border:1px solid var(--rule);border-radius:5px;padding:2px 6px;margin-right:4px;color:var(--ink2)}
+.tag.sim{border-color:#7a5b24;color:#e0b66a}.tag.dat{border-color:#3f6b4f;color:#9fd1af}.tag.rec{border-color:#59508a;color:#b7aef0}
+.loops{display:grid;gap:10px}
+.loop{border:1px solid var(--rule);border-radius:10px;padding:12px 14px;background:var(--bg2)}
+.loop b{font:500 16px var(--font)}
+.loop ol{margin:6px 0 8px;padding-left:20px;color:var(--ink2);font-size:13.5px}
+.fid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
+.fid div{border:1px solid var(--rule);border-radius:8px;padding:10px 12px}
+.fid b{display:block;font:500 24px var(--font);color:var(--gold)}.fid span{font-size:12.5px;color:var(--ink3)}
+</style><script src="vendor/x_ite/x_ite.min.js"></script><script src="common.js"></script></head><body><header class="stage" id="stage"><div class="shade"></div><div class="fog"></div><div class="dark"></div><div class="grain"></div><div class="flash"></div><div class="vignette"></div><div class="ui"><div class="top"><div class="brand"><a href="index.html">PolyXandria</a></div><nav class="nav"><a class="chip" href="index.html">All demos</a><a class="chip" href="gobbler.html">Gobbler</a><a class="chip on" href="gobbler3.html">Gobbler 3</a></nav></div><div class="titleblock"><div class="kicker">Demo · Gobbler 3 · scriptless X3D 4.0 knowledge graph</div><h1>The <em>Gobbler</em> thinks</h1><p>Everything we know about the X3D community, as a graph the bird is swallowing. The flywheel loops turn as wheels; the lights wander.</p></div><div class="bar"><div class="btns" id="vps"><button class="chip" id="btn-tour">Pause tour</button><button class="chip" id="btn-dark">Lights out</button><button class="chip" id="btn-clean">Hide text</button><button class="chip" id="btn-full">Full screen</button></div><div class="hud" id="hud">starting</div></div></div><div class="busy" id="busy">Starting the viewer</div><div class="hint" id="hint">Drag to orbit · scroll to zoom · pick a star in the explorer below to fly to it</div></header><main><section class="band"><div class="wrap"><h2>Explore the graph</h2><p class="lead">The 3D scene is one scriptless file. This panel is the index to it: search a name, filter by kind, provenance or grade, and the camera flies to the star. Simulated and recalled entities are tagged, and real ones carry the sentence they came from.</p><div class="fid"><div><b>604</b><span>entities drawn</span></div><div><b>1179</b><span>relations</span></div><div><b>15</b><span>flywheel loops</span></div><div><b>112</b><span>from live data</span></div><div><b>426</b><span>quoted from documents</span></div><div><b>66</b><span>tagged recalled or simulated</span></div></div><br><div class="ex"><div><h3>Find</h3><input type="search" id="q" placeholder="validator, Blender, glTF, X_ITE..." autocomplete="off"><div class="grp"><button class="chip fam on" data-fam="spec"><span class="sw" style="background:#facc73"></span>Standards and nodes</button><button class="chip fam on" data-fam="tool"><span class="sw" style="background:#57dbf5"></span>Tools, validators, repos</button><button class="chip fam on" data-fam="people"><span class="sw" style="background:#f575a8"></span>People, orgs, events</button><button class="chip fam on" data-fam="work"><span class="sw" style="background:#ff9e42"></span>Workstreams, documents, scenes</button><button class="chip fam on" data-fam="learn"><span class="sw" style="background:#9ef275"></span>Experiments, findings, metrics</button><button class="chip fam on" data-fam="rule"><span class="sw" style="background:#ad85ff"></span>Rules and decisions</button><button class="chip fam on" data-fam="loop"><span class="sw" style="background:#fff2cc"></span>Flywheel loops</button></div><div class="grp"><button class="chip pv on" data-pv="data">live data</button><button class="chip pv on" data-pv="doc">quoted</button><button class="chip pv on" data-pv="model_recall">recalled</button><button class="chip pv on" data-pv="simulated">simulated</button></div><div class="grp"><button class="chip gd on" data-gd="Confirmed">Confirmed</button><button class="chip gd on" data-gd="Likely">Likely</button><button class="chip gd on" data-gd="Suspected">Suspected</button></div></div><div><h3 id="lh">Entities</h3><div class="list" id="list"></div></div><div><div class="card" id="card"><h4>Pick a star</h4><div class="meta">entity card</div><p style="color:var(--ink3);font-size:14px">Every entity shows its kind, how we know it (live data, a quoted document, recalled or simulated), its grade, the sentence that supports it and its neighbours.</p></div></div></div></div></section><section class="band"><div class="wrap"><h2>The flywheel loops</h2><p class="lead">The virtuous circle and the knowledge graph are the same thing. Each loop is a ring of the graph; ride one to watch the camera follow its steps.</p><div class="loops" id="loops"></div></div></section><section class="band"><div class="wrap"><h2>Take it with you</h2><p class="lead">The graph as data, for tools: <a href="graph-v3.json">graph-v3.json</a> (what this page reads) and <a href="graph-v3.jsonld">graph-v3.jsonld</a> (JSON-LD, every relation a statement with provenance, grade and evidence). The scene is <a href="gobbler3.x3d">gobbler3.x3d</a>, X3D 4.0, checked with the fork validator.</p></div></section><footer><div class="wrap"><p>Real core, tagged fill. Counts are from the build that made this page. Evidence lines are quoted from the sources they came from.</p><p><a href="index.html">All demos</a></p></div></footer></main><script>PX.boot({"scene": "gobbler3.x3d", "look": {"toneMapping": "KHR_PBR_NEUTRAL", "exposure": 1.0}, "darkDefault": false, "autoClean": 0, "viewpoints": [["Wide", "Wide"], ["Colossus", "Colossus"], ["EyeToEye", "Eye"], ["Inside", "Inside"], ["Flywheel", "Flywheel"], ["Crown", "Crown"]], "tour": {"vp": "Wide", "center": [5.2, -2.2, 0], "r0": 26, "r1": 9.5, "e0": 34, "e1": 6, "duration": 44, "spin": 0.05, "loop": "pingpong", "fov": 0.95, "delay": 900}});</script><script>
+(function(){
+  var PAL={"Standard": "#facc73", "Component": "#facc73", "NodeType": "#facc73", "Tool": "#57dbf5", "Validator": "#57dbf5", "Repo": "#57dbf5", "Org": "#f575a8", "Person": "#f575a8", "Event": "#f575a8", "Workstream": "#ff9e42", "Document": "#ff9e42", "Dataset": "#ff9e42", "Scene": "#ff9e42", "Experiment": "#9ef275", "Finding": "#9ef275", "Metric": "#9ef275", "Rule": "#ad85ff", "Decision": "#ad85ff", "Loop": "#fff2cc"}, FAM={"Standard": "spec", "Component": "spec", "NodeType": "spec", "Tool": "tool", "Validator": "tool", "Repo": "tool", "Org": "people", "Person": "people", "Event": "people", "Workstream": "work", "Document": "work", "Dataset": "work", "Scene": "work", "Experiment": "learn", "Finding": "learn", "Metric": "learn", "Rule": "rule", "Decision": "rule", "Loop": "loop"}, FAMHEX={"spec": "#facc73", "tool": "#57dbf5", "people": "#f575a8", "work": "#ff9e42", "learn": "#9ef275", "rule": "#ad85ff", "loop": "#fff2cc"}, G=null, sel=-1, flyRaf=0, ride=0;
+  var $=function(s){return document.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+  var on={fam:{},pv:{},gd:{}}; $$('.fam').forEach(function(b){on.fam[b.dataset.fam]=1}); $$('.pv').forEach(function(b){on.pv[b.dataset.pv]=1}); $$('.gd').forEach(function(b){on.gd[b.dataset.gd]=1});
+  function e(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  fetch('graph-v3.json').then(function(r){return r.json()}).then(function(g){G=g;G.adj=g.nodes.map(function(){return[]});g.edges.forEach(function(x,i){G.adj[x.s].push(i);G.adj[x.t].push(i)});render();loops()});
+  function pvTag(p){return'<span class="tag '+(p==='data'?'dat':p==='simulated'?'sim':p==='model_recall'?'rec':'')+'">'+({data:'live data',doc:'quoted',model_recall:'recalled',simulated:'simulated'}[p]||p)+'</span>'}
+  function render(){
+    var q=$('#q').value.trim().toLowerCase(), out=[];
+    G.nodes.forEach(function(n,i){ if(!on.fam[FAM[n.cls]]||!on.pv[n.prov]||!on.gd[n.grade])return; if(q&&n.label.toLowerCase().indexOf(q)<0&&n.cls.toLowerCase().indexOf(q)<0)return; out.push(i)});
+    out.sort(function(a,b){return G.nodes[b].deg-G.nodes[a].deg});
+    $('#lh').textContent=out.length+' of '+G.nodes.length+' entities';
+    $('#list').innerHTML=out.slice(0,250).map(function(i){var n=G.nodes[i];return'<button data-i="'+i+'" class="'+(i===sel?'on':'')+'"><span class="sw" style="background:'+PAL[n.cls]+'"></span><span>'+e(n.label)+'</span><small>'+e(n.cls)+'</small></button>'}).join('');
+  }
+  $('#list').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)select(+b.dataset.i,true)});
+  $('#q').addEventListener('input',render);
+  [['fam','fam'],['pv','pv'],['gd','gd']].forEach(function(k){$$('.'+k[0]).forEach(function(b){b.addEventListener('click',function(){var key=b.dataset[k[1]];if(on[k[0]][key]){delete on[k[0]][key];b.classList.remove('on')}else{on[k[0]][key]=1;b.classList.add('on')}render()})})});
+  function select(i,fly){
+    sel=i;var n=G.nodes[i];render();
+    var nb=G.adj[i].slice().sort(function(a,b){return rank(G.edges[b])-rank(G.edges[a])}).slice(0,10);
+    var h='<h4>'+e(n.label)+'</h4><div class="meta"><span class="sw" style="background:'+PAL[n.cls]+'"></span>'+e(n.cls)+' · '+pvTag(n.prov)+'<span class="tag">'+n.grade+'</span></div>';
+    var ev=null;G.adj[i].forEach(function(k){if(!ev&&G.edges[k].ev&&G.edges[k].ev[0])ev=G.edges[k].ev[0]});
+    if(n.notes&&n.notes[0])h+='<p style="font-size:14px;color:var(--ink2)">'+e(n.notes[0])+'</p>';
+    if(ev)h+='<blockquote>'+e(ev)+'</blockquote>';
+    if(n.metrics&&n.metrics.length)h+='<ul>'+n.metrics.map(function(m){return'<li><b style="color:var(--ink)">'+e(m.value)+'</b> '+e(m.name)+'</li>'}).join('')+'</ul>';
+    var pk=Object.keys(n.props||{}).slice(0,5);if(pk.length)h+='<ul>'+pk.map(function(k){return'<li>'+e(k)+': '+e(n.props[k])+'</li>'}).join('')+'</ul>';
+    if(nb.length){h+='<div class="meta" style="margin-top:12px">connected to</div><ul>'+nb.map(function(k){var x=G.edges[k],o=x.s===i?x.t:x.s,on_=G.nodes[o];return'<li><a data-go="'+o+'">'+e(on_.label)+'</a> <span style="color:var(--ink3);font:11px var(--mono)">'+(x.s===i?'':'← ')+e(x.p.replace(/_/g,' '))+(x.s===i?' →':'')+' · '+x.grade+'</span></li>'}).join('')+'</ul>'}
+    if(n.docs&&n.docs.length)h+='<div class="meta" style="margin-top:12px">'+e(n.docs.join(' · '))+'</div>';
+    $('#card').innerHTML=h;
+    if(fly)flyTo(n.xyz);
+    mark(n.xyz);
+  }
+  function rank(x){return({Confirmed:3,Likely:2,Suspected:1}[x.grade]||0)*10+(x.prov==='data'?5:0)}
+  $('#card').addEventListener('click',function(ev){var a=ev.target.closest('a[data-go]');if(a)select(+a.dataset.go,true)});
+  function mark(p){try{var m=PX.el.browser.currentScene.getNamedNode('PickMarker');m.translation=new X3D.SFVec3f(p[0],p[1],p[2])}catch(x){}}
+  function probe(){var sc=PX.el.browser.currentScene;return sc.getNamedNode('Probe')}
+  function flyTo(p,from,fov){
+    if(!window.X3D||!PX.el||!PX.el.browser)return; if(PX.tourStop)PX.tourStop();
+    var v;try{v=probe()}catch(x){return}
+    var cur=v.position, cp=[cur.x,cur.y,cur.z]; var d=0.0;
+    var tgt=p, pos=from||[p[0]+0.35,p[1]+0.4,p[2]+2.6];
+    var a=cp, b=pos, t0=performance.now(), D=1500;
+    try{v.set_bind=true;if(fov)v.fieldOfView=fov}catch(x){}
+    var oa=null; cancelAnimationFrame(flyRaf);
+    (function step(){var k=Math.min(1,(performance.now()-t0)/D);k=k*k*(3-2*k);
+      var q=[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k,a[2]+(b[2]-a[2])*k], o=PX.lookAt(q,tgt);
+      try{v.position=new X3D.SFVec3f(q[0],q[1],q[2]);v.orientation=new X3D.SFRotation(o[0],o[1],o[2],o[3])}catch(x){}
+      if(k<1)flyRaf=requestAnimationFrame(step)})();
+    $$('.vp').forEach(function(b){b.classList.remove('on')});
+    $('#stage').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function loops(){
+    $('#loops').innerHTML=G.loops.map(function(L,i){
+      return'<div class="loop"><b>'+e(L.name)+'</b> '+pvTag(L.prov)+'<span class="tag">'+L.grade+'</span>'+(L.gain?'<span class="tag">'+e(L.gain)+'</span>':'')+'<ol>'+L.steps.map(function(s){return'<li>'+e(G.nodes[s].label)+'</li>'}).join('')+'</ol>'+
+        '<button class="chip" data-wheel="'+i+'">Fly to the wheel</button> <button class="chip" data-ride="'+i+'">Ride the loop</button></div>'}).join('')||'<p class="lead">No loops in this build.</p>';
+  }
+  $('#loops').addEventListener('click',function(ev){
+    var w=ev.target.closest('[data-wheel]'),r=ev.target.closest('[data-ride]');
+    if(w){var L=G.loops[+w.dataset.wheel],rg=L.ring,n=rg.normal,s=n[2]>=0?1:-1,c=rg.center;flyTo(c,[c[0]+s*n[0]*rg.radius*2.6,c[1]+s*n[1]*rg.radius*2.6+0.3,c[2]+s*n[2]*rg.radius*2.6],0.95);mark(c)}
+    if(r){var L2=G.loops[+r.dataset.ride],k=0;clearInterval(ride);var stepf=function(){var n=G.nodes[L2.steps[k%L2.steps.length]];select(L2.steps[k%L2.steps.length],true);k++;if(k>L2.steps.length+1)clearInterval(ride)};stepf();ride=setInterval(stepf,3200)}
+  });
+  document.addEventListener('pointerdown',function(ev){if(ev.target.closest&&ev.target.closest('x3d-canvas'))clearInterval(ride)});
+})();
+</script></body></html>

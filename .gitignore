@@ -4,3 +4,5 @@ demo/node_modules/
 demo/shots/
 __pycache__/
 demo/tests/shots/
+gobbler-v3/build-private/vendor/
+gobbler-v3/build-public-candidate/vendor/
