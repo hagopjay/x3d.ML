@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D version="4.0" profile="Immersive"><head><component name="Shape" level="2"/></head><Scene><Transform DEF="T_CRGB"><Shape><Appearance><PhysicalMaterial/></Appearance>
+<IndexedFaceSet DEF="CRGB" coordIndex="0 1 2 -1" colorPerVertex="true" solid="false"><Coordinate point="0 0 0 1 0 0 0 1 0"/><Color color="0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5"/></IndexedFaceSet></Shape></Transform><Transform DEF="T_CRGBA"><Shape><Appearance><PhysicalMaterial/></Appearance>
+<IndexedFaceSet DEF="CRGBA" coordIndex="0 1 2 -1" colorPerVertex="true" solid="false"><Coordinate point="0 0 0 1 0 0 0 1 0"/><ColorRGBA color="0.5 0.5 0.5 1 0.5 0.5 0.5 1 0.5 0.5 0.5 1"/></IndexedFaceSet></Shape></Transform><Transform DEF="T_CFACE"><Shape><Appearance><PhysicalMaterial/></Appearance>
+<IndexedFaceSet DEF="CFACE" coordIndex="0 1 2 -1" colorPerVertex="false" solid="false"><Coordinate point="0 0 0 1 0 0 0 1 0"/><Color color="0.5 0.5 0.5"/></IndexedFaceSet></Shape></Transform></Scene></X3D>

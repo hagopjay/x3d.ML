@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'><head/><Scene>
+<TimeSensor DEF='Clock' cycleInterval='4' loop='true'/>
+<Viewpoint DEF='Cam' position='0 0 10' description='cam'/>
+<PositionInterpolator DEF='CamP' key='0 1' keyValue='0 0 10 0 0 4'/>
+<OrientationInterpolator DEF='CamO' key='0 1' keyValue='0 1 0 0 0 1 0 1.0'/>
+<DirectionalLight DEF='Sun' direction='0 -1 -1' intensity='1' color='1 1 1'/>
+<ScalarInterpolator DEF='SunI' key='0 1' keyValue='1 3'/>
+<ColorInterpolator DEF='SunC' key='0 1' keyValue='1 1 1 1 0.4 0.2'/>
+<Transform DEF='Mover' translation='0 0 0'><Shape><Appearance><Material DEF='Mat' diffuseColor='1 0 0' transparency='0'/></Appearance><Box/></Shape></Transform>
+<PositionInterpolator DEF='MovP' key='0 1' keyValue='0 0 0 2 0 0'/>
+<ScalarInterpolator DEF='MatT' key='0 1' keyValue='0 0.8'/>
+<ColorInterpolator DEF='MatC' key='0 1' keyValue='1 0 0 0 0 1'/>
+<Switch DEF='Sw' whichChoice='0'><Shape><Appearance><Material diffuseColor='0 1 0'/></Appearance><Sphere/></Shape><Shape><Appearance><Material diffuseColor='0 0 1'/></Appearance><Cone/></Shape></Switch>
+<IntegerSequencer DEF='SwSeq' key='0 0.5' keyValue='0 1'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='CamP' toField='set_fraction'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='CamO' toField='set_fraction'/>
+<ROUTE fromNode='CamP' fromField='value_changed' toNode='Cam' toField='set_position'/>
+<ROUTE fromNode='CamO' fromField='value_changed' toNode='Cam' toField='set_orientation'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='SunI' toField='set_fraction'/>
+<ROUTE fromNode='SunI' fromField='value_changed' toNode='Sun' toField='set_intensity'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='SunC' toField='set_fraction'/>
+<ROUTE fromNode='SunC' fromField='value_changed' toNode='Sun' toField='set_color'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='MovP' toField='set_fraction'/>
+<ROUTE fromNode='MovP' fromField='value_changed' toNode='Mover' toField='set_translation'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='MatT' toField='set_fraction'/>
+<ROUTE fromNode='MatT' fromField='value_changed' toNode='Mat' toField='set_transparency'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='MatC' toField='set_fraction'/>
+<ROUTE fromNode='MatC' fromField='value_changed' toNode='Mat' toField='set_diffuseColor'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='SwSeq' toField='set_fraction'/>
+<ROUTE fromNode='SwSeq' fromField='value_changed' toNode='Sw' toField='set_whichChoice'/>
+</Scene></X3D>

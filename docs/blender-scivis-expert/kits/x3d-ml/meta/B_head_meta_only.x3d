@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D version="4.0" profile="Interchange">
+  <head>
+    <meta name="title" content="metadata probe B: head meta only"/>
+    <meta name="x3dprov.version" content="x3dprov/0.1"/>
+    <meta name="x3dprov.step.1" content="{&quot;op&quot;:&quot;ingest&quot;}"/>
+  </head>
+  <Scene>
+    <Shape><Appearance><Material diffuseColor="1 0 0"/></Appearance><Box size="1 1 1"/></Shape>
+  </Scene>
+</X3D>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape><IsoSurfaceVolumeData dimensions="1 1 1" contourStepSize="0.1" surfaceValues="0.5"><ImageTexture3D containerField="voxels" url='"vol.nrrd"'/><ToneMappedVolumeStyle containerField="renderStyle"/></IsoSurfaceVolumeData></Shape>
+  </Scene>
+</X3D>

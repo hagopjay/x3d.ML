@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D version="4.1" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.1.xsd">
+  <head>
+    <meta name="generator" content="X3D Blender I/O v2.6.1" />
+    <meta name="filename" content="probe_fork.x3d" />
+    <meta name="info" content="Object 'probe4' has no exportable faces." />
+  </head>
+  <Scene>
+    <NavigationInfo headlight="true" type='"EXAMINE" "ANY"' />
+    <Transform DEF="OB_probe4" translation="0.000000 0.000000 0.000000" rotation="-1.000000 0.000000 0.000000 1.570796" scale="1.000000 1.000000 1.000000">
+    </Transform>
+  </Scene>
+</X3D>

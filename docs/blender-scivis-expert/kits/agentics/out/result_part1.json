@@ -1,0 +1,22 @@
+{
+ "blender": "5.2.3 LTS",
+ "fork": "8dd0d3e",
+ "importer": "482741b",
+ "v0": {
+  "verdict": "pass",
+  "errors": 0,
+  "warnings": 0,
+  "checks": [],
+  "first": []
+ },
+ "v0_head_meta": [
+  [
+   "generator",
+   "X3D Blender I/O v2.6.1"
+  ],
+  [
+   "filename",
+   "v0_blender_lane.x3d"
+  ]
+ ]
+}

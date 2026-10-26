@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Interchange" version="3.3">
+<Scene>
+<Transform translation="0 0 0"><Shape><Appearance><Material diffuseColor="1 0 0"/></Appearance><Sphere/></Shape></Transform>
+<Transform translation="10 0 0"><Shape><Appearance><Material diffuseColor="0 1 0"/></Appearance><Box/></Shape></Transform>
+<Transform translation="20 0 0"><Shape><Appearance><Material diffuseColor="0 0 1"/></Appearance><Box size="1 1 1"/></Shape></Transform>
+<Transform translation="30 0 0"><Shape><Appearance><Material diffuseColor="0 0 1"/></Appearance><Sphere radius="0.5"/></Shape></Transform>
+<Transform translation="40 0 0"><Shape><Appearance><Material diffuseColor="0 0 1"/></Appearance><Cylinder/></Shape></Transform>
+<Transform translation="50 0 0"><Shape><Appearance><Material diffuseColor="0 0 1"/></Appearance><Cone/></Shape></Transform>
+</Scene>
+</X3D>
