@@ -3,7 +3,7 @@ import fs from 'fs'; import path from 'path'; import http from 'http';
 const root = process.argv[2], out = process.argv[3]; const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.x3d':'model/x3d+xml','.jsonld':'application/ld+json'};
 const srv = http.createServer((q,r)=>{let p=path.join(root,decodeURIComponent(q.url.split('?')[0]));if(p.endsWith('/'))p+='index.html';fs.readFile(p,(e,d)=>{if(e){r.writeHead(404);r.end();return}r.writeHead(200,{'content-type':mime[path.extname(p)]||'application/octet-stream'});r.end(d)})}).listen(0);
 const port = srv.address().port;
-const b = await chromium.launch({args:['--use-gl=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
+const b = await chromium.launch({executablePath:'/opt/pw-browsers/chromium',args:['--disable-dev-shm-usage','--no-sandbox','--use-gl=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist']});
 const pg = await b.newPage({viewport:{width:1280,height:720}});
 const errs=[]; pg.on('pageerror',e=>errs.push('pageerror '+e.message)); pg.on('console',m=>{if(m.type()==='error')errs.push('console '+m.text().slice(0,200))});
 pg.on('response',r=>{if(r.status()>=400)console.log('HTTP',r.status(),r.url())});

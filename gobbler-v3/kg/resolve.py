@@ -37,6 +37,9 @@ def one(args):
 def main():
     m = json.load(open(G3 + '/merged.json')); os.makedirs(G3 + '/resolve', exist_ok=True)
     cand = candidates(m)
+    INCR = os.environ.get('INCR') == '1'      # incremental: only entities that did not exist in the previous merged.json; the old canon is kept and chained
+    if INCR:
+        prev = json.load(open(G3 + '/merged_prev.json'))['entities']; cand = {k: v for k, v in cand.items() if k not in prev}
     by = collections.defaultdict(list)
     for k, v in sorted(cand.items(), key=lambda kv: kv[1]['name'].lower()): by[v['type']].append((k, v))
     jobs = []
@@ -74,6 +77,9 @@ def main():
         for a in v['aliases']:
             na = merge.norm(a)
             if na in cand and na != k and na not in canon and k not in canon: canon[na] = k
+    if INCR:
+        old = json.load(open(G3 + '/canon_prev.json'))
+        canon = dict(canon); canon.update({k: canon.get(v, v) for k, v in old.items()})
     json.dump(canon, open(G3 + '/canon.json', 'w'))
     print('pairs', len(pairs), 'agreed', agreed, 'merged groups', len(groups), 'names mapped', len(canon))
 if __name__ == '__main__': main()

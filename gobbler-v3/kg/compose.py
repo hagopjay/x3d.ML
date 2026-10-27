@@ -5,6 +5,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import merge, layers, layout, schema
 G3 = merge.G3
 NMAX = int(os.environ.get('NMAX', '520')); EMAX = int(os.environ.get('EMAX', '1500'))
+ALL = os.environ.get('ALL') == '1'          # deep mode: every connected entity is drawn; the first NMAX are the core (full ribbons), the rest a star tier with 1-2 faint tethers
+CORE_PEOPLE = {   # GitHub handles read from the public pages on 27 Oct 2026
+    'ahujasid': {'role': 'GitHub account of Siddharth, author of blender-mcp', 'license': 'MIT', 'contributions': 'README: "Contributions are welcome!"', 'src': 'github.com/ahujasid/blender-mcp, read 27 Oct 2026'},
+    'coderextreme': {'role': 'GitHub account of John Carlson, author of X3DJSONLD', 'license': 'BSD 3-clause (Copyright 2015-6 John Carlson)', 'src': 'github.com/coderextreme/X3DJSONLD LICENSE, read 27 Oct 2026'},
+}
 GR = {'Confirmed': 3, 'Likely': 2, 'Suspected': 1}
 FAM = {c: i for i, (_, cs) in enumerate([('spec', ('Standard', 'Component', 'NodeType')), ('tool', ('Tool', 'Validator', 'Repo')), ('people', ('Org', 'Person', 'Event')),
        ('work', ('Workstream', 'Document', 'Dataset', 'Scene')), ('learn', ('Experiment', 'Finding', 'Metric')), ('rule', ('Rule', 'Decision')), ('loop', ('Loop',))]) for c in cs}
@@ -48,6 +53,12 @@ def main():
                 ents[k]['prov'] = 'data'; ents[k]['props'].update(v['props']); ents[k]['src'] = v['src']
             else:
                 ents[k] = {'name': v['name'], 'type': v['type'], 'prov': 'data', 'mentions': 3, 'docs': [], 'props': v['props'], 'notes': [], 'src': v['src']}
+    # GitHub owner handles were typed Org when they were only a repo prefix; a lowercase single-token handle is a person's account unless it names a group
+    for k, v in ents.items():
+        if v['type'] == 'Org' and re.fullmatch(r'[a-z0-9_-]{4,}', v['name']) and not re.search(r'group|consortium|innovation|foundation|labs?$|inc$', v['name']):
+            v['type'] = 'Person'
+        if v['name'].lower() in CORE_PEOPLE:
+            v['type'] = 'Person'; v['prov'] = 'data'; v['props'].update({kk: vv for kk, vv in CORE_PEOPLE[v['name'].lower()].items() if kk != 'src'}); v['src'] = CORE_PEOPLE[v['name'].lower()]['src']
     edges = []
     for t in m['triples']:
         if t['s'] not in ents or t['o'] not in ents: continue
@@ -103,6 +114,11 @@ def main():
     for e in edges: deg[e['s']] += 1; deg[e['o']] += 1
     protected = {k for k, v in ents.items() if v['prov'] == 'data' or v.get('step') or v.get('centre')}
     score = {k: deg[k] + 0.5 * min(v['mentions'], 6) + (3 if v['prov'] == 'data' else 0) for k, v in ents.items() if deg[k] > 0}
+    orphans = set()
+    if ALL:      # entities no relation survived voting for: drawn as untethered stars when two or more runs saw them, listed in the data when only one did
+        orphans = {k for k, v in ents.items() if deg[k] == 0 and v['mentions'] >= 2 and not v.get('step') and not v.get('centre')}
+        for k in orphans: score[k] = 0.25 * min(ents[k]['mentions'], 6)
+    undrawn = [k for k, v in ents.items() if deg[k] == 0 and k not in orphans and not v.get('step') and not v.get('centre')]
     keep = set(protected & set(score))
     # the flywheel is findings -> rules -> metrics: reserve room for them instead of letting hub tools crowd them out
     QUOTA = {'Finding': 70, 'Rule': 55, 'Experiment': 40, 'Metric': 12, 'Decision': 14, 'Workstream': 40, 'Validator': 30}
@@ -114,13 +130,31 @@ def main():
     for k in sorted(score, key=lambda k: -score[k]):
         if len(keep) >= NMAX: break
         keep.add(k)
-    ed = [e for e in edges if e['s'] in keep and e['o'] in keep]
+    core = set(keep)
+    ed = [e for e in edges if e['s'] in core and e['o'] in core]
     loop_e = [e for e in ed if e.get('loop', -1) != -1]
     other = sorted([e for e in ed if e.get('loop', -1) == -1], key=lambda e: (-GR[e['grade']], -e['w']))
     ed = loop_e + other[:max(0, EMAX - len(loop_e))]
+    if ALL:
+        # star tier: every other connected entity is drawn, tethered by its best 2 relations (faint ribbons); the relations stay in the data
+        keep |= set(score)      # includes orphans
+        best = collections.defaultdict(list)
+        for e in edges:
+            if e.get('loop', -1) != -1: continue
+            for a, b in ((e['s'], e['o']), (e['o'], e['s'])):
+                if a in keep and a not in core and b in keep and b != a:
+                    best[a].append((-(GR[e['grade']] * 2 + (b in core) * 3 + min(e['w'], 3)), id(e), e))
+        have = {(min(e['s'], e['o']), max(e['s'], e['o'])) for e in ed}
+        for a, lst in best.items():
+            n_ = 0
+            for _, _, e in sorted(lst, key=lambda x: x[:2]):
+                kk = (min(e['s'], e['o']), max(e['s'], e['o']))
+                if kk in have: n_ += 1; continue
+                if n_ >= 2: break
+                e = dict(e); e['faint'] = 1; ed.append(e); have.add(kk); n_ += 1
     deg = collections.Counter()
     for e in ed: deg[e['s']] += 1; deg[e['o']] += 1
-    keys = [k for k in keep if deg[k] > 0]
+    keys = [k for k in keep if deg[k] > 0 or k in orphans]
     order = [k for k in keys if not ents[k].get('step') and not ents[k].get('centre')] + [k for k in keys if ents[k].get('step')] + [k for k in keys if ents[k].get('centre')]
     # keep step nodes contiguous per loop in cycle order for the layout
     idx = {k: i for i, k in enumerate(order)}
@@ -131,10 +165,10 @@ def main():
         best = max([GR[e['grade']] for e in ed if e['s'] == k or e['o'] == k] + [0])
         w = (min(1.0, score.get(k, deg[k]) / (0.55 * mx))) ** 0.6
         nodes.append({'id': k, 'label': v['name'], 'cls': v['type'], 'grade': {3: 'Confirmed', 2: 'Likely', 1: 'Suspected', 0: 'Suspected'}[best] if v['prov'] != 'data' else 'Confirmed',
-                      'prov': v['prov'], 'vis': extra.get('vis', {}).get(k, 'private' if v['prov'] == 'doc' else 'public'), 'w': round(w, 3), 'deg': deg[k], 'docs': v['docs'][:4], 'props': v['props'], 'metrics': v.get('metrics', []), 'notes': v.get('notes', [])[:1], 'loops': []})
+                      'tier': 1 if k in core else 2, 'orphan': 1 if k in orphans else 0, 'prov': v['prov'], 'vis': extra.get('vis', {}).get(k, 'private' if v['prov'] == 'doc' else 'public'), 'w': round(w, 3), 'deg': deg[k], 'docs': v['docs'][:4], 'props': v['props'], 'metrics': v.get('metrics', []), 'notes': v.get('notes', [])[:1], 'loops': []})
     E_out = []
     for e in ed:
-        E_out.append({'s': idx[e['s']], 't': idx[e['o']], 'p': e['p'], 'grade': e['grade'], 'prov': e['prov'], 'loop': e.get('loop', -1), 'w': e['w'], 'ev': e.get('ev', []), 'docs': e.get('docs', [])})
+        E_out.append({'s': idx[e['s']], 't': idx[e['o']], 'p': e['p'], 'grade': e['grade'], 'prov': e['prov'], 'loop': e.get('loop', -1), 'w': e['w'], 'faint': e.get('faint', 0), 'ev': e.get('ev', []), 'docs': e.get('docs', [])})
     Lo = []
     for li, L in enumerate(loops):
         if not all(i in idx for i in L['ids']) or L['centre'] not in idx: continue
@@ -147,7 +181,16 @@ def main():
     for e in E_out:
         if e['loop'] == -2: e['loop'] = -3          # spokes: kept in the data, not drawn as wheel rim
     # drawn wheel edges only for loop >= 0 ; spokes (-3) are data only
-    pos, rings = layout.layout(len(nodes), [(e['s'], e['t'], min(1.0, 0.3 + 0.2 * e['w'])) for e in E_out if e['loop'] != -3 or True], [n['w'] for n in nodes], [L['steps'] for L in Lo], [FAM.get(n['cls'], 0) for n in nodes])
+    if ALL: layout.SPREAD = float(os.environ.get('SPREAD', '1.35'))
+    conn = [i for i, n in enumerate(nodes) if not n.get('orphan')]
+    cmap = {o: k for k, o in enumerate(conn)}
+    sub_edges = [(cmap[e['s']], cmap[e['t']], min(1.0, 0.3 + 0.2 * e['w'])) for e in E_out if e['s'] in cmap and e['t'] in cmap]
+    pos_c, rings = layout.layout(len(conn), sub_edges, [nodes[i]['w'] for i in conn], [[cmap[x] for x in L['steps']] for L in Lo], [FAM.get(nodes[i]['cls'], 0) for i in conn])
+    orph = [i for i, n in enumerate(nodes) if n.get('orphan')]
+    pos_o = layout.place_free(pos_c, [FAM.get(nodes[i]['cls'], 0) for i in orph], len(set(FAM.values()))) if orph else []
+    pos = [None] * len(nodes)
+    for o, k in cmap.items(): pos[o] = pos_c[k]
+    for o, p_ in zip(orph, pos_o): pos[o] = p_
     for n, p_ in zip(nodes, pos): n['xyz'] = [round(float(x), 3) for x in p_]
     for L, r in zip(Lo, rings):
         L['ring'] = r
@@ -156,6 +199,8 @@ def main():
     meta = {'nodes': len(nodes), 'edges': len(E_out), 'loops': len(Lo), 'extraction_chunks': m['chunks_done'], 'stats': m['stats'],
             'prov_counts': dict(collections.Counter(n['prov'] for n in nodes)), 'grade_counts': dict(collections.Counter(n['grade'] for n in nodes)), 'class_counts': dict(collections.Counter(n['cls'] for n in nodes)),
             'edge_prov_counts': dict(collections.Counter(e['prov'] for e in E_out)), 'edge_grade_counts': dict(collections.Counter(e['grade'] for e in E_out))}
-    json.dump({'nodes': nodes, 'edges': E_out, 'loops': Lo, 'meta': meta}, open(sys.argv[1] if len(sys.argv) > 1 else G3 + '/graph.json', 'w'))
+    meta['undrawn'] = len(undrawn); meta['assembled'] = len(ents)
+    und = [{'label': ents[k]['name'], 'cls': ents[k]['type'], 'prov': ents[k]['prov'], 'mentions': ents[k]['mentions'], 'docs': ents[k]['docs'][:3], 'vis': extra.get('vis', {}).get(k, 'private')} for k in undrawn]
+    json.dump({'nodes': nodes, 'edges': E_out, 'loops': Lo, 'meta': meta, 'undrawn': und}, open(sys.argv[1] if len(sys.argv) > 1 else G3 + '/graph.json', 'w'))
     print(json.dumps(meta, indent=1)[:1800])
 if __name__ == '__main__': main()
