@@ -1,0 +1,118 @@
+{
+  "file": "gobbler3.x3d",
+  "build": "standard",
+  "bytes": 685470,
+  "x3dVersion": "4.0",
+  "profile": "Immersive",
+  "components": [
+    {
+      "name": "Shaders",
+      "level": 1
+    },
+    {
+      "name": "Shape",
+      "level": 2
+    },
+    {
+      "name": "ParticleSystems",
+      "level": 3
+    },
+    {
+      "name": "Texturing3D",
+      "level": 1
+    }
+  ],
+  "nodeCount": 205,
+  "defCount": 78,
+  "useCount": 32,
+  "routeCount": 76,
+  "interpolatorCount": 19,
+  "shaderCount": 6,
+  "sensors": [
+    "TimeSensor",
+    "TouchSensor"
+  ],
+  "validator": {
+    "name": "x3d_mcp fork, main",
+    "commit": "2b696f5",
+    "label": "x3d_mcp fork, main, commit 2b696f5",
+    "xsd_valid": true,
+    "profile_ok": true,
+    "semantic_errors": 0,
+    "semantic_warnings": 0,
+    "semantic_infos": 4,
+    "checks": [
+      "X3D 4.0 XSD",
+      "profile and component",
+      "DEF/USE/ROUTE wiring"
+    ],
+    "profile_unknown": []
+  },
+  "renderedWith": "X_ITE 16.5.1",
+  "generated": "2026-10-27",
+  "extrasBuild": null,
+  "graph": {
+    "nodes": 2476,
+    "edges": 2412,
+    "loops": 19,
+    "meta": {
+      "nodes": 2476,
+      "edges": 2412,
+      "loops": 19,
+      "extraction_chunks": 242,
+      "stats": {
+        "triples_raw": 10572,
+        "triples_kept": 8511,
+        "evidence_not_verbatim": 1980,
+        "metrics_kept": 2819,
+        "loops_kept": 29,
+        "bad_pred": 46
+      },
+      "prov_counts": {
+        "doc": 2232,
+        "data": 123,
+        "model_recall": 61,
+        "simulated": 60
+      },
+      "grade_counts": {
+        "Confirmed": 1342,
+        "Likely": 246,
+        "Suspected": 888
+      },
+      "class_counts": {
+        "Org": 88,
+        "Document": 349,
+        "Event": 55,
+        "Tool": 566,
+        "Experiment": 77,
+        "Scene": 133,
+        "Rule": 180,
+        "Finding": 160,
+        "NodeType": 122,
+        "Validator": 73,
+        "Repo": 57,
+        "Decision": 49,
+        "Standard": 133,
+        "Person": 63,
+        "Component": 56,
+        "Workstream": 94,
+        "Dataset": 89,
+        "Loop": 131,
+        "Metric": 1
+      },
+      "edge_prov_counts": {
+        "doc": 1850,
+        "simulated": 196,
+        "data": 144,
+        "model_recall": 222
+      },
+      "edge_grade_counts": {
+        "Likely": 463,
+        "Suspected": 285,
+        "Confirmed": 1664
+      },
+      "undrawn": 1283,
+      "assembled": 3761
+    }
+  }
+}

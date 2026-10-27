@@ -9,8 +9,10 @@ AXIS = np.array([0.975, 0.22, 0.0]); AXIS /= np.linalg.norm(AXIS)
 UPV = np.array([-0.22, 0.975, 0.0])
 ZV = np.array([0.0, 0.0, 1.0])
 
+SPREAD = 1.0      # deep builds widen the cone so a few thousand stars fit around the core
+
 def cone_radius(s):          # allowed radius at distance s along the axis: (y-ish, z) semi-axes of an elliptical cone
-    return 1.1 + 0.36 * s, 1.3 + 0.78 * s
+    return (1.1 + 0.36 * s) * SPREAD, (1.3 + 0.78 * s) * SPREAD
 
 def ell(rel_up, rel_z, s):
     ry, rz = cone_radius(s)
@@ -59,9 +61,11 @@ def layout(n, edges, weights, loops, cls_idx, seed=11, iters=420, length=11.0):
     T0 = 0.9
     for it in range(iters):
         T = T0 * (1.0 - it / iters) ** 1.5 + 0.015
-        d = pos[:, None, :] - pos[None, :, :]
-        dist = np.sqrt((d ** 2).sum(-1)) + 0.05
-        f = (d / dist[..., None] * (k * k / dist)[..., None]).sum(1)
+        f = np.zeros_like(pos)
+        for a0 in range(0, n, 600):                                                   # repulsion in row blocks: a few thousand nodes stay inside memory
+            d = pos[a0:a0 + 600, None, :] - pos[None, :, :]
+            dist = np.sqrt((d ** 2).sum(-1)) + 0.05
+            f[a0:a0 + 600] = (d / dist[..., None] * (k * k / dist)[..., None]).sum(1)
         if len(E):
             dv = pos[E[:, 1]] - pos[E[:, 0]]; dl = np.linalg.norm(dv, axis=1) + 1e-6
             fa = dv / dl[:, None] * (dl ** 2 / k * (0.5 + EW))[:, None]
@@ -84,3 +88,21 @@ def layout(n, edges, weights, loops, cls_idx, seed=11, iters=420, length=11.0):
     for nid, t in ring.items(): pos[nid] = t
     # drift hubs slightly toward the root for the tether
     return pos, [dict(center=c.tolist(), radius=R, normal=n_.tolist(), u=u.tolist(), v=v.tolist()) for (c, R, n_, u, v) in centers]
+
+
+def place_free(pos, cls_idx, ncls, length=11.0, seed=5, cand=14):
+    """Untethered stars: best-candidate sampling inside the cone, biased toward their class centre, each new star placed where it is furthest from what is already there."""
+    rng = np.random.default_rng(seed)
+    placed = [p for p in pos]; allp = np.array(placed)
+    ccen = np.array([ROOT + AXIS * (2.5 + length * 0.8 * (k + 0.5) / max(ncls, 1)) + UPV * 1.6 * math.sin(k * 2.4) + np.array([0, 0, 2.2 * math.cos(k * 1.7)]) for k in range(max(ncls, 1))])
+    out = []
+    for c in cls_idx:
+        best = None; bd = -1
+        for _ in range(cand):
+            s = float(np.clip(rng.normal(((ccen[c] - ROOT) @ AXIS), 2.4), 1.8, length))
+            ry, rz = cone_radius(s); a = rng.uniform(0, 2 * math.pi); r = math.sqrt(rng.uniform(0.02, 1.0)) * 0.95
+            q = ROOT + AXIS * s + UPV * ry * r * math.cos(a) + ZV * rz * r * math.sin(a)
+            d = np.min(np.linalg.norm(allp - q, axis=1))
+            if d > bd: bd = d; best = q
+        out.append(best); allp = np.vstack([allp, best])
+    return out

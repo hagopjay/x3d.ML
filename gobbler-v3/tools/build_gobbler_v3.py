@@ -471,6 +471,7 @@ def build_network(mesh, outline_ids):
     nodes = []
     for i, nd in enumerate(G['nodes']):
         sz = 1.5 + 1.8 * nd['w'] ** 0.6 + (0.3 if nd.get('loops') else 0.0)
+        if nd.get('tier') == 2: sz = 1.05 + 1.0 * nd['w'] ** 0.6      # the star tier of a deep build: smaller, dimmer stars
         nodes.append({'px': (480 + nd['xyz'][0] * 100, 420 - nd['xyz'][1] * 100), 'xyz': list(nd['xyz']), 'size': sz, 'sz': sz, 'group': 0,
                       'cls': nd['cls'], 'rgb': node_rgb(nd), 'label': nd['label'], 'w': nd['w'], 'loops': nd.get('loops', [])})
     na = len(nodes)
@@ -491,7 +492,7 @@ def build_network(mesh, outline_ids):
         if e['loop'] >= 0:
             continue
         a, b = e['s'], e['t']
-        if a != b and math.dist(nodes[a]['xyz'], nodes[b]['xyz']) <= 3.8:
+        if a != b and math.dist(nodes[a]['xyz'], nodes[b]['xyz']) <= (6.0 if e.get('faint') else 3.8):
             keep.add((min(a, b), max(a, b)))
     net_edges = sorted(keep) + edges
     dust = []
@@ -1974,7 +1975,7 @@ def write_x3d(g, extras):
         if e['loop'] >= 0:
             continue
         k_ = (min(e['s'], e['t']), max(e['s'], e['t']))
-        if k_ not in einfo or GRADE_W.get(e['grade'], 0) > GRADE_W.get(einfo[k_]['grade'], 0):
+        if k_ not in einfo or (not e.get('faint') and einfo[k_].get('faint')) or GRADE_W.get(e['grade'], 0) > GRADE_W.get(einfo[k_]['grade'], 0) and not (e.get('faint') and not einfo[k_].get('faint')):
             einfo[k_] = e
     # points: nodes, dust, then (hidden) wheel arc points and wheel centres
     net_str = [vec(nd['xyz']) for nd in nodes] + [vec(d['xyz']) for d in g['dust']]
@@ -2009,6 +2010,8 @@ def write_x3d(g, extras):
         c = mix(REL_COLOUR[fam], mix(nodes[a]['rgb'], nodes[b]['rgb'], 0.5), 0.4)
         k = {'data': 1.0, 'doc': 0.95, 'model_recall': 0.72, 'simulated': 0.55}.get(e['prov'] if e else 'doc', 0.9)
         far = min(1.0, max(0.0, (nodes[a]['xyz'][0] + nodes[b]['xyz'][0]) / 2 - 5.0) / 12.0)
+        if e and e.get('faint'):                       # star-tier tether: thin and dim
+            return col(mix(c, GROUND, 0.62 + 0.2 * far)), 0.075
         return col(mix(c, GROUND, 0.3 + 0.25 * far + (1 - k) * 0.5)), GRADE_W.get(e['grade'] if e else 'Likely', 0.16)
     w("      <!-- The graph the bird trails into: one ribbon per typed relation, coloured by relation family and dimmed by provenance;")
     w("           alpha is the ribbon's width (grade). Ribbons carry light pulses toward the head; the four lights tint them as they pass. -->")

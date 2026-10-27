@@ -36,7 +36,7 @@ def filter_public(g):
             if ol['name'] == L['name'] and ol['ev'] == L['ev']: lmap[oi] = k
     for n in nodes: n['loops'] = [lmap[x] for x in n.get('loops', []) if x in lmap]
     for e in edges: e['loop'] = lmap.get(e['loop'], -1) if e['loop'] >= 0 else e['loop']
-    out = dict(g); out.update(nodes=nodes, edges=edges, loops=loops)
+    out = dict(g); out.update(nodes=nodes, edges=edges, loops=loops, undrawn=[u for u in g.get('undrawn', []) if u.get('vis') == 'public'])
     return out
 
 
@@ -44,22 +44,27 @@ def slim(g, public):
     """What the page needs: no evidence text beyond one line per edge, no private paths in public builds."""
     nodes = []
     for n in g['nodes']:
-        d = {'id': n['id'], 'label': n['label'], 'cls': n['cls'], 'prov': n['prov'], 'grade': n['grade'], 'xyz': n['xyz'], 'deg': n['deg'], 'w': n['w'],
+        d = {'id': n['id'], 'tier': n.get('tier', 1), 'label': n['label'], 'cls': n['cls'], 'prov': n['prov'], 'grade': n['grade'], 'xyz': n['xyz'], 'deg': n['deg'], 'w': n['w'],
              'loops': n.get('loops', []), 'metrics': [({'name': x['name'], 'value': x['value']} if public else x) for x in n.get('metrics', [])[:3]], 'notes': n.get('notes', [])[:1], 'props': {k: v for k, v in (n.get('props') or {}).items() if v not in (None, '')}}
         if not public: d['docs'] = n.get('docs', [])
         nodes.append(d)
-    edges = [{'s': e['s'], 't': e['t'], 'p': e['p'], 'grade': e['grade'], 'prov': e['prov'], 'loop': e['loop'], 'ev': (e.get('ev') or [])[:1], **({} if public else {'docs': e.get('docs', [])})}
+    drawn_n = len(nodes)
+    for u in g.get('undrawn', []):
+        d = {'id': 'u', 'tier': 3, 'label': u['label'], 'cls': u['cls'], 'prov': u['prov'], 'grade': 'Suspected', 'xyz': None, 'deg': 0, 'w': 0, 'loops': [], 'metrics': [], 'notes': [], 'props': {'mentions': u['mentions']}}
+        if not public: d['docs'] = u.get('docs', [])
+        nodes.append(d)
+    edges = [{'f': e.get('faint', 0), 's': e['s'], 't': e['t'], 'p': e['p'], 'grade': e['grade'], 'prov': e['prov'], 'loop': e['loop'], 'ev': (e.get('ev') or [])[:1], **({} if public else {'docs': e.get('docs', [])})}
              for e in g['edges'] if e.get('loop', -1) != -3 or True]
     loops = [{'name': L['name'], 'steps': L['steps'], 'centre': L['centre'], 'gain': L['gain'], 'prov': L['prov'], 'grade': L['grade'], 'votes': L['votes'], 'ev': L['ev'],
               'ring': {'center': L['ring']['center'], 'normal': L['ring']['normal'], 'radius': L['ring']['radius']}} for L in g['loops']]
-    return {'nodes': nodes, 'edges': edges, 'loops': loops, 'meta': g['meta']}
+    return {'nodes': nodes, 'drawn': drawn_n, 'edges': edges, 'loops': loops, 'meta': g['meta']}
 
 
 def jsonld(s):
     ctx = {'@vocab': 'https://polyxandria.example/kg#', 'name': 'http://schema.org/name', 'prov': 'px:provenance', 'grade': 'px:grade', 'px': 'https://polyxandria.example/kg#'}
     gr = []
     for i, n in enumerate(s['nodes']):
-        gr.append({'@id': 'px:n%d' % i, '@type': 'px:' + n['cls'], 'name': n['label'], 'prov': n['prov'], 'grade': n['grade'], 'px:position': n['xyz']})
+        gr.append({'@id': 'px:n%d' % i, '@type': 'px:' + n['cls'], 'name': n['label'], 'prov': n['prov'], 'grade': n['grade'], **({'px:position': n['xyz']} if n['xyz'] else {})})
     for k, e in enumerate(s['edges']):
         gr.append({'@id': 'px:s%d' % k, '@type': 'px:Statement', 'px:subject': {'@id': 'px:n%d' % e['s']}, 'px:predicate': e['p'], 'px:object': {'@id': 'px:n%d' % e['t']},
                    'prov': e['prov'], 'grade': e['grade'], **({'px:evidence': e['ev'][0]} if e.get('ev') else {}), **({'px:loop': e['loop']} if e['loop'] >= 0 else {})})
@@ -113,30 +118,36 @@ def build(args):
     shutil.copy(args.scene, os.path.join(args.out, 'gobbler3.x3d'))
     json.dump(s, open(os.path.join(args.out, 'graph-v3.json'), 'w'), separators=(',', ':'))
     json.dump(jsonld(s), open(os.path.join(args.out, 'graph-v3.jsonld'), 'w'), separators=(',', ':'))
-    m = g['meta']; N = len(s['nodes']); E = len(s['edges']); Lc = len(s['loops'])
+    m = g['meta']; N = s['drawn']; E = len(s['edges']); Lc = len(s['loops'])
     prov = {}
     for n in s['nodes']: prov[n['prov']] = prov.get(n['prov'], 0) + 1
     gr = {}
     for n in s['nodes']: gr[n['grade']] = gr.get(n['grade'], 0) + 1
     st = m.get('stats', {})
-    fid = [(N, 'entities drawn'), (E, 'relations'), (Lc, 'flywheel loops'), (prov.get('data', 0), 'from live data'), (prov.get('doc', 0), 'quoted from documents'),
+    fid = [(len(s['nodes']), 'entities in the graph'), (s['drawn'], 'drawn as stars'), (E, 'relations'), (Lc, 'flywheel loops'), (prov.get('data', 0), 'from live data'), (prov.get('doc', 0), 'quoted from documents'),
            (prov.get('model_recall', 0) + prov.get('simulated', 0), 'tagged recalled or simulated')]
     pal = {c: CLS_HEX[c] for c in CLS_HEX}
     cfg = dict(scene='gobbler3.x3d', look=dict(toneMapping='KHR_PBR_NEUTRAL', exposure=1.0), darkDefault=False, autoClean=0,
                viewpoints=[['Wide', 'Wide'], ['Colossus', 'Colossus'], ['EyeToEye', 'Eye'], ['Inside', 'Inside'], ['Flywheel', 'Flywheel'], ['Crown', 'Crown']],
                tour=dict(vp='Wide', center=[5.2, -2.2, 0], r0=26, r1=9.5, e0=34, e1=6, duration=44, spin=0.05, loop='pingpong', fov=0.95, delay=900))
-    nav = '<a class="chip" href="index.html">All demos</a><a class="chip" href="gobbler.html">Gobbler</a><a class="chip on" href="gobbler3.html">Gobbler 3</a>'
+    nav = '<a class="chip" href="index.html">All demos</a><a class="chip" href="gobbler.html">Gobbler</a><a class="chip on" href="gobbler3.html">' + args.title + '</a>'
     head = ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-            '<title>Gobbler 3 · PolyXandria</title><meta name="description" content="A knowledge graph of the X3D community and its flywheel loops, growing out of the gobbler\'s neck.">'
+            '<title>' + args.title + ' · PolyXandria</title><meta name="description" content="A knowledge graph of the X3D community and its flywheel loops, growing out of the gobbler\'s neck.">'
             '<link rel="stylesheet" href="vendor/x_ite/x_ite.css"><link rel="stylesheet" href="common.css"><style>' + CSS + '</style>'
             '<script src="vendor/x_ite/x_ite.min.js"></script><script src="common.js"></script></head><body>')
     stage = ('<header class="stage" id="stage"><div class="shade"></div><div class="fog"></div><div class="dark"></div><div class="grain"></div><div class="flash"></div><div class="vignette"></div>'
              '<div class="ui"><div class="top"><div class="brand"><a href="index.html">PolyXandria</a></div><nav class="nav">' + nav + '</nav></div>'
-             '<div class="titleblock"><div class="kicker">Demo · Gobbler 3 · scriptless X3D 4.0 knowledge graph</div><h1>The <em>Gobbler</em> thinks</h1>'
+             '<div class="titleblock"><div class="kicker">Demo · ' + args.title + ' · scriptless X3D 4.0 knowledge graph</div><h1>The <em>Gobbler</em> thinks</h1>'
              '<p>Everything we know about the X3D community, as a graph the bird is swallowing. The flywheel loops turn as wheels; the lights wander.</p></div>'
              '<div class="bar"><div class="btns" id="vps"><button class="chip" id="btn-tour">Pause tour</button><button class="chip" id="btn-dark">Lights out</button>'
              '<button class="chip" id="btn-clean">Hide text</button><button class="chip" id="btn-full">Full screen</button></div><div class="hud" id="hud">starting</div></div></div>'
              '<div class="busy" id="busy">Starting the viewer</div><div class="hint" id="hint">Drag to orbit · scroll to zoom · pick a star in the explorer below to fly to it</div></header>')
+    lic = [n for n in s['nodes'] if (n.get('props') or {}).get('license')]
+    oss = ''
+    if lic:
+        oss = ('<section class="band"><div class="wrap"><h2>Open-source neighbours</h2><p class="lead">People and projects the graph leans on, with the licence read from their public pages. Contributions from them are welcome where the licence allows.</p><div class="loops">' +
+               ''.join('<div class="loop"><b>%s</b><ol style="list-style:none;padding:0"><li>%s</li><li>Licence: %s</li>%s</ol></div>' % (esc(n['label']), esc(n['props'].get('role', n['cls'])), esc(n['props']['license']),
+                       ('<li>%s</li>' % esc(n['props']['contributions'])) if n['props'].get('contributions') else '') for n in lic) + '</div></div></section>')
     legend = ''.join('<button class="chip fam on" data-fam="%s"><span class="sw" style="background:%s"></span>%s</button>' % (f, FAM_HEX[f], esc(FAM_LABEL[f])) for f in FAM_LABEL)
     provb = ''.join('<button class="chip pv on" data-pv="%s">%s</button>' % (k, esc(v)) for k, v in (('data', 'live data'), ('doc', 'quoted'), ('model_recall', 'recalled'), ('simulated', 'simulated')))
     gradeb = ''.join('<button class="chip gd on" data-gd="%s">%s</button>' % (k, k) for k in ('Confirmed', 'Likely', 'Suspected'))
@@ -150,7 +161,7 @@ def build(args):
             '<div><div class="card" id="card"><h4>Pick a star</h4><div class="meta">entity card</div><p style="color:var(--ink3);font-size:14px">Every entity shows its kind, how we know it (live data, a quoted document, recalled or simulated), '
             'its grade, the sentence that supports it and its neighbours.</p></div></div></div></div></section>'
             '<section class="band"><div class="wrap"><h2>The flywheel loops</h2><p class="lead">The virtuous circle and the knowledge graph are the same thing. Each loop is a ring of the graph; ride one to watch the camera follow its steps.</p>'
-            '<div class="loops" id="loops"></div></div></section>'
+            '<div class="loops" id="loops"></div></div></section>' + oss +
             '<section class="band"><div class="wrap"><h2>Take it with you</h2><p class="lead">The graph as data, for tools: <a href="graph-v3.json">graph-v3.json</a> (what this page reads) and <a href="graph-v3.jsonld">graph-v3.jsonld</a> '
             '(JSON-LD, every relation a statement with provenance, grade and evidence). The scene is <a href="gobbler3.x3d">gobbler3.x3d</a>, X3D 4.0, checked with the fork validator.</p></div></section>'
             '<footer><div class="wrap"><p>Real core, tagged fill. Counts are from the build that made this page. Evidence lines are quoted from the sources they came from.</p><p><a href="index.html">All demos</a></p></div></footer></main>')
@@ -173,15 +184,15 @@ PAGE_JS = r"""
     G.nodes.forEach(function(n,i){ if(!on.fam[FAM[n.cls]]||!on.pv[n.prov]||!on.gd[n.grade])return; if(q&&n.label.toLowerCase().indexOf(q)<0&&n.cls.toLowerCase().indexOf(q)<0)return; out.push(i)});
     out.sort(function(a,b){return G.nodes[b].deg-G.nodes[a].deg});
     $('#lh').textContent=out.length+' of '+G.nodes.length+' entities';
-    $('#list').innerHTML=out.slice(0,250).map(function(i){var n=G.nodes[i];return'<button data-i="'+i+'" class="'+(i===sel?'on':'')+'"><span class="sw" style="background:'+PAL[n.cls]+'"></span><span>'+e(n.label)+'</span><small>'+e(n.cls)+'</small></button>'}).join('');
+    var cap=window.LISTCAP||250;$('#list').innerHTML=out.slice(0,cap).map(function(i){var n=G.nodes[i];return'<button data-i="'+i+'" class="'+(i===sel?'on':'')+'"><span class="sw" style="background:'+PAL[n.cls]+'"></span><span>'+e(n.label)+'</span><small>'+e(n.cls)+'</small></button>'}).join('')+(out.length>cap?'<button data-more="1" style="justify-content:center;color:var(--gold)">Show 400 more</button>':'');
   }
-  $('#list').addEventListener('click',function(ev){var b=ev.target.closest('button');if(b)select(+b.dataset.i,true)});
+  $('#list').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;if(b.dataset.more){window.LISTCAP=(window.LISTCAP||250)+400;render();return}select(+b.dataset.i,true)});
   $('#q').addEventListener('input',render);
   [['fam','fam'],['pv','pv'],['gd','gd']].forEach(function(k){$$('.'+k[0]).forEach(function(b){b.addEventListener('click',function(){var key=b.dataset[k[1]];if(on[k[0]][key]){delete on[k[0]][key];b.classList.remove('on')}else{on[k[0]][key]=1;b.classList.add('on')}render()})})});
   function select(i,fly){
     sel=i;var n=G.nodes[i];render();
     var nb=G.adj[i].slice().sort(function(a,b){return rank(G.edges[b])-rank(G.edges[a])}).slice(0,10);
-    var h='<h4>'+e(n.label)+'</h4><div class="meta"><span class="sw" style="background:'+PAL[n.cls]+'"></span>'+e(n.cls)+' · '+pvTag(n.prov)+'<span class="tag">'+n.grade+'</span></div>';
+    var h='<h4>'+e(n.label)+'</h4><div class="meta"><span class="sw" style="background:'+PAL[n.cls]+'"></span>'+e(n.cls)+' · '+pvTag(n.prov)+'<span class="tag">'+n.grade+'</span>'+(n.tier===2?'<span class="tag">star tier</span>':'')+(n.tier===3?'<span class="tag">in the data, not drawn</span>':'')+'</div>';
     var ev=null;G.adj[i].forEach(function(k){if(!ev&&G.edges[k].ev&&G.edges[k].ev[0])ev=G.edges[k].ev[0]});
     if(n.notes&&n.notes[0])h+='<p style="font-size:14px;color:var(--ink2)">'+e(n.notes[0])+'</p>';
     if(ev)h+='<blockquote>'+e(ev)+'</blockquote>';
@@ -190,8 +201,7 @@ PAGE_JS = r"""
     if(nb.length){h+='<div class="meta" style="margin-top:12px">connected to</div><ul>'+nb.map(function(k){var x=G.edges[k],o=x.s===i?x.t:x.s,on_=G.nodes[o];return'<li><a data-go="'+o+'">'+e(on_.label)+'</a> <span style="color:var(--ink3);font:11px var(--mono)">'+(x.s===i?'':'← ')+e(x.p.replace(/_/g,' '))+(x.s===i?' →':'')+' · '+x.grade+'</span></li>'}).join('')+'</ul>'}
     if(n.docs&&n.docs.length)h+='<div class="meta" style="margin-top:12px">'+e(n.docs.join(' · '))+'</div>';
     $('#card').innerHTML=h;
-    if(fly)flyTo(n.xyz);
-    mark(n.xyz);
+    if(n.xyz){if(fly)flyTo(n.xyz);mark(n.xyz)}
   }
   function rank(x){return({Confirmed:3,Likely:2,Suspected:1}[x.grade]||0)*10+(x.prov==='data'?5:0)}
   $('#card').addEventListener('click',function(ev){var a=ev.target.closest('a[data-go]');if(a)select(+a.dataset.go,true)});
@@ -229,5 +239,5 @@ PAGE_JS = r"""
 if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--graph', required=True); ap.add_argument('--scene', required=True); ap.add_argument('--poc', default='/home/user/x3d.poc')
-    ap.add_argument('--out', required=True); ap.add_argument('--vendor', default=os.path.join(HERE, '..', 'site')); ap.add_argument('--public', action='store_true')
+    ap.add_argument('--out', required=True); ap.add_argument('--title', default='Gobbler 3'); ap.add_argument('--vendor', default=os.path.join(HERE, '..', 'site')); ap.add_argument('--public', action='store_true')
     build(ap.parse_args())

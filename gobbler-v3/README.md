@@ -19,3 +19,6 @@ Rebuild (from a scratch copy that holds `corpus/`, `data/` and the Gemini client
     # the page needs vendor/x_ite (x_ite.min.js, x_ite.css, assets/) next to it; copy from the x3d.poc site
 
 Rules kept: v1 and v2 of the gobbler are untouched; nothing sent outside; the public candidate carries no model or vendor names, project ids, costs or private links.
+
+## Deep build (27 October 2026)
+`deep/` holds Gobbler 3 Deep: every connected entity drawn (2,476 stars, 3,759 entities searchable), 19 loops, new sources (docs of the three repos), typing fix for GitHub handles, open-source neighbours panel. Read `deep/GRAPH-v3-deep.md`. Build with `ALL=1 NMAX=650 EMAX=1900 python3 -I kg/compose.py graph.json` (after `INCR=1 PYTHONHASHSEED=0 python3 -I kg/resolve.py` for new corpus, `kg/vis2.py` for visibility of new entities). The 26 October build above is untouched.

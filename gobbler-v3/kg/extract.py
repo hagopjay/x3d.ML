@@ -1,5 +1,5 @@
 """Pass 1: Gemini extracts entities and typed triples from every corpus chunk, 3 runs each (cached, resumable)."""
-import glob, hashlib, json, os, re, sys, concurrent.futures as cf
+import collections, glob, hashlib, json, os, re, sys, concurrent.futures as cf
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gem, schema
 HERE = os.path.dirname(os.path.abspath(__file__)); G3 = os.path.dirname(HERE)
@@ -22,10 +22,16 @@ def chunks():
             while len(cur) > 9000:
                 res.append((name, cur[:8000])); cur = cur[7500:]
         if cur.strip(): res.append((name, cur))
-    out = []
-    for i, (n, t) in enumerate(res):
-        cid = '%s#%d' % (n, i)
-        out.append({'id': hashlib.sha1(cid.encode()).hexdigest()[:10], 'doc': n, 'text': t})
+    # ids of the first build are frozen per document (frozen_chunk_ids.json) so later corpus growth never re-runs finished chunks;
+    # documents whose text changed since then, and new documents, get fresh 'v2' ids.
+    fz = json.load(open(G3 + '/frozen_chunk_ids.json')) if os.path.exists(G3 + '/frozen_chunk_ids.json') else {}
+    CHANGED = {'MEMORY.md', 'data-spine-plan.md'}
+    out = []; k = collections.Counter()
+    for n, t in res:
+        j = k[n]; k[n] += 1
+        if n in fz and n not in CHANGED and j < len(fz[n]): cid = fz[n][j]
+        else: cid = hashlib.sha1(('v2|%s#%d' % (n, j)).encode()).hexdigest()[:10]
+        out.append({'id': cid, 'doc': n, 'text': t})
     return out
 
 SYS = ("You build a knowledge graph of the global X3D (Extensible 3D) community and the PolyXandria project. "
