@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Interchange' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<HAnimHumanoid DEF='H' name='h' version='2.0'><HAnimJoint DEF='hanim_humanoid_root' name='humanoid_root'><HAnimJoint DEF='hanim_sacroiliac' name='sacroiliac' containerField='children'><HAnimSegment DEF='hanim_pelvis' name='pelvis'><HAnimSite DEF='hanim_site' name='site'/><HAnimDisplacer DEF='disp' name='d'/></HAnimSegment></HAnimJoint></HAnimJoint><HAnimJoint USE='hanim_humanoid_root' containerField='joints'/><HAnimSegment USE='hanim_pelvis' containerField='segments'/><HAnimSite USE='hanim_site' containerField='sites'/><HAnimJoint DEF='empty_joint' name='x' containerField='skeleton'/><Transform DEF='Tx'><HAnimSite DEF='siteInTransform' name='s'/></Transform></HAnimHumanoid>
+</Scene>
+</X3D>

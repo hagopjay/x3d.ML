@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Full' version='4.1'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<RigidBodyCollection><RigidBody DEF='B1' mass='١' position='1_000 0 0' linearVelocity='Infinity 0 0'/><RigidBody DEF='B2' mass='+0' fixed='false' angularVelocity='-nan 0 0'/><RigidBody DEF='B3' mass='1e400'/><RigidBody DEF='B4' mass='0x10'/><RigidBody DEF='B5' mass='in_f' position='1.5e 0 0'/><RigidBody DEF='B6' mass='٠.٠' orientation='٠ 0 0 1'/><RigidBody DEF='B7' mass='' orientation='0 0 0'/><RigidBody DEF='B8' mass='1,5' position='1, 2, 3'/></RigidBodyCollection><GaussianSplats DEF='G' positions='0 0 0' scales='-١ 1 1' opacities='١.٥' orientations='١ 0 0 0'/>
+</Scene>
+</X3D>

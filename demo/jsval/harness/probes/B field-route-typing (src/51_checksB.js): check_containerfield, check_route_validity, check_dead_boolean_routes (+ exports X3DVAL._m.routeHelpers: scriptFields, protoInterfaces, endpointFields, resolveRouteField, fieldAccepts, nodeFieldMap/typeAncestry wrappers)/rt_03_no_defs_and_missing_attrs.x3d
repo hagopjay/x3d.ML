@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform/>
+<ROUTE fromNode='A' fromField='x' toNode='B' toField='y'/>
+<ROUTE toNode='B' toField='y'/>
+<ROUTE/>
+</Scene>
+</X3D>

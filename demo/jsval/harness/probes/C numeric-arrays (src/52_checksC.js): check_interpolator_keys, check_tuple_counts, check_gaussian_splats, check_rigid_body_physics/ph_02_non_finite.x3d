@@ -1,0 +1,8 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection DEF='World'>
+  <RigidBody DEF='A' mass='nan' linearVelocity='1 inf 0' forces='1e400 0 0' position='1 abc 0' orientation='0 1 0 Infinity' fixed='nan' inertia='1 0 0 0 1 0 0 0 -inf'/>
+  <RigidBody USE='A' mass='nan'/>
+  <BallJoint DEF='J' anchorPoint='nan 0 0'><RigidBody USE='A' containerField='body1'/><RigidBody USE='A' containerField='body2'/></BallJoint>
+  <MotorJoint DEF='M' axis1Angle='inf' motor1Axis='0 0 0' stop1Bounce='-inf'/>
+</RigidBodyCollection>
+</Scene></X3D>

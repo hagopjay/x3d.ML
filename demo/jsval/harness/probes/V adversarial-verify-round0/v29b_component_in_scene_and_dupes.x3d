@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Interchange' version='4.0'>
+<head><component name='Geometry2D' level='1'/><component name='Geometry2D' level='0'/><component name='Geometry2D' level='2'/></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><Material/></Appearance><Box/></Shape>
+<component name='Texturing3D' level='2'/><ComposedTexture3D/><Rectangle2D/>
+</Scene>
+</X3D>

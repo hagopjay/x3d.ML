@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform DEF='T'>
+  <MetadataString name='ok' value='"x"'/>
+  <MetadataString containerField='children' name='bad' value='"y"'/>
+  <Group>
+    <MetadataSet containerField='children' name='bad2'/>
+  </Group>
+</Transform>
+</Scene>
+</X3D>

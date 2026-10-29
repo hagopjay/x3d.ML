@@ -1,0 +1,5 @@
+<X3D profile='Full' version='4.1'><Scene>
+<CoordinateInterpolator DEF='C' key='0 1' keyValue='0 0 0 1 1 1 2  0 0 0 1 1 1 2'/>
+<CoordinateInterpolator2D key='0' keyValue='0 0 1'/>
+<NormalInterpolator DEF='N' key='0 1' keyValue='0 0 1 0  0 0 1 0'/>
+</Scene></X3D>

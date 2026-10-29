@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Shape DEF='ok'><Appearance><Material/></Appearance><Box/></Shape><Shape><IndexedFaceSet coordIndex='0 1 2 -1'><Coordinate point='0 0 0 1 0 0 0 1 0'/></IndexedFaceSet><Appearance/></Shape></Scene></X3D>

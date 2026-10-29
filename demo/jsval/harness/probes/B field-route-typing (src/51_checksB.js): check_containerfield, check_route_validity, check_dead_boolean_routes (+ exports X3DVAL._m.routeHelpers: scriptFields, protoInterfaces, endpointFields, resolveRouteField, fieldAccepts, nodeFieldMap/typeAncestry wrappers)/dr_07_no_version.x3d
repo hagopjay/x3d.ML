@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive'>
+<Scene>
+<TouchSensor DEF='TS'/>
+<BooleanFilter DEF='F'/>
+<BooleanToggle DEF='T'/>
+<IntegerTrigger DEF='I'/>
+<TimeTrigger DEF='TT'/>
+<ROUTE fromNode='TS' fromField='isOver' toNode='F' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='T' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='I' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='TT' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputTrue' toNode='T' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputNegate' toNode='I' toField='set_boolean'/>
+<ROUTE fromNode='F' fromField='inputFalse' toNode='I' toField='set_triggerValue'/>
+</Scene>
+</X3D>

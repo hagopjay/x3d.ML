@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Transform DEF='pi'><?x3d hint?></Transform><Group DEF='piThenComment'><?a b?><!-- c --></Group><Group DEF='afterPi'/><?scene-pi x?><Transform DEF='last'/></Scene></X3D>

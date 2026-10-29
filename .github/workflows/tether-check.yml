@@ -1,0 +1,23 @@
+name: Tether check
+# The validator canary: every recorded body is re-validated with the pinned x3d_mcp fork commit and compared with the committed
+# baseline. A flip means the validator moved (or a body changed); the page's numbers must not be repeated until it is explained.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: hagopjay/x3d_mcp
+          ref: 8dd0d3e3beef25cf1865a153dd487898fc4bf516   # fork main, canary 24 Oct 2026: 0 flips vs eb4b4b4 on 557 bodies
+          path: fork
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "lxml>=6.0" "jsonschema>=4.26"
+      - run: python -I drift/canary.py --tree fork --baseline drift/verdicts-8dd0d3e.json

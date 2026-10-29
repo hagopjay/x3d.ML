@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Full' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform translation='1e308 -1e308 1e-320'><Shape><Box size='1e400 1 1'/></Shape></Transform><PositionInterpolator key='0 1e400' keyValue='0 0 0 1 1 1'/><Coordinate point='1e999 2 3'/><RigidBodyCollection><RigidBody DEF='B' mass='1e308' position='1e308 1e308 1e308'/></RigidBodyCollection>
+</Scene>
+</X3D>

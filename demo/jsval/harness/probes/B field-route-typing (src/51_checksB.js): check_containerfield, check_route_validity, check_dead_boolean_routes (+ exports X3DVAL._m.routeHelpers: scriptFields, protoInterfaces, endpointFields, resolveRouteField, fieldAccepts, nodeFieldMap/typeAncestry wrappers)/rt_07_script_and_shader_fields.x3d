@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Script DEF='S'>
+  <field name='out' type='SFFloat' accessType='outputOnly'/>
+  <field name='in' type='SFColor' accessType='inputOnly'/>
+  <field name='url' type='SFString' accessType='inputOutput' value='x'/>
+  <field type='SFBool' accessType='inputOnly'/>
+  <field name='io' accessType='inputOutput'/>
+  <!-- comment inside Script -->
+  <field name='' type='SFBool' accessType='inputOnly'/>
+</Script>
+<Material DEF='M'/>
+<Inline DEF='I' url='"a.x3d"'/>
+<ComposedShader DEF='CS' language='GLSL'>
+  <field name='time' type='SFFloat' accessType='inputOnly'/>
+  <ShaderPart DEF='SP' type='VERTEX' url='"v.glsl"'><field name='dummy' type='SFInt32' accessType='inputOutput'/></ShaderPart>
+</ComposedShader>
+<TimeSensor DEF='Clock'/>
+<ROUTE fromNode='S' fromField='out' toNode='M' toField='transparency'/>
+<ROUTE fromNode='S' fromField='in' toNode='M' toField='diffuseColor'/>
+<ROUTE fromNode='S' fromField='url' toNode='I' toField='url'/>
+<ROUTE fromNode='S' fromField='io' toNode='M' toField='diffuseColor'/>
+<ROUTE fromNode='S' fromField='nothere' toNode='M' toField='diffuseColor'/>
+<ROUTE fromNode='S' fromField='directOutput' toNode='M' toField='transparency'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='CS' toField='time'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='CS' toField='missing'/>
+<ROUTE fromNode='Clock' fromField='fraction_changed' toNode='SP' toField='dummy'/>
+</Scene>
+</X3D>

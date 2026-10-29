@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF=' lead' translation='
+1	2
+3 '><Shape DEF='trail '><Box/></Shape></Transform><Transform DEF='in ner'/><Transform DEF='nb&#160;sp'/><Transform DEF='nel&#x85;x'/><Transform DEF='zw&#x200b;x'/><Transform DEF='tab	x'/><Group USE='in ner'/><PositionInterpolator key='
+0
+1
+' keyValue='0 0 0
+
+	1 1 1'/><Coordinate point='
+
+'/>
+</Scene>
+</X3D>

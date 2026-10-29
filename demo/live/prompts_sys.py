@@ -10,3 +10,8 @@ When given validator errors, return the whole corrected document, not a diff."""
 
 REPAIR = """The validator rejected the scene. Fix every error and return the whole corrected X3D document.
 XSD errors:\n{xsd}\nSemantic errors:\n{sem}\n"""
+
+REPAIR_AUTOFIX = """The validator rejected the scene. A deterministic fixer then changed your document ({n} change(s): {changes}) and the validator still rejects the result.
+Here is the document after those changes; fix every error below in this version and return the whole corrected X3D document.
+{body}
+XSD errors:\n{xsd}\nSemantic errors:\n{sem}\n"""

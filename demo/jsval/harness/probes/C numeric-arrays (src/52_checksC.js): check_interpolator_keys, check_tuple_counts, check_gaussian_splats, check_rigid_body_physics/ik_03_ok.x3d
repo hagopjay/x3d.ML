@@ -1,0 +1,9 @@
+<X3D profile='Full' version='4.1'><Scene>
+<PositionInterpolator key='0 1' keyValue='0 0 0 1 1 1'/>
+<OrientationInterpolator key='0 0.5 1' keyValue='0 1 0 0 0 1 0 1.57 0 1 0 3.14'/>
+<CoordinateInterpolator key='0 1' keyValue='0 0 0 1 1 1  2 2 2 3 3 3'/>
+<CoordinateInterpolator2D key='0' keyValue='0 0 1 1'/>
+<NormalInterpolator key='0 1' keyValue='0 0 1 0 0 1'/>
+<ScalarInterpolator key='0 1' keyValue='0 1'/>
+<PositionInterpolator2D key='0 1' keyValue='0 0 1 1'/>
+</Scene></X3D>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Interchange' version='4.0'>
+<head><component name='Shaders' level='x'/><component name='Shaders' level=''/><component name='Geospatial' level=' 1 '/><component name='HAnim' level='+1'/><component name='NURBS' level='１'/><component name='Geometry2D' level='1_0'/><component name='EnvironmentalEffects' level='2.0'/><component name='ParticleSystems' level='0x10'/><component name='DIS' level='-5'/><component level='3'/><component name='CADGeometry' level='٢'/></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><Material/></Appearance><Box/></Shape>
+<PhysicalMaterial/><GeoOrigin/><HAnimHumanoid/><NurbsCurve/><Rectangle2D/><TextureBackground/><ParticleSystem/><DISEntityManager/><CADLayer/>
+</Scene>
+</X3D>

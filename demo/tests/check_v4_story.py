@@ -1,0 +1,133 @@
+"""check_v4_story.py — Firehose 4 story group acceptance: S2 the stage (12-hero), S3 the repair morph (14-morph), S4 the dark seven (16-seven), 30-stage.css,
+workers/diff.worker.js and the M3 stubs of 08-stage (SPEC-v4 S2–S4, §5; WORKPLAN modules 12/14/16, milestone M3).
+Run: python3 demo/v4/build_v4.py demo/build/v4-story --modules=12-hero,14-morph,16-seven,30-stage --no-xite && ln -sfn $PWD/demo/build/xite demo/build/v4-story/xite
+     V4_BUILD=demo/build/v4-story python3 demo/tests/check_v4_story.py [--csp viewer|noeval|nowasm|noworker]
+One desktop page at fx 0 (webdriver + SwiftShader): the measured path, the DOM facts and the SAI dolly; the staged look is never asserted (SPEC §5)."""
+import os, re, sys, json
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from v4fixture import Fixture
+fx = Fixture()
+async def main():
+    bundle = open(os.path.join(fx.build_dir, "index.html"), encoding="utf-8").read()
+    js = bundle[bundle.rfind("<script>"):]
+    fx.ok("story modules in the bundle", "12-hero.js" in js and "14-morph.js" in js and "16-seven.js" in js)
+    fx.ok("no setInterval, no $digit replacement in the story modules", js.count("setInterval(") == 0 and not re.search(r"\$\d", open(os.path.join(fx.build_dir, "workers", "diff.worker.js"), encoding="utf-8").read()))
+    fx.ok("diff worker shipped as an own file", os.path.isfile(os.path.join(fx.build_dir, "workers", "diff.worker.js")))
+    async with fx.browser() as b:
+        pg = await fx.page(b)
+        await fx.goto(pg)
+        fx.ok("boot reaches ready", await fx.wait(pg, 'BOOT.phase==="ready"', 180000), await pg.evaluate("[BOOT.phase,BOOT.ms]"))
+        fx.ok("fx 0 under webdriver", await fx.wait(pg, 'document.documentElement.dataset.fx==="0"', 20000))
+        # ---- S2: overlays, tiles, card, plaque, rail ----
+        fx.ok("#stage .kpi count 3 (the three tiles)", await pg.evaluate("document.querySelectorAll('#stage .kpi').length") == 3, await pg.evaluate("document.querySelectorAll('#stage .kpi').length"))
+        fx.ok("tiles render the three claim ids", await pg.evaluate("[...document.querySelectorAll('#stage .kpi .claim.tile')].map(b=>b.dataset.claim).join(',')") == "c.rates,c.seven,c.ratio")
+        fx.ok("thesis lines on the stage", await pg.evaluate("document.querySelector('#stageView .thesis h1')?.textContent") == "X3D IS THE 3D FORMAT AN AI CAN BE HELD ACCOUNTABLE TO" and "VISIBLE" in (await fx.txt(pg, "#stageView .thesis h2")))
+        fx.ok("parts in (live.core, live.bodies, live.jpg, renders.151)", await fx.wait(pg, "['live.core','live.bodies','live.jpg','renders.151'].every(n=>DATA.loaded(n))", 150000), await pg.evaluate("JSON.stringify(Object.fromEntries(Object.entries(DATA.status).map(([k,v])=>[k,v.state])))"))
+        cl = await pg.evaluate("(async()=>{const o={};for(const id of ['c.rates','c.seven','c.ratio','hero.valid_finals','hero.seven151','hero.ratio_x','seven.ids','seven.pass151','morph.repaired']){const r=await CLAIMS.run(id);o[id]=[r.ok,JSON.stringify(r.value).slice(0,80),JSON.stringify(r.expected).slice(0,80)]}return o})()")
+        for cid, (okv, v, e) in cl.items():
+            fx.ok(f"claim {cid} compute()===expected", okv is True, f"{v} vs {e}")
+        face = await pg.evaluate("[...document.querySelectorAll('#stage .kpi .claim.tile .v')].map(b=>b.textContent)")
+        fx.ok("tile faces computed from data (rates · 7 of N · ms vs s)", re.match(r"^\d+ → \d+ · \d+ → \d+ · \d+ → \d+$", face[0]) and re.match(r"^\d+ of \d+$", face[1]) and re.match(r"^\d+ ms vs \d+ s$", face[2]), face)
+        fx.ok("tiles earned after live.core", await fx.wait(pg, "[...document.querySelectorAll('#stage .kpi .claim.tile')].every(b=>b.classList.contains('earned'))", 20000), await pg.evaluate("[...document.querySelectorAll('#stage .kpi .claim.tile')].map(b=>b.className)"))
+        card = await pg.evaluate("({src:document.querySelector('#stageView .mcard .frame img')?.src.slice(0,22),l1:document.querySelector('#stageView .mcard .mc')?.textContent,l2:document.querySelectorAll('#stageView .mcard .mc')[1]?.textContent})")
+        fx.ok("measured card: the 192×144 JPEG at 1:1 with the 16.5.0 and 16.5.1 lines", card["src"] == "data:image/jpeg;base64" and "X_ITE 16.5.0" in card["l1"] and "% of pixels differ" in card["l1"] and "16.5.1 offline:" in card["l2"], card)
+        rect = await pg.evaluate("(()=>{const r=document.querySelector('#stageView .mcard .frame img').getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)]})()")
+        fx.ok("measured card img is 192×144 on screen", rect == [192, 144], rect)
+        fx.ok("measured card: this browser line fills from the boot measure (fx 0: after the parts, ≤ 60 s)", await fx.wait(pg, "/this browser: \\d/.test(document.querySelector('#stageView .mcard .live').textContent)", 120000), await fx.txt(pg, "#stageView .mcard .live"))
+        pl = await pg.evaluate("[...document.querySelectorAll('#stageView .plaque .pl')].map(e=>e.textContent)")
+        fx.ok("plaque line 1: prompt id, category, prompt text", pl[0].startswith("sp-09 · showpiece · ") and "castle" in pl[0], pl[0][:80])
+        fx.ok("plaque line 2: lane, calls, cost, verdict after 1 repair", "gemini-3.8-flash · 2 calls · $" in pl[1] and "valid on fork@eb4b4b4 after 1 repair" in pl[1] and "chain" in pl[1], pl[1])
+        fx.ok("plaque line 3: content hash equals contentHash(body) prefix", await pg.evaluate("document.querySelector('#stageView .plaque .l3').textContent.includes('content hash '+contentHash(HERO.items[0].body).slice(0,6))") and "x3dprov/0.1" in pl[2], pl[2])
+        fx.ok("plaque line 4 names HagopJay on the private build", "HagopJay" in pl[3], pl[3])
+        fx.ok("plaque chain line settles once the run clock built the scene (chain N steps VERIFIED)", await fx.wait(pg, "(()=>{SIM.seekTo(Math.max(S.clk,LIVE[HERO.items[0].idx].T+5));return true})()&&/chain \\d+ steps VERIFIED/.test(document.querySelector('#stageView .plaque .l2').textContent)", 30000) or await fx.wait(pg, "/chain \\d+ steps VERIFIED/.test(document.querySelector('#stageView .plaque .l2').textContent)", 15000), await fx.txt(pg, "#stageView .plaque .l2"))
+        fx.ok("plaque head hash printed from the chain", re.search(r"head [0-9a-f]{6}…", await fx.txt(pg, "#stageView .plaque .l3")), await fx.txt(pg, "#stageView .plaque .l3"))
+        rail = await pg.evaluate("[...document.querySelectorAll('#stageView .hrail .strip button.th')].map(b=>b.querySelector('img').src.slice(0,22))")
+        fx.ok("rail: 12 tiles, every img from the HERO jpgs (never a staged snapshot)", len(rail) == 12 and all(s == "data:image/jpeg;base64" for s in rail), (len(rail), rail[:2]))
+        fx.ok("rail: tile 1 selected, no auto-advance under webdriver", await pg.evaluate("document.querySelector('#stageView .hrail .strip button.th.sel')?.dataset.i") == "0" and await pg.evaluate("__hero.auto") is False)
+        # ---- S2: the spine ----
+        fx.ok("spine pick: the opening hero with a repair", await pg.evaluate("__hero.spinePick&&__hero.spinePick.p") == "sp-09", await pg.evaluate("JSON.stringify(__hero.spinePick)"))
+        fx.ok("spine finding names roughness", "roughness" in await fx.txt(pg, "#hero .spine .finding"), await fx.txt(pg, "#hero .spine .finding"))
+        fx.ok("spine verdict lines", "INVALID on fork@eb4b4b4 in" in await fx.txt(pg, "#hero .spine .vline") and "VALID on fork@eb4b4b4 in" in await pg.evaluate("document.querySelectorAll('#hero .spine .vline')[1].textContent"))
+        fx.ok("spine arrow: the model was sent its own report · N characters", re.search(r"the model was sent its own report · [\d,]+ characters", await fx.txt(pg, "#hero .spine .sarrow")), await fx.txt(pg, "#hero .spine .sarrow"))
+        fx.ok("spine diff line +a −d tag lines of n", re.search(r"\+\d+ −\d+ tag lines of \d+", await fx.txt(pg, "#hero .spine .dl")), await fx.txt(pg, "#hero .spine .dl"))
+        fx.ok("spine frames: attempt 1 from live.jpg, final from HERO", await pg.evaluate("document.querySelectorAll('#hero .spine .fr img').length") == 2)
+        # ---- S2: stage mode and the hash proof ----
+        fx.ok("STAGE ready", await fx.wait(pg, "__stage.show.ready&&__stage.show.loads>=1", 60000), await pg.evaluate("JSON.stringify(__stage.show)"))
+        fx.ok("fx 0 default: MEASURED, hero hash kept, badge says MEASURED", await pg.evaluate("__stage.show.staged===false&&__stage.show.lastHash===contentHash(HERO.items[0].body)") and (await fx.txt(pg, "#stageBadge")).startswith("MEASURED"), await fx.txt(pg, "#stageBadge"))
+        fx.ok("measure canvas never rigged", await pg.evaluate("__stage.measure.rigNodes") == 0)
+        h0 = await pg.evaluate("__stage.show.lastHash")
+        await pg.evaluate("HEROUI.toggle('staged')")
+        fx.ok("toggle STAGED at fx 0: rig applied without a reload (lights only), hash unchanged", await fx.wait(pg, "__stage.show.staged===true", 20000) and await pg.evaluate("__stage.show.lastHash") == h0 and await pg.evaluate("__stage.show.rig&&__stage.show.rig.lightsOnly===true"), await pg.evaluate("JSON.stringify(__stage.show.rig)"))
+        await pg.evaluate("HEROUI.toggle('measured')")
+        fx.ok("toggle MEASURED: a fresh load of the raw bytes, prints fresh load, hash identical", await fx.wait(pg, "__stage.show.staged===false&&document.getElementById('stageMsg').textContent.includes('fresh load')", 40000) and await pg.evaluate("__stage.show.lastHash") == h0, await fx.txt(pg, "#stageMsg"))
+        # ---- the STAGED manifest: blank flags read from data/staged.json, never a hard-coded list ----
+        sm = await pg.evaluate("""HEROUI.stagedManifest().then(m=>{if(!m)return null;const ents=[];Object.entries(m.turntables||{}).forEach(([k,v])=>ents.push([k,v]));Object.entries(m.stills||{}).forEach(([k,o])=>Object.values(o||{}).forEach(v=>ents.push([k,v])));
+          const keys=[...new Set(ents.map(e=>e[0]))],lines=keys.flatMap(k=>HEROUI.stagedLines(k));const blank=ents.filter(e=>e[1]&&e[1].blank===true).length;
+          const said=lines.filter(l=>l.blank&&/did not render in Blender/.test(l.text)).length,wrong=lines.filter(l=>(l.blank&&/baked picture/.test(l.text))||(!l.blank&&/did not render/.test(l.text))||(l.blank&&l.url)).length;
+          const cur=HEROUI.cur(),cl=cur?HEROUI.stagedLines(cur.key):[],cyc=document.querySelector('#stageView .plaque .cyc');
+          return{ents:ents.length,lines:lines.length,blank,said,wrong,curLines:cl.length,cycHidden:cyc?cyc.hidden:null,cycText:cyc?cyc.textContent:null,first:cl[0]?cl[0].text:null}})""")
+        fx.ok("STAGED manifest read (BUILD.staged → data/staged.json) with entries and measured blank flags", bool(sm) and sm["ents"] > 0 and sm["blank"] > 0, sm)
+        fx.ok("every blank entry reads 'did not render in Blender', none presented as a render or linked", bool(sm) and sm["lines"] == sm["ents"] and sm["said"] == sm["blank"] and sm["wrong"] == 0, sm)
+        fx.ok("plaque Cycles slot follows the manifest for the current hero (shown iff it has entries, text from stagedLines)", bool(sm) and ((sm["curLines"] == 0 and sm["cycHidden"] is True) or (sm["curLines"] > 0 and sm["cycHidden"] is False and sm["first"] in (sm["cycText"] or ""))), sm)
+        fx.ok("HERO gains the WORKPLAN names (open, select, plaque, spine, measuredCard)", await pg.evaluate("typeof HERO.open==='function'&&typeof HERO.select==='function'&&!!HERO.plaque&&!!HERO.spine&&!!HERO.measuredCard"))
+        # ---- S3: the morph ----
+        await pg.evaluate("document.getElementById('morph').scrollIntoView({block:'start'})")
+        fx.ok("picker: 96 repaired-and-valid scenes", await fx.wait(pg, "document.querySelectorAll('#morph .mpicker .strip button.th').length===96", 20000), await pg.evaluate("document.querySelectorAll('#morph .mpicker .strip button.th').length"))
+        fx.ok("picker sorted by diff size once repairStats landed", await fx.wait(pg, "__morph.stats&&__morph.stats.n===96", 60000), await pg.evaluate("JSON.stringify(__morph.stats)+' via '+__morph.via"))
+        idx = await pg.evaluate("MODES.get('live17').order()[2]")
+        fx.ok("MORPH.open on L-003 (the third scene by run time)", await pg.evaluate("i=>{const it=MORPH.open(i);return it&&it.p}", idx) == "anim-01", idx)
+        fx.ok("MORPH.open('L-003') resolves the same scene once the clock built it", await pg.evaluate("(()=>{const sc=S.byId.get('L-003');return !sc||MORPH.open('L-003')===LIVE[MODES.get('live17').order()[2]]})()"))
+        fx.ok("head shows the roughness finding before 0.5", "roughness" in await fx.txt(pg, "#morph .mhead h3"), await fx.txt(pg, "#morph .mhead h3"))
+        fx.ok("diff computed", await fx.wait(pg, "__morph.diff&&__morph.diff.rows", 20000), await pg.evaluate("JSON.stringify(__morph.diff&&{add:__morph.diff.add,del:__morph.diff.del,base:__morph.diff.base,via:__morph.diff.via})"))
+        fx.ok("diff summary +1 −1 tag lines of n", re.search(r"\+1 −1 tag lines of \d+", await fx.txt(pg, "#morph .dsum")), await fx.txt(pg, "#morph .dsum"))
+        await pg.evaluate("MORPH.scrub(1)")
+        fx.ok("past 0.5 the head crossfades to VALID on fork@eb4b4b4 in N ms", re.search(r"VALID on fork@eb4b4b4 in [\d,]+ ms", await fx.txt(pg, "#morph .mhead h3")) and re.search(r"\+1 −1 tag lines of \d+", await fx.txt(pg, "#morph .mhead .vl")), await fx.txt(pg, "#morph .mhead"))
+        pins = await pg.evaluate("[...document.querySelectorAll('#morph .pin')].map(p=>p.textContent)")
+        fx.ok("both measured frames pinned with nb 16.5.0 · 16.5.1 and verdicts", len(pins) == 2 and all("16.5.0 offline:" in p and "16.5.1 offline:" in p and "%" in p for p in pins) and "INVALID" in pins[0] and "VALID" in pins[1], [p[:90] for p in pins])
+        fx.ok("ribbon: 5 tiles for a 2-call scene (generate, validate, repair, validate, render)", await pg.evaluate("[...document.querySelectorAll('#morph .ribbon .rtile')].map(t=>t.textContent.split(' ')[1]).join(',')") == "GENERATE,VALIDATE,REPAIR,VALIDATE,RENDER", await pg.evaluate("[...document.querySelectorAll('#morph .ribbon .rtile')].map(t=>t.textContent)"))
+        fx.ok("ribbon tiles all stamped in at t=1", await pg.evaluate("[...document.querySelectorAll('#morph .ribbon .rtile')].every(t=>t.classList.contains('on'))"))
+        fx.ok("fx 0: exactly one X_ITE canvas in #morph (snapshot crossfade)", await fx.wait(pg, "document.querySelectorAll('#morph x3d-canvas').length===1", 30000) and await pg.evaluate("__stage.show2.live") <= 2, await pg.evaluate("[document.querySelectorAll('#morph x3d-canvas').length,__stage.show2.live]"))
+        fx.ok("morph loaded the final into its instance", await fx.wait(pg, "__morph.loads>=1", 90000), await pg.evaluate("[__morph.loads,__morph.snapshot]"))
+        fx.ok("DIFF.diffHtml port returns html/add/del/base", await pg.evaluate("(()=>{const it=LIVE[MODES.get('live17').order()[2]];const r=DIFF.diffHtml(it.B[0],it.B[1]);return r.add===1&&r.del===1&&r.base>0&&r.html.includes('class=\"a\"')})()"))
+        fx.ok("diff worker answers a ping-sized job (or the main thread took over honestly)", await pg.evaluate("(async()=>{const r=await DIFF.diffAsync('<a/><b/>','<a/><c/>');return r.add===1&&r.del===1&&(r.via==='main'||r.via==='worker')})()"))
+        # ---- the lazy-instance race (director rate >= 4 / a fast tour click): dispose during a pending load must defer, never throw ----
+        race = await pg.evaluate("""(async()=>{const ids=MODES.get('live17').order();MORPH.open(ids[3]);const d0=__morph.dispose();const p0=__morph.pending;await later(6000);
+          return{deferred:d0===false,pending0:p0,pendingNow:__morph.pending,botAlive:!!__morph.inst.bot,visible:__morph.visible}})()""")
+        fx.ok("morph: dispose() during a pending load is deferred (returns false), the load settles, the instance survives while visible", race["deferred"] and race["pending0"] >= 1 and race["pendingNow"] == 0 and race["botAlive"], race)
+        fx.ok("plus-your-N: tiles print '+ your N' only while S.flags.includeMine is on", await pg.evaluate("""(()=>{const t=()=>Array.from(document.querySelectorAll('#hero .ttile .mine')).map(m=>[m.hidden,m.textContent]);const a=t();S.flags.includeMine=true;__hero.updateMine();const b=t();S.flags.includeMine=false;__hero.updateMine();const c=t();
+          return a.length===3&&a.every(x=>x[0]===true)&&b.every(x=>x[0]===false&&/^\\+ your \\d/.test(x[1]))&&c.every(x=>x[0]===true)})()"""))
+        # ---- S4: the dark seven ----
+        await pg.evaluate("document.getElementById('seven').scrollIntoView({block:'start'})")
+        fx.ok("7 tiles", await fx.wait(pg, "document.querySelectorAll('#seven .sstrip button.th').length===7", 20000), await pg.evaluate("document.querySelectorAll('#seven .sstrip button.th').length"))
+        fx.ok("strip ids equal the record's list", await pg.evaluate("JSON.stringify(__seven.ids)===JSON.stringify(STATS.claims['c.seven'].ids.slice().sort())"), await pg.evaluate("JSON.stringify(__seven.ids)"))
+        fx.ok("tiles print BLANK · nb", await pg.evaluate("[...document.querySelectorAll('#seven .sstrip .nb')].every(e=>/BLANK · \\d+\\.\\d+%/.test(e.textContent))"))
+        fx.ok("seven stage instance created on reveal", await fx.wait(pg, "__seven.inst&&__seven.inst.ok", 30000))
+        fx.ok("morph instance disposed off screen (its canvas gone, the seven's alone)", await fx.wait(pg, "__stage.show2.live===1&&document.querySelectorAll('#morph x3d-canvas').length===0", 20000), await pg.evaluate("[__stage.show2.live,document.querySelectorAll('#morph x3d-canvas').length]"))
+        geo = await pg.evaluate("(()=>{const x=SEVEN.open('gemini-3.8-flash/geo-02_a2.x3d');return x&&x.key})()")
+        fx.ok("open flash geo-02", geo == "gemini-3.8-flash/geo-02_a2.x3d", geo)
+        fx.ok("geo-02 loaded MEASURED (no rig)", await fx.wait(pg, "__seven.loaded==='gemini-3.8-flash/geo-02_a2.x3d'", 90000) and await pg.evaluate("!!__seven.inst&&__seven.inst.staged===false&&__seven.inst.rig()===null"), await pg.evaluate("[__seven.loaded,__seven.inst&&__seven.inst.staged]"))
+        fx.ok("before FIND IT the live frame is blank too", await fx.wait(pg, "__seven.ratio!=null", 20000) and await pg.evaluate("__seven.ratio") < 0.005, await pg.evaluate("__seven.ratio"))
+        await pg.evaluate("SEVEN.findIt()")
+        found = await fx.wait(pg, "(()=>{const t=document.querySelector('#seven .sratio').textContent;const m=/this browser: (\\d+\\.\\d+)%/.exec(t);return (m&&+m[1]>0.5)||/renderer could not/.test(t)})()", 30000)
+        fx.ok("FIND IT on geo-02 ends with this browser > 0.5 % or an honest 'renderer could not'", found, await pg.evaluate("[document.querySelector('#seven .sratio').textContent,JSON.stringify(__seven.plan),document.querySelector('#seven .scounter').textContent]"))
+        fx.ok("counter travelled a geocentric distance (m or km: the GeoViewpoint's bind transition advances only while rendering, so the start varies at fx 0)", await fx.wait(pg, "/arrived · travelled [\\d,.]+ (m|km)$/.test(document.querySelector('#seven .scounter').textContent)", 15000), await fx.txt(pg, "#seven .scounter"))
+        han = await pg.evaluate("(()=>{const k=__seven.list.find(k=>k.includes('hanim-01'));return k&&SEVEN.open(k)&&k})()")
+        fx.ok("open hanim-01", bool(han) and "hanim-01" in han, han)
+        fx.ok("hanim-01 loaded", await fx.wait(pg, "__seven.loaded===__seven.cur&&__seven.cur.includes('hanim-01')", 90000), await pg.evaluate("__seven.loaded"))
+        await pg.evaluate("SEVEN.findIt()")
+        fx.ok("hanim-01 prints 0 shapes placed and the honest line", await fx.wait(pg, "document.getElementById('seven').innerText.includes('0 shapes placed')", 20000) and "passes by saying less" in await fx.txt(pg, "#seven .sstage"), await fx.txt(pg, "#seven .smsg"))
+        race2 = await pg.evaluate("""(async()=>{SEVEN.open(0);const d0=__seven.dispose();const p0=__seven.pending;await later(6000);return{deferred:d0===false,pending0:p0,pendingNow:__seven.pending,alive:!!__seven.inst}})()""")
+        fx.ok("seven: dispose() during a pending load is deferred and the instance survives while visible", race2["deferred"] and race2["pending0"] >= 1 and race2["pendingNow"] == 0 and race2["alive"], race2)
+        fx.ok("the hero stage stayed MEASURED (__stage.show.staged false) and the seven instance never staged", await pg.evaluate("__stage.show.staged===false&&__seven.staged===false&&!!__seven.inst&&__seven.inst.staged===false"))
+        fx.ok("cards: BLANKWHY, X_ITE lines, verdict pills, pass pills, warning text", await pg.evaluate("(()=>{const t=document.querySelector('#seven .scard').textContent.toLowerCase();return t.includes('valid on fork@eb4b4b4')&&t.includes('js-port-of-8dd0d3e')&&t.includes('16.5.0 blank')&&t.includes('16.5.1')&&t.includes('proposed warning')})()"), (await fx.txt(pg, "#seven .scard"))[:200])
+        # ---- hygiene ----
+        fx.ok("no .stamp-unknown in the three sections", await pg.evaluate("document.querySelectorAll('#stage .stamp-unknown,#morph .stamp-unknown,#seven .stamp-unknown').length") == 0, await pg.evaluate("[...document.querySelectorAll('.stamp-unknown')].map(e=>e.textContent)"))
+        fx.ok("three section headers with honesty lines", await pg.evaluate("['stage','morph','seven'].every(id=>document.querySelector('#'+id+' .sh h2')&&document.querySelector('#'+id+' > .hl').textContent.length>40)"))
+        fx.ok("story panels own their visibility (no el: RAIL.init observes every section and IO keeps one callback per element)", await pg.evaluate("['hero','morph','seven'].every(n=>__panels[n]&&!__panels[n].el)&&typeof __hero.visible==='boolean'&&__panels.hero.draws>0"), await pg.evaluate("JSON.stringify({v:__hero.visible,d:__panels.hero.draws})"))   # the page sits at #seven here, so the view itself is off screen
+        fx.ok("LOOP panels registered: hero, morph, seven, stageRig lazily", await pg.evaluate("!!(__panels.hero&&__panels.morph&&__panels.seven)"))
+        await fx.shot(pg, "v4_story.png", full=False)
+        errs = fx.errors(pg)
+        fx.ok("no page errors", not errs, errs[:5])
+        fx.ok("no boot errors", await pg.evaluate("BOOT.log.length") == 0, await pg.evaluate("BOOT.log"))
+    fx.summary()
+Fixture.run(main)

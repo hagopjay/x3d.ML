@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='T'><Shape><Appearance><Material diffuseColor='1 0 0'/></Appearance><Box/></Shape></Transform><TimeSensor DEF='Clock' cycleInterval='4' loop='true'/><OrientationInterpolator DEF='OI' key='0 1' keyValue='0 1 0 0 0 1 0 6.28'/><ROUTE fromNode='Clock' fromField='fraction_changed' toNode='OI' toField='set_fraction'/><ROUTE fromNode='OI' fromField='value_changed' toNode='T' toField='set_rotation'/>
+</Scene>
+</X3D>

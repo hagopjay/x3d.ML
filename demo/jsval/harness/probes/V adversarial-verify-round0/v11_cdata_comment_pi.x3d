@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Group DEF='commentOnly'><!-- just a comment --></Group><Transform DEF='piOnly'><?x3d-hint a='1'?></Transform><Switch DEF='textOnly'>  text  </Switch><Group DEF='cdataOnly'><![CDATA[<Shape/>]]></Group><Shape DEF='withComment'><!-- no geometry --><Appearance><Material/></Appearance></Shape><Script DEF='S'><![CDATA[ecmascript:
+function initialize(){}
+]]></Script><Group DEF='mixed'><!--a--><?pi b?><Shape><Box/></Shape></Group>
+</Scene>
+</X3D>

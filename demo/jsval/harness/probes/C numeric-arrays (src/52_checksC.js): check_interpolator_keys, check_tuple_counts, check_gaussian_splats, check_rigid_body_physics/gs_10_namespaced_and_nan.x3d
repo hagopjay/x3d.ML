@@ -1,0 +1,4 @@
+<X3D profile='Full' version='4.1'><Scene>
+<x:GaussianSplats xmlns:x='urn:x' DEF='Ns' positions='0 0 0 1' scales='nan -1 1' opacities='0.5 nan 2' orientations='nan 0 0 1'/>
+<GaussianSplats DEF='NanLater' positions='0 0 0' scales='-1 nan 1' opacities='0.5 nan -1' sphericalHarmonicsDegree0Coef0='1 0 0'/>
+</Scene></X3D>

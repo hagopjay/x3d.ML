@@ -1,0 +1,5 @@
+<X3D profile='Full' version='4.1'><head><PositionInterpolator key='0' keyValue='1 2'/></head><Scene>
+<PositionInterpolator DEF='P' key='0 1' keyValue='0 0 0 1 1'/>
+<Transform><Group><ScalarInterpolator DEF='Deep' key='0 1 2' keyValue='0 1'/></Group></Transform>
+<ProtoDeclare name='Pr'><ProtoBody><PositionInterpolator DEF='InProto' key='0' keyValue='1 2'/></ProtoBody></ProtoDeclare>
+</Scene></X3D>

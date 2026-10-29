@@ -1,0 +1,8 @@
+<X3D profile='Full' version='4.1'><Scene>
+<Transform DEF='Dup'/>
+<RigidBodyCollection>
+  <RigidBody DEF='Dup'/>
+  <RigidBody DEF='Ok'/>
+  <BallJoint DEF='J'><RigidBody USE='Dup' containerField='body1'/><RigidBody USE='Ok' containerField='body2'/></BallJoint>
+</RigidBodyCollection>
+</Scene></X3D>

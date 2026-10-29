@@ -1,0 +1,2 @@
+<!DOCTYPE X3D [<!ENTITY e "v"><!ENTITY frag "<Box/>">]>
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Transform DEF='ent'>&e;</Transform><Group DEF='entElem'>&frag;</Group><Group DEF='amp'>&amp;</Group><Group DEF='lt'>&lt;x&gt;</Group></Scene></X3D>

@@ -1,0 +1,127 @@
+/* 90-phone.css — the 390 px pass over every section and the 768 px tablet pass (SPEC-v4 §11, §1 grid; ARCHITECTURE §8 phone rules; WORKPLAN 10-curtain-mast).
+   Loads last, so it only narrows what 10..80 already set. Rules: single column ≤ 600 px; every canvas max-width 100 % with an explicit CSS height before its
+   first draw (a LOOP panel draws only once in view since the IO fix, and a canvas sized only in JS would otherwise keep its 300×150 bitmap and scale to the
+   wrong height; fitCanvas() writes the drawn height inline, which wins over these); tables and code scroll inside their own box, never the page; tap targets
+   44 px (mast buttons through the ::after hit box of 20-mast.css, inspector tabs and the firehose rows for real); the inspector tab strip scrolls
+   horizontally; sheet tiles two per row; bench editor → report → draws stacked; wall and ladder stacked; mast 40 px: clock · scrub · Pause · x1/x30/x60.
+   Sections (ids from template.html): stage morph seven lane film raster matrix stream bench wall ladder sheet suite desk deck. Every colour is a token. */
+
+/* ---------- everywhere at ≤ 1100 px: nothing may widen the page ---------- */
+@media (max-width:1100px){
+ main.wrap,main section,.sb{min-width:0;max-width:100%}
+ main canvas,main svg,main img,main video{max-width:100%}
+ main table:not(#fh table){display:block;max-width:100%;overflow-x:auto}
+ main pre,main code{max-width:100%}
+ main pre{overflow-x:auto}
+ #env,#under,#real,#versionsDeck,#licences{max-width:100%;overflow-x:auto}
+ .proof dl{grid-template-columns:minmax(80px,auto) minmax(0,1fr)}
+}
+
+/* ---------- tablet and phone (≤ 900 px): touch-sized controls, stacked two-column pairs that no longer fit ---------- */
+@media (max-width:900px){
+ /* inspector: the 11 tabs are one horizontal strip that scrolls; each tab is a 44 px target */
+ #tabs{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;gap:2px;max-width:100%}
+ #tabs button{flex:0 0 auto;min-height:44px;min-width:44px;padding:0 12px;scroll-snap-align:start}
+ .ins .insR button{min-height:36px}
+ /* wall and ladder stacked */
+ .wallGrid,.gapGrid{grid-template-columns:minmax(0,1fr)}
+ #wall .wallKpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ /* canvases: CSS heights before the first draw (tablet values = the JS desktop/tablet heights) */
+ #wfCanvas{height:420px}
+ #wfMini{height:36px}
+ #scopeCanvas{height:140px}
+ #spendCanvas{height:28px}
+ .rs-wrap canvas.rs-cv{height:420px}
+ .fl-cv{height:420px}
+ .mx-cvbox{max-width:100%;overflow-x:auto}
+ #benchSeries{height:44px}
+ #wallCv{height:160px}
+ #ttd{height:48px}
+ #gapWall{height:120px}
+ #braidCv{height:320px}
+ #suiteChart{height:150px}
+ #metricChart{height:180px}
+ .mribbonCv{width:100%;height:100%}
+ /* S2 stage overlays: the status badge sits left of the measured card, the thesis starts under it, the status line is dropped (it repeats the card) */
+ .stageView .stageBadge{left:8px;transform:none;max-width:calc(100% - 140px)}
+ .stageView .stageMsg{display:none}
+ .thesis{top:40px}
+}
+
+/* ---------- tablet (601–900 px): two columns where they still fit ---------- */
+@media (min-width:601px) and (max-width:900px){
+ .tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .runstrip{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .rsClockWrap{grid-column:1 / -1;border-right:0;border-bottom:1px solid var(--line)}
+ .benchGrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .benchGrid>:first-child{grid-column:1 / -1}
+ .mx-grid{grid-template-columns:minmax(0,1fr)}
+ .mx-cmp{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .sheetGrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+ .sheetGrid .th{width:100%;height:auto;aspect-ratio:4/3}
+ .lbStage{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .suiteCols{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .chainGrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #fh tbody tr.r td{max-width:200px}
+}
+
+/* ---------- phone (≤ 600 px) ---------- */
+@media (max-width:600px){
+ /* the mast: one 40 px row, transport collapsed to the essentials (ARCHITECTURE §8: no honesty line, Step, run segment, x4/x10, versions; SPEC §11 40 px) */
+ #mast{height:40px;min-height:40px;overflow:visible}
+ .mastRow{height:39px;min-height:39px;flex-wrap:nowrap;gap:0 6px;padding:0}
+ .mastL,.mastR{display:none}
+ .mastC{order:0;flex:1 1 auto;flex-wrap:nowrap;gap:6px;min-width:0}
+ .clk{font-size:12px;min-width:0;flex:0 0 auto}
+ #scrub{flex:1 1 40px;min-width:40px;width:auto;height:32px}
+ #bStep,#bReset,#runseg,#mastHonesty,#speed button[data-r="4"],#speed button[data-r="10"]{display:none}
+ #mast .seg button{height:32px;min-width:44px;padding:0 6px;font-size:11px}
+ #bPause{min-width:52px}
+ /* sections: one column, 10 px inner padding, the honesty label in flow */
+ section{padding:10px 10px 12px}
+ .sh h2{font-size:18px}
+ .sh .stamps{margin-left:0}
+ .grid2,.grid3,.cols-7-5,.wallGrid,.gapGrid,.mx-grid,.benchGrid,.sgrid,.mwrap,.suiteCols,.lbStage{grid-template-columns:minmax(0,1fr)}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .kpi .v{font-size:22px}
+ .row{min-width:0}
+ /* S6 film: transposed waterfall, minimap on the right edge, 80 px scope */
+ #wfCanvas{height:420px}
+ #wfMini{width:36px;height:420px}
+ #scopeCanvas{height:80px}
+ /* S7 raster 200 px */
+ .rs-wrap canvas.rs-cv{height:200px}
+ /* S8 matrix + flow */
+ .mx-cv{height:220px}
+ .fl-cv{height:340px}
+ .mx-tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
+ .mx-tabs button{flex:0 0 auto;min-height:36px}
+ /* S9 firehose: readable 36 px rows (30-firehose measures the row height once and windows on it), inspector below */
+ #fh tbody tr.r td{height:36px;line-height:36px;font-size:12.5px;max-width:132px}
+ #fh thead th{font-size:var(--t-stamp)}
+ .fhBar label{flex:1 1 calc(50% - 10px);min-width:0;display:flex} .fhBar label select{flex:1 1 0;width:0;min-width:0;max-width:none;min-height:36px}
+ .insBody{max-height:60vh;overflow:auto}
+ .insBody pre,.insBody table{max-width:100%;overflow-x:auto}
+ /* S10 bench: editor (220 px, gutter beside it) → report → draws */
+ .benchGrid{display:flex;flex-direction:column;gap:10px}
+ .benchEditor{height:220px}
+ .benchFixes button,.repApply{min-height:36px}
+ /* S11 wall + S12 ladder stacked; wall cells are 10 px in JS */
+ #wallCv{height:120px}
+ #braidCv{height:220px}
+ .injRow{grid-template-columns:minmax(0,1fr)}
+ .injRow button.inj{min-height:44px}
+ .notches{grid-template-columns:repeat(5,minmax(0,1fr))}
+ /* S13 contact sheet: two tiles per row */
+ .sheetGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .sheetGrid .th{width:100%;height:auto;aspect-ratio:4/3}
+ .sheetBar select{max-width:100%;min-height:36px}
+ /* S14 suite */
+ .chainGrid{grid-template-columns:minmax(0,1fr)}
+ #xlad .row.xrow,#xlad .row.xaxis{grid-template-columns:minmax(0,1fr)}
+ /* S16 deck */
+ .drawer summary{min-height:44px;display:flex;align-items:center}
+ #askQ{flex-basis:100%}
+ /* the proof drawer as a bottom sheet */
+ .proof{left:8px;right:8px;width:auto;bottom:8px;max-height:70vh}
+}

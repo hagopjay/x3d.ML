@@ -1,0 +1,10 @@
+<X3D profile='Full' version='4.1'><Scene>
+<Group>
+  <CollisionCollection DEF='CC' bounce='nan' frictionCoefficients='inf 1' softnessConstantForceMix='abc'/>
+  <CollidableShape DEF='CS' translation='0 nan 0' rotation='0 1 0 0'/>
+  <Contact DEF='Ct' depth='-inf' position='1 2 3'/>
+  <CollisionSpace DEF='Sp' bboxSize='inf inf inf'/>
+  <CollisionSensor DEF='Sn'/>
+  <CollidableOffset DEF='Off' translation='1 2 nan'/>
+</Group>
+</Scene></X3D>

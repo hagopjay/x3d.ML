@@ -1,0 +1,5 @@
+<X3D profile='Full' version='4.1'><Scene>
+<GaussianSplats scales='1 1 1 1 1 1 1 1 1' opacities='1 1' sphericalHarmonicsDegree0Coef0='1 0 0'/>
+<GaussianSplats DEF='Empty'/>
+<GaussianSplats DEF='NoColor' positions='0 0 0'/>
+</Scene></X3D>

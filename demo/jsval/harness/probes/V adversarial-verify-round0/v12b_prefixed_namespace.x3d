@@ -1,0 +1,2 @@
+<?xml version='1.0'?>
+<x:X3D xmlns:x='urn:x3d' profile='Interchange' version='4.0'><x:head/><x:Scene><x:Viewpoint/><x:Shape DEF='S'><x:Appearance/></x:Shape><x:Group/><x:ROUTE fromNode='S' fromField='a' toNode='S' toField='b'/><x:Transform DEF='1x'/><x:PhysicalMaterial/></x:Scene></x:X3D>

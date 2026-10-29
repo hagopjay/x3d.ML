@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><!-- DEF='a.b' --><Transform DEF='ok_name'><Shape><Appearance/><Box/></Shape></Transform><Transform USE='ok_name'/><Transform DEF='' USE=''/></Scene></X3D>

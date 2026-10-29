@@ -1,0 +1,422 @@
+{
+"xite/x_ite.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/x_ite.min.js"
+},
+"xite/x_ite.css": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/x_ite.css"
+},
+"xite/LICENSE.md": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/LICENSE.md"
+},
+"xite/assets/components/TextureProjectionComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/TextureProjectionComponent.min.js"
+},
+"xite/assets/components/Geometry3DComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/Geometry3DComponent.min.js"
+},
+"xite/assets/components/VolumeRenderingComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/VolumeRenderingComponent.min.js"
+},
+"xite/assets/components/DISComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/DISComponent.min.js"
+},
+"xite/assets/components/RigidBodyPhysicsComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/RigidBodyPhysicsComponent.min.js"
+},
+"xite/assets/components/Geometry2DComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/Geometry2DComponent.min.js"
+},
+"xite/assets/components/PickingComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/PickingComponent.min.js"
+},
+"xite/assets/components/EventUtilitiesComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/EventUtilitiesComponent.min.js"
+},
+"xite/assets/components/WebXRComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/WebXRComponent.min.js"
+},
+"xite/assets/components/KeyDeviceSensorComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/KeyDeviceSensorComponent.min.js"
+},
+"xite/assets/components/CubeMapTexturingComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/CubeMapTexturingComponent.min.js"
+},
+"xite/assets/components/CADGeometryComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/CADGeometryComponent.min.js"
+},
+"xite/assets/components/NURBSComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/NURBSComponent.min.js"
+},
+"xite/assets/components/TextComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/TextComponent.min.js"
+},
+"xite/assets/components/ParticleSystemsComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/ParticleSystemsComponent.min.js"
+},
+"xite/assets/components/GaussianSplatsComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/GaussianSplatsComponent.min.js"
+},
+"xite/assets/components/AnnotationComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/AnnotationComponent.min.js"
+},
+"xite/assets/components/GeospatialComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/GeospatialComponent.min.js"
+},
+"xite/assets/components/X_ITEComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/X_ITEComponent.min.js"
+},
+"xite/assets/components/LayoutComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/LayoutComponent.min.js"
+},
+"xite/assets/components/ScriptingComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/ScriptingComponent.min.js"
+},
+"xite/assets/components/Texturing3DComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/Texturing3DComponent.min.js"
+},
+"xite/assets/components/HAnimComponent.min.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/components/HAnimComponent.min.js"
+},
+"xite/assets/hatching/15.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/15.png"
+},
+"xite/assets/hatching/14.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/14.png"
+},
+"xite/assets/hatching/13.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/13.png"
+},
+"xite/assets/hatching/11.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/11.png"
+},
+"xite/assets/hatching/16.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/16.png"
+},
+"xite/assets/hatching/6.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/6.png"
+},
+"xite/assets/hatching/8.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/8.png"
+},
+"xite/assets/hatching/19.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/19.png"
+},
+"xite/assets/hatching/3.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/3.png"
+},
+"xite/assets/hatching/17.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/17.png"
+},
+"xite/assets/hatching/18.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/18.png"
+},
+"xite/assets/hatching/4.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/4.png"
+},
+"xite/assets/hatching/7.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/7.png"
+},
+"xite/assets/hatching/2.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/2.png"
+},
+"xite/assets/hatching/12.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/12.png"
+},
+"xite/assets/hatching/1.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/1.png"
+},
+"xite/assets/hatching/5.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/5.png"
+},
+"xite/assets/hatching/9.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/9.png"
+},
+"xite/assets/hatching/10.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/hatching/10.png"
+},
+"xite/assets/images/background-dark.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/background-dark.svg"
+},
+"xite/assets/images/info.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/info.svg"
+},
+"xite/assets/images/border_all.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/border_all.svg"
+},
+"xite/assets/images/block.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/block.svg"
+},
+"xite/assets/images/done_all.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/done_all.svg"
+},
+"xite/assets/images/radio_button_unchecked.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/radio_button_unchecked.svg"
+},
+"xite/assets/images/animation.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/animation.svg"
+},
+"xite/assets/images/background-light.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/background-light.svg"
+},
+"xite/assets/images/stop_circle.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/stop_circle.svg"
+},
+"xite/assets/images/directions_run.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/directions_run.svg"
+},
+"xite/assets/images/stadia_controller.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/stadia_controller.svg"
+},
+"xite/assets/images/globe.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/globe.svg"
+},
+"xite/assets/images/check_circle.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/check_circle.svg"
+},
+"xite/assets/images/travel.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/travel.svg"
+},
+"xite/assets/images/logo.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/logo.svg"
+},
+"xite/assets/images/schedule.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/schedule.svg"
+},
+"xite/assets/images/point_scan.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/point_scan.svg"
+},
+"xite/assets/images/fullscreen_exit.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/fullscreen_exit.svg"
+},
+"xite/assets/images/stroke_partial.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/stroke_partial.svg"
+},
+"xite/assets/images/visibility.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/visibility.svg"
+},
+"xite/assets/images/hexagon.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/hexagon.svg"
+},
+"xite/assets/images/texture.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/texture.svg"
+},
+"xite/assets/images/language.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/language.svg"
+},
+"xite/assets/images/fullscreen.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/fullscreen.svg"
+},
+"xite/assets/images/radio_button_checked.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/radio_button_checked.svg"
+},
+"xite/assets/images/eye_tracking.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/eye_tracking.svg"
+},
+"xite/assets/images/head_mounted_device.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/head_mounted_device.svg"
+},
+"xite/assets/images/play_circle.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/play_circle.svg"
+},
+"xite/assets/images/no_sound.svg": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/images/no_sound.svg"
+},
+"xite/assets/linetype/linetypes.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/linetype/linetypes.png"
+},
+"xite/assets/fonts/PT_Sans/PTSans-Italic.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/PT_Sans/PTSans-Italic.woff2"
+},
+"xite/assets/fonts/PT_Sans/PTSans-Regular.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/PT_Sans/PTSans-Regular.woff2"
+},
+"xite/assets/fonts/PT_Sans/PTSans-Bold.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/PT_Sans/PTSans-Bold.woff2"
+},
+"xite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/PT_Sans/PTSans-BoldItalic.woff2"
+},
+"xite/assets/fonts/PT_Sans/OFL.txt": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/PT_Sans/OFL.txt"
+},
+"xite/assets/fonts/Droid/DroidSerif Apache License.txt": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Droid/DroidSerif Apache License.txt"
+},
+"xite/assets/fonts/Droid/DroidSerif-Italic.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Droid/DroidSerif-Italic.woff2"
+},
+"xite/assets/fonts/Droid/DroidSerif-BoldItalic.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Droid/DroidSerif-BoldItalic.woff2"
+},
+"xite/assets/fonts/Droid/DroidSerif-Bold.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Droid/DroidSerif-Bold.woff2"
+},
+"xite/assets/fonts/Droid/DroidSerif-Regular.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Droid/DroidSerif-Regular.woff2"
+},
+"xite/assets/fonts/Ubuntu/UbuntuMono-BI.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/UbuntuMono-BI.woff2"
+},
+"xite/assets/fonts/Ubuntu/UbuntuMono-R.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/UbuntuMono-R.woff2"
+},
+"xite/assets/fonts/Ubuntu/Ubuntu-R.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/Ubuntu-R.woff2"
+},
+"xite/assets/fonts/Ubuntu/UbuntuMono-RI.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/UbuntuMono-RI.woff2"
+},
+"xite/assets/fonts/Ubuntu/Ubuntu-B.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/Ubuntu-B.woff2"
+},
+"xite/assets/fonts/Ubuntu/Ubuntu-RI.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/Ubuntu-RI.woff2"
+},
+"xite/assets/fonts/Ubuntu/Ubuntu-BI.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/Ubuntu-BI.woff2"
+},
+"xite/assets/fonts/Ubuntu/Ubuntu LICENCE.txt": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/Ubuntu LICENCE.txt"
+},
+"xite/assets/fonts/Ubuntu/UbuntuMono-B.woff2": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/fonts/Ubuntu/UbuntuMono-B.woff2"
+},
+"xite/assets/lib/libktx.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/libktx.js"
+},
+"xite/assets/lib/lut_charlie.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/lut_charlie.png"
+},
+"xite/assets/lib/README.md": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/README.md"
+},
+"xite/assets/lib/lut_sheen_E.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/lut_sheen_E.png"
+},
+"xite/assets/lib/draco_decoder_gltf.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/draco_decoder_gltf.js"
+},
+"xite/assets/lib/mikktspace_bg.wasm": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/mikktspace_bg.wasm"
+},
+"xite/assets/lib/mkkellogg-sort.worker.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/mkkellogg-sort.worker.js"
+},
+"xite/assets/lib/woff2_decoder.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/woff2_decoder.js"
+},
+"xite/assets/lib/meshopt_decoder.js": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/meshopt_decoder.js"
+},
+"xite/assets/lib/sorter_no_simd_non_shared.wasm": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/sorter_no_simd_non_shared.wasm"
+},
+"xite/assets/lib/lut_ggx.png": {
+"artifact": "https://claude.ai/artifact/S98mPP7PcEtR5kKWgSU2y7",
+"path": "xite/assets/lib/lut_ggx.png"
+}
+}

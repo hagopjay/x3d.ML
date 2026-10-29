@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='T'/><Transform USE='T' DEF='U'/><TimeSensor DEF='Clock'/><ROUTE fromNode='Clock' fromField='fraction_changed' toNode='U' toField='set_scale'/><ProtoDeclare name='P'><ProtoBody><Transform DEF='InBody'/></ProtoBody></ProtoDeclare><ROUTE fromNode='Clock' fromField='time' toNode='InBody' toField='set_translation'/>
+</Scene>
+</X3D>

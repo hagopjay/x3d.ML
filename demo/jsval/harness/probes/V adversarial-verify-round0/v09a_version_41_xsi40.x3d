@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><Material/></Appearance><Box/></Shape>
+<BooleanFilter DEF='BF'/><IntegerTrigger DEF='IT'/><TimeTrigger DEF='TT'/><BooleanToggle DEF='BT'/><ROUTE fromNode='BF' fromField='inputFalse' toNode='IT' toField='set_boolean'/><ROUTE fromNode='BF' fromField='inputFalse' toNode='TT' toField='set_boolean'/><ROUTE fromNode='BF' fromField='inputFalse' toNode='BT' toField='set_boolean'/><ROUTE fromNode='BF' fromField='inputNegate' toNode='BT' toField='set_boolean'/><PhysicalMaterial/>
+</Scene>
+</X3D>

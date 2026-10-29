@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><Material/></Appearance><Box/></Shape>
+
+</Scene>
+</X3D>

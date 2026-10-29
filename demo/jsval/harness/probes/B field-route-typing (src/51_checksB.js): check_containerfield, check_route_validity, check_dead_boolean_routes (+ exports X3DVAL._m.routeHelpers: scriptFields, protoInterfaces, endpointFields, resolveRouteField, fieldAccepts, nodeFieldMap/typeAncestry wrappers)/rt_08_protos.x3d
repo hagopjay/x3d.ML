@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<ProtoDeclare name='P'>
+  <ProtoInterface>
+    <field name='a' type='SFFloat' accessType='inputOutput' value='0'/>
+    <field name='b' type='SFBool' accessType='outputOnly'/>
+    <field type='SFBool' accessType='outputOnly'/>
+  </ProtoInterface>
+  <ProtoBody><Group/></ProtoBody>
+</ProtoDeclare>
+<ExternProtoDeclare name='E' url='"e.x3d"'>
+  <field name='e1' type='SFColor' accessType='inputOnly'/>
+  <!-- comment -->
+</ExternProtoDeclare>
+<ProtoDeclare name='Q'><ProtoBody><Group/></ProtoBody></ProtoDeclare>
+<ProtoDeclare><ProtoInterface><field name='z' type='SFFloat' accessType='inputOutput'/></ProtoInterface><ProtoBody><Group/></ProtoBody></ProtoDeclare>
+<Material DEF='M'/>
+<ProtoInstance DEF='pi' name='P'/>
+<ProtoInstance DEF='ux' name='Unknown'/>
+<ProtoInstance DEF='nn'/>
+<ProtoInstance DEF='qi' name='Q'/>
+<ProtoInstance DEF='ei' name='E'/>
+<P DEF='sh'/>
+<ROUTE fromNode='pi' fromField='a' toNode='M' toField='transparency'/>
+<ROUTE fromNode='pi' fromField='b' toNode='M' toField='transparency'/>
+<ROUTE fromNode='pi' fromField='zzz' toNode='M' toField='transparency'/>
+<ROUTE fromNode='pi' fromField='metadata' toNode='M' toField='metadata'/>
+<ROUTE fromNode='ux' fromField='zzz' toNode='M' toField='transparency'/>
+<ROUTE fromNode='M' fromField='transparency' toNode='ux' toField='zzz'/>
+<ROUTE fromNode='nn' fromField='zzz' toNode='M' toField='transparency'/>
+<ROUTE fromNode='qi' fromField='a' toNode='M' toField='transparency'/>
+<ROUTE fromNode='M' fromField='diffuseColor' toNode='ei' toField='e1'/>
+<ROUTE fromNode='M' fromField='diffuseColor' toNode='ei' toField='e2'/>
+<ROUTE fromNode='sh' fromField='a' toNode='M' toField='transparency'/>
+<ROUTE fromNode='sh' fromField='zzz' toNode='M' toField='transparency'/>
+<ROUTE fromNode='sh' fromField='a_changed' toNode='pi' toField='set_a'/>
+</Scene>
+</X3D>

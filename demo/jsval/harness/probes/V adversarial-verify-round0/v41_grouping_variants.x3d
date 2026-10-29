@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Full' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Switch whichChoice='0'><Shape><Box/></Shape><Shape containerField='children'><Sphere/></Shape></Switch><LOD range='5'><Shape containerField='level'><Box/></Shape><Group/></LOD><Collision><Shape containerField='proxy'><Box/></Shape><Group containerField='proxy'/></Collision><Billboard axisOfRotation='0 0 0'/><Anchor url='"x"'><Shape><Box/></Shape></Anchor><StaticGroup><Shape><Box/></Shape></StaticGroup><CADAssembly><CADPart><CADFace><Shape><Box/></Shape></CADFace></CADPart><CADLayer/></CADAssembly><Transform><Transform containerField='metadata'/></Transform>
+</Scene>
+</X3D>

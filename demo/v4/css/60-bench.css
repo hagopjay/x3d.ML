@@ -1,0 +1,59 @@
+/* 60-bench.css — S10 THE BENCH (SPEC S10, §10 tokens, §11 phone). Three columns minmax(0,1.2fr) 300px minmax(0,1fr); editor mono 12.5 with a 46 px
+   line-number gutter canvas; report cards with code pills, line buttons, named fixes in --ok; the commit slider notches; the receipt table. Every colour
+   is a token; phone (≤ 600 px): accordion (editor 220 px → report → draws), the slider becomes a <select>. */
+#bench .benchBar{gap:6px 10px;margin-bottom:8px;font:var(--t-data)/1.45 var(--mono)}
+#bench .benchBar .legend{text-transform:none}
+#bench .benchStatus{font:500 var(--t-chip)/1.4 var(--mono);color:var(--mute);background:var(--p1);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:4px;padding:5px 9px;margin-bottom:10px;letter-spacing:.02em}
+#bench .benchStatus[data-mode="full"]{border-left-color:var(--ok)}
+#bench .benchStatus.ro,#bench .benchStatus[data-mode="none"]{border-left-color:var(--bad);color:var(--fg)}
+.benchGrid{display:grid;grid-template-columns:minmax(0,1.2fr) 300px minmax(0,1fr);gap:12px;align-items:start}
+@media (max-width:1100px){.benchGrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.benchGrid .benchDraw{grid-column:1 / -1}}
+/* editor */
+.benchEditor{display:flex;position:relative;border:1px solid var(--line2);border-radius:4px;background:var(--p0);overflow:hidden;height:420px;max-height:70vh}
+.benchGut{width:46px;flex:0 0 46px;height:100%;display:block}
+#benchTa{flex:1 1 auto;min-width:0;height:100%;margin:0;border:0;outline:0;resize:none;background:var(--p0);color:var(--fg);font:var(--t-data)/17px var(--mono);tab-size:2;-moz-tab-size:2;padding:6px 8px;white-space:pre;overflow:auto;caret-color:var(--acc)}
+#benchTa:read-only{color:var(--mute)}
+#benchTa:focus-visible{outline:0;box-shadow:inset 0 0 0 1px var(--acc)}
+.benchFixes{font:var(--t-data)/1.5 var(--mono);color:var(--mute);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.benchFixes b{color:var(--fg);font-weight:600}
+.benchFix{color:var(--ok);border-color:var(--ok)} .benchFix:hover:not(:disabled){background:var(--okbg)}
+/* report */
+.benchRep{display:flex;flex-direction:column;gap:6px;max-height:70vh;overflow:auto;min-height:120px}
+.rep{display:flex;flex-direction:column;gap:6px;font:var(--t-data)/1.45 var(--mono)}
+.rep>.pill{font-size:12px;line-height:22px;padding:0 10px;align-self:flex-start}
+.repHead{color:var(--mute);font-size:var(--t-chip)}
+.repCard{background:var(--p0);border:1px solid var(--line);border-left:3px solid var(--line2);border-radius:4px;padding:6px 8px;display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;min-width:0}
+.repCard.bad{border-left-color:var(--bad)} .repCard.warn{border-left-color:var(--warn)} .repCard.ok{border-left-color:var(--ok)} .repCard.info{border-left-color:var(--info)} .repCard.mute{border-left-color:var(--line2);color:var(--mute)}
+.repMsg{flex:1 1 100%;overflow-wrap:anywhere;white-space:pre-wrap}
+.repLine{font:600 var(--t-chip)/1.3 var(--mono);padding:1px 6px;border-radius:3px;color:var(--acc);background:transparent}
+.repFix{flex:1 1 100%;color:var(--ok);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.repFix i{color:var(--mute);font-style:normal}
+.repApply{font:600 11px/1.3 var(--mono);color:var(--ok);border-color:var(--ok);padding:2px 8px;letter-spacing:.06em} .repApply:hover:not(:disabled){background:var(--okbg)}
+.repFoot{color:var(--dim);font-size:var(--t-stamp);padding-top:4px;border-top:1px solid var(--line)}
+/* slider */
+.benchSliderWrap{display:inline-flex;flex-direction:column;gap:3px;min-width:0}
+.benchNotches{display:flex;flex-wrap:wrap;gap:3px}
+.notch{font:600 var(--t-stamp)/1.3 var(--mono);padding:1px 6px;border-radius:3px;border:1px solid var(--line);background:var(--p1);color:var(--mute);letter-spacing:.03em}
+.notch.v{color:var(--ok);border-color:var(--ok)} .notch.i{color:var(--bad);border-color:var(--bad)} .notch.grey{color:var(--dim);border-style:dashed} .notch.pending{color:var(--dim)}
+.notch.live{box-shadow:0 0 0 1px var(--acc) inset}
+.notch.on{background:var(--accbg)}
+#benchSlider{width:100%;min-width:240px}
+#benchSel{display:none}
+/* draws */
+.benchSeries{width:100%;height:44px;border:1px solid var(--line2);border-radius:4px;background:var(--p0)}
+.benchStampRow{border-top:1px solid var(--line);padding-top:8px}
+.benchReceipt{font:var(--t-data)/1.45 var(--mono);display:flex;flex-direction:column;gap:6px}
+.benchReceipt:empty{display:none}
+.benchScroll{max-height:220px}
+.benchSteps td{white-space:normal;overflow-wrap:anywhere}
+.benchSteps tr.new td{background:var(--accbg)}
+/* phone: accordion, select instead of the slider */
+@media (max-width:600px){
+ .benchGrid{grid-template-columns:1fr}
+ .benchGrid .benchDraw{grid-column:auto}
+ .benchEditor{height:220px}
+ .benchNotches,#benchSlider{display:none}
+ #benchSel{display:inline-block;max-width:100%}
+ .benchRep{max-height:50vh}
+ #bench .benchBar{font-size:var(--t-chip)}
+}
