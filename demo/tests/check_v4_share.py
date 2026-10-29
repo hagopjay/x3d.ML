@@ -20,7 +20,7 @@ import os, re, sys, gzip, base64, subprocess
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
 SWEEP = os.path.join(REPO, "demo", "leak_sweep.py")
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
-root = args[0] if args else (os.environ.get("SHARE_DIR") or next((d for d in [os.path.join(REPO, "demo", "build", "v4.share"), os.path.join(REPO, "build", "v4.share")] if os.path.isdir(d)), os.path.join(REPO, "demo", "build", "v4.share")))
+root = args[0] if args else (os.environ.get("SHARE_DIR") or os.environ.get("V4_BUILD") or next((d for d in [os.path.join(REPO, "demo", "build", "v4.share"), os.path.join(REPO, "build", "v4.share")] if os.path.isdir(d)), os.path.join(REPO, "demo", "build", "v4.share")))
 extras = args[1:]
 if not os.path.isdir(root):
     print(f"SKIP check_v4_share: no share build at {root} (run: python3 demo/v4/build_v4.py {root} --share)"); sys.exit(2)
@@ -68,7 +68,7 @@ def find(pattern, exempt=None):
     return hits
 def exempt_files_map(f, t): return re.sub(r'"artifact"\s*:\s*"https://claude\.ai/artifact/[A-Za-z0-9]+"', '"artifact":"<publisher copy>"', t) if os.path.basename(f) == "files.json" else t
 h = find(r"claude\.ai/artifact", exempt_files_map); ok("no claude.ai/artifact in any emitted text (files.json publisher rows exempt)", not h, h[:3] or "0")
-h = find(r"\$\s?[0-9]", lambda f, t: t.replace("$1", "<bref>")); ok("no $ followed by a digit ($1 back-reference exempt)", not h, h[:3] or "0")
+h = find(r"\$\s?[0-9]", lambda f, t: "" if "/jsval/vendor/" in f.replace(os.sep, "/") else t.replace("$1", "<bref>")); ok("no $ followed by a digit ($1 back-reference exempt; jsval/vendor third-party minified code exempt, as in leak_sweep.py)", not h, h[:3] or "0")
 h = find(r"chan_"); ok("no chan_ anywhere", not h, h[:3] or "0")
 h = find(r'"(macos|loadavg_1m|ncpu)"\s*:'); ok("no physics-ledger env block keys (macos, loadavg_1m, ncpu)", not h, h[:3] or "0")
 
@@ -79,6 +79,25 @@ if os.path.isfile(page):
     sz = os.path.getsize(page); s = texts.get(page) or text_of(page)
     ok("index.html < 16 MB", sz < 16 * 1024 * 1024, f"{sz:,} bytes")
     ok("no /*__ placeholder left in index.html", "/*__" not in s, s.count("/*__"))
+# 4. the SAFE map took: BUILD.share, the map's sha, lane labels in place of every model id the private data names (ids read from the data, never typed here)
+if os.path.isfile(page):
+    s = texts.get(page) or text_of(page)
+    ok("BUILD.share true and BUILD.safe_map_sha set", re.search(r'"share":true', s) and re.search(r'"safe_map_sha":"[0-9a-f]{64}"', s), "BUILD block")
+    ids = []
+    try:
+        import json
+        live = json.load(open(os.path.join(REPO, "demo", "data", "live.json"))); ids = [m["id"] for m in live["meta"]["models"]]
+        if os.path.isfile(os.path.join(REPO, "demo", "data", "live2.json")): ids += [m["id"] for m in json.load(open(os.path.join(REPO, "demo", "data", "live2.json")))["meta"]["models"]]
+        if os.path.isfile(os.path.join(REPO, "demo", "data", "replay.json")): ids += sorted({i["m"] for i in json.load(open(os.path.join(REPO, "demo", "data", "replay.json")))})
+    except Exception as e: print("note: model ids not read from demo/data:", e)
+    leaks = [(os.path.relpath(f, root), i) for f, t in texts.items() for i in ids if i in t or i.replace("/", "_") in t]
+    ok(f"no private model id ({len(ids)} read from demo/data) in any emitted text", ids and not leaks, leaks[:4] or f"{len(ids)} ids checked")
+    labels = sorted(set(re.findall(r"\blane-[A-Z]\b", s)))
+    ok("lane labels stand where the page prints a model (STATS lanes, LM.models, hero keys)", len(labels) >= 5 and re.search(r'"id":"lane-A"', s) and re.search(r'"models":\[\{"id":"lane-A"', s), labels)
+    parts_dir = os.path.join(root, "parts")
+    pl = [n for n in ("live.core", "replay", "events", "renders.151") if os.path.isfile(os.path.join(parts_dir, n + ".txt")) and "lane-A" not in text_of(os.path.join(parts_dir, n + ".txt")) and "lane-F" not in text_of(os.path.join(parts_dir, n + ".txt"))]
+    ok("lane labels inside the re-encoded parts (live.core, replay, events, renders.151)", not pl, pl or "all")
+    ok("the id -> label map itself is not published (no lanes object keyed by a private id)", not any(re.search(r'"lanes":\{"[^"]*(?:gemini|qwen|nemotron|gpt-|glm|minimax)', t) for t in texts.values()))
 n_fail = sum(1 for _, c in res if not c)
 print(f"SUMMARY check_v4_share: {len(res) - n_fail} pass, {n_fail} fail ({root})")
 sys.exit(1 if n_fail else 0)

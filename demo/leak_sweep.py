@@ -21,6 +21,7 @@ ROOT = ARGS[ARGS.index("--root") + 1] if "--root" in ARGS and ARGS.index("--root
 POS = [a for i, a in enumerate(ARGS) if not a.startswith("--") and not (i > 0 and ARGS[i - 1] == "--root")]
 STAMP = rb"(?i)anthropic|claude|c2pa|cabx|jumb|openai|google|gemini"
 ALLOW = [r'claude:viewport-fit-sides',                    # artifact page contract meta (not visible)
+         r'(?:window|self|globalThis)\.claude\b', r'\bclaude\.use\b', r'"claude" in (?:window|self)', r'\bclaude\.(?:sample|files|user|downloads|assets)\b',   # the artifact runtime API (claude.use), not a vendor mention
          r'https://fonts\.(googleapis|gstatic)\.com',     # the one allowed stylesheet host
          r'cdn\.jsdelivr\.net/npm/x_ite@16\.4\.1',        # pinned renderer (v3)
          r'cdn\.jsdelivr\.net/npm/x_ite@16\.5\.[01]',     # pinned renderer (v4: 16.5.0 runtime, 16.5.1 as data)
@@ -143,10 +144,14 @@ for p in files:
             # a public W3C/Web3D schema (x3d-4.x.xsd): its annotations and comments are published documentation
             # (author credits, "nVidia Cg", google URLs); element and attribute names and enumeration values stay swept
             schema = True; s = re.sub(r"(?s)<xs:annotation>.*?</xs:annotation>|<!--.*?-->", "", s)
+        if "/jsval/vendor/" in p.replace(os.sep, "/") or "\\jsval\\vendor\\" in p:
+            # third-party minified library (libxml2-wasm): "$6"-style tokens are code, not cost strings
+            checks_here = [c for c in checks if c[0] != "dollar amounts"]
+        else: checks_here = checks
         if os.path.basename(p) == "files.json":
             copy_rows = len(re.findall(r'"artifact"\s*:\s*"https://claude\.ai/artifact/[A-Za-z0-9]+"', s))
             extra_allow = [r'"artifact"\s*:\s*"https://claude\.ai/artifact/[A-Za-z0-9]+"']
-        n_img, img_hits, rows = scan(s, checks, "any", extra_allow); n_imgs += n_img
+        n_img, img_hits, rows = scan(s, checks_here, "any", extra_allow); n_imgs += n_img
         found = [(n, h, k) for n, h, k in rows if h]
         head = f"  {label}: {len(s)//1024} KB" + (f" decoded ({how}, {len(raw)//1024} KB published)" if how else "") + (f", {n_img} thumbnails byte-swept" if n_img else "") + (f", {copy_rows} publisher copy rows (artifact url allowed)" if copy_rows else "") + (" (public schema: annotations and comments not swept)" if schema else "")
         if not found: print(head + " -> clean"); continue
