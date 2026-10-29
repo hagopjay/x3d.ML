@@ -167,7 +167,7 @@
    "ledger": 1
   }
  },
- "HAS_CYCLES": false,
+ "HAS_CYCLES": true,
  "HAS_RUN2": true,
  "validator_recorded": [
   "fork@eb4b4b4",

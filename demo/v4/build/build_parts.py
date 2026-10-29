@@ -12,9 +12,20 @@ sha256 of the decoded bytes against the manifest before it mounts the part. Part
   xsd40, xsd41     demo/jsval/data/schemas/x3d-4.0.xsd and x3d-4.1.xsd, raw bytes (for the js-port's XSD pass)
   live2            only with --run2 <live2.json> (the 24 Oct run once build_live.py has written it; not run while that run is still recording): HAS_RUN2 becomes true
 demo/v4/parts/manifest.json = {parts:{name:{bytes_raw, bytes_gz, bytes_b64, sha256, rows, source, recorded, validator, xite, file}}, canary:{bodies, flips, set} (from stats.json),
-HAS_CYCLES false, HAS_RUN2, validator_recorded, port, xite, passes, built}. Every part is decoded back from its file and its sha256 compared before the manifest is written.
+HAS_CYCLES (true once staged.json urls are filled), HAS_RUN2, validator_recorded, port, xite, passes, built}. Every part is decoded back from its file and its sha256 compared before the manifest is written.
 Usage: python3 demo/v4/build/build_parts.py [--run2 <live2.json>]"""
 import base64, copy, datetime, gzip, hashlib, json, os, sys
+
+def _has_cycles():
+    """True once data/staged.json carries an uploaded url for at least one turntable or still (the Cycles assets live in the artifact, never in this repo)."""
+    try:
+        import json as _j, os as _o
+        st = _j.load(open(_o.path.join(_o.path.dirname(_o.path.dirname(_o.path.abspath(__file__))), "data", "staged.json")))
+        if any(e.get("url") for e in st.get("turntables", {}).values()): return True
+        return any(c.get("url") for e in st.get("stills", {}).values() for c in e.values() if isinstance(c, dict))
+    except Exception:
+        return False
+
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 D, V4, P = os.path.join(ROOT, "demo/data"), os.path.join(ROOT, "demo/v4/data"), os.path.join(ROOT, "demo/v4/parts")
@@ -63,7 +74,7 @@ for name, raw, rows, prov in PARTS:
     assert len(raw) <= 16_000_000, (name, len(raw))
     manifest[name] = {"bytes_raw": len(raw), "bytes_gz": len(gz), "bytes_b64": os.path.getsize(path), "sha256": sha, "rows": rows, **prov, "file": f"parts/{name}.txt"}
 out = {"built": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "parts": manifest, "canary": {k: stats["canary"][k] for k in ("bodies", "flips", "set")},
-       "HAS_CYCLES": False, "HAS_RUN2": bool(RUN2), "validator_recorded": ["fork@eb4b4b4", "fork@8dd0d3e"], "port": "js-port-of-8dd0d3e", "xite": "16.5.0", "passes": ["16.5.0", "16.5.1"],
+       "HAS_CYCLES": _has_cycles(), "HAS_RUN2": bool(RUN2), "validator_recorded": ["fork@eb4b4b4", "fork@8dd0d3e"], "port": "js-port-of-8dd0d3e", "xite": "16.5.0", "passes": ["16.5.0", "16.5.1"],
        "encoding": "gzip level 9 mtime 0, base64, one line; sha256 is of the decoded bytes"}
 json.dump(out, open(P + "/manifest.json", "w"), indent=1)
 

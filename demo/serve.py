@@ -39,7 +39,12 @@ class Page(http.server.SimpleHTTPRequestHandler):
     root = os.path.join(HERE, "build"); policy = None
     extensions_map = {**http.server.SimpleHTTPRequestHandler.extensions_map, **MIME}
     def __init__(s, *a, **k): super().__init__(*a, directory=s.root, **k)
-    def translate_path(s, p): return ROUTES.get(p.split("?")[0]) or super().translate_path(p)
+    def translate_path(s, p):
+        q = p.split("?")[0]
+        if q.startswith("/_blob/") and os.environ.get("V4_BLOBS"):   # artifact asset store stand-in: V4_BLOBS=<dir> holds files named by asset id (the stripped Cycles images), so a local run can light the STAGED slots
+            f = os.path.join(os.environ["V4_BLOBS"], q[len("/_blob/"):].split("/")[0])
+            if os.path.isfile(f): return f
+        return ROUTES.get(q) or super().translate_path(p)
     def end_headers(s): s.send_header("Content-Security-Policy", s.policy if s.policy is not None else os.environ.get("CSP", CSP)); super().end_headers()
     def log_message(s, fmt, *a):
         if os.environ.get("LOG404") and " 404 " in (fmt % a): print("404", s.path, flush=True)

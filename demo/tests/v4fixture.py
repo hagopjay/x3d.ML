@@ -72,6 +72,12 @@ class Fixture:
         csp = CSP[self.csp]
         class H(http.server.SimpleHTTPRequestHandler):
             def __init__(s, *a, **k): super().__init__(*a, directory=root, **k)
+            def translate_path(s, p):
+                q = p.split("?")[0]; blobs = os.environ.get("V4_BLOBS")   # artifact asset stand-in: a dir of files named by asset id (see demo/serve.py)
+                if blobs and q.startswith("/_blob/"):
+                    f = os.path.join(blobs, q[len("/_blob/"):].split("/")[0])
+                    if os.path.isfile(f): return f
+                return super().translate_path(p)
             def end_headers(s): s.send_header("Content-Security-Policy", csp); s.send_header("Cache-Control", "no-store"); super().end_headers()
             def log_message(s, *a): pass
         H.extensions_map.update(MIME)
