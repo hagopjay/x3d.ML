@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Background skyColor="0 0 0.5  0.2 0.4 1  0.9 0.9 1" skyAngle="0.9 1.5708" groundColor="0.3 0.2 0.1  0.1 0.1 0.1" groundAngle="1.5" transparency="0"/>
+    <Shape><Appearance><PhysicalMaterial/></Appearance><Box/></Shape>
+  </Scene>
+</X3D>

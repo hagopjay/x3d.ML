@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="3.3" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance">
+  <Scene>
+    <!-- Define the red sphere -->
+    <Transform>
+      <Shape>
+        <Appearance>
+          <Material diffuseColor="1 0 0"/> <!-- Red color -->
+        </Appearance>
+        <Sphere/>
+      </Shape>
+    </Transform>
+
+    <!-- Define the green cube positioned on top of the sphere -->
+    <Transform translation="0 1 0"> <!-- Adjust translation if needed -->
+      <Shape>
+        <Appearance>
+          <Material diffuseColor="0 1 0"/> <!-- Green color -->
+        </Appearance>
+        <Box size="1 1 1"/> <!-- Cube dimensions -->
+      </Shape>
+    </Transform>
+  </Scene>
+</X3D>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape><PointSet><Coordinate point="0 0 0  1 0 0"/><ColorRGBA color="1 0 0 0.5  0 1 0 1"/></PointSet></Shape>
+  </Scene>
+</X3D>

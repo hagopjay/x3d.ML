@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape><IndexedFaceSet coordIndex="0 1 2 -1"><Coordinate point="0 0 0 1 0 0 0 1 0"><MetadataSet containerField='metadata' name="provenance" reference="urn:x"><MetadataString name="source" value='"AF-P12345-F1"'/><MetadataFloat name="plddt_min" value="12.5"/><MetadataInteger name="n_res" value="287"/><MetadataString name="unit" value='"angstrom"'/></MetadataSet></Coordinate></IndexedFaceSet></Shape>
+  </Scene>
+</X3D>

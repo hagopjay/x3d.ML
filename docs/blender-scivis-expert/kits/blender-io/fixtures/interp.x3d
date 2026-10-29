@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <TimeSensor DEF="T" cycleInterval="2" loop="true"/>
+    <ColorInterpolator DEF="CI" key="0 1" keyValue="1 0 0  0 0 1"/>
+    <ScalarInterpolator DEF="SI" key="0 1" keyValue="0 1"/>
+    <Shape><Appearance><PhysicalMaterial DEF="MAT" baseColor="1 0 0"/></Appearance><Box DEF="BX"/></Shape>
+    <ROUTE fromNode="T" fromField="fraction_changed" toNode="CI" toField="set_fraction"/>
+    <ROUTE fromNode="CI" fromField="value_changed" toNode="MAT" toField="baseColor"/>
+    <ROUTE fromNode="T" fromField="fraction_changed" toNode="SI" toField="set_fraction"/>
+    <ROUTE fromNode="SI" fromField="value_changed" toNode="MAT" toField="transparency"/>
+  </Scene>
+</X3D>

@@ -1,0 +1,211 @@
+{
+ "bpy": "5.2.3 LTS",
+ "bpy_hash": "e13b728c6880",
+ "addon": "x3d-blender-io main 482741b (manifest 2.6.4)",
+ "validator": "x3d_mcp fork main 8dd0d3e (XSD only here)",
+ "A_source_verify": {
+  "ok": true,
+  "status": "verified",
+  "steps": 2,
+  "problems": []
+ },
+ "B_scene_prop_x3d_head_meta_count": 6,
+ "B_scene_prop_names": [
+  "title",
+  "reference",
+  "license",
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2"
+ ],
+ "B_objects": [
+  [
+   "M",
+   "MESH",
+   true
+  ],
+  [
+   "T",
+   "MESH",
+   true
+  ]
+ ],
+ "B_out_head_names": [
+  "generator",
+  "filename",
+  "title",
+  "reference",
+  "license",
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2",
+  "info"
+ ],
+ "B_out_prov_survived": true,
+ "B_out_prov_content_identical": true,
+ "B_out_verify_before_transform_step": {
+  "ok": false,
+  "status": "stale",
+  "steps": 2,
+  "problems": [
+   "file content differs from last recorded output (edited after the last step, untracked)"
+  ]
+ },
+ "B_out_geom_tags": [
+  "Appearance",
+  "Coordinate",
+  "IndexedFaceSet",
+  "MetadataDouble",
+  "MetadataSet",
+  "MetadataString",
+  "NavigationInfo",
+  "PhysicalMaterial",
+  "Scene",
+  "Shape",
+  "TextureCoordinate",
+  "Transform",
+  "X3D",
+  "component",
+  "head",
+  "meta"
+ ],
+ "B_out_metadata_nodes": [
+  [
+   "MetadataSet",
+   "sci",
+   null
+  ],
+  [
+   "MetadataString",
+   "units",
+   "\"K\""
+  ],
+  [
+   "MetadataString",
+   "colormap",
+   "\"viridis\""
+  ],
+  [
+   "MetadataString",
+   "data_sha256",
+   "\"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9\""
+  ],
+  [
+   "MetadataDouble",
+   "vmin",
+   "290.1"
+  ],
+  [
+   "MetadataDouble",
+   "vmax",
+   "301.4"
+  ]
+ ],
+ "A_metadata_nodes": [
+  [
+   "MetadataSet",
+   "sci",
+   null
+  ],
+  [
+   "MetadataString",
+   "units",
+   "\"K\""
+  ],
+  [
+   "MetadataString",
+   "colormap",
+   "\"viridis\""
+  ],
+  [
+   "MetadataString",
+   "data_sha256",
+   "\"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9\""
+  ],
+  [
+   "MetadataDouble",
+   "vmin",
+   "290.1"
+  ],
+  [
+   "MetadataDouble",
+   "vmax",
+   "301.4"
+  ],
+  [
+   "MetadataSet",
+   "sci",
+   null
+  ],
+  [
+   "MetadataString",
+   "units",
+   "\"K\""
+  ],
+  [
+   "MetadataString",
+   "colormap",
+   "\"viridis\""
+  ],
+  [
+   "MetadataString",
+   "data_sha256",
+   "\"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9\""
+  ],
+  [
+   "MetadataDouble",
+   "vmin",
+   "290.1"
+  ],
+  [
+   "MetadataDouble",
+   "vmax",
+   "301.4"
+  ]
+ ],
+ "B_out_xsd": {
+  "valid": true,
+  "n_err": 0,
+  "first": []
+ },
+ "B_after_transform_step_verify": {
+  "ok": true,
+  "status": "verified",
+  "steps": 3,
+  "problems": []
+ },
+ "C_verify_after_second_roundtrip_unrecorded": "stale",
+ "C_prov_content_identical_to_B2": true,
+ "D_scene_prop_names_after_two_imports": [
+  "title",
+  "reference",
+  "license",
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2",
+  "title",
+  "x3dprov.step.1"
+ ],
+ "D_out_prov_names": [
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2",
+  "x3dprov.step.1"
+ ],
+ "D_verify": {
+  "ok": false,
+  "status": "broken-chain",
+  "steps": 3,
+  "problems": [
+   "step numbering gap: expected 2, found 1",
+   "step 1: prev hash does not match step 0 (step removed or edited)",
+   "step 1: input_sha256 differs from step 0 output (content changed between steps, untracked)",
+   "step numbering gap: expected 3, found 2"
+  ]
+ },
+ "E_same_file_twice_prov_names": [
+  "x3dprov.version",
+  "x3dprov.step.1",
+  "x3dprov.step.2"
+ ]
+}

@@ -1,0 +1,82 @@
+{
+ "rt_g0_control.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_g4_sh0_used_as_rgb.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_g7_float32_offset.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r00-control.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r01-clipplane.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r02-switch-minus-one.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r03-headlight-off-no-light.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r05-solid-culls-everything.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r06-script-throws.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r07-shader-bad-glsl.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_r08-geolocation-far-from-viewpoint.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_s1_units_km.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_s1_units_none.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_s2_prec_absolute.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_s2_prec_offset.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ },
+ "rt_s3_color_ramp.x3d": {
+  "xsd": true,
+  "xsd_err": [],
+  "sem_errs": []
+ }
+}

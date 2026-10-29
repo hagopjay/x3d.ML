@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D version="4.0" profile="Immersive" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="https://www.web3d.org/specifications/x3d-4.0.xsd">
+  <head>
+    <component name="Shape" level="2" />
+    <unit category="length" name="millimetre" conversionFactor="0.001" />
+    <unit category="angle" name="degree" conversionFactor="0.0174532925" />
+    <meta name="title" content="unit probe" />
+    <meta name="identifier" content="urn:x3dio:spine:abc123.x3d" />
+  </head>
+  <Scene>
+    <Transform DEF="T1" translation="1000 0 0">
+      <Shape><Appearance><PhysicalMaterial baseColor="1 0 0"/></Appearance><Box size="100 100 100"/></Shape>
+    </Transform>
+  </Scene>
+</X3D>

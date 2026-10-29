@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D version="4.0" profile="Immersive">
+  <head>
+    <component name="Shape" level="2"/>
+    <meta name="title" content="metadata sites probe"/>
+    <meta name="x3dprov.version" content="x3dprov/0.1"/>
+  </head>
+  <Scene>
+    <MetadataSet name="scene-level" containerField="metadata">
+      <MetadataString name="who" value='"scene"' containerField="value"/>
+    </MetadataSet>
+    <WorldInfo title="probe world" info='"WORLDINFO-INFO-TEXT"'/>
+    <Transform DEF="XF" translation="1 0 0">
+      <MetadataSet name="on-transform" containerField="metadata">
+        <MetadataString name="who" value='"transform"' containerField="value"/>
+      </MetadataSet>
+      <Shape DEF="SH">
+        <MetadataSet name="on-shape" containerField="metadata">
+          <MetadataString name="data_sha256" value='"3f5a0c"' containerField="value"/>
+          <MetadataString name="unit" value='"m"' containerField="value"/>
+          <MetadataDouble name="vmax" value="100.0" containerField="value"/>
+          <MetadataInteger name="n" value="7" containerField="value"/>
+        </MetadataSet>
+        <Appearance>
+          <Material diffuseColor="1 0 0"/>
+          <MetadataString name="on-appearance" value='"appearance"' containerField="metadata"/>
+        </Appearance>
+        <Box size="1 1 1"/>
+      </Shape>
+    </Transform>
+    <Group DEF="GR">
+      <MetadataString name="on-group" value='"group"' containerField="metadata"/>
+      <Shape><Appearance><Material diffuseColor="0 1 0"/></Appearance><Sphere radius="0.5"/></Shape>
+    </Group>
+  </Scene>
+</X3D>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <GeoOrigin geoSystem='"GD" "WE"' geoCoords="38 -77 0"/>
+    <GeoLocation geoCoords="38.9 -77.0 0" geoSystem='"GD" "WE"'><Shape><Box/></Shape></GeoLocation>
+  </Scene>
+</X3D>

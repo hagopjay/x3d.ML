@@ -1,0 +1,407 @@
+"""PROTOTYPE sci-vis semantic checks for hagopjay/x3d_mcp (scratch only, nothing pushed).
+
+Written as drop-in `_check_*(scene) -> list[Diagnostic]` functions in the same style as
+src/validation/semantic.py at main 8dd0d3e. Each check carries the Blender/sci-vis fact it
+comes from in its docstring. Use:
+
+    from sci_checks import SCI_CHECKS
+    for fn in SCI_CHECKS: diagnostics.extend(fn(scene))
+"""
+from __future__ import annotations
+
+import math
+import re
+import sys
+from array import array
+
+from lxml import etree
+
+STATS = {}
+
+
+def _tick(k):
+    STATS[k] = STATS.get(k, 0) + 1
+
+
+SRC = None  # set by the caller: path to x3d_mcp/src (so Diagnostic and helpers are the fork's own)
+
+
+def _bind(src):
+    global SRC, Diagnostic, _local_tag, _floats
+    if src not in sys.path:
+        sys.path.insert(0, src)
+    from validation.semantic import Diagnostic as D, _local_tag as lt, _floats as fl
+    Diagnostic, _local_tag, _floats = D, lt, fl
+    SRC = src
+
+
+_NUM = re.compile(r"[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?")
+
+
+def _nums(attr: str) -> list[float]:
+    """Fast float parse of an MF attribute (the fork's _floats splits on separators; same result)."""
+    return [float(x) for x in _NUM.findall(attr)]
+
+
+def _label(el):
+    return f" (DEF={el.get('DEF')!r})" if el.get("DEF") else ""
+
+
+def _emit(level, check, el, msg):
+    return Diagnostic(level=level, check=check, message=msg, node_tag=_local_tag(el), def_name=el.get("DEF", ""))
+
+
+# ---------------------------------------------------------------- splats (G2 / G5-static)
+SH_C0 = 0.28209479177387814  # same constant as x3d-blender-io source/splat_io.py:31
+
+
+def _check_splat_sh0_looks_rgb(scene):
+    """KB 4 + x3d-blender-io splat_io.rgb_to_sh0: the DC coefficient is (rgb - 0.5) / 0.2821, so a
+    trained scene spans about -1.77..+1.77 per channel and any colour darker than mid-grey is negative.
+    A file whose every SH0 value sits in 0..1 was written with plain RGB: black renders mid-grey
+    (0.5), white renders 0.78, and the whole scene looks washed out. Valid XSD, no error today."""
+    out = []
+    for el in scene.iter("GaussianSplats", "{*}GaussianSplats"):
+        a = el.get("sphericalHarmonicsDegree0Coef0")
+        if not a:
+            continue
+        v = _nums(a)
+        n = len(v) // 3
+        if n < 100:
+            continue
+        _tick('splat-sh0-looks-rgb')
+        lo, hi = min(v), max(v)
+        neg = sum(x < -1e-6 for x in v) / len(v)
+        if neg < 0.001 and hi <= 1.0 + 1e-6:
+            out.append(_emit("warning", "splat-sh0-looks-rgb", el,
+                f"GaussianSplats{_label(el)}: all {n} sphericalHarmonicsDegree0Coef0 triples lie in "
+                f"{lo:.3f}..{hi:.3f} with {neg:.2%} negative. A trained SH0 is (colour - 0.5) / {SH_C0:.4f} "
+                f"(about -1.77..+1.77), so this looks like plain RGB: black would draw mid-grey and white "
+                f"{0.5 + SH_C0:.2f}. Convert with (c - 0.5) / {SH_C0:.5f}."))
+    return out
+
+
+def _check_splat_invisible(scene):
+    """3DGS rasterisers skip a splat whose alpha is under 1/255 (Likely: the reference rasteriser's
+    cut-off). A file whose largest opacity is below that draws nothing, and is valid."""
+    out = []
+    for el in scene.iter("GaussianSplats", "{*}GaussianSplats"):
+        a = el.get("opacities")
+        if not a:
+            continue
+        v = _nums(a)
+        if len(v) >= 10:
+            _tick('splat-invisible-opacity')
+        if len(v) >= 10 and max(v) < 1 / 255:
+            out.append(_emit("warning", "splat-invisible-opacity", el,
+                f"GaussianSplats{_label(el)}: the largest of {len(v)} opacities is {max(v):.5f}, under 1/255 "
+                f"({1/255:.5f}); splat renderers skip such splats, so the node draws nothing."))
+    return out
+
+
+def _check_splat_scale_vs_extent(scene):
+    """KB 4: scales are linear standard deviations. Median scale larger than half the cloud's
+    own diagonal means every splat covers the cloud (white-out); under 1e-6 of it means sub-pixel dust."""
+    out = []
+    for el in scene.iter("GaussianSplats", "{*}GaussianSplats"):
+        p, s = el.get("positions"), el.get("scales")
+        if not p or not s:
+            continue
+        pv, sv = _nums(p), _nums(s)
+        n = min(len(pv), len(sv)) // 3
+        if n < 100:
+            continue
+        lo = [min(pv[i::3][:n]) for i in range(3)]
+        hi = [max(pv[i::3][:n]) for i in range(3)]
+        diag = math.dist(lo, hi)
+        if diag <= 0:
+            continue
+        _tick('splat-scale')
+        big = sorted(max(abs(sv[3 * i]), abs(sv[3 * i + 1]), abs(sv[3 * i + 2])) for i in range(n))
+        med = big[n // 2]
+        if med > 0.5 * diag:
+            out.append(_emit("warning", "splat-scale-huge", el,
+                f"GaussianSplats{_label(el)}: median largest scale {med:.4g} is {med / diag:.1f} x the cloud "
+                f"diagonal {diag:.4g}; every splat covers the whole cloud. Scales are linear (exp() of a PLY's "
+                f"ln-scale); a double exp() or a unit mix-up gives this."))
+        elif 0 < med < 1e-6 * diag:
+            out.append(_emit("warning", "splat-scale-tiny", el,
+                f"GaussianSplats{_label(el)}: median largest scale {med:.3g} is {med / diag:.1e} x the cloud "
+                f"diagonal {diag:.4g}; splats are far below a pixel at any usable distance."))
+    return out
+
+
+def _check_splat_budget(scene):
+    """KB 4 size arithmetic: PLY floats per splat = 17 + 3*((d+1)^2 - 1) -> 68/104/164/248 B at SH 0..3
+    (position 3 + normal 3 + DC 3 + rest + opacity 1 + scale 3 + rot 4). Info only; the escalation
+    threshold belongs to the Compact-encodings size table."""
+    out = []
+    for el in scene.iter("GaussianSplats", "{*}GaussianSplats"):
+        a = el.get("positions")
+        if not a:
+            continue
+        n = len(_nums(a)) // 3
+        deg = -1
+        for d in range(4):
+            if el.get(f"sphericalHarmonicsDegree{d}Coef0") is not None:
+                deg = d
+        d = max(deg, 0)
+        per = 4 * (17 + 3 * ((d + 1) ** 2 - 1))
+        if n * per < 10e6:   # quiet below 10 MB of PLY-equivalent data: only budget-relevant nodes get a line
+            continue
+        out.append(_emit("info", "splat-size-budget", el,
+            f"GaussianSplats{_label(el)}: {n} splats at SH degree {d} = {per} B each as a 3DGS PLY, "
+            f"{n * per / 1e6:.1f} MB; this node's text is {sum(len(v) for v in el.attrib.values()) / 1e6:.1f} MB."))
+    return out
+
+
+# ---------------------------------------------------------------- 32-bit precision (G2)
+def _f32(vals):
+    return array("f", vals)
+
+
+_F32_FIELDS = {  # float32 coordinate carriers: (tag, attribute)
+    ("Coordinate", "point"), ("GaussianSplats", "positions"), ("PointSet", None),
+}
+
+
+def _check_float32_collapse(scene):
+    """KB 1 insight 5 / 10 test 3: Blender and X3D (SFVec3f/MFVec3f) hold float32; Python holds float64.
+    Measured with bpy 5.2.3: a vertex written as (500000.123456, 4100000.654321) reads back as
+    (500000.125, 4100000.75); float32 spacing is 0.03125 at 5e5 and 0.25 at 4.1e6. Two tests, either
+    of which fires the warning:
+      (a) collapse: distinct points written in the file merge after float32 rounding (catches an agent
+          that writes float64 text, e.g. x3d.py, a script, a converter);
+      (b) steps: the object spans fewer than 1000 float32 steps on some axis (catches a file that came
+          THROUGH Blender, where the rounding already happened upstream and the file only shows a coarse lattice).
+    Remedy: centre the points and carry the offset in a GeoLocation/GeoOrigin or CoordinateDouble."""
+    out = []
+    for el in scene.iter("Coordinate", "{*}Coordinate", "GaussianSplats", "{*}GaussianSplats"):
+        attr = "point" if _local_tag(el) == "Coordinate" else "positions"
+        a = el.get(attr)
+        if not a or el.get("USE"):
+            continue
+        v = _nums(a)
+        if len(v) < 24 or len(v) % 3:
+            continue
+        m = max(abs(x) for x in v)
+        if m < 2 ** 14:  # float32 spacing under 0.002 below 16384
+            continue
+        pts64 = set(zip(v[0::3], v[1::3], v[2::3]))
+        if len(pts64) < 8:
+            continue
+        _tick('float32-precision-loss')
+        f = _f32(v)
+        pts32 = set(zip(f[0::3], f[1::3], f[2::3]))
+        collapsed = 1 - len(pts32) / len(pts64)
+        worst = None
+        for i in range(3):
+            ax = v[i::3]
+            mi = max(abs(x) for x in ax)
+            ext = max(ax) - min(ax)
+            if mi == 0 or ext == 0:
+                continue
+            ulp = 2.0 ** (math.floor(math.log2(mi)) - 23)
+            steps = ext / ulp
+            if worst is None or steps < worst[0]:
+                worst = (steps, "xyz"[i], ext, ulp, mi)
+        low_steps = worst is not None and worst[0] < 1000
+        if collapsed >= 0.01 or low_steps:
+            steps, axn, ext, ulp, mi = worst if worst else (float("nan"), "?", 0, 0, m)
+            out.append(_emit("warning", "float32-precision-loss", el,
+                f"{_local_tag(el)}{_label(el)} {attr}: largest coordinate {m:.6g}; float32 spacing there is "
+                f"{ulp:.3g}, the {axn}-extent is {ext:.4g} = {steps:.0f} float32 step(s); {collapsed:.1%} of "
+                f"{len(pts64)} distinct points merge when rounded to float32. Centre the points and put the "
+                f"offset in a GeoLocation/GeoOrigin or use CoordinateDouble."))
+    return out
+
+
+# ---------------------------------------------------------------- attribute counts (G2)
+def _kids(el, tags, cf):
+    for c in el:
+        if isinstance(c.tag, str) and _local_tag(c) in tags and c.get("containerField", cf) == cf:
+            return c
+    return None
+
+
+def _check_attribute_counts(scene):
+    """x3d-blender-io round-trip table (KB 8): Colour/ColorRGBA and Normal are the listed importer
+    losses; an exporter that writes N coordinates and fewer colours/normals validates (XSD ignores
+    counts) and draws with the attribute dropped or garbage. Rule (19775-1 11.4/13.3, Likely): with
+    no colorIndex/normalIndex/texCoordIndex the attribute node needs a value for every coordinate
+    (perVertex) or face (per face)."""
+    defs = {}
+    out = []
+
+    def resolve(c):
+        return defs.get(c.get("USE")) if c is not None and c.get("USE") else c
+
+    for el in scene.getroottree().iter():
+        if isinstance(el.tag, str) and el.get("DEF"):
+            defs.setdefault(el.get("DEF"), el)
+    for el in scene.iter():
+        tag = _local_tag(el)
+        if tag not in ("IndexedFaceSet", "IndexedLineSet", "PointSet", "TriangleSet", "IndexedTriangleSet") or el.get("USE"):
+            continue
+        coord = resolve(_kids(el, ("Coordinate", "CoordinateDouble"), "coord"))
+        if coord is None or coord.get("point") is None:
+            continue
+        ncoord = len(_nums(coord.get("point"))) // 3
+        indexed = tag in ("IndexedFaceSet", "IndexedLineSet")
+        specs = [(("Color", "ColorRGBA"), "color", "color", None, "colorIndex", "colorPerVertex")]
+        if tag != "PointSet":
+            specs.append((("Normal",), "normal", "vector", 3, "normalIndex", "normalPerVertex"))
+        if tag in ("IndexedFaceSet", "TriangleSet", "IndexedTriangleSet"):
+            specs.append((("TextureCoordinate",), "texCoord", "point", 2, "texCoordIndex", None))
+        for tags, cf, attr, width, idxf, perv in specs:
+            node = resolve(_kids(el, tags, cf))
+            if node is None or node.get(attr) is None:
+                continue
+            if el.get(idxf, "").strip():
+                continue  # index case is covered by index-out-of-range on acdf5c4
+            _tick('attribute-count')
+            w = width or (4 if _local_tag(node) == "ColorRGBA" else 3)
+            have = len(_nums(node.get(attr))) // w
+            per_vertex = el.get(perv, "true") != "false" if perv else True
+            if per_vertex and indexed:
+                ids = [int(x) for x in re.findall(r"-?\d+", el.get("coordIndex", ""))]
+                need, what = (max(ids) + 1 if ids else 0), "referenced coordinate"
+            elif per_vertex or not indexed:
+                need, what = ncoord, "coordinate"
+            else:
+                ci = el.get("coordIndex", "")
+                need = sum(1 for _ in re.finditer(r"-1", ci)) + (0 if ci.strip().endswith("-1") or not ci.strip() else 1)
+                what = "face" if tag == "IndexedFaceSet" else "polyline"
+            if have < need:
+                out.append(_emit("error", "attribute-count", el,
+                    f"{tag}{_label(el)}: {_local_tag(node)} holds {have} value(s) but there are {need} {what}(s) "
+                    f"and no {idxf}; the attribute cannot cover the geometry."))
+    return out
+
+
+def _check_normal_unit_length(scene):
+    """Normals shall be unit length (19775-1 11.? Normal; Likely). Blender normals are unit, so a
+    non-unit Normal after a modifier or a scale bake is a round-trip defect: lighting is wrong by |n|^2."""
+    out = []
+    for el in scene.iter("Normal", "{*}Normal"):
+        a = el.get("vector")
+        if not a or el.get("USE"):
+            continue
+        v = _nums(a)
+        n = len(v) // 3
+        if n == 0:
+            continue
+        _tick('normal-not-unit')
+        bad = 0
+        for i in range(n):
+            L = math.sqrt(v[3 * i] ** 2 + v[3 * i + 1] ** 2 + v[3 * i + 2] ** 2)
+            if abs(L - 1) > 1e-3:
+                bad += 1
+        if bad:
+            out.append(_emit("warning", "normal-not-unit", el,
+                f"Normal{_label(el)}: {bad} of {n} vectors are not unit length (|n| off by more than 1e-3); "
+                f"shading is scaled by |n| and zero vectors give black."))
+    return out
+
+
+# ---------------------------------------------------------------- metadata / sci-vis convention (G2, opt-in by name)
+_PLDDT = re.compile(r"plddt", re.I)
+
+
+def _check_plddt_metadata(scene):
+    """KB 5: pLDDT lives in the 0..100 B-factor column (>90 high, <50 low). X3D has no atoms, so the
+    value travels as MetadataFloat/Double/Integer named (or inside a MetadataSet named / referenced) plddt.
+    A 0..1 fraction or a value over 100 is the classic wrong-scale mistake and is invisible to the XSD."""
+    out = []
+    for el in scene.iter("MetadataFloat", "{*}MetadataFloat", "MetadataDouble", "{*}MetadataDouble",
+                         "MetadataInteger", "{*}MetadataInteger"):
+        names = [el.get("name", ""), el.get("reference", "")]
+        p = el.getparent()
+        while p is not None:
+            if _local_tag(p) == "MetadataSet":
+                names += [p.get("name", ""), p.get("reference", "")]
+            p = p.getparent()
+        if not any(_PLDDT.search(n) for n in names):
+            continue
+        v = _nums(el.get("value", ""))
+        if not v:
+            continue
+        if min(v) < -1e-9 or max(v) > 100 + 1e-9:
+            out.append(_emit("error", "plddt-range", el,
+                f"{_local_tag(el)}{_label(el)} '{el.get('name', '')}': pLDDT values span {min(v):g}..{max(v):g}, "
+                f"outside 0..100."))
+        elif len(v) >= 3 and max(v) <= 1.0:
+            out.append(_emit("warning", "plddt-range", el,
+                f"{_local_tag(el)}{_label(el)} '{el.get('name', '')}': all {len(v)} pLDDT values are within "
+                f"0..1; pLDDT is a 0..100 score, so this looks like a fraction and every residue would fall "
+                f"in the 'very low' (<50) band."))
+    return out
+
+
+# ---------------------------------------------------------------- volume (G2 / G5-static)
+def _check_volume_data(scene):
+    """KB 2 (volumes: OpenVDB grids density/color/temperature are the join key to X3D VolumeRendering).
+    A VolumeData with no voxels node, or with a zero dimension, is valid by the XSD (every child is
+    optional) but has nothing to integrate."""
+    out = []
+    for el in scene.iter("VolumeData", "{*}VolumeData", "IsoSurfaceVolumeData", "{*}IsoSurfaceVolumeData",
+                         "SegmentedVolumeData", "{*}SegmentedVolumeData"):
+        if el.get("USE"):
+            continue
+        has_vox = any(isinstance(c.tag, str) and c.get("containerField", "voxels") == "voxels"
+                      and (_local_tag(c).endswith("Texture3D") or _local_tag(c) == "ComposedTexture3D")
+                      for c in el)
+        if not has_vox:
+            out.append(_emit("error", "volume-no-voxels", el,
+                f"{_local_tag(el)}{_label(el)} has no voxels node (ImageTexture3D, ComposedTexture3D or "
+                f"PixelTexture3D); there is no data to render."))
+        d = _nums(el.get("dimensions", "1 1 1"))
+        if len(d) == 3 and min(d) <= 0:
+            out.append(_emit("error", "volume-dimensions", el,
+                f"{_local_tag(el)}{_label(el)} dimensions='{el.get('dimensions')}' has a non-positive size; the "
+                f"volume box is empty."))
+    return out
+
+
+# ---------------------------------------------------------------- provenance (G0 stamp; info here)
+_PROV = ("title", "creator", "created", "generator", "license")
+
+
+def _check_provenance_meta(root):
+    heads = [c for c in root if isinstance(c.tag, str) and _local_tag(c) == "head"]
+    names = {m.get("name") for h in heads for m in h if isinstance(m.tag, str) and _local_tag(m) == "meta"}
+    missing = [n for n in ("title", "creator", "created") if n not in names]
+    if not (names & {"generator", "creator"}):
+        missing.append("generator")
+    if missing:
+        return [Diagnostic(level="info", check="provenance-meta-missing",
+                           message=f"head has no <meta> for: {', '.join(missing)}.", node_tag="head")]
+    return []
+
+
+SCI_CHECKS = [
+    _check_splat_sh0_looks_rgb,
+    _check_splat_invisible,
+    _check_splat_scale_vs_extent,
+    _check_splat_budget,
+    _check_float32_collapse,
+    _check_attribute_counts,
+    _check_normal_unit_length,
+    _check_plddt_metadata,
+    _check_volume_data,
+]
+
+
+def run(xml_text: str, src: str):
+    """Run the prototype checks on a document; returns list of Diagnostic."""
+    if SRC is None:
+        _bind(src)
+    from validation.semantic import _PARSER, _find_scene
+    root = etree.fromstring(xml_text.encode("utf-8"), _PARSER)
+    scene = _find_scene(root)
+    if scene is None:
+        return []
+    out = _check_provenance_meta(root)
+    for fn in SCI_CHECKS:
+        out.extend(fn(scene))
+    return out

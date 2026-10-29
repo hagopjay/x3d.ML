@@ -1,0 +1,609 @@
+{
+ "N": 2000,
+ "cases": [
+  {
+   "sh_degree": 0,
+   "ply_bytes": 136414,
+   "floats_per_splat": 17,
+   "payload_bytes_per_splat": 68.0,
+   "ply_bytes_per_splat_incl_header_amortised": 68.207,
+   "targets": [
+    {
+     "target": "mesh",
+     "obj_type": "MESH",
+     "data_type_attrs": null,
+     "read_s": 0.01,
+     "build_s": 0.0,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.09,
+     "x3d_bytes": 309885,
+     "x3d_bytes_per_splat": 154.9425,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": 5,
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 309115,
+     "x3d_import_s": 0.02,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "MESH"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 2.9802322387695312e-08,
+       "opacity_logit": 0.00036144256591796875,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.00036144256591796875,
+      "ply_bytes": 136414
+     }
+    },
+    {
+     "target": "pointcloud",
+     "obj_type": "POINTCLOUD",
+     "data_type_attrs": {
+      "position": "FLOAT_VECTOR",
+      "scale": "FLOAT_VECTOR",
+      "rotation": "QUATERNION",
+      "radiance:base": "FLOAT4"
+     },
+     "read_s": 0.02,
+     "build_s": 0.0,
+     "is_native_splat_object": true,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.05,
+     "x3d_bytes": 309891,
+     "x3d_bytes_per_splat": 154.9455,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": 5,
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 309115,
+     "x3d_import_s": 0.01,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "POINTCLOUD"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 2.9802322387695312e-08,
+       "opacity_logit": 0.00036144256591796875,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.00036144256591796875,
+      "ply_bytes": 136414
+     }
+    }
+   ]
+  },
+  {
+   "sh_degree": 1,
+   "ply_bytes": 208630,
+   "floats_per_splat": 26,
+   "payload_bytes_per_splat": 104.0,
+   "ply_bytes_per_splat_incl_header_amortised": 104.315,
+   "targets": [
+    {
+     "target": "mesh",
+     "obj_type": "MESH",
+     "data_type_attrs": null,
+     "read_s": 0.02,
+     "build_s": 0.0,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.1,
+     "x3d_bytes": 529815,
+     "x3d_bytes_per_splat": 264.9075,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": 8,
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 529045,
+     "x3d_import_s": 0.02,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "MESH"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 0.0,
+       "opacity_logit": 0.00026607513427734375,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.00026607513427734375,
+      "ply_bytes": 208630
+     }
+    },
+    {
+     "target": "pointcloud",
+     "obj_type": "POINTCLOUD",
+     "data_type_attrs": {
+      "position": "FLOAT_VECTOR",
+      "scale": "FLOAT_VECTOR",
+      "rotation": "QUATERNION",
+      "radiance:base": "FLOAT4",
+      "radiance:sh_0": "FLOAT_VECTOR",
+      "radiance:sh_1": "FLOAT_VECTOR",
+      "radiance:sh_2": "FLOAT_VECTOR"
+     },
+     "read_s": 0.02,
+     "build_s": 0.0,
+     "is_native_splat_object": true,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.08,
+     "x3d_bytes": 529821,
+     "x3d_bytes_per_splat": 264.9105,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": 8,
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 529045,
+     "x3d_import_s": 0.02,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "POINTCLOUD"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 0.0,
+       "opacity_logit": 0.00026607513427734375,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.00026607513427734375,
+      "ply_bytes": 208630
+     }
+    }
+   ]
+  },
+  {
+   "sh_degree": 2,
+   "ply_bytes": 329004,
+   "floats_per_splat": 41,
+   "payload_bytes_per_splat": 164.0,
+   "ply_bytes_per_splat_incl_header_amortised": 164.502,
+   "targets": [
+    {
+     "target": "mesh",
+     "obj_type": "MESH",
+     "data_type_attrs": null,
+     "read_s": 0.04,
+     "build_s": 0.01,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.16,
+     "x3d_bytes": 896680,
+     "x3d_bytes_per_splat": 448.34,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": 13,
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 895910,
+     "x3d_import_s": 0.04,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "MESH"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 5.960464477539063e-08,
+       "opacity_logit": 0.00046539306640625,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.00046539306640625,
+      "ply_bytes": 329004
+     }
+    },
+    {
+     "target": "pointcloud",
+     "obj_type": "POINTCLOUD",
+     "data_type_attrs": {
+      "position": "FLOAT_VECTOR",
+      "scale": "FLOAT_VECTOR",
+      "rotation": "QUATERNION",
+      "radiance:base": "FLOAT4",
+      "radiance:sh_0": "FLOAT_VECTOR",
+      "radiance:sh_1": "FLOAT_VECTOR",
+      "radiance:sh_2": "FLOAT_VECTOR",
+      "radiance:sh_3": "FLOAT_VECTOR",
+      "radiance:sh_4": "FLOAT_VECTOR",
+      "radiance:sh_5": "FLOAT_VECTOR",
+      "radiance:sh_6": "FLOAT_VECTOR",
+      "radiance:sh_7": "FLOAT_VECTOR"
+     },
+     "read_s": 0.03,
+     "build_s": 0.0,
+     "is_native_splat_object": true,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.13,
+     "x3d_bytes": 896686,
+     "x3d_bytes_per_splat": 448.343,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": 13,
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 895910,
+     "x3d_import_s": 0.06,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "POINTCLOUD"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 5.960464477539063e-08,
+       "opacity_logit": 0.00046539306640625,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.00046539306640625,
+      "ply_bytes": 329004
+     }
+    }
+   ]
+  },
+  {
+   "sh_degree": 3,
+   "ply_bytes": 497529,
+   "floats_per_splat": 62,
+   "payload_bytes_per_splat": 248.0,
+   "ply_bytes_per_splat_incl_header_amortised": 248.7645,
+   "targets": [
+    {
+     "target": "mesh",
+     "obj_type": "MESH",
+     "data_type_attrs": null,
+     "read_s": 0.05,
+     "build_s": 0.01,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.21,
+     "x3d_bytes": 1410714,
+     "x3d_bytes_per_splat": 705.357,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": [
+       "opacities",
+       "orientations",
+       "positions",
+       "scales",
+       "sphericalHarmonicsDegree0Coef0",
+       "sphericalHarmonicsDegree1Coef0",
+       "sphericalHarmonicsDegree1Coef1",
+       "sphericalHarmonicsDegree1Coef2",
+       "sphericalHarmonicsDegree2Coef0",
+       "sphericalHarmonicsDegree2Coef1",
+       "sphericalHarmonicsDegree2Coef2",
+       "sphericalHarmonicsDegree2Coef3",
+       "sphericalHarmonicsDegree2Coef4",
+       "sphericalHarmonicsDegree3Coef0",
+       "sphericalHarmonicsDegree3Coef1",
+       "sphericalHarmonicsDegree3Coef2",
+       "sphericalHarmonicsDegree3Coef3",
+       "sphericalHarmonicsDegree3Coef4",
+       "sphericalHarmonicsDegree3Coef5",
+       "sphericalHarmonicsDegree3Coef6"
+      ],
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 1409944,
+     "x3d_import_s": 0.06,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "MESH"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 0.0,
+       "opacity_logit": 0.0006847381591796875,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.0006847381591796875,
+      "ply_bytes": 497529
+     }
+    },
+    {
+     "target": "pointcloud",
+     "obj_type": "POINTCLOUD",
+     "data_type_attrs": {
+      "position": "FLOAT_VECTOR",
+      "scale": "FLOAT_VECTOR",
+      "rotation": "QUATERNION",
+      "radiance:base": "FLOAT4",
+      "radiance:sh_0": "FLOAT_VECTOR",
+      "radiance:sh_1": "FLOAT_VECTOR",
+      "radiance:sh_2": "FLOAT_VECTOR",
+      "radiance:sh_3": "FLOAT_VECTOR",
+      "radiance:sh_4": "FLOAT_VECTOR",
+      "radiance:sh_5": "FLOAT_VECTOR",
+      "radiance:sh_6": "FLOAT_VECTOR",
+      "radiance:sh_7": "FLOAT_VECTOR",
+      "radiance:sh_8": "FLOAT_VECTOR",
+      "radiance:sh_9": "FLOAT_VECTOR",
+      "radiance:sh_10": "FLOAT_VECTOR",
+      "radiance:sh_11": "FLOAT_VECTOR",
+      "radiance:sh_12": "FLOAT_VECTOR",
+      "radiance:sh_13": "FLOAT_VECTOR",
+      "radiance:sh_14": "FLOAT_VECTOR"
+     },
+     "read_s": 0.05,
+     "build_s": 0.01,
+     "is_native_splat_object": true,
+     "export": [
+      "FINISHED"
+     ],
+     "export_s": 0.21,
+     "x3d_bytes": 1410720,
+     "x3d_bytes_per_splat": 705.36,
+     "ply_to_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "fields": [
+       "opacities",
+       "orientations",
+       "positions",
+       "scales",
+       "sphericalHarmonicsDegree0Coef0",
+       "sphericalHarmonicsDegree1Coef0",
+       "sphericalHarmonicsDegree1Coef1",
+       "sphericalHarmonicsDegree1Coef2",
+       "sphericalHarmonicsDegree2Coef0",
+       "sphericalHarmonicsDegree2Coef1",
+       "sphericalHarmonicsDegree2Coef2",
+       "sphericalHarmonicsDegree2Coef3",
+       "sphericalHarmonicsDegree2Coef4",
+       "sphericalHarmonicsDegree3Coef0",
+       "sphericalHarmonicsDegree3Coef1",
+       "sphericalHarmonicsDegree3Coef2",
+       "sphericalHarmonicsDegree3Coef3",
+       "sphericalHarmonicsDegree3Coef4",
+       "sphericalHarmonicsDegree3Coef5",
+       "sphericalHarmonicsDegree3Coef6"
+      ],
+      "transform": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "notes": {}
+     },
+     "largest_start_tag": 1409944,
+     "x3d_import_s": 0.06,
+     "x3d_blender_x3d": {
+      "nodes": 1,
+      "all_exact": true,
+      "worst": 0.0,
+      "notes": {},
+      "objs": [
+       [
+        "S",
+        "POINTCLOUD"
+       ]
+      ],
+      "transform_in": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ],
+      "transform_out": [
+       "<Transform DEF=\"OB_S\" translation=\"0.000000 0.000000 0.000000\" rotation=\"-1.000000 0.000000 0.000000 1.570796\" scale=\"1.000000 1.000000 1.000000\">"
+      ]
+     },
+     "blender_to_ply": {
+      "n": 2000,
+      "same_n": true,
+      "max_abs_diff_by_column_summary": {
+       "xyz": 0.0,
+       "f_dc": 0.0,
+       "f_rest": 0.0,
+       "scale_ln": 0.0,
+       "opacity_logit": 0.0006847381591796875,
+       "quat_signfree": 5.960464477539063e-08
+      },
+      "missing": [],
+      "source_logit_beyond_13p8": 0,
+      "opacity_logit_worst_when_within_13p8": 0.0006847381591796875,
+      "ply_bytes": 497529
+     }
+    }
+   ]
+  }
+ ],
+ "bpy": "5.2.3 LTS",
+ "addon_manifest": "2.6.4",
+ "pointcloud_type_supported": false,
+ "pointcloud_buildable": true
+}

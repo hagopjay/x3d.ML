@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape><GeoElevationGrid geoGridOrigin="38 -77 0" geoSystem='"GD" "WE"' xDimension="2" zDimension="2" xSpacing="0.01" zSpacing="0.01" height="0 1 2 3"/></Shape>
+  </Scene>
+</X3D>

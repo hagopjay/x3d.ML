@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Shape>
+      <Appearance><PhysicalMaterial baseColor="0.8 0.8 0.8"/></Appearance>
+      <IndexedFaceSet coordIndex="0 1 2 -1" solid="false">
+        <Coordinate point="0 0 0 1 0 0 0 1 0"/>
+        <Normal vector="0.6 0 0.8  0 0.6 0.8  0.6 0.6 0.5291502622"/>
+      </IndexedFaceSet>
+    </Shape>
+  </Scene>
+</X3D>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0"><head>
+<meta name="title" content="sci point cloud B-other"/>
+<meta name="reference" content="data sha256 63eadcbc3ef7eef8 (synthetic temperature field)"/>
+<meta name="license" content="CC0 synthetic"/>
+<meta name="x3dprov.version" content="x3dprov/0.1"/><meta name="x3dprov.step.1" content="{&quot;agent&quot;:&quot;t2_roundtrip.py&quot;,&quot;agent_ref&quot;:&quot;other&quot;,&quot;data_sha256&quot;:&quot;ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff&quot;,&quot;input_sha256&quot;:&quot;61baf052f52a8dd7d3f91a28cf463b02f50faed4e720aa3b6961ff4b929939d4&quot;,&quot;op&quot;:&quot;ingest&quot;,&quot;output_sha256&quot;:&quot;61baf052f52a8dd7d3f91a28cf463b02f50faed4e720aa3b6961ff4b929939d4&quot;,&quot;prev&quot;:&quot;0000000000000000000000000000000000000000000000000000000000000000&quot;}"/></head><Scene>
+<Shape DEF="T"><MetadataSet containerField="metadata" name="sci" reference="units-v0">
+<MetadataString name="units" value='"K"'/><MetadataString name="colormap" value='"viridis"'/>
+<MetadataString name="data_sha256" value='"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9"'/><MetadataDouble name="vmin" value="290.1"/><MetadataDouble name="vmax" value="301.4"/></MetadataSet>
+<PointSet><Coordinate point="0 0 0 1 0 0 0 1 0 1 1 1"/><Color color="0.27 0.0 0.33 0.13 0.57 0.55 0.37 0.79 0.38 0.99 0.91 0.14"/></PointSet></Shape>
+<Transform translation="3 0 0"><Shape DEF="M"><MetadataSet containerField="metadata" name="sci" reference="units-v0">
+<MetadataString name="units" value='"K"'/><MetadataString name="colormap" value='"viridis"'/>
+<MetadataString name="data_sha256" value='"63eadcbc3ef7eef86816f1f694f433b91fa77011ca5c437537313a617e2f58f9"'/><MetadataDouble name="vmin" value="290.1"/><MetadataDouble name="vmax" value="301.4"/></MetadataSet>
+<Appearance><Material diffuseColor="0.2 0.5 0.8"/></Appearance><Box size="1 1 1"/></Shape></Transform>
+</Scene></X3D>

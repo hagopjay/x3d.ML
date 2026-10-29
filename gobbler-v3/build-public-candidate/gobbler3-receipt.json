@@ -1,0 +1,115 @@
+{
+  "file": "gobbler3.x3d",
+  "build": "standard",
+  "bytes": 276599,
+  "x3dVersion": "4.0",
+  "profile": "Immersive",
+  "components": [
+    {
+      "name": "Shaders",
+      "level": 1
+    },
+    {
+      "name": "Shape",
+      "level": 2
+    },
+    {
+      "name": "ParticleSystems",
+      "level": 3
+    },
+    {
+      "name": "Texturing3D",
+      "level": 1
+    }
+  ],
+  "nodeCount": 187,
+  "defCount": 65,
+  "useCount": 29,
+  "routeCount": 64,
+  "interpolatorCount": 13,
+  "shaderCount": 6,
+  "sensors": [
+    "TimeSensor",
+    "TouchSensor"
+  ],
+  "validator": {
+    "name": "x3d_mcp fork, main",
+    "commit": "2b696f5",
+    "label": "x3d_mcp fork, main, commit 2b696f5",
+    "xsd_valid": true,
+    "profile_ok": true,
+    "semantic_errors": 0,
+    "semantic_warnings": 0,
+    "semantic_infos": 4,
+    "checks": [
+      "X3D 4.0 XSD",
+      "profile and component",
+      "DEF/USE/ROUTE wiring"
+    ],
+    "profile_unknown": []
+  },
+  "renderedWith": "X_ITE 16.5.1",
+  "generated": "2026-10-26",
+  "extrasBuild": null,
+  "graph": {
+    "nodes": 121,
+    "edges": 162,
+    "loops": 10,
+    "meta": {
+      "nodes": 121,
+      "edges": 162,
+      "loops": 10,
+      "extraction_chunks": 163,
+      "stats": {
+        "triples_raw": 7078,
+        "triples_kept": 5949,
+        "metrics_kept": 2072,
+        "evidence_not_verbatim": 1055,
+        "loops_kept": 17,
+        "bad_pred": 44
+      },
+      "prov_counts": {
+        "doc": 426,
+        "data": 112,
+        "model_recall": 6,
+        "simulated": 60
+      },
+      "grade_counts": {
+        "Likely": 111,
+        "Confirmed": 481,
+        "Suspected": 12
+      },
+      "class_counts": {
+        "Finding": 62,
+        "Workstream": 37,
+        "Validator": 25,
+        "Tool": 58,
+        "Scene": 18,
+        "Org": 21,
+        "Dataset": 10,
+        "Event": 5,
+        "Document": 59,
+        "Rule": 42,
+        "NodeType": 44,
+        "Person": 19,
+        "Standard": 25,
+        "Repo": 13,
+        "Experiment": 36,
+        "Component": 29,
+        "Loop": 89,
+        "Decision": 12
+      },
+      "edge_prov_counts": {
+        "doc": 717,
+        "simulated": 197,
+        "data": 144,
+        "model_recall": 121
+      },
+      "edge_grade_counts": {
+        "Likely": 228,
+        "Suspected": 216,
+        "Confirmed": 735
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <LOD range="10"><Shape DEF="HI"><Box size="1 1 1"/></Shape><Shape DEF="LO"><Sphere radius="0.5"/></Shape></LOD>
+    <Billboard axisOfRotation="0 1 0"><Shape><Cylinder/></Shape></Billboard>
+    <Anchor url='"http://x"'><Shape><Cone/></Shape></Anchor>
+    <Collision enabled="false"><Shape><Box size="2 2 2"/></Shape></Collision>
+    <StaticGroup><Shape><Box size="3 3 3"/></Shape></StaticGroup>
+    <ProtoDeclare name="P"><ProtoBody><Shape><Box size="4 4 4"/></Shape></ProtoBody></ProtoDeclare>
+    <ProtoInstance name="P"/>
+    <Fog color="0.5 0.5 0.5" visibilityLimit="100"/>
+    <WorldInfo title="T"/>
+    <NavigationInfo type='"EXAMINE"'/>
+    <OrthoViewpoint position="0 0 10" fieldOfView="-1 -1 1 1" description="o"/>
+    <Shape><Box/><Appearance><Material diffuseColor="1 0 0"/></Appearance></Shape>
+  </Scene>
+</X3D>

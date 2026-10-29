@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<X3D profile="Immersive" version="4.0">
+  <head></head>
+  <Scene>
+    <Transform translation="6378137.123456 0 0"><Shape><IndexedFaceSet coordIndex="0 1 2 -1"><Coordinate point="6378137.123456 0 0  6378138.123456 0 0  6378137.123456 1 0"/></IndexedFaceSet></Shape></Transform>
+  </Scene>
+</X3D>
