@@ -158,3 +158,50 @@ Method: five models (gemini-3.8-flash, gemini-3.1-pro-preview, gpt-6.1-sol; glm-
 | Per valid scene (list-price estimate) gpt-6.1-sol 0.027, gemini-3.8-flash 0.033, gemini-3.1-pro-preview 0.103 USD | Likely | finished chains only |
 
 What it changes in this document: section 5 (what a pipeline gains) now has a measured loop number, and section 3 (limits) a new honest one: the repair loop optimises for the checker, so a render check and an eyes-on pass stay in. Where tethering pays beyond X3D, and what to build next: `research/traceability-2026-10-17/WHERE-TETHERING-PAYS.md` (also a Claude Doc).
+
+## 10. Fifth pass: x3dprov speaks PROV-O, OWL-Time and OpenLineage (added 29 Oct 2026)
+
+Code: `src/x3dprov_provo.py` (chain <-> PROV-O as Turtle and JSON-LD, OWL-Time for dates), `src/x3dprov_openlineage.py` (chain -> OpenLineage RunEvents), `schemas/` (SHACL shapes, facet schema, the OpenLineage spec files vendored with their licence and sha256), `tests/test_provo.py`. x3dprov.py is unchanged. `export_prov.py` (section 4) is superseded: it was a hand projection and lost the chain. Placeholder namespace `https://x3dprov.example/` (RFC 2606); a registered one is the Consortium's call (section 6 item 5).
+
+| x3dprov | PROV-O / OWL-Time | Note |
+|---|---|---|
+| chain | `x3dp:Chain`, `prov:Collection`; `prov:hadMember` each record | |
+| step record | `prov:Entity` named `ni:///sha-256;...` (RFC 6920) of its own JSON text | content-addressed |
+| `prev` | record `prov:wasDerivedFrom` the record named by `prev` | the hash link is a derivation |
+| step (`op`) | `prov:Activity` + `x3dp:Generate / Validate / Repair / Transform (Blender round trip) / Render / Ingest / Measure / Judge / Summary` | |
+| `input_sha256`, `output_sha256` | `prov:used` / `prov:generated` a `x3dp:SceneVersion` per step with `x3dp:contentSha256`; output `prov:wasDerivedFrom` input (qualified, `prov:hadActivity`), `prov:wasRevisionOf` when the hash changed; `prov:specializationOf` the content `ni:` IRI | the content IRI is the join key across chains |
+| `prompt_sha256` | the generate step also `prov:used` an `x3dp:Prompt` | input `"none"` = `x3dp:NoScene` |
+| `agent`/`agent_ref`, `tool`, `validator`/`validator_ref`, `model`, `renderer`, `human` | `prov:SoftwareAgent` (`prov:Person` for `human`) per name and ref; qualified association with `prov:hadRole` Tool / Validator / Model / Renderer / Human | |
+| verdict, codes, repair round, report shown, every other field | `x3df:<field>` typed literal on the activity (lists, dicts, null as `rdf:JSON`) | |
+| `started_at`, `ended_at` | step `time:hasTime` a `time:ProperInterval`, its beginning and end `time:Instant` with `time:inXSDDateTimeStamp`; also `prov:startedAtTime` / `endedAtTime` | |
+| `t` | record `prov:generatedAtTime` and its instant | |
+| `run_created` (no zone in the data) | `time:inXSDDateTime`, marked "recorded without a time zone" | not a timestamp, said so |
+| order | record instant N `time:before` instant N+1 | proven by the chain itself |
+| file as found | `x3dp:FileAsFound` derived from the last version | carries the stale check |
+
+`prev`, `input_sha256` and `output_sha256` are not stored as literals: the inverse mapping reads them back from the derivations and versions, so a byte-identical round trip shows the PROV structure carries the chain.
+
+OpenLineage (spec 2-0-2): one parent run per chain (job = chain), one run per step (job = `x3d-loop.<op>`, `ParentRunFacet`), each with one START and one COMPLETE or FAIL. Datasets are the scene (namespace `x3d`, version = content hash via `DatasetVersionDatasetFacet`) and, for generate, the prompt. Custom run facets `x3dprov_step` (the record byte for byte), `x3dprov_validation`, `x3dprov_repair`, `x3dprov_chain`. A step run FAILs when `verify()` names a problem at that step or its record says the tool failed; the chain run FAILs when `verify()` is not `verified` or the last verdict is invalid (`ErrorMessageRunFacet` says which).
+
+### Measured (29 Oct 2026; rdflib 7.6.0, pyshacl 0.40.2, jsonschema 4.26.0, prov 3.2.3)
+
+Every chain in the repo: 179 stamped scenes in `runs/` plus 3 `*.steps.json` = 182 chains, 584 steps. `demo/` has no chain at rest (its pages build chains in the browser), so none are covered there.
+
+| Check | Result | Grade |
+|---|---|---|
+| chain -> Turtle -> chain and chain -> JSON-LD -> chain | 182 of 182 byte-identical records, same record hashes | C |
+| scene with its records emptied, refilled from the graph | 179 of 179 byte-identical files, all `verified` | C |
+| SHACL (`schemas/x3dprov-prov.shacl.ttl`, 11 shapes) | 182 of 182 conform | C |
+| PROV-CONSTRAINTS, Python check of 7 rules (entity-activity disjoint, generation uniqueness, revision is derivation, derivation generation ordering, generation precedes usage, strict cycle, start precedes end) | 182 of 182 clean | C for those rules; the full constraint set not run (below) |
+| an independent PROV implementation (`prov` 3.2.3) reads the Turtle into PROV-DM records | 10 sampled chains, activity, usage and membership counts as expected | C |
+| OpenLineage events against RunEvent 2-0-2, each standard facet against its own schema, custom facets against ours, formats (uuid, date-time, uri) checked | 1,532 events, 0 errors (766 START, 646 COMPLETE, 120 FAIL); OpenLineage -> chain also lossless, 182 of 182 | C |
+| the 120 FAILs | the 120 replayed scenes whose last verdict (fork eb4b4b4) is invalid | C |
+| one-byte edit to the scene body (a digit outside comments) | `verify()` `stale` 179 of 179; the PROV graph fails SHACL with one "untracked edit" derivation on the file as found, 179 of 179 | C |
+| one-byte edit to record 1 (first letter of `op` upper-cased) | `verify()` `broken-chain` 179 of 179; the graph fails with one "previous record not in the chain" derivation, 179 of 179; the OpenLineage chain run and step 2's run FAIL, still schema-valid | C |
+| step 2 deleted; a step claiming an input the previous step never produced | both caught by `verify()` and by the graph | C |
+| one-byte edit to the **last** record | missed by `verify()` and by the graph alike (limit 1, section 3; the view inherits it) | C |
+| one digit changed inside a comment | `verified` in 16 of 16 scenes that have one: the hash binds content (limit 2) | C |
+| records that carry any date | 3 of 584 steps (the suite ingests' `run_created`, no zone). x3dprov 0.1 does not date steps; OWL-Time orders them by the chain, and the OpenLineage times are synthetic (one second per step, marked `synthetic-order`) unless a record carries `started_at` / `ended_at` / `t` | C |
+| size | 468 KB of records -> 2.5 MB Turtle, 3.2 MB JSON-LD, 2.9 MB OpenLineage; 54 triples per step; mapping plus serialisation median 14 ms per chain, SHACL median 136 ms (max 1.1 s) | C |
+
+Not done: the full W3C PROV-CONSTRAINTS. ProvToolbox 2.2.5 (`prov-validation`) was fetched from a Maven mirror and its checksum matched, but this session's policy blocked running the downloaded code, and it reads PROV-N or PROV-JSON, not Turtle, so the `prov` package would have had to convert first. It is one command where running it is allowed. No OpenLineage server (Marquez) was run: schema-valid events are Likely ingestible (L), not shown. Next for 0.2 (S, not built): an optional UTC `t` per step so records are dated, not only ordered.

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://x3dprov.example/0.1/openlineage-facets.json",
+  "description": "Custom OpenLineage run facets for x3dprov chains (src/x3dprov_openlineage.py). Each one extends the OpenLineage RunFacet.",
+  "$defs": {
+    "X3dprovStepRunFacet": {
+      "allOf": [
+        {"$ref": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunFacet"},
+        {"type": "object",
+         "properties": {
+           "step": {"type": "integer", "minimum": 1},
+           "op": {"type": "string"},
+           "recordSha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+           "record": {"type": "string", "description": "the step's x3dprov JSON text, byte for byte"},
+           "eventTimeSource": {"enum": ["record", "synthetic-order"]}
+         },
+         "required": ["step", "op", "recordSha256", "record", "eventTimeSource"]}
+      ]
+    },
+    "X3dprovValidationRunFacet": {
+      "allOf": [
+        {"$ref": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunFacet"},
+        {"type": "object",
+         "properties": {
+           "validator": {"type": "string"},
+           "validatorRef": {"type": ["string", "null"]},
+           "verdict": {"enum": ["valid", "invalid"]},
+           "xsdValid": {"type": ["boolean", "null"]},
+           "semanticErrorCodes": {"type": "array", "items": {"type": "string"}}
+         },
+         "required": ["validator", "validatorRef", "verdict"]}
+      ]
+    },
+    "X3dprovRepairRunFacet": {
+      "allOf": [
+        {"$ref": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunFacet"},
+        {"type": "object",
+         "properties": {
+           "kind": {"type": "string"},
+           "round": {"type": ["integer", "null"]},
+           "reportShown": {"type": ["boolean", "null"]},
+           "fixes": {}
+         },
+         "required": ["kind"]}
+      ]
+    },
+    "X3dprovChainRunFacet": {
+      "allOf": [
+        {"$ref": "https://openlineage.io/spec/2-0-2/OpenLineage.json#/$defs/RunFacet"},
+        {"type": "object",
+         "properties": {
+           "steps": {"type": "integer", "minimum": 0},
+           "schema": {"type": ["string", "null"]},
+           "verify": {"enum": ["verified", "stale", "broken-chain", "no-record", "not-run (steps only)"]},
+           "lastVerdict": {"enum": ["valid", "invalid", null]}
+         },
+         "required": ["steps", "verify"]}
+      ]
+    }
+  }
+}

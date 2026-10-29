@@ -1,0 +1,92 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix x3dp: <https://x3dprov.example/0.1#> .
+@prefix x3df: <https://x3dprov.example/0.1/field#> .
+@prefix s:    <https://x3dprov.example/0.1/shapes#> .
+
+# Shapes for the x3dprov -> PROV-O mapping (src/x3dprov_provo.py). Two shapes carry the tamper evidence:
+# s:RecordShape (a record must derive from a record that is in the chain) and s:SceneDerivationShape
+# (a scene derivation needs an activity that accounts for it, or the same content hash).
+
+s:prefixes sh:declare [ sh:prefix "prov" ; sh:namespace "http://www.w3.org/ns/prov#"^^xsd:anyURI ] ,
+                      [ sh:prefix "x3dp" ; sh:namespace "https://x3dprov.example/0.1#"^^xsd:anyURI ] .
+
+s:ChainShape a sh:NodeShape ; sh:targetClass x3dp:Chain ;
+  sh:class prov:Collection ;
+  sh:property [ sh:path x3dp:schema ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path prov:hadMember ; sh:minCount 1 ; sh:class x3dp:StepRecord ] .
+
+s:RecordShape a sh:NodeShape ; sh:targetClass x3dp:StepRecord ;
+  sh:class prov:Entity ;
+  sh:property [ sh:path x3dp:sha256 ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[0-9a-f]{64}$" ] ;
+  sh:property [ sh:path x3dp:stepIndex ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ] ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class x3dp:Step ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:maxCount 1 ; sh:class x3dp:StepRecord ;
+                sh:message "broken derivation: the record names a previous record (prev) that is not in the chain" ] ;
+  sh:property [ sh:path x3dp:prevLiteral ; sh:maxCount 0 ; sh:message "prev is not a sha-256" ] ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "broken derivation: record after the first one has no link to a previous record" ;
+    sh:select """SELECT $this WHERE { $this x3dp:stepIndex ?n . FILTER(?n > 1)
+                 FILTER NOT EXISTS { $this prov:wasDerivedFrom ?p } }""" ] ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "broken derivation: record 1 derives from another record (its prev is not zero)" ;
+    sh:select """SELECT $this WHERE { $this x3dp:stepIndex 1 ; prov:wasDerivedFrom ?p }""" ] ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "step numbering: the record it derives from is not the previous step" ;
+    sh:select """SELECT $this WHERE { $this x3dp:stepIndex ?n ; prov:wasDerivedFrom ?p . ?p x3dp:stepIndex ?m .
+                 FILTER(?m != ?n - 1) }""" ] .
+
+s:StepShape a sh:NodeShape ; sh:targetClass x3dp:Step ;
+  sh:class prov:Activity ;
+  sh:property [ sh:path x3dp:stepIndex ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ] ;
+  sh:property [ sh:path x3df:op ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path prov:used ; sh:qualifiedValueShape [ sh:class x3dp:SceneVersion ] ;
+                sh:qualifiedMinCount 1 ; sh:qualifiedMaxCount 1 ] ;
+  sh:property [ sh:path prov:used ; sh:or ( [ sh:class x3dp:SceneVersion ] [ sh:class x3dp:Prompt ] ) ] ;
+  sh:property [ sh:path prov:generated ; sh:minCount 1 ; sh:maxCount 1 ; sh:class x3dp:SceneVersion ] ;
+  sh:property [ sh:path prov:wasAssociatedWith ; sh:class prov:Agent ] ;
+  sh:property [ sh:path time:hasTime ; sh:maxCount 1 ; sh:class time:ProperInterval ] .
+
+s:ValidateShape a sh:NodeShape ; sh:targetClass x3dp:Validate ;
+  sh:property [ sh:path x3df:validator ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path x3df:validator_ref ; sh:minCount 1 ; sh:maxCount 1 ] ;
+  sh:property [ sh:path x3df:verdict ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "valid" "invalid" ) ] ;
+  sh:property [ sh:path ( prov:qualifiedAssociation prov:hadRole ) ; sh:hasValue x3dp:ValidatorRole ] .
+
+s:RepairShape a sh:NodeShape ; sh:targetClass x3dp:Repair ;
+  sh:property [ sh:path x3df:kind ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] .
+
+s:TransformShape a sh:NodeShape ; sh:targetClass x3dp:Transform ;
+  sh:property [ sh:path x3df:tool ; sh:minCount 1 ; sh:datatype xsd:string ] .
+
+s:SceneVersionShape a sh:NodeShape ; sh:targetClass x3dp:SceneVersion ;
+  sh:class prov:Entity ;
+  sh:property [ sh:path x3dp:contentSha256 ; sh:maxCount 1 ; sh:pattern "^([0-9a-f]{64}|none)$" ] ;
+  sh:property [ sh:path prov:specializationOf ; sh:maxCount 1 ; sh:class x3dp:SceneContent ] ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:maxCount 1 ; sh:class x3dp:Step ] .
+
+s:SceneDerivationShape a sh:NodeShape ; sh:targetClass x3dp:SceneVersion ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "broken derivation: scene content changed with no recorded step (untracked edit)" ;
+    sh:select """SELECT $this ?value WHERE { $this prov:wasDerivedFrom ?value . ?value a x3dp:SceneVersion .
+                 FILTER NOT EXISTS { $this prov:qualifiedDerivation ?q . ?q prov:entity ?value ; prov:hadActivity ?a .
+                                     ?a prov:used ?value ; prov:generated $this }
+                 FILTER NOT EXISTS { $this x3dp:contentSha256 ?h . ?value x3dp:contentSha256 ?h } }""" ] .
+
+s:RevisionShape a sh:NodeShape ; sh:targetSubjectsOf prov:wasRevisionOf ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "revision with the same content hash" ;
+    sh:select """SELECT $this WHERE { $this prov:wasRevisionOf ?a ; x3dp:contentSha256 ?h . ?a x3dp:contentSha256 ?h }""" ] .
+
+s:AgentShape a sh:NodeShape ; sh:targetClass prov:SoftwareAgent, prov:Person ;
+  sh:class prov:Agent ;
+  sh:property [ sh:path x3dp:name ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path x3dp:ref ; sh:maxCount 1 ] .
+
+s:InstantShape a sh:NodeShape ; sh:targetClass time:Instant ;
+  sh:property [ sh:path time:inXSDDateTimeStamp ; sh:maxCount 1 ; sh:datatype xsd:dateTimeStamp ] ;
+  sh:property [ sh:path time:inXSDDateTime ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+  sh:property [ sh:path time:before ; sh:maxCount 1 ; sh:class time:Instant ] .
