@@ -1,0 +1,9 @@
+<X3D profile='Full' version='4.1'><Scene>
+<Shape><IndexedFaceSet><Coordinate point='0 0 0 1' xmlns:p='urn:p' p:point='1 2'/></IndexedFaceSet></Shape>
+<Unknown point='1 2'/>
+<GaussianSplats positions='1 2 3 4'/>
+<Coordinate/>
+<!-- comment --><?pi data?>
+<Transform translation='1 2'><Group bboxSize='1 2 3 4'/></Transform>
+<Coordinate point=''/>
+</Scene></X3D>

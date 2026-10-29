@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Inline DEF='Inl' url='"other.x3d"'/><IMPORT inlineDEF='Inl' importedDEF='X' AS='LocalX'/><IMPORT inlineDEF='Missing' importedDEF='Y'/><Transform DEF='T'><Shape><Box/></Shape></Transform><EXPORT localDEF='T' AS='Out'/><EXPORT localDEF='Nope'/><TimeSensor DEF='Clock'/><ROUTE fromNode='Clock' fromField='fraction_changed' toNode='LocalX' toField='set_fraction'/><ROUTE fromNode='X' fromField='value_changed' toNode='T' toField='translation'/><Inline DEF='Unused' load='false'/>
+</Scene>
+</X3D>

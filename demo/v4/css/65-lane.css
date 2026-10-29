@@ -1,0 +1,52 @@
+/* 65-lane.css — S5 LIVE TETHER LANE (18-lane) and S15 MEMBERS' DESK (44-desk). Every colour a token (00-tokens); dark first, light through the tokens.
+   Lane: two columns (terminal side minmax(0,1fr), controls 420 px), five lamps, a 14-line mono terminal, verdict and .att cards framed --you.
+   Desk: CONNECT bar, a file tree with sizes and createdAt, LOAD per run file, the flywheel re-validate strip, the owner recipe. Phone (≤ 600 px): one column. */
+.laneGrid{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:14px;align-items:start}
+@media (max-width:1000px){.laneGrid{grid-template-columns:minmax(0,1fr)}.laneRight{order:-1}}
+.laneRight{display:flex;flex-direction:column;gap:10px;min-width:0}
+.laneLeft{display:flex;flex-direction:column;gap:8px;min-width:0}
+.lanePre{display:flex;flex-direction:column;gap:8px}
+.laneCardTitle{font:600 var(--t-stamp)/1.2 var(--mono);letter-spacing:.08em;color:var(--you)}
+.laneValNote{font:var(--t-chip)/1.4 var(--mono);color:var(--mute)}
+#lanePick,#laneText{width:100%;max-width:100%;box-sizing:border-box;background:var(--p0);color:var(--fg);border:1px solid var(--line2);border-radius:4px;font:var(--t-data)/1.4 var(--mono);padding:6px 8px}
+#laneText{resize:vertical;min-height:58px}
+.lanePshow{min-height:1.5em}
+.laneMsg{font:500 var(--t-data)/1.45 var(--mono);color:var(--mute);border-left:3px solid var(--line2);padding:4px 8px;background:var(--p0);border-radius:3px;overflow-wrap:anywhere}
+.laneMsg[data-tone="bad"]{border-left-color:var(--bad);color:var(--fg)} .laneMsg[data-tone="warn"]{border-left-color:var(--warn)} .laneMsg[data-tone="mute"]{border-left-color:var(--line2)}
+.laneInc{font:var(--t-data)/1.4 var(--mono);color:var(--mute);display:flex;gap:6px;align-items:center}
+.laneSaveCard{display:flex;flex-direction:column;gap:6px}
+.laneStamp{font:var(--t-chip)/1.4 var(--mono);color:var(--mute);overflow-wrap:anywhere}
+.laneLamps{display:flex;flex-wrap:wrap;gap:6px}
+.lamp{font:600 var(--t-stamp)/1.2 var(--mono);letter-spacing:.07em;padding:4px 8px;border:1px solid var(--line);border-radius:3px;color:var(--dim);background:var(--p1)}
+.lamp.on{color:var(--you);border-color:var(--you);background:var(--youbg)}
+.lamp.done{color:var(--ok);border-color:var(--ok)}
+.laneTermHead{font:var(--t-chip)/1.3 var(--mono);color:var(--mute);min-height:18px}
+.laneBar{height:3px;background:var(--p2);border-radius:2px;overflow:hidden}
+.laneBar i{display:block;height:100%;width:0;background:var(--you);transition:width .3s}
+#lane[data-bar="amber"] .laneBar i{background:var(--warn);width:100%}
+.laneTerm{margin:0;height:calc(14 * 17px + 12px);overflow:auto;background:var(--p0);border:1px solid var(--line2);border-radius:4px;padding:6px 8px;font:var(--t-data)/17px var(--mono);color:var(--fg);white-space:pre-wrap;overflow-wrap:anywhere}
+.laneVerdict{display:flex;flex-direction:column;gap:6px;font:var(--t-data)/1.45 var(--mono)}
+.laneVerdict .rep{max-height:260px;overflow:auto}
+.laneAtts{display:flex;flex-direction:column;gap:8px}
+.att{display:flex;flex-direction:column;gap:6px}
+.attHead{font:600 var(--t-chip)/1.4 var(--mono);color:var(--you);letter-spacing:.03em;overflow-wrap:anywhere}
+.attShot{display:block;width:192px;height:144px}
+.attRep{max-height:220px;overflow:auto}
+.attDiff{max-height:240px;overflow:auto;font:var(--t-chip)/1.4 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.att details summary{cursor:pointer;font:var(--t-chip)/1.4 var(--mono);color:var(--mute)}
+.laneOne{padding:14px;border:1px dashed var(--line);border-radius:4px;font:var(--t-data)/1.5 var(--mono)}
+/* desk */
+.deskBar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px;font:var(--t-data)/1.45 var(--mono);color:var(--mute)}
+.deskStatus{font:var(--t-chip)/1.4 var(--mono);color:var(--mute);overflow-wrap:anywhere}
+.deskGrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px;align-items:start}
+@media (max-width:900px){.deskGrid{grid-template-columns:minmax(0,1fr)}}
+.deskTree{list-style:none;margin:0;padding:0;font:var(--t-data)/1.5 var(--mono);max-height:420px;overflow:auto;border:1px solid var(--line);border-radius:4px;background:var(--p0)}
+.deskTree li{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;padding:3px 8px;border-bottom:1px solid var(--line);min-width:0}
+.deskTree li.dir{color:var(--acc);font-weight:600;background:var(--p1)}
+.deskTree .nm{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--fg)}
+.deskTree .sz,.deskTree .at{color:var(--dim);font-size:var(--t-chip)}
+.deskTree button{font-size:var(--t-chip);padding:1px 7px}
+.deskRight{display:flex;flex-direction:column;gap:10px;min-width:0}
+.deskRecipe{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:var(--t-chip)/1.5 var(--mono);color:var(--mute);background:var(--p0);border:1px solid var(--line);border-radius:4px;padding:8px}
+.deskFly{display:flex;flex-direction:column;gap:6px}
+@media (max-width:600px){.laneTerm{height:calc(10 * 17px + 12px)}.attShot{width:144px;height:108px}}

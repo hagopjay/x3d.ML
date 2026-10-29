@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<ProtoDeclare name='P'>
+  <ProtoInterface><field name='a' type='SFFloat' accessType='inputOutput' value='0'/></ProtoInterface>
+  <ProtoInterface><field name='c' type='SFColor' accessType='outputOnly'/><field name='a' type='SFBool' accessType='outputOnly'/></ProtoInterface>
+  <ProtoBody><Group/></ProtoBody>
+</ProtoDeclare>
+<ProtoDeclare name='P'>
+  <ProtoInterface><field name='d' type='SFTime' accessType='outputOnly'/></ProtoInterface>
+  <ProtoBody><Group/></ProtoBody>
+</ProtoDeclare>
+<Material DEF='M'/>
+<TimeSensor DEF='Clock'/>
+<ProtoInstance DEF='pi' name='P'/>
+<ProtoInstance DEF='pm' name='P'><fieldValue name='d' value='0'/></ProtoInstance>
+<ROUTE fromNode='pi' fromField='a' toNode='M' toField='transparency'/>
+<ROUTE fromNode='pi' fromField='c' toNode='M' toField='diffuseColor'/>
+<ROUTE fromNode='pi' fromField='d' toNode='Clock' toField='startTime'/>
+<ROUTE fromNode='pi' fromField='metadata' toNode='M' toField='metadata'/>
+<ROUTE fromNode='pm' fromField='d' toNode='Clock' toField='set_startTime'/>
+</Scene>
+</X3D>

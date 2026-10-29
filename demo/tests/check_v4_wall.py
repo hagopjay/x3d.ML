@@ -1,0 +1,216 @@
+"""check_v4_wall.py — S11 integrity wall + tamper arena (36-wall) and S12 validator ladder (38-ladder) acceptance (WORKPLAN 36/38, SPEC S11/S12, section 13).
+Carries the v3 asserts of check_v3.py (wall alpha count, unsigned 3 of 4 caught, sealed last-flip = seal-fail, ladder 36 then 1 flip, 54 valid on eb4b4b4,
+chains verify after re-validation) and check_tour.py (S.inj 3 then 4, '4 / 3', S.sealOn, seal-fail, S.vi 2 with 54 valid). Every expected number is read from the page's
+own STATS.REALSTATS / REAL / MANIFEST, never typed here. Injections 5/6 and RE-VALIDATE ON THE PORT need the js-port: when VAL.mode is not 'full' they print
+FAIL-SOFT (exit 2 unless JSVAL_OPTIONAL=1), as SPEC 13 asks.
+Run: V4_BUILD=demo/build/v4-wall python3 demo/tests/check_v4_wall.py [--csp viewer|noeval|nowasm|noworker]"""
+import os, re, sys, time
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from v4fixture import Fixture, REPO
+fx = Fixture()
+ALPHA = "(c=>{const d=c.getContext('2d').getImageData(0,0,c.width,c.height).data;let nz=0;for(let i=3;i<d.length;i+=4)if(d[i]>0)nz++;return [c.width,c.height,nz]})(document.querySelector(%s))"
+KPI = "[...document.querySelectorAll('#wall .kpi')].map(k=>k.innerText.replace(/\\n/g,' | '))"
+async def main():
+    t_start = time.time()
+    bundle = open(os.path.join(fx.build_dir, "index.html"), encoding="utf-8").read()
+    for name in ("36-wall.js", "38-ladder.js"):
+        p = os.path.join(REPO, "demo", "v4", "js", name); src = open(p, encoding="utf-8").read() if os.path.exists(p) else ""
+        fx.ok(f"{name}: no setInterval, no innerHTML, no $digit replacement", src and "setInterval(" not in src and "innerHTML" not in src and not re.search(r"\$[0-9]", src), name)
+    fx.ok("bundle carries both modules", "js/36-wall.js" in bundle and "js/38-ladder.js" in bundle)
+    async with fx.browser() as b:
+        pg = await fx.page(b)
+        await fx.goto(pg)
+        booted = await fx.wait(pg, 'self.BOOT&&BOOT.phase==="ready"', 150000)
+        fx.ok("boot reaches BOOT.phase ready", booted, await pg.evaluate("self.BOOT?[BOOT.phase,BOOT.ms,LOOP.frames]:['no BOOT (the bundle died before 99-boot)']"))
+        if not booted: print("page errors:", fx.errors(pg)[:8], flush=True); fx.summary(); return
+        fx.ok("parts loaded (xsd parts idle)", await fx.wait(pg, 'Object.entries(DATA.status).filter(([k])=>!k.startsWith("xsd")).every(([,s])=>s.state==="loaded")', 120000), await pg.evaluate("JSON.stringify(Object.fromEntries(Object.entries(DATA.status).map(([k,v])=>[k,v.state])))"))
+        fx.ok("no mount errors in BOOT.log", await pg.evaluate("BOOT.log.length") == 0, await pg.evaluate("BOOT.log"))
+        # ---- S11 mounted ----
+        fx.ok("#wall has the four KPI tiles", await pg.evaluate("document.querySelectorAll('#wall .kpi').length") == 4, await pg.evaluate("document.querySelectorAll('#wall .kpi').length"))
+        fx.ok("no .stamp-unknown in #wall or #ladder", await pg.evaluate("document.querySelectorAll('#wall .stamp-unknown,#ladder .stamp-unknown').length") == 0)
+        hl = await fx.txt(pg, "#wall > .hl")
+        fx.ok("S11 honesty label names the HMAC stand-in, the page hash and the simulated attacks", "HMAC stand-in" in hl and "text-normalised SHA-256" in hl and "simulated attacks" in hl and "undetected while unsigned" in hl, hl[:160])
+        seal_note = await fx.txt(pg, "#wall .sealNote")
+        fx.ok("signing control is labelled a stand-in, not a real signature", "stand-in" in seal_note and "NOT a real signature" in seal_note and "Ed25519" in seal_note, seal_note[:120])
+        gap = await fx.txt(pg, "#gapDrawer summary")
+        fx.ok("Model the gap drawer is labelled simulated + MODELED and collapsed", "simulated" in gap.lower() and "modeled" in gap.lower() and await pg.evaluate("!document.getElementById('gapDrawer').open&&document.getElementById('gapDrawer').classList.contains('modeled')"), gap)
+        fx.ok("MODELED stamp inside the drawer is in the vocabulary", await pg.evaluate("[...document.querySelectorAll('#gapDrawer .stamp')].some(s=>s.textContent==='MODELED')&&!document.querySelector('#gapDrawer .stamp-unknown')"))
+        # ---- the wall draws ----
+        await pg.evaluate("document.getElementById('wall').scrollIntoView()")
+        await pg.evaluate("SIM.seekTo(1200)")
+        fx.ok("wall panel drew after seekTo(1200)", await fx.wait(pg, "__panels.wall.draws>0&&__panels.wall.cells>20", 15000), await pg.evaluate("[__panels.wall.draws,__panels.wall.cells,__panels.wall.visible]"))
+        a = await pg.evaluate(ALPHA % "'#wallCv'")
+        fx.ok("integrity wall drawn (alpha count > 1000)", a[2] > 1000, a)
+        fx.ok("one cell per stored scene", await pg.evaluate("__panels.wall.cells===S.scenes.length&&__panels.wall.rows>=1"), await pg.evaluate("[__panels.wall.cells,S.scenes.length,__panels.wall.rows]"))
+        fx.ok("statuses settled after the seek", await fx.wait(pg, 'S.scenes.every(s=>s.status!=="?")', 20000), await pg.evaluate("S.scenes.filter(s=>s.status==='?').length"))
+        fx.ok("continuity trace: 0 breaks before any tamper", await pg.evaluate("__panels.wall.breaks") == 0, await pg.evaluate("__panels.wall.breaks"))
+        kp = await pg.evaluate(KPI)
+        fx.ok("KPI tiles read verified / injected / time to detect / re-validation", len(kp) == 4 and kp[0].startswith("CHAINS VERIFIED") and kp[1].startswith("INJECTED") and kp[2].startswith("TIME TO DETECT") and kp[3].startswith("NEED RE-VALIDATION"), kp)
+        fx.ok("time-to-detect tile says it is measured on this page's playback clock", "playback clock" in kp[2], kp[2])
+        # hover popover
+        box = await pg.evaluate("(r=>[r.left,r.top,r.width,r.height])(document.getElementById('wallCv').getBoundingClientRect())")
+        await pg.mouse.move(box[0] + 9, box[1] + 9); await pg.wait_for_timeout(250)
+        fx.ok("hover popover shows id · model · verdict", await pg.evaluate("!document.querySelector('.wallPop').hidden&&/L-\\d+|R-\\d+/.test(document.querySelector('.wallPop .t').textContent)"), await pg.evaluate("document.querySelector('.wallPop .t').textContent.slice(0,80)"))
+        await pg.mouse.move(5, 5)
+        # ---- injections 1–4, unsigned (v3 check_v3 lines 50–56, check_tour steps 3–4) ----
+        e1 = await pg.evaluate("(()=>{const sc=inject('edit');return sc?{id:sc.id,st:sc.status,type:sc.injured.type}:null})()")
+        fx.ok("injection 1: coordinate edit on a verified chain", e1 and e1["type"] == "edit", e1)
+        fx.ok("injection 1 moved a shape 9 units (translation x changed by 9)", await pg.evaluate("(id=>{const s=S.byId.get(id);const re=/translation=([\"'])\\s*(-?[\\d.eE+-]+)\\s+(-?[\\d.eE+-]+)\\s+(-?[\\d.eE+-]+)\\s*\\1/;const a=re.exec(stripProv(s.injured.pre)),b=re.exec(stripProv(s.xml));return !!(a&&b)&&Math.abs((+b[2])-(+a[2])-9)<1e-6})", e1["id"]) if e1 else False)
+        await pg.evaluate("inject('del')"); await pg.evaluate("inject('flipmid')")
+        fx.ok("S.inj is 3 after injections 1–3 (tour step 3)", await pg.evaluate("S.inj") == 3, await pg.evaluate("S.inj"))
+        f4 = await pg.evaluate("(()=>{const sc=inject('fliplast');return sc?sc.id:null})()")
+        fx.ok("S.inj is 4 after the last-verdict flip (tour step 4)", await pg.evaluate("S.inj") == 4 and f4, [await pg.evaluate("S.inj"), f4])
+        fx.ok("the scrubber names the three detectable injections", await fx.wait(pg, "S.detected>=3", 45000), await pg.evaluate("[S.inj,S.detected,S.alerts.slice(0,4).map(a=>a.msg)]"))
+        await pg.wait_for_timeout(600)
+        kp = await pg.evaluate(KPI); inj = [k for k in kp if k.startswith("INJECTED")]
+        fx.ok("unsigned: 3 of 4 injections caught (the last-step flip is the stated gap)", inj and "4 / 3" in inj[0] and "undetected" in inj[0], inj)
+        st = await pg.evaluate("S.scenes.filter(s=>s.injured).map(s=>s.injured.type+':'+s.status+':'+(s.detected?1:0))")
+        fx.ok("edit → stale, del/flipmid → broken, fliplast → still verified (undetected)", sorted(st) == sorted(["edit:stale:1", "del:broken:1", "flipmid:broken:1", "fliplast:verified:0"]), st)
+        fx.ok("continuity trace breaks where chains broke", await fx.wait(pg, "__panels.wall.breaks>=3", 5000), await pg.evaluate("__panels.wall.breaks"))
+        al = await fx.txt(pg, "#alerts")
+        fx.ok("detection log names STALE and BROKEN with a time to detect", "STALE after" in al and "BROKEN after" in al and "injected coordinate edit" in al, al[:200].replace("\n", " | "))
+        fx.ok("TTD strip has three bars (S.ttd) and drew", await pg.evaluate("S.ttd.length===3&&__panels.ttd.draws>0"), await pg.evaluate("[S.ttd,__panels.ttd.draws]"))
+        g = await pg.evaluate("WALL.ghostState")
+        fx.ok("tamper ghost attempted on STAGE.show (render-time wireframe at the pre-edit position)", g.get("tried") == 1, g)
+        if not g.get("ok"):
+            fx.ok("tamper ghost placed through the SAI", await fx.wait(pg, "WALL.ghostState.ok", 25000), await pg.evaluate("WALL.ghostState"))
+        else: fx.ok("tamper ghost placed through the SAI", True, g)
+        fx.ok("measure canvas never rigged by the ghost", await pg.evaluate("__stage.measure.rigNodes") == 0)
+        # ---- signing: sealed last-flip = seal-fail (check_v3 57–61, check_tour step 5) ----
+        await pg.click("#bSeal")
+        fx.ok("Signing switch sets HASH.sealOn and mirrors S.sealOn", await pg.evaluate("HASH.sealOn===true&&S.sealOn===true"), await pg.evaluate("[HASH.sealOn,S.sealOn,document.getElementById('bSeal').textContent]"))
+        await pg.evaluate("if(S.paused)SIM.resume()")
+        fx.ok("a new sealed chain arrives and verifies", await fx.wait(pg, 'S.scenes.some(s=>s.sealed&&s.status==="verified"&&!s.injured)', 40000), await pg.evaluate("[S.clk,S.scenes.filter(s=>s.sealed).length]"))
+        r = await pg.evaluate("(()=>{const sc=S.scenes.slice().reverse().find(s=>s.sealed&&s.status==='verified'&&!s.injured);if(!sc)return null;inject('fliplast',sc);return sc.id})()")
+        fx.ok("sealed scene found + last-verdict flip injected (S.inj 5)", r and await pg.evaluate("S.inj") == 5, [r, await pg.evaluate("S.inj")])
+        fx.ok("sealed last-verdict flip detected as seal-fail", await fx.wait(pg, f"(s=>s&&s.status==='seal-fail'&&s.detected)(S.byId.get('{r}'))", 40000), await pg.evaluate(f"(s=>s?s.status+'|det='+s.detected:'gone')(S.byId.get('{r}'))"))
+        fx.ok("some scene is seal-fail (tour step 5)", await pg.evaluate('S.scenes.some(s=>s.status==="seal-fail")'))
+        await pg.click("#bSeal"); fx.ok("signing off again", await pg.evaluate("HASH.sealOn===false&&S.sealOn===false"))
+        # ---- injections 5 and 6: validity, chain intact ----
+        val_mode = await pg.evaluate("VAL.mode")
+        n5 = await pg.evaluate("(()=>{const sc=inject('nocomp');return sc?{id:sc.id,st:sc.status,ok:verify(sc.xml).ok,t:sc.tampered&&sc.tampered.type,steps:readSteps(sc.xml).map(([n,c])=>JSON.parse(c).op).slice(-2)}:null})()")
+        fx.ok("injection 5 (drop the component statement) keeps the chain VERIFIED and records a transform step", n5 and n5["ok"] and n5["st"] == "verified" and n5["t"] == "nocomp" and "transform" in n5["steps"], n5)
+        fx.ok("injection 5 does not count as an integrity injection (S.inj unchanged, validity counter 1)", await pg.evaluate("S.inj===5&&WALL.injValidity===1"), await pg.evaluate("[S.inj,WALL.injValidity]"))
+        n6 = await pg.evaluate("(()=>{const sc=inject('misnest');return sc?{id:sc.id,st:sc.status,ok:verify(sc.xml).ok,t:sc.tampered&&sc.tampered.type,grp:/<Group>[\\s\\S]*?<(Box|Sphere|Cone|Cylinder|IndexedFaceSet|Appearance)/.test(stripProv(sc.xml))}:null})()")
+        fx.ok("injection 6 (mis-nest a Shape in a Group) keeps the chain VERIFIED, geometry now sits in a Group", n6 and n6["ok"] and n6["st"] == "verified" and n6["t"] == "misnest" and n6["grp"], n6)
+        if val_mode == "full":
+            fx.ok("injection 5 re-validated on js-port: verdict invalid with profile-component", await fx.wait(pg, f"(s=>s&&s.port&&s.verdict==='invalid'&&codesOfRes(s.port).includes('profile-component'))(S.byId.get('{n5['id']}'))", 40000), await pg.evaluate(f"(s=>s&&s.port?[s.verdict,codesOfRes(s.port),s.status]:null)(S.byId.get('{n5['id']}'))"))
+            fx.ok("injection 6 re-validated on js-port: a containerfield code, chain still verified", await fx.wait(pg, f"(s=>s&&s.port&&s.verdict==='invalid'&&codesOfRes(s.port).some(c=>/containerfield/.test(c))&&s.status==='verified')(S.byId.get('{n6['id']}'))", 40000), await pg.evaluate(f"(s=>s&&s.port?[s.verdict,codesOfRes(s.port),s.status]:null)(S.byId.get('{n6['id']}'))"))
+            fx.ok("the port's report is shown beside the arena", "js-port-of-8dd0d3e" in await fx.txt(pg, "#portSays") and "INVALID" in await fx.txt(pg, "#portSays"), await fx.txt(pg, "#portSays"))
+        else:
+            fx.fail_soft("MISSING jsval: injections 5/6 not re-validated on the port", f"VAL.mode={val_mode}: {await pg.evaluate('VAL.reason')}")
+            fx.ok("degraded: the arena says the port is unavailable and keeps the recorded verdict", await fx.wait(pg, "/not available in this viewer/.test(document.getElementById('portSays').textContent)", 10000), await fx.txt(pg, "#portSays"))
+        fx.ok("every un-injected chain still verifies", await pg.evaluate("S.scenes.filter(s=>!s.injured).every(s=>verify(s.xml).ok)"))
+        # ---- RE-VERIFY ALL ----
+        await pg.click("#bReverify")
+        fx.ok("RE-VERIFY ALL completes", await fx.wait(pg, "WALL.reverify.last&&!WALL.reverify.busy", 120000), await fx.txt(pg, "#rvLine"))
+        rv = await pg.evaluate("WALL.reverify.last")
+        # expected count computed here from the data parts with the corpus rule: one chain per replay body, per live body that has its attempt record
+        # (a body with no attempt has no validate step to chain), per cut body in the events part, plus the repo-stamped ledger; bench/viewer rows are not bodies
+        comp = await pg.evaluate("({real:REAL.length,liveB:LIVE.reduce((n,i)=>n+i.B.length,0),liveChained:LIVE.reduce((n,i)=>n+i.B.filter((b,k)=>!!i.A[k]).length,0),cut:EVENTS.cut.reduce((n,c)=>n+((c.bodies||[]).filter(b=>!!(typeof b==='string'?b:b&&b.xml)).length),0),cutEmpty:EVENTS.cut.reduce((n,c)=>n+((c.bodies||[]).filter(b=>!(typeof b==='string'?b:b&&b.xml)).length),0),ledger:WALL.ledger.text?1:0,corpus:WALL.corpus().length})")
+        exp_n = comp["real"] + comp["liveChained"] + comp["cut"] + comp["ledger"]
+        fx.ok("every body on the page became a chain: page-built chains verified, the repo-stamped ledger linked (its head hash is the repo's C14N, not the page's)", rv and rv["ok"] == rv["built"] and rv["ok"] + rv["stampedLinked"] == rv["n"] == exp_n == comp["corpus"] and not rv["bad"], ({k: rv.get(k) for k in ("n", "ok", "built", "stampedLinked", "ms", "stamped", "missing", "expected", "bad")}, comp) if rv else rv)
+        if comp["liveB"] != comp["liveChained"]: print(f"WARN {comp['liveB'] - comp['liveChained']} live bodies have no attempt record on this page (LIVE[].B longer than LIVE[].A): not chained, not counted", flush=True)
+        canary = await pg.evaluate("MANIFEST.canary.bodies")
+        if rv and rv.get("missing"):
+            print(f"WARN RE-VERIFY ALL: {rv['n']} chains, manifest canary names {canary}: {rv['missing']} cut-chain bodies are not in the events part (EVENTS.cut[].bodies absent) — data request to the lead; strict 558 assert resumes when they land", flush=True)
+            fx.ok("result line names the absent cut-chain bodies", "absent from the events part" in rv["line"], rv["line"][:200])
+        else:
+            fx.ok(f"RE-VERIFY ALL covers the manifest canary set ({canary}): chains + recorded empty answers (0 chars, nothing to chain)", rv and rv["n"] + rv.get("empty", 0) == canary and rv.get("empty", 0) == comp["cutEmpty"], rv and [rv["n"], rv.get("empty")])
+            if rv and rv.get("empty"): fx.ok("result line names the empty answers", "recorded empty answers" in rv["line"], rv["line"][-160:])
+        fx.ok("result line: page-normalised hash, the ledger's repo C14N hash beside the page hash, byte equality not claimed", "page-normalised hash" in rv["line"] and "repo C14N hash" in rv["line"] and "byte equality not claimed" in rv["line"] and rv["stamped"] == 1, rv["line"][:260])
+        fx.ok("w.reverify claim chip rendered; expected = manifest canary bodies minus the recorded empty answers (nothing to chain)", await pg.evaluate("!!document.querySelector('#rvClaim .claim[data-claim=\"w.reverify\"]')&&__claims.get('w.reverify').expected===MANIFEST.canary.bodies-WALL.emptyCut()"), await pg.evaluate("[__claims.get('w.reverify')&&__claims.get('w.reverify').expected,MANIFEST.canary.bodies,WALL.emptyCut()]"))
+        # ---- Model the gap (simulated) drawer ----
+        before = await pg.evaluate("[S.scenes.length,__panels.wall.cells,S.inj]")
+        await pg.evaluate("document.getElementById('gapDrawer').open=true")
+        g1 = await pg.evaluate("(()=>{GAP.seed=7;GAP.run(40);return {n:GAP.scenes.length,sig:GAP.signature(),valid:GAP.scenes.filter(s=>s.verdict==='valid').length,ok:GAP.scenes.every(s=>verify(s.xml).ok),src:[...new Set(GAP.scenes.map(s=>s.src))]}})()")
+        fx.ok("drawer runs 40 modeled scenes, all src syn, all chains verify", g1["n"] == 40 and g1["ok"] and g1["src"] == ["syn"], {k: g1[k] for k in ("n", "valid", "ok", "src")})
+        after = await pg.evaluate("[S.scenes.length,__panels.wall.cells,S.inj]")
+        # the live clock keeps arriving scenes while the drawer runs, so S.scenes may grow by the clock's own arrivals; what must not happen: a syn scene in S, an injection count change, or fewer scenes
+        fx.ok("the drawer never touches S.scenes, the main wall or the KPI counters", after[0] >= before[0] and after[2] == before[2] and await pg.evaluate("S.scenes.every(s=>s.src!=='syn')&&GAP.scenes.every(s=>!S.byId.has(s.id))"), [before, after])
+        fx.ok("drawer mini-wall drawn and table filled", await pg.evaluate("document.querySelectorAll('#gapFh tbody tr').length===40&&document.getElementById('gapWall').width>0"))
+        rv2 = await pg.evaluate("(()=>{GAP.vi=1;return GAP.revalidate()})()")
+        gl = await fx.txt(pg, "#gapLog")
+        fx.ok("drawer revalidate on fork@8c0a457 reports flips (modeled, in its own log)", rv2["n"] == 40 and re.search(r"re-validated 40 scenes on fork@8c0a457: \d+ flipped", gl) and "(modeled)" in gl, gl[:160].replace("\n", " | "))
+        fx.ok("the gap is stated: valid scenes that draw nothing on the weak validator", "draw nothing" in await fx.txt(pg, "#gapPoint") and "modeled" in await fx.txt(pg, "#gapPoint"), await fx.txt(pg, "#gapPoint"))
+        g2 = await pg.evaluate("(()=>{GAP.vi=0;GAP.seed=7;GAP.run(40);return GAP.signature()})()")
+        fx.ok("same seed twice → identical mini-wall (mulberry32 seeded, rewind exact)", g2 == g1["sig"] and len(g2) > 100)
+        g3 = await pg.evaluate("(()=>{GAP.seed=8;GAP.run(40);return GAP.signature()})()")
+        fx.ok("a different seed gives a different modeled world", g3 != g1["sig"])
+        fx.ok("S.alerts carries no modeled line", await pg.evaluate("!S.alerts.some(a=>/modeled/.test(a.msg))"))
+        # ---- S12: the ladder on the replay (check_v3 75–83, check_tour step 7) ----
+        await pg.evaluate("MODES.set('replay11');SIM.seekTo(400)")
+        fx.ok("replay11 at seekTo(400): 174 scenes, slider follows the mode to svc@11Oct", await pg.evaluate("S.scenes.length===174&&S.vi===0&&SLIDER.i===0&&SLIDER.ref==='svc@11Oct'"), await pg.evaluate("[S.mode,S.scenes.length,S.vi,SLIDER.i,SLIDER.ref]"))
+        RS = await pg.evaluate("({svc:REALSTATS.f[0].valid,f1:REALSTATS.f[1].valid,f2:REALSTATS.f[2].valid,flip:REALSTATS.flip,flip2:REAL.filter(i=>i.f1[0]&&!i.f2[0]).length,nodraw2:REALSTATS.f[2].nodraw})")
+        cnt = await pg.evaluate("LADDER.counts()")
+        fx.ok("rail counts from the drift part match REALSTATS (svc, 8c0a457, eb4b4b4)", cnt["svc"]["valid"] == RS["svc"] and cnt["8c0a457"]["valid"] == RS["f1"] and cnt["eb4b4b4"]["valid"] == RS["f2"] and cnt["8dd0d3e"]["n"] == 174 and cnt["port"]["n"] == 0, {k: v["valid"] for k, v in cnt.items()})
+        await pg.evaluate("document.getElementById('ladder').scrollIntoView()")
+        fx.ok("braid panel drew 174 threads over 10 rails", await fx.wait(pg, "__panels.braid.draws>0&&__panels.braid.threads===174", 15000), await pg.evaluate("[__panels.braid.draws,__panels.braid.threads,__panels.braid.rails,__panels.braid.flips]"))
+        a = await pg.evaluate(ALPHA % "'#braidCv'")
+        fx.ok("braid drawn (alpha count > 1000) with bends", a[2] > 1000 and await pg.evaluate("__panels.braid.flips>=REALSTATS.flip"), [a, await pg.evaluate("__panels.braid.flips")])
+        fx.ok("braid sub names the unlit port rail honestly", "port rail unlit" in await fx.txt(pg, "#braidSub") or "measured here" in await fx.txt(pg, "#braidSub"), await fx.txt(pg, "#braidSub"))
+        await pg.click("#liveSwitch")
+        fx.ok("383 live switch adds the live bodies (358 on the page + 25 cut, on the rails that exist)", await fx.wait(pg, "__panels.braid.threads===174+383", 10000), await pg.evaluate("__panels.braid.threads"))
+        await pg.click("#liveSwitch")
+        fx.ok("every claim of the ladder computes to its expected", await pg.evaluate("(async()=>{const out=[];for(const id of ['l.svcValid','l.flip8c0a457','l.validEb']){const r=await CLAIMS.run(id);out.push([id,r.ok,r.value,r.expected])}return out})()") and await pg.evaluate("(async()=>(await Promise.all(['l.svcValid','l.flip8c0a457','l.validEb'].map(id=>CLAIMS.run(id)))).every(r=>r.ok===true))()"), await pg.evaluate("['l.svcValid','l.flip8c0a457','l.validEb'].map(id=>[id,__claims.get(id).value,__claims.get(id).expected])"))
+        # slider to 8c0a457 recolours the wall: cells whose verdict differs = the flips
+        await pg.evaluate("SLIDER.set('8c0a457')")
+        diff = await pg.evaluate("S.scenes.filter(s=>SLIDER.verdictOf(s)!==s.verdict).length")
+        fx.ok(f"slider to 8c0a457 changes {RS['flip']} wall cells' verdict bars (S.vi follows)", diff == RS["flip"] and await pg.evaluate("S.vi===1&&SLIDER.active"), [diff, await pg.evaluate("[S.vi,SLIDER.ref]")])
+        ALERTS = "S.alerts.slice(0,3).map(a=>a.msg).join('\\n')"   # the state; the #alerts list itself is drawn only while on screen (LOOP panel gated by IO) and is asserted above
+        await pg.click("#bRevalidate"); await fx.wait(pg, "S.alerts.length&&/re-validated/.test(S.alerts[0].msg)", 5000)
+        al = await pg.evaluate(ALERTS)
+        fx.ok(f"ladder step 1: {RS['flip']} flip on fork@8c0a457 (from the files alone)", re.search(rf"fork@8c0a457: {RS['flip']} flipped", al), al[:200].replace("\n", " | "))
+        fx.ok(f"{RS['f1']} valid on 8c0a457 after re-validation", await pg.evaluate("S.scenes.filter(s=>s.verdict==='valid').length") == RS["f1"], await pg.evaluate("S.scenes.filter(s=>s.verdict==='valid').length"))
+        await pg.evaluate("SLIDER.set('eb4b4b4')"); await pg.click("#bRevalidate"); await fx.wait(pg, "S.alerts.length&&/eb4b4b4: \\d+ flipped/.test(S.alerts[0].msg)", 5000)
+        al = await pg.evaluate(ALERTS)
+        fx.ok(f"ladder step 2: {RS['flip2']} more flip on fork@eb4b4b4", re.search(rf"fork@eb4b4b4: {RS['flip2']} flipped", al), al[:200].replace("\n", " | "))
+        v = await pg.evaluate("S.scenes.filter(s=>s.verdict==='valid').length")
+        fx.ok(f"{RS['f2']} valid on eb4b4b4 with S.vi 2 (tour step 7)", v == RS["f2"] and await pg.evaluate("S.vi") == 2, [v, await pg.evaluate("S.vi")])
+        fx.ok("valid-and-draws-nothing on eb4b4b4 equals REALSTATS.f[2].nodraw", await pg.evaluate("S.scenes.filter(s=>s.verdict==='valid'&&s.blank).length") == RS["nodraw2"], [await pg.evaluate("S.scenes.filter(s=>s.verdict==='valid'&&s.blank).length"), RS["nodraw2"]])
+        fx.ok("chains still verify after revalidation", await pg.evaluate("S.scenes.every(s=>verify(s.xml).ok)"))
+        fx.ok("every stored chain's last validate step names eb4b4b4", await pg.evaluate("S.scenes.every(s=>s.vref==='fork@eb4b4b4'&&lastRef(s.xml)==='fork@eb4b4b4')"))
+        await pg.evaluate("SLIDER.set('c9c9788')")
+        fx.ok("a commit outside VALS keeps S.vi but moves the cursor (recorded verdicts only)", await pg.evaluate("S.vi===2&&SLIDER.ref==='fork@c9c9788'&&!document.getElementById('bRevalidate').disabled"), await pg.evaluate("[S.vi,SLIDER.ref,document.getElementById('bRevalidate').disabled]"))
+        r3 = await pg.evaluate("LADDER.revalidate()")
+        fx.ok("re-validating on c9c9788 stamps 174 steps with the recorded verdicts (flips counted from the data)", r3["n"] == 174 and r3["flips"] == await pg.evaluate("REAL.filter(i=>i.f2[0]&&!DRIFT.by_commit['c9c9788'][i.k].valid).length") and await pg.evaluate("S.scenes.every(s=>verify(s.xml).ok&&s.vref==='fork@c9c9788')"), r3)
+        fx.ok("'not investigated (S)' label is computed from the data (an invalid→valid crossing exists)", await pg.evaluate("(()=>{const R=LADDER.rails;for(let i=1;i<R.length;i++){if(LADDER.flipsBetween(R[i-1],R[i]).iv>0)return true}return false})()"))
+        fx.ok("the port rail text never says fork@ for the port", await pg.evaluate("!LADDER.rails.filter(r=>r.kind==='port').some(r=>/fork@/.test(r.ref+r.short))&&document.getElementById('ladder').innerText.includes('js-port-of-8dd0d3e')"))
+        # ---- the port run (S12 RE-VALIDATE 558) ----
+        if val_mode == "full":
+            await pg.click("#bRevalPort")
+            fx.ok("RE-VALIDATE ON THE PORT completes", await fx.wait(pg, "PORT.result&&!PORT.busy", 170000), await fx.txt(pg, "#portLine"))
+            pr = await pg.evaluate("PORT.result&&{n:PORT.result.n,nRec:PORT.result.nRec,flips:PORT.result.flips,codeDiffs:PORT.result.codeDiffs,agreeEb:PORT.result.agreeEb,nEb:PORT.result.nEb,ms:PORT.result.ms,skipped:PORT.result.skipped,via:PORT.result.via,ids:PORT.result.list.map(f=>f.id).slice(0,20)}")
+            line = await fx.txt(pg, "#portLine")
+            fx.ok("result line: N bodies · agree with fork@8dd0d3e on N of N", re.search(r"(\d+) bodies .* agree with fork@8dd0d3e on (\d+) of (\d+)", line) and "expected (recorded canary" in line, line[:240])
+            fx.ok("0 flips vs the recorded fork@8dd0d3e verdicts (or the ids are listed)", pr and pr["flips"] == 0, pr)
+            if pr and pr.get("skipped") and not (rv and rv.get("missing")):
+                print(f"WARN RE-VALIDATE: VAL.canary skipped {pr['skipped']} recorded bodies it could not find on the page (its bodyFor reads LIVE[].B only; the cut bodies live in EVENTS.cut[].bodies) — request to 05-val; the earned claim stays red against {canary} until then", flush=True)
+                fx.ok("the earned canary claim names the skipped bodies in its line", "not on this page" in line, line[-200:])
+            else:
+                fx.ok("the earned canary claim agrees with MANIFEST.canary", await pg.evaluate("__claims.get('l.portAgree')&&__claims.get('l.portAgree').ok===true") or (rv and rv.get("missing")), await pg.evaluate("__claims.get('l.portAgree')&&[__claims.get('l.portAgree').value,__claims.get('l.portAgree').expected]"))
+            fx.ok("the port rail is lit on the braid after the run", await fx.wait(pg, "LADDER.counts().port.n===174", 10000), await pg.evaluate("LADDER.counts().port"))
+        else:
+            fx.fail_soft("MISSING jsval: RE-VALIDATE ON THE PORT not run", f"VAL.mode={val_mode}")
+            fx.ok("degraded: labelled chip says recorded rails only and the port button is disabled", await pg.evaluate("document.querySelector('#ladder .valChip').classList.contains('deg')&&/recorded rails/.test(document.querySelector('#ladder .valChip').textContent)&&document.getElementById('bRevalPort').disabled"), await fx.txt(pg, "#ladder .valChip"))
+            fx.ok("degraded: the expected canary is printed as expected, never as earned", "expected (recorded canary" in await fx.txt(pg, "#portLine") and await pg.evaluate("!__claims.get('l.portAgree')"), await fx.txt(pg, "#portLine"))
+        fx.ok("S12 honesty label: recorded per commit, canary, the port is never the fork", "never the fork itself" in await fx.txt(pg, "#ladder > .hl") and "drift/canary.py" in await fx.txt(pg, "#ladder > .hl"))
+        await pg.evaluate("MODES.set('live17')")
+        await fx.shot(pg, "v4_wall.png", full=False)
+        errs = fx.errors(pg)
+        fx.ok("no page errors (X_ITE wasm fetch excluded)", not errs, errs[:5])
+        fx.ok("no boot/mount errors in #under", await pg.evaluate("BOOT.log.length") == 0, await pg.evaluate("BOOT.log"))
+        await pg.context.close()
+        # ---- phone ----
+        pg2 = await fx.page(b, width=390, height=844)
+        await fx.goto(pg2)
+        fx.ok("390 px: loop runs", await fx.wait(pg2, "LOOP.frames>5", 60000))
+        await pg2.evaluate("document.getElementById('wall').scrollIntoView()"); await pg2.wait_for_timeout(600)
+        sw = await pg2.evaluate("[document.documentElement.scrollWidth,document.documentElement.clientWidth]")
+        fx.ok("390 px: no horizontal page scroll with the wall and ladder mounted", sw[0] <= sw[1] + 1, sw)
+        fx.ok("390 px: four KPI tiles, injection buttons wrap, braid 220 px", await pg2.evaluate("document.querySelectorAll('#wall .kpi').length===4&&document.getElementById('braidCv').clientHeight<=230&&document.getElementById('wallCv').clientWidth<=390"), await pg2.evaluate("[document.getElementById('braidCv').clientHeight,document.getElementById('wallCv').clientWidth]"))
+        e2 = fx.errors(pg2)
+        fx.ok("390 px: no page errors", not e2, e2[:3])
+    print(f"elapsed {time.time()-t_start:.0f} s", flush=True)
+    fx.summary()
+Fixture.run(main)

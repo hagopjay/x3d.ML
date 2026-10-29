@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Shape DEF='S'><Appearance/><Box/></Shape><Shape USE='S'/><Shape USE='Missing'/></Scene></X3D>

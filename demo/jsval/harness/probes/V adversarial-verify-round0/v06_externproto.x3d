@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<ExternProtoDeclare name='Ext' url='"ext.x3d#Ext"'><field name='on' type='SFBool' accessType='inputOnly'/><field name='level' type='SFFloat' accessType='outputOnly'/><field type='SFInt32' accessType='inputOnly'/></ExternProtoDeclare><ProtoInstance name='Ext' DEF='E'/><Transform DEF='T'/><TimeSensor DEF='Clock'/><ROUTE fromNode='E' fromField='level' toNode='T' toField='set_scale'/><ROUTE fromNode='Clock' fromField='isActive' toNode='E' toField='on'/><ROUTE fromNode='Clock' fromField='isActive' toNode='E' toField='set_on'/><ROUTE fromNode='E' fromField='on' toNode='Clock' toField='enabled'/>
+</Scene>
+</X3D>

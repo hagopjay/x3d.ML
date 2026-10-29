@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<!-- leading comment -->
+<Foo>
+  <Material/>
+</Foo>
+<Shape>
+  <!-- comment child -->
+  <Box/>
+  <Material/>
+  <ROUTE fromNode='a' toNode='b' fromField='c' toField='d'/>
+  <Unknown><Material containerField='zzz'/></Unknown>
+</Shape>
+</Scene>
+</X3D>

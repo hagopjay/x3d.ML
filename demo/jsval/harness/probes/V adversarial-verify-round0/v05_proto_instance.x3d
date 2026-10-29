@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<ProtoDeclare name='Spinner'><ProtoInterface><field name='speed' type='SFFloat' accessType='inputOutput' value='1'/><field name='tick' type='SFTime' accessType='outputOnly'/><field name='translation' type='SFVec3f' accessType='initializeOnly' value='0 0 0'/></ProtoInterface><ProtoBody><Transform DEF='Inner'><Shape DEF='InnerShape'><Box/></Shape></Transform><TimeSensor DEF='InnerClock'/><ROUTE fromNode='InnerClock' fromField='fraction_changed' toNode='Inner' toField='set_scale'/></ProtoBody></ProtoDeclare><ProtoInstance name='Spinner' DEF='P1'><fieldValue name='speed' value='2'/></ProtoInstance><ProtoInstance name='Nope' DEF='P2'/><Spinner DEF='P3'/><TimeSensor DEF='Clock'/><ROUTE fromNode='P1' fromField='tick' toNode='Clock' toField='set_startTime'/><ROUTE fromNode='P1' fromField='speed_changed' toNode='Clock' toField='cycleInterval'/><ROUTE fromNode='Clock' fromField='time' toNode='P1' toField='translation'/><ROUTE fromNode='Clock' fromField='bogus' toNode='P2' toField='bogus'/><ROUTE fromNode='P2' fromField='x' toNode='Clock' toField='y'/><ROUTE fromNode='P3' fromField='speed' toNode='Clock' toField='enabled'/><ROUTE fromNode='P1' fromField='speed' toNode='P3' toField='speed'/>
+</Scene>
+</X3D>

@@ -1,0 +1,46 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>x3dval smoke</title>
+<style>body{font:14px/1.4 system-ui,sans-serif;margin:16px;background:#fff;color:#111}pre{white-space:pre-wrap;word-break:break-all;background:#f4f4f4;padding:8px}</style>
+<h1>x3dval.js smoke test (js-port-of-8dd0d3e)</h1>
+<p id="status">loading…</p>
+<pre id="out"></pre>
+<script>
+  window.__csp = [];
+  document.addEventListener('securitypolicyviolation', function (e) { window.__csp.push(e.violatedDirective + ' ' + e.blockedURI); });
+  window.__bodies = [{"key":"replay/qwen3-8b/grounded/asm-02.x3d","xml":"<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>\n<Scene>\n<Viewpoint description='Solar System View' position='0 0 20' orientation='0 1 0 0'/>\n<NavigationInfo type='EXAMINE'/>\n<Background skyColor='0.1 0.1 0.1'/>\n<DirectionalLight direction='0 -1 0' intensity='1'/>\n<Transform translation='0 0 0'>\n<Shape>\n<Appearance>\n<Material diffuseColor='1 1 0'/>\n<\/Appearance>\n<Sphere radius='1'/>\n<\/Shape>\n<\/Transform>\n<Transform translation='5 0 0'>\n<Shape>\n<Appearance>\n<Material diffuseColor='0.8 0.8 0.8'/>\n<\/Appearance>\n<Sphere radius='0.2'/>\n<\/Shape>\n<\/Transform>\n<Transform translation='10 0 0'>\n<Shape>\n<Appearance>\n<Material diffuseColor='0.6 0.6 0.6'/>\n<\/Appearance>\n<Sphere radius='0.15'/>\n<\/Shape>\n<\/Transform>\n<Transform translation='15 0 0'>\n<Shape>\n<Appearance>\n<Material diffuseColor='0.4 0.4 0.4'/>\n<\/Appearance>\n<Sphere radius='0.1'/>\n<\/Shape>\n<\/Transform>\n<\/Scene>\n<\/X3D>"},{"key":"replay/qwen3-8b/grounded/anim-04.x3d","xml":"<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>\n<Scene>\n<Viewpoint description='Looking at Sphere' position='0 0 5'/>\n<Shape>\n<Appearance>\n<Material DEF='SphereMaterial' diffuseColor='1 0 0'/>\n<ColorInterpolator DEF='ColorCycle' key='0 0.5 1' keyValue='1 0 0 0 1 0 0 0 1'/>\n<TimeSensor DEF='ColorTimer' cycleInterval='6' loop='true'/>\n<ROUTE fromNode='ColorTimer' fromField='fraction' toNode='ColorCycle' toField='set_fraction'/>\n<ROUTE fromNode='ColorCycle' fromField='value' toNode='SphereMaterial' toField='diffuseColor'/>\n<\/Appearance>\n<Sphere radius='1'/>\n<\/Shape>\n<\/Scene>\n<\/X3D>"},{"key":"replay/qwen3-8b/oneshot/anim-02.x3d","xml":"<X3D profile='Immersive' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>\n<Scene>\n<Viewpoint description='Bouncing Ball' position='0 2 5'/>\n<NavigationInfo type='EXAMINE'/>\n<TimeSensor DEF='BounceTimer' cycleInterval='2' loop='TRUE'/>\n<PositionInterpolator DEF='BouncePath' key='0 0.25 0.5 0.75 1' keyValue='0 0 0 0 2 0 0 2 0 0 0 2 0 0 0 0'/>\n<PositionInterpolator DEF='EaseTopPath' key='0 0.75 1' keyValue='0 2 0 0 2 0'/>\n<OrientationInterpolator DEF='Spin' key='0 1' keyValue='0 1 0 0 0 0 1 0'/>\n<Script DEF='BounceScript'>\n<field name='fraction' type='SFTime' accessType='inputOutput'/>\n<field name='position' type='SFVec3f' accessType='outputOnly'/>\n<field name='orientation' type='SFVec3f' accessType='outputOnly'/>\n<field name='isBouncing' type='SFBool' accessType='outputOnly'/>\n<field name='isSpinning' type='SFBool' accessType='outputOnly'/>\n<IS>\n<connect fromNode='BounceTimer' fromField='fraction' toNode='BounceScript' toField='fraction'/>\n<connect fromNode='BounceScript' fromField='position' toNode='BounceBall' toField='position'/>\n<connect fromNode='BounceScript' fromField='orientation' toNode='BounceBall' toField='orientation'/>\n<connect fromNode='BounceScript' fromField='isBouncing' toNode='BounceBall' toField='isBouncing'/>\n<connect fromNode='BounceScript' fromField='isSpinning' toNode='BounceBall' toField='isSpinning'/>\n<\/IS>\n<javascript>\nfunction SFTime fraction_changed(fraction) {\n    var time = fraction;\n    var pos = new SFVec3f();\n    var orient = new SFVec3f();\n    var isBouncing = new SFBool();\n    var isSpinning = new SFBool();\n    var t = time;\n    if (t < 0.5) {\n        pos.setValue(0, 2 * t, 0);\n        orient.setValue(0, 1, 0);\n        isBouncing.setValue(true);\n        isSpinning.setValue(true);\n    } else {\n        pos.setValue(0, 2 - 2 * (t - 0.5), 0);\n        orient.setValue(0, 1, 0);\n        isBouncing.setValue(true);\n        isSpinning.setValue(true);\n    }\n    this.position.setValue(pos);\n    this.orientation.setValue(orient);\n    this.isBouncing.setValue(isBouncing);\n    this.isSpinning.setValue(isSpinning);\n}\n<\/javascript>\n<\/Script>\n<Shape DEF='BounceBall'>\n<Appearance>\n<Material diffuseColor='1 0 0'/>\n<\/Appearance>\n<Sphere radius='0.5'/>\n<\/Shape>\n<ROUTE fromNode='BounceTimer' fromField='fraction' toNode='BounceScript' toField='fraction'/>\n<ROUTE fromNode='BounceScript' fromField='position' toNode='BounceBall' toField='position'/>\n<ROUTE fromNode='BounceScript' fromField='orientation' toNode='BounceBall' toField='orientation'/>\n<ROUTE fromNode='BounceScript' fromField='isBouncing' toNode='BounceBall' toField='isBouncing'/>\n<ROUTE fromNode='BounceScript' fromField='isSpinning' toNode='BounceBall' toField='isSpinning'/>\n<\/Scene>\n<\/X3D>"}];
+</script>
+<script src="x3dval.js"></script>
+<script>
+(function () {
+  var status = document.getElementById('status'), out = document.getElementById('out');
+  function digest(r) {
+    return { valid: r.valid, xsd_valid: r.xsd.valid, xsd_errors: r.xsd.errors, schema_version: r.xsd.schema_version || null, notes: r.xsd.notes || null,
+             sem_status: r.semantic.status, sem_ids: [].concat(r.semantic.errors, r.semantic.warnings, r.semantic.info).map(function (d) { return d.id; }), report: r.semantic.report };
+  }
+  var results = { label: X3DVAL.label, main: {}, worker: {}, timing: {} };
+  var t0 = performance.now();
+  X3DVAL.load({ base: './' }).then(function () {
+    results.timing.load_ms = performance.now() - t0;
+    var tc = performance.now(); X3DVAL.precompile('4.0'); results.timing.compile40_ms = performance.now() - tc;
+    window.__bodies.forEach(function (b) { results.main[b.key] = digest(X3DVAL.validate(b.xml)); });
+    status.textContent = 'main thread done; starting worker…';
+    var client = X3DVAL.createWorkerClient({ base: './' });
+    var tw = performance.now();
+    return client.load({}).then(function () {
+      results.timing.worker_load_ms = performance.now() - tw;
+      return window.__bodies.reduce(function (p, b) { return p.then(function () { return client.validate(b.xml).then(function (r) { results.worker[b.key] = digest(r); }); }); }, Promise.resolve());
+    }).then(function () { return client.info(); }).then(function (info) { results.worker_info = info; client.terminate(); });
+  }).then(function () {
+    results.csp_violations = window.__csp.slice();
+    window.__results = results;
+    out.textContent = JSON.stringify(results, null, 1);
+    status.textContent = 'done: ' + Object.keys(results.main).length + ' bodies on main thread, ' + Object.keys(results.worker).length + ' in worker, ' + results.csp_violations.length + ' CSP violations';
+  }).catch(function (e) {
+    results.error = String(e && e.stack || e);
+    window.__results = results;
+    status.textContent = 'done: ERROR ' + (e && e.message || e);
+    out.textContent = results.error;
+  });
+})();
+</script>

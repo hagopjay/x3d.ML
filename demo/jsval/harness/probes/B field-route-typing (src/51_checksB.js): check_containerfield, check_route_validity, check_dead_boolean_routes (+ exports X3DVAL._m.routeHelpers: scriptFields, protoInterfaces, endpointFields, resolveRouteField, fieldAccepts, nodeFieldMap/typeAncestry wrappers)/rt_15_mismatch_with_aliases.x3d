@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform DEF='A'/>
+<Transform DEF='B'/>
+<ROUTE fromNode='A' fromField='translation_changed' toNode='B' toField='set_scale'/>
+<ROUTE fromNode='A' fromField='rotation_changed' toNode='B' toField='set_translation'/>
+<ROUTE fromNode='A' fromField='visible_changed' toNode='B' toField='set_bboxDisplay'/>
+<ROUTE fromNode='A' fromField='center' toNode='B' toField='set_rotation'/>
+<ROUTE fromNode='A' fromField='translation' toNode='B' toField='set_children'/>
+</Scene>
+</X3D>

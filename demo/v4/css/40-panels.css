@@ -1,0 +1,31 @@
+/* 40-panels.css — generic panel and canvas frames shared by every section (SPEC §1: cards --p1 on --bg, 1 px --line, 6 px radius;
+   canvases with a 2 px inset shadow and a 1 px --line2 frame). Section-specific layouts live in 50..90. */
+.panel{background:var(--p1);border:1px solid var(--line);border-radius:var(--radius);padding:10px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.panel>header{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.panel>header h3{font-size:14px;letter-spacing:.06em;color:var(--mute)}
+.panel .sub{color:var(--dim);font:400 var(--t-stamp)/1.4 var(--mono)}
+.cv{position:relative;background:var(--p0);border:1px solid var(--line2);border-radius:4px;box-shadow:inset 0 0 0 2px #0004;overflow:hidden;min-width:0}
+.cv canvas{width:100%;display:block}
+.cv .ovl{position:absolute;inset:0;pointer-events:none}
+.cv .ax{position:absolute;font:500 var(--t-stamp)/1.2 var(--mono);color:var(--dim);pointer-events:none}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(430px,100%),1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:12px}
+.cols-7-5{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:12px}
+@media (max-width:900px){.cols-7-5{grid-template-columns:1fr}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.kpi{background:var(--p1);border:1px solid var(--line);border-radius:var(--radius);padding:8px 10px;min-width:0}
+.kpi .l{font:600 var(--t-stamp)/1.25 var(--mono);color:var(--mute);letter-spacing:.07em;text-transform:uppercase}
+.kpi .v{font:700 28px/1.1 var(--disp);font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi .v.long{font-size:16px;font-family:var(--mono);line-height:1.5}
+.kpi .s{font:400 var(--t-stamp)/1.3 var(--mono);color:var(--dim);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kpi.ok .v{color:var(--ok)} .kpi.warn .v{color:var(--warn)} .kpi.bad .v{color:var(--bad)} .kpi.acc .v{color:var(--acc)}
+.card{background:var(--p1);border:1px solid var(--line);border-radius:4px;padding:10px;min-width:0}
+.card.you{border-color:var(--you)} .card.modeled{border-color:var(--warn)}
+.row{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.tabs{display:flex;flex-wrap:wrap;gap:2px} .tabs button{border-radius:3px 3px 0 0;border-bottom:0;background:var(--p0)} .tabs button.on{background:var(--p1);color:var(--acc);border-color:var(--acc)}
+.placeholder{color:var(--dim);font:var(--t-data)/1.5 var(--mono);padding:14px;border:1px dashed var(--line);border-radius:4px;text-align:center}
+pre{margin:0;font:11.5px/1.45 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere}
+.staged-tag{color:var(--warn)} .measured-tag{color:var(--acc)}
+.th{display:inline-block;border:2px solid var(--line);border-radius:3px;background:#000;overflow:hidden;line-height:0}
+.th.v{border-color:var(--ok)} .th.i{border-color:var(--bad)} .th.x{border-color:var(--warn)}
+.th img{display:block;image-rendering:pixelated}

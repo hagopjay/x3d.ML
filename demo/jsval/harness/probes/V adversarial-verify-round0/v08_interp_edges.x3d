@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<ScalarInterpolator DEF='S0' key='' keyValue='1 2 3'/><ScalarInterpolator DEF='S1' key='0 1' keyValue=''/><ScalarInterpolator DEF='S2' key='0 1' keyValue='1'/><CoordinateInterpolator DEF='CI' key='0 1' keyValue='0 0 0 1 1 1 2 2'/><CoordinateInterpolator DEF='CI2' key='0 1' keyValue='0 0 0 1 1 1 0 0 0 1 1 1'/><NormalInterpolator key='0,1' keyValue='0,0,1,0,0,1,0'/><CoordinateInterpolator2D key='0 1' keyValue='0 0 1 1 2'/><PositionInterpolator2D key='0 1 2' keyValue='0 0 1 1'/><SplinePositionInterpolator key='0' keyValue='0 0 0 0'/><SquadOrientationInterpolator key='0 1' keyValue='0 0 1 0 0 0 1 0'/><GeoPositionInterpolator key='0 1' keyValue='0 0 0 1 1'/><ColorInterpolator key='0' keyValue=''/><OrientationInterpolator key='0 1' keyValue='0 0 1 0 0 0 1'/><ScalarInterpolator key='0 1 2' keyValue='1 2 3 4 5 6 7'/>
+</Scene>
+</X3D>

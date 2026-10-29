@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0'><Scene><Viewpoint/><Transform DEF='withComment'><!-- not empty for lxml --></Transform><Group DEF='withText'>text only</Group><Switch DEF='cdata'><![CDATA[ x ]]></Switch><Transform DEF='nested'><Group/></Transform></Scene></X3D>

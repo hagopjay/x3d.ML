@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='T'/><Transform USE='T'/><ROUTE/><ROUTE fromNode='T' toNode='T'/><ROUTE fromNode='T' fromField='translation' toNode='T' toField='translation'/><ROUTE fromNode='T' fromField='translation' toNode='T' toField='translation'/><ROUTE fromNode='' fromField='' toNode='' toField=''/>
+</Scene>
+</X3D>

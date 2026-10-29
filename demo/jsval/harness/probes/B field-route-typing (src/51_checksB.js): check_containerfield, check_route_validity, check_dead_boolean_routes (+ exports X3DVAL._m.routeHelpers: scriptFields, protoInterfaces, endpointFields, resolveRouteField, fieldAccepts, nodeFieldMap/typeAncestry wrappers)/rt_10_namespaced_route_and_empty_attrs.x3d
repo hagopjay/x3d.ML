@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform DEF='A'/>
+<Transform DEF='B'/>
+<x:ROUTE xmlns:x='urn:x' fromNode='A' fromField='bogus' toNode='B' toField='translation'/>
+<ROUTE fromNode='A' toNode='B' toField='translation'/>
+<ROUTE fromNode='A' fromField='translation' toField='translation'/>
+<ROUTE fromNode='A' fromField='translation' toNode='B' toField=''/>
+</Scene>
+</X3D>

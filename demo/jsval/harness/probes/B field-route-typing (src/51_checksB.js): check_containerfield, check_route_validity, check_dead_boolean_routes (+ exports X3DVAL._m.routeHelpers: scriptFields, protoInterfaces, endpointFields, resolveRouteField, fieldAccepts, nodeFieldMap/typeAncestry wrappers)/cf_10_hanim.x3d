@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<HAnimHumanoid DEF='H' name='h'>
+  <HAnimJoint DEF='hanim_root' name='root'>
+    <Transform/>
+    <HAnimJoint DEF='hanim_hip' name='hip' containerField='children'/>
+    <HAnimSegment name='seg' containerField='children'/>
+  </HAnimJoint>
+  <HAnimSegment DEF='seg2' name='seg2'/>
+  <HAnimJoint USE='hanim_root' containerField='joints'/>
+</HAnimHumanoid>
+</Scene>
+</X3D>

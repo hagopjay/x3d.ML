@@ -1,0 +1,10 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection DEF='C1'><RigidBody DEF='A'/><RigidBody DEF='B'/></RigidBodyCollection>
+<RigidBodyCollection DEF='C2'>
+  <RigidBody USE='A'/>
+  <BallJoint DEF='J1'><RigidBody USE='A' containerField='body1'/><RigidBody USE='B' containerField='body2'/></BallJoint>
+  <SingleAxisHingeJoint DEF='J2' containerField='bodies'><RigidBody USE='A' containerField='body1'/><RigidBody USE='A' containerField='body2'/></SingleAxisHingeJoint>
+  <RigidBody USE='Missing'/>
+</RigidBodyCollection>
+<RigidBodyCollection DEF='C3'><Group containerField='bodies'><RigidBody DEF='Hidden'/></Group><BallJoint DEF='J3'><RigidBody USE='Hidden' containerField='body1'/><RigidBody DEF='Direct' containerField='body2'/></BallJoint></RigidBodyCollection>
+</Scene></X3D>

@@ -1,7 +1,8 @@
-"""Spend ledger and hard cap for the recorded live run (Tether Firehose 3).
-Every paid call, including probes and failed calls, is appended to ledger.jsonl BEFORE its result is used; the cap is checked before a call is made, with the call's worst case
-reserved so parallel workers cannot overshoot it. Prices are list prices per 1M tokens as used in the project's earlier ledgers (estimates from reported token usage, not an invoice);
-NVIDIA calls run on free trial credits and cost 0 here. Usage: python3 ledger.py [--md] [--cap USD]   (summary, or the markdown table for the project folder; --cap names the hard stop the run used)."""
+"""Spend ledger and hard caps for the recorded live runs (Tether Firehose 3 and 4).
+Every paid call, including probes and failed calls, is appended to ledger.jsonl BEFORE its result is used; a cap is checked before a call is made, with the call's worst case
+reserved so parallel workers cannot overshoot it. A Budget counts the rows it is told to (`since` a run's start, one `model`) and can chain to a `parent` cap (the run's total), so
+each lane has its own cap and one lane reaching it never stops another. Prices are list prices per 1M tokens as used in the project's earlier ledgers (estimates from reported token
+usage, not an invoice); NVIDIA calls run on free trial credits and cost 0 here. Usage: python3 ledger.py [--md] [--cap USD]   (summary, or the markdown table; --cap names the hard stop the run used)."""
 import json, os, sys, threading, time, datetime, collections
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +17,8 @@ FREE = (0.0, 0.0)      # NVIDIA trial credits and anything unlisted that runs on
 
 
 class BudgetStop(Exception):
-    pass
+    def __init__(self, msg, scope="run"):
+        super().__init__(msg); self.scope = scope       # "run" for the whole run's cap, else the name of the lane whose own cap was reached
 
 
 def price(model, provider):
@@ -27,18 +29,39 @@ def price(model, provider):
     raise BudgetStop(f"no price for {model}; add it to PRICES before calling")
 
 
+_flock = threading.Lock()     # one writer at a time to the ledger file, whichever Budget writes
+
+
 class Budget:
-    def __init__(self, cap=CAP_USD, path=LEDGER):
-        self.cap, self.path, self.lock, self.reserved = cap, path, threading.Lock(), 0.0
-        self.spent = sum(r.get("usd", 0.0) for r in read(path))
+    """A spend cap. `since` counts only the ledger rows written from that time (a run's own spend, not the file's history), `model` only one model's rows; `parent` is a wider cap
+    that every reserve and charge also passes through (a lane under the run's total). Only the Budget that is charged writes the ledger row."""
+    def __init__(self, cap=CAP_USD, path=LEDGER, parent=None, since=None, model=None, name="run"):
+        self.cap, self.path, self.parent, self.name, self.lock, self.reserved = cap, path, parent, name, threading.Lock(), 0.0
+        self.spent = sum(r.get("usd", 0.0) for r in read(path) if (since is None or r.get("t", 0) >= since) and (model is None or r.get("model") == model))
+
+    def _chain(self):
+        b, out = self, []
+        while b: out.append(b); b = b.parent
+        return out
+
+    def _take(self, worst):
+        with self.lock:
+            if self.spent + self.reserved + worst > self.cap:
+                raise BudgetStop(f"{self.name} cap {self.cap:.2f} USD: spent {self.spent:.4f} + in flight {self.reserved:.4f} + this call's worst case {worst:.4f}", self.name)
+            self.reserved += worst
+
+    def _settle(self, worst, usd):
+        with self.lock:
+            self.reserved = max(0.0, self.reserved - worst); self.spent += usd
 
     def reserve(self, model, provider, tin_est, max_out):
         pi, po = price(model, provider)
-        worst = (tin_est * pi + max_out * po) / 1e6
-        with self.lock:
-            if self.spent + self.reserved + worst > self.cap:
-                raise BudgetStop(f"cap {self.cap:.2f} USD: spent {self.spent:.4f} + in flight {self.reserved:.4f} + this call's worst case {worst:.4f}")
-            self.reserved += worst
+        worst = (tin_est * pi + max_out * po) / 1e6; taken = []
+        for b in self._chain():
+            try: b._take(worst); taken.append(b)
+            except BudgetStop:
+                for t in taken: t._settle(worst, 0.0)
+                raise
         return worst
 
     def charge(self, worst, model, provider, tag, tin, tout, **extra):
@@ -46,11 +69,9 @@ class Budget:
         usd = (tin * pi + tout * po) / 1e6
         row = {"t": round(time.time(), 3), "utc": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "tag": tag, "model": model, "provider": provider,
                "in": tin, "out": tout, "usd": round(usd, 6), **extra}
-        with self.lock:
-            self.reserved = max(0.0, self.reserved - worst)
-            self.spent += usd
-            with open(self.path, "a") as f:
-                f.write(json.dumps(row) + "\n")
+        for b in self._chain(): b._settle(worst, usd)
+        with _flock, open(self.path, "a") as f:
+            f.write(json.dumps(row) + "\n")
         return usd
 
 

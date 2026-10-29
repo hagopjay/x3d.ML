@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Transform>
+  <Shape containerField='translation'><Box/></Shape>
+  <Group containerField='bboxCenter'/>
+  <Viewpoint containerField='scale'/>
+</Transform>
+<Shape>
+  <Appearance containerField='castShadow'><Material/></Appearance>
+  <Sphere containerField='visible'/>
+</Shape>
+</Scene>
+</X3D>

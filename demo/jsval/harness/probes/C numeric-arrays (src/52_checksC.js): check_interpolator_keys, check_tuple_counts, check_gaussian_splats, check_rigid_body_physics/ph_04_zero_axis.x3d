@@ -1,0 +1,16 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection>
+  <RigidBody DEF='O1' orientation='0 0 0 1'/>
+  <RigidBody DEF='O2' orientation='0 0 0'/>
+  <RigidBody DEF='O3' orientation='0 -0 0.0 3.14'/>
+  <RigidBody DEF='O4' orientation='nan 0 0 1'/>
+  <RigidBody DEF='O5' orientation='0 0 1 0'/>
+  <RigidBody DEF='O6' orientation=''/>
+  <SingleAxisHingeJoint DEF='J1' axis='0 0 0'><RigidBody USE='O1' containerField='body1'/><RigidBody USE='O2' containerField='body2'/></SingleAxisHingeJoint>
+  <DoubleAxisHingeJoint DEF='J2' axis1='0 -0 0.0' axis2='nan 0 0'><RigidBody USE='O1' containerField='body1'/><RigidBody USE='O2' containerField='body2'/></DoubleAxisHingeJoint>
+  <UniversalJoint DEF='J3' axis1='' axis2='0 0'><RigidBody USE='O1' containerField='body1'/><RigidBody USE='O2' containerField='body2'/></UniversalJoint>
+  <SliderJoint DEF='J4' axis='0 0 0 0'><RigidBody USE='O1' containerField='body1'/><RigidBody USE='O2' containerField='body2'/></SliderJoint>
+  <SliderJoint USE='J1'/>
+</RigidBodyCollection>
+<SliderJoint USE='J1' axis='0 0 0'/>
+</Scene></X3D>

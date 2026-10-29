@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<TimeSensor DEF='Clock' loop='true'/><Transform DEF='T'><Shape><Box/></Shape></Transform><PositionInterpolator DEF='PI' key='0 1' keyValue='0 0 0 1 1 1'/><ROUTE fromNode='Clock' fromField='fraction_changed_changed' toNode='PI' toField='set_fraction'/><ROUTE fromNode='Clock' fromField='fraction_changed' toNode='PI' toField='set_set_fraction'/><ROUTE fromNode='PI' fromField='value_changed' toNode='T' toField='set_translation'/><ROUTE fromNode='PI' fromField='value_changed' toNode='T' toField='translation_changed'/><ROUTE fromNode='T' fromField='set_translation' toNode='T' toField='translation'/><ROUTE fromNode='Clock' fromField='' toNode='T' toField=''/><ROUTE fromNode='Clock' fromField='loop' toNode='T' toField='translation'/><ROUTE fromNode='Clock' fromField='enabled' toNode='T' toField='bboxSize'/><ROUTE fromNode='Clock' fromField='isActive' toNode='T' toField='bboxSize'/>
+</Scene>
+</X3D>

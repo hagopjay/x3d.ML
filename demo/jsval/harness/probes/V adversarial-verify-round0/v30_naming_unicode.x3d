@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='😀x'/><Transform DEF='٣x'/><Transform DEF='²'/><Transform DEF='x '/><Transform DEF=' x'/><Transform DEF='a.b-c'/><Transform USE='a.b-c'/><Group DEF='a.b-c'/><Transform DEF='x' name='a.b'/><Transform name='a.b'/><Transform name='a-b'/><Transform DEF='𝟎1'/><Transform DEF='x​'/><Transform DEF='x﻿'/><Transform DEF='٠'/>
+</Scene>
+</X3D>

@@ -1,0 +1,7 @@
+<X3D profile='Full' version='4.1'><Scene>
+<x:Coordinate xmlns:x='urn:x' DEF='NsCoord' point='1 2 3 4'/>
+<Coordinate DEF='Plain' point='1,2,3,4,5'/>
+<MFFloatHolder/>
+<ElevationGrid DEF='Eg' height='1 2 3 4'/>
+<Normal DEF='Nm' vector='0 0 1 0'/>
+</Scene></X3D>

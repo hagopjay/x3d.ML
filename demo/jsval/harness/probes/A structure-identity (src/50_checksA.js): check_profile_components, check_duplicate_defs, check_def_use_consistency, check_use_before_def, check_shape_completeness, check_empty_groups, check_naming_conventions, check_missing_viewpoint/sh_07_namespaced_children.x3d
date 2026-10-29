@@ -1,0 +1,1 @@
+<X3D profile='Immersive' version='4.0' xmlns:x='urn:x'><Scene><Viewpoint/><Shape DEF='nsgeo'><x:Box/></Shape><Shape DEF='nsapp'><x:Appearance/><Sphere/></Shape><x:Shape DEF='nsshape'/></Scene></X3D>

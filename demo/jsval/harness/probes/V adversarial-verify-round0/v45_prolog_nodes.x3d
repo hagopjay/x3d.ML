@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-stylesheet type='text/xsl' href='x.xsl'?>
+<!-- leading comment -->
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Immersive' version='4.0'><!-- in root --><head><?pi in head?><meta name='a' content='b'/></head><Scene><?pi in scene?><Viewpoint/><Group DEF='G'><?pi?></Group></Scene></X3D>
+<!-- trailing comment -->

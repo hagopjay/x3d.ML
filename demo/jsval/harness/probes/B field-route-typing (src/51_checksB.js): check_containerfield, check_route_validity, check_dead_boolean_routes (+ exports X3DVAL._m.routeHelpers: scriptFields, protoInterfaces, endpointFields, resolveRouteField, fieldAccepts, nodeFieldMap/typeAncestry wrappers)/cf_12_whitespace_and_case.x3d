@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Shape>
+  <Appearance>
+    <Material containerField=' material '/>
+    <Material containerField='Material'/>
+  </Appearance>
+  <Box containerField='Geometry'/>
+</Shape>
+<Switch whichChoice='0'>
+  <Shape containerField='children'><Box/></Shape>
+  <Shape containerField='proxy'><Box/></Shape>
+</Switch>
+</Scene>
+</X3D>

@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<Shape>
+  <Appearance>
+    <Material containerField='foo' diffuseColor='1 0 0'/>
+  </Appearance>
+  <Sphere/>
+</Shape>
+</Scene>
+</X3D>

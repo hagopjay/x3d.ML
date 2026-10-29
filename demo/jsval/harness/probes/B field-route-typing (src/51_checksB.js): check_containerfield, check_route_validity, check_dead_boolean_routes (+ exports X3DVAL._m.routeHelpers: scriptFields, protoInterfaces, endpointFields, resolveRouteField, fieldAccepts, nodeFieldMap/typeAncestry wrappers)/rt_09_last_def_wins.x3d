@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<TimeSensor DEF='X' loop='true'/>
+<Transform DEF='X'/>
+<ProtoDeclare name='P'><ProtoInterface/><ProtoBody><Transform DEF='Inner'/></ProtoBody></ProtoDeclare>
+<ROUTE fromNode='X' fromField='fraction_changed' toNode='X' toField='translation'/>
+<ROUTE fromNode='X' fromField='translation' toNode='Inner' toField='translation'/>
+<ROUTE fromNode='X' fromField='translation' toNode='Y' toField='translation'/>
+</Scene>
+</X3D>

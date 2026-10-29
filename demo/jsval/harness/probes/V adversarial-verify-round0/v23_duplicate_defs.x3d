@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='a'/><Transform DEF='A'/><Transform DEF='a'><Shape DEF='a'><Box/></Shape></Transform><ProtoDeclare name='P'><ProtoBody><Group DEF='a'/><TimeSensor DEF='Dup'/></ProtoBody></ProtoDeclare><Transform DEF='Dup'/><TimeSensor DEF='Dup' loop='true'/><Transform DEF='Tgt'/><ROUTE fromNode='Dup' fromField='fraction_changed' toNode='Tgt' toField='set_scale'/><ROUTE fromNode='Dup' fromField='translation' toNode='Tgt' toField='set_translation'/><Group USE='a'/>
+</Scene>
+</X3D>

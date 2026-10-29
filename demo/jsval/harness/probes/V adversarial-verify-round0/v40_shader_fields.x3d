@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Shape><Appearance><ComposedShader DEF='CS' language='GLSL'><field name='time' type='SFFloat' accessType='inputOnly'/><field name='color' type='SFColor' accessType='inputOutput' value='1 0 0'/><ShaderPart type='VERTEX' url='"v.glsl"'/><ShaderPart type='FRAGMENT'><![CDATA[void main(){}]]></ShaderPart></ComposedShader></Appearance><Box/></Shape><Shape><Appearance><PackagedShader DEF='PS' language='HLSL'><field name='k' type='SFInt32' accessType='initializeOnly'/></PackagedShader></Appearance><Sphere/></Shape><Shape><Appearance><ProgramShader DEF='PR'><ShaderProgram DEF='SP' type='VERTEX'><field name='u' type='SFVec3f' accessType='inputOnly'/></ShaderProgram></ProgramShader></Appearance><Cone/></Shape><TimeSensor DEF='Clock'/><ROUTE fromNode='Clock' fromField='fraction_changed' toNode='CS' toField='time'/><ROUTE fromNode='Clock' fromField='fraction_changed' toNode='CS' toField='set_time'/><ROUTE fromNode='CS' fromField='color_changed' toNode='PS' toField='k'/><ROUTE fromNode='Clock' fromField='isActive' toNode='PS' toField='set_k'/><ROUTE fromNode='Clock' fromField='cycleTime' toNode='SP' toField='u'/><ROUTE fromNode='CS' fromField='activate' toNode='SP' toField='activate'/>
+</Scene>
+</X3D>

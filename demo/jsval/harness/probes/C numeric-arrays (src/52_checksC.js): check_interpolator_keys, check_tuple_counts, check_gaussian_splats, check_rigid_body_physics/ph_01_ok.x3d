@@ -1,0 +1,10 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection DEF='World'>
+  <RigidBody DEF='A' mass='1'><CollidableShape containerField='geometry'><Shape><Box/></Shape></CollidableShape></RigidBody>
+  <RigidBody DEF='B' mass='2' fixed='true'/>
+  <SingleAxisHingeJoint DEF='J' axis='0 1 0' containerField='joints'>
+    <RigidBody USE='A' containerField='body1'/>
+    <RigidBody USE='B' containerField='body2'/>
+  </SingleAxisHingeJoint>
+</RigidBodyCollection>
+</Scene></X3D>

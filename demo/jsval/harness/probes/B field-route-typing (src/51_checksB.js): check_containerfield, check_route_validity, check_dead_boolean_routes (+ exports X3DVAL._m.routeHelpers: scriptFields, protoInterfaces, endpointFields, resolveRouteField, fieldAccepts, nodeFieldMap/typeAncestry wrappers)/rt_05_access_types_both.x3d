@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<Scene>
+<BooleanFilter DEF='Filter'/>
+<TimeSensor DEF='Clock'/>
+<Transform DEF='T'/>
+<ROUTE fromNode='Filter' fromField='set_boolean' toNode='Clock' toField='fraction_changed'/>
+<ROUTE fromNode='Clock' fromField='enabled' toNode='T' toField='set_translation'/>
+<ROUTE fromNode='Clock' fromField='cycleTime' toNode='Clock' toField='startTime'/>
+<ROUTE fromNode='Clock' fromField='startTime' toNode='Clock' toField='isActive'/>
+<ROUTE fromNode='Clock' fromField='set_startTime' toNode='Clock' toField='stopTime'/>
+</Scene>
+</X3D>

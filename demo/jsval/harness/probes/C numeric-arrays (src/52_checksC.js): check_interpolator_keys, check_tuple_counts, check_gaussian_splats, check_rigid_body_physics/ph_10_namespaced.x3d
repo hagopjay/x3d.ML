@@ -1,0 +1,7 @@
+<X3D profile='Full' version='4.1'><Scene>
+<x:RigidBodyCollection xmlns:x='urn:x'>
+  <x:RigidBody DEF='A' mass='-1'/>
+  <x:BallJoint DEF='J'><x:RigidBody USE='A' containerField='body1'/></x:BallJoint>
+</x:RigidBodyCollection>
+<Group><x:RigidBody xmlns:x='urn:x' mass='0' orientation='0 0 0 0'/></Group>
+</Scene></X3D>

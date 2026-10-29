@@ -1,0 +1,8 @@
+<X3D profile='Full' version='4.1'><Scene>
+<RigidBodyCollection>
+  <RigidBody DEF='A'/><Transform DEF='T'/><Group DEF='G'/>
+  <BallJoint DEF='Rev'><Transform USE='T' containerField='body2'/><Group USE='G' containerField='body1'/></BallJoint>
+  <BallJoint DEF='Dups'><RigidBody USE='A' containerField='body1'/><Transform USE='T' containerField='body2'/><Group USE='G' containerField='body1'/></BallJoint>
+  <BallJoint DEF='Cmt'><!-- c --><RigidBody USE='A' containerField='body1'/><?pi x?><RigidBody USE='A' containerField='body2'/></BallJoint>
+</RigidBodyCollection>
+</Scene></X3D>

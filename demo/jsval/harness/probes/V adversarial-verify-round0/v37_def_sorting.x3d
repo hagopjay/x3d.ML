@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D profile='Immersive' version='4.0'>
+<head></head>
+<Scene>
+<Viewpoint DEF='V' position='0 0 10'/>
+<Transform DEF='Z'/><Transform DEF='a'/><Transform DEF='_x'/><Transform DEF='é'/><Transform DEF='x1'/><Transform DEF='x10'/><Transform DEF='x2'/><Transform DEF='Ω'/><Transform DEF='zebra'/><Transform DEF='Zebra'/><Transform DEF='ß'/><Transform DEF='ẞ'/><Transform DEF='ab'/><Transform DEF='aB'/><Transform DEF='a_b'/><Transform DEF='a-b'/><Transform DEF='a.b'/><Transform DEF='😀'/><Transform DEF='𝓐'/><Transform DEF='Ａ'/><Group USE='nope'/><Group USE='Nope'/><ROUTE fromNode='none' fromField='x' toNode='Z' toField='y'/><ROUTE fromNode='Z' fromField='translation' toNode='none2' toField='y'/>
+</Scene>
+</X3D>

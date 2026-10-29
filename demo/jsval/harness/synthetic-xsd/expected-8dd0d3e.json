@@ -1,0 +1,200 @@
+{
+ "nsprefix": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Namespace prefix xsi for noNamespaceSchemaLocation on X3D is not defined, line 1, column 73 (<string>, line 1)"
+  ]
+ },
+ "undef_entity": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Entity 'nbsp' not defined, line 1, column 72 (<string>, line 1)"
+  ]
+ },
+ "doctype_entity": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "doctype_public": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "bom": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "latin1_decl": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "dup_attr": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Attribute version redefined, line 1, column 53 (<string>, line 1)"
+  ]
+ },
+ "xml11": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "two_roots": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Extra content at the end of the document, line 1, column 54 (<string>, line 1)"
+  ]
+ },
+ "trailing_junk": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Extra content at the end of the document, line 2, column 1 (<string>, line 2)"
+  ]
+ },
+ "whitespace_only": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Start tag expected, '<' not found, line 2, column 2 (<string>, line 2)"
+  ]
+ },
+ "text_only": {
+  "valid": false,
+  "errors": [
+   "XML parse error: Start tag expected, '<' not found, line 1, column 1 (<string>, line 1)"
+  ]
+ },
+ "cdata": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'WorldInfo': Character content other than whitespace is not allowed because the content type is 'element-only'."
+  ],
+  "schema_version": "4.0"
+ },
+ "default_ns": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element '{http://www.web3d.org/specifications/x3d-4.0.xsd}X3D': No matching global declaration available for the validation root."
+  ],
+  "schema_version": "4.0"
+ },
+ "xsi_https": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "xsi_http": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0"
+ },
+ "v33": {
+  "valid": true,
+  "errors": [],
+  "schema_version": "4.0",
+  "notes": [
+   "X3D 3.3 has no bundled schema; validated against X3D 4.0, of which X3D 3.3 is a subset."
+  ]
+ },
+ "v41_node_in_40": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'GaussianSplats': This element is not expected. Expected is one of ( IS, MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataSet, MetadataString, Appearance, Box, Cone ).",
+   "Line 1: Element 'EnvironmentLight': This element is not expected."
+  ],
+  "schema_version": "4.0",
+  "notes": [
+   "Node 'GaussianSplats' is not in X3D 4.0; it was added in X3D 4.1. Declare version='4.1' or remove the node.",
+   "Node 'EnvironmentLight' is not in X3D 4.0; it was added in X3D 4.1. Declare version='4.1' or remove the node."
+  ]
+ },
+ "unknown_ver": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'X3D', attribute 'version': [facet 'enumeration'] The value '5.0' is not an element of the set {'3.0', '3.1', '3.2', '3.3', '4.0', '4.1'}."
+  ],
+  "schema_version": "4.1",
+  "notes": [
+   "Unknown version '5.0'; validated against X3D 4.1."
+  ]
+ },
+ "no_ver": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'X3D': The attribute 'version' is required but missing."
+  ],
+  "schema_version": "4.1",
+  "notes": [
+   "No version attribute; validated against X3D 4.1."
+  ]
+ },
+ "geolod": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'GeoLOD': Missing child element(s). Expected is one of ( Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group, NavigationInfo, NormalInterpolator, OrientationInterpolator, PositionInterpolator, ScalarInterpolator )."
+  ],
+  "schema_version": "4.0",
+  "notes": [
+   "GeoLOD at line 1: the bundled XSD's content model is (rootNode children, GeoOrigin, rootNode children), so any inline rootNode child requires a GeoOrigin sibling, although ISO/IEC 19775-1 makes geoOrigin optional. Either add <GeoOrigin containerField='geoOrigin' geoSystem='\"UTM\"' geoCoords='1 2 3'/> inside the GeoLOD (a GeoOrigin re-anchors the local frame, so give every geospatial node the same one by USE), or remove the inline children and load the low-detail model through rootUrl."
+  ]
+ },
+ "geolod_defaults": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'GeoLOD': Missing child element(s). Expected is one of ( Background, ColorInterpolator, CoordinateInterpolator, DirectionalLight, Group, NavigationInfo, NormalInterpolator, OrientationInterpolator, PositionInterpolator, ScalarInterpolator )."
+  ],
+  "schema_version": "4.0",
+  "notes": [
+   "GeoLOD at line 1: the bundled XSD's content model is (rootNode children, GeoOrigin, rootNode children), so any inline rootNode child requires a GeoOrigin sibling, although ISO/IEC 19775-1 makes geoOrigin optional. Either add <GeoOrigin containerField='geoOrigin' geoSystem='\"GD\" \"WE\"' geoCoords='0 0 0'/> inside the GeoLOD (a GeoOrigin re-anchors the local frame, so give every geospatial node the same one by USE), or remove the inline children and load the low-detail model through rootUrl."
+  ]
+ },
+ "pi_comment": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'Bogus': This element is not expected."
+  ],
+  "schema_version": "4.0"
+ },
+ "ctrl_char": {
+  "valid": false,
+  "errors": [
+   "XML parse error: invalid character in attribute value, line 1, column 66 (<string>, line 1)"
+  ]
+ },
+ "many_errors": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'Box', attribute 'size': [facet 'pattern'] The value 'a' is not accepted by the pattern '\\s*(([+-]?((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s+){2}([+-]?((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s*'.",
+   "Line 1: Element 'Foo': This element is not expected. Expected is one of ( Appearance, ProtoInstance ).",
+   "Line 1: Element 'Transform', attribute 'rotation': [facet 'pattern'] The value '1 2' is not accepted by the pattern '\\s*(([+-]?((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s+){3}([+-]?((0|[1-9][0-9]*)(\\.[0-9]*)?|\\.[0-9]+)([Ee][+-]?[0-9]+)?)\\s*'.",
+   "Line 1: Element 'Baz': This element is not expected."
+  ],
+  "schema_version": "4.0"
+ },
+ "non_x3d_root": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element 'html': No matching global declaration available for the validation root."
+  ],
+  "schema_version": "4.1",
+  "notes": [
+   "No version attribute; validated against X3D 4.1."
+  ]
+ },
+ "nested_ns": {
+  "valid": false,
+  "errors": [
+   "Line 1: Element '{urn:a}Shape': This element is not expected."
+  ],
+  "schema_version": "4.0"
+ },
+ "huge_attr_lines": {
+  "valid": false,
+  "errors": [
+   "Line 12: Element 'Bogus': This element is not expected."
+  ],
+  "schema_version": "4.0"
+ }
+}

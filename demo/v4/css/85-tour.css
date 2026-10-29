@@ -1,0 +1,40 @@
+/* 85-tour.css — the Tour overlay (50-tour) and Director mode (52-director): tour box, mast chips, letterbox bars, titles (SPEC-v4 "Tour" + "Director mode", §10 tokens, §11 phone).
+   Every colour is a token; dark first (the tokens flip under 00-tokens.css's two guarded light selectors); phone (≤ 600 px): the tour box spans the bottom edge, titles 40 px (--t-title). */
+.tourChip.on,.dirChip.on{color:var(--acc);border-color:var(--acc);background:var(--accbg)}
+#tour{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:60;width:min(440px,calc(100vw - 32px));pointer-events:none}
+#tour[hidden]{display:none}
+.tourBox{pointer-events:auto;background:var(--glass);backdrop-filter:blur(8px);border:1px solid var(--line2);border-radius:var(--radius);box-shadow:var(--elev1);padding:12px 14px 10px;display:flex;flex-direction:column;gap:6px;color:var(--fg)}
+.tourHead{display:flex;align-items:baseline;gap:10px}
+.tourHead h3{margin:0;font:600 var(--t-h2)/1.1 var(--disp);text-transform:uppercase;letter-spacing:.05em;color:var(--fg)}
+.tourHead .tn{font:600 var(--t-chip)/1.3 var(--mono);color:var(--acc);letter-spacing:.06em}
+.tourText{margin:0;font:400 var(--t-body)/1.5 var(--sans);color:var(--fg)}
+.tourText:empty{display:none}
+.tourBar{height:2px;background:var(--line);border-radius:1px;overflow:hidden}
+.tourBar i{display:block;height:100%;width:0;background:var(--acc)}
+.tourBtns{display:flex;gap:6px;align-items:center}
+.tourBtns .sp{flex:1}
+.tourBtns .keys{font:500 var(--t-stamp)/1.3 var(--mono);color:var(--dim)}
+.tourBox[data-pause="1"] .tourBar{background:var(--warnbg)}
+.tourBox[data-pause="1"] .tourHead .tn{color:var(--warn)}
+/* director: letterbox bars + title */
+.letterbox{position:fixed;inset:0;z-index:55;pointer-events:none}
+.letterbox::before,.letterbox::after{content:"";position:absolute;left:0;right:0;height:56px;background:var(--stage-bg)}
+.letterbox::before{top:0}
+.letterbox::after{bottom:0}
+.letterbox .dirTitle{position:absolute;left:0;right:0;top:calc(50% - 60px);text-align:center;font:700 48px/1.1 var(--disp);text-transform:uppercase;color:var(--etch);letter-spacing:.32em;opacity:0;transition:letter-spacing var(--dur-slow) ease-out,opacity var(--dur-slow) ease-out;text-shadow:0 2px 12px #0009;padding:0 var(--gutter) 0 var(--gutter-r)}
+.letterbox .dirTitle.in{letter-spacing:.08em;opacity:1}
+.letterbox .dirTitle.out{opacity:0;letter-spacing:.12em}
+html[data-fx="0"] .letterbox .dirTitle{letter-spacing:.08em}
+.letterbox .dirSub{position:absolute;left:0;right:0;top:calc(50% + 2px);text-align:center;font:500 var(--t-chip)/1.3 var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mute)}
+.letterbox .dirShot{position:absolute;right:max(16px,env(safe-area-inset-right,0px));bottom:18px;font:600 var(--t-chip)/1.3 var(--mono);color:var(--acc);letter-spacing:.08em;pointer-events:auto;display:flex;gap:8px;align-items:center}
+.letterbox .dirShot button{pointer-events:auto}
+.letterbox .dirStamp{position:absolute;left:max(16px,env(safe-area-inset-left,0px));bottom:18px;font:500 var(--t-stamp)/1.3 var(--mono);color:var(--mute)}
+@media (prefers-reduced-motion:reduce){.letterbox .dirTitle{transition:none;letter-spacing:.08em}.tourBar i{transition:none !important}}
+@media (max-width:600px){
+ #tour{right:0;left:0;bottom:0;width:auto}
+ .tourBox{border-radius:var(--radius) var(--radius) 0 0;padding:10px var(--gutter-r) 10px var(--gutter)}
+ .letterbox::before,.letterbox::after{height:36px}
+ .letterbox .dirTitle{font-size:var(--t-title);letter-spacing:.14em}
+ .letterbox .dirTitle.in{letter-spacing:.04em}
+ .mastR .chip.tourChip,.mastR .chip.dirChip{display:inline-flex}
+}

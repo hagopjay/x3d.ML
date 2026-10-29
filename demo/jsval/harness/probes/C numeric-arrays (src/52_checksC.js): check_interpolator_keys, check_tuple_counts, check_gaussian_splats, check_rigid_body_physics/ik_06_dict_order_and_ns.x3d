@@ -1,0 +1,7 @@
+<X3D profile='Full' version='4.1'><Scene>
+<OrientationInterpolator DEF='Rot' key='0 1' keyValue='0 1 0 0 1'/>
+<ScalarInterpolator DEF="it's" key='0 1' keyValue='0 1 2'/>
+<x:PositionInterpolator xmlns:x='urn:x' DEF='NS' key='0 1' keyValue='0 0 0 1'/>
+<PositionInterpolator DEF='Pos' key='0 1' keyValue='0 0 0 1'/>
+<GeoPositionInterpolator DEF='Geo' key='0 1 2' keyValue='0 0 0 1 1 1'/>
+</Scene></X3D>

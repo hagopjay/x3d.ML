@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<X3D xmlns='http://www.web3d.org/specifications/x3d-namespace' profile='Immersive' version='4.0'>
+<Scene>
+<Shape>
+  <Appearance>
+    <PhysicalMaterial>
+      <ImageTexture url='"a.png"'/>
+    </PhysicalMaterial>
+    <Material containerField='texture'/>
+  </Appearance>
+  <Box containerField='bboxSize'/>
+</Shape>
+</Scene>
+</X3D>
