@@ -15,3 +15,6 @@ the measured results, and `docs/LOG.md` for the running log.
 
 `src/ingest_runs.py` turns an X3D export-suite run and the physics-stress metrics into `x3dprov` chains, and `audit()` checks a chain against the files it came from. Plan and caveats: `docs/INTEGRATION-SUITE-PHYSICS.md`; a run over the local data: `runs/suite-physics-2026-10-17/`; tests: `tests/` (needs lxml).
 
+## Standards views
+
+`src/x3dprov_provo.py` maps a chain to W3C PROV-O (Turtle, JSON-LD) with OWL-Time and back, losslessly; `src/x3dprov_openlineage.py` emits OpenLineage RunEvents for a lineage server. Shapes and schemas in `schemas/`; results in `docs/DESIGN.md` section 10. Tests need lxml, rdflib, pyshacl, jsonschema (`pip install lxml rdflib pyshacl jsonschema rfc3339-validator rfc3987 pytest`).
