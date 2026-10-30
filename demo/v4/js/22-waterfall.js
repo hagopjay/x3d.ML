@@ -20,7 +20,7 @@ const DOLLAR=String.fromCharCode(36);                     /* the share sweep ref
 const PRIV=()=>!(self.BUILD&&BUILD.share);               /* private build: provider names, spend, prompt text; the share build (wave 3) drops them */
 const r6=x=>Math.round(x*1e6)/1e6;
 const dispBase=m=>String(m||"").replace(/^[\w.-]+\//,"");  /* v3 disp (line 343) without the SAFE map: the share build gets the SAFE map in wave 3 */
-function disp(m,i){if(!PRIV())return"lane "+((i|0)+1);return dispBase(m)}
+function disp(m,i){return dispBase(m)}   /* the share build's ids are already the SAFE map's lane labels (build_v4.py --share), so one naming scheme serves both builds */
 /* ---------- sources: one per MODES entry; a new mode plugs in with FILM.register(name, src) and the panels never change ---------- */
 const SOURCES={};
 function register(mode,src){SOURCES[mode]=Object.assign({mode,chains:()=>[],meta:()=>null,events:()=>null,lanes:()=>[],laneOf:it=>it.m+(it.arm?" · "+it.arm:""),tmax:()=>0,

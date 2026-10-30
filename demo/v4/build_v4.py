@@ -10,7 +10,7 @@ Writes <out_dir>/index.html (template + css/*.css in order + js/*.js in order in
 <out_dir>/manifest.json, <out_dir>/hero.json, and, unless --no-xite, a local copy of demo/build/xite/ for testing (the publish copies xite/ server-side from v3).
 --files-map writes <out_dir>/files.json for the Artifact publish: every local file under the out dir mapped to its path plus the 105 xite/* rows as
 {"artifact": v3 url, "path": "xite/..."} copies (list from the Step 0 probe, scratchpad/probe_files.json, mirrored at demo/v4/data/xite_files.json).
---monolith inlines the parts into the page (var __PARTS) for file:// debugging. --share is a documented stub (wave 3): exits 2.
+--monolith inlines the parts into the page (var __PARTS) for file:// debugging. --share applies demo/v4/build/safe_map.py (model ids -> lane labels, providers, hardware, branches, people, vendor words) to every decoded part, data file and the baked page, re-encodes the parts (new sha256 in manifest.json), sets BUILD.share / safe_map_sha / lanes, and runs demo/leak_sweep.py --share on the output: the build exits 4 unless RESULT: clean.
 Refuses on: a placeholder count != 1, a leftover /*__, `new Function` / `eval(` outside the two lines tagged /*@env-probe*/, `</script` or `<!--` inside the bundle,
 a part whose sha256 differs from the manifest, files.json with != 105 xite rows or >= 511 entries, a page over 16 MB.
 """
@@ -20,8 +20,8 @@ DEMO = os.path.dirname(HERE)                                  # demo
 REPO = os.path.dirname(DEMO)
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
 flags = {a.split("=",1)[0] for a in sys.argv[1:] if a.startswith("--")}
-if "--share" in flags:
-    print("build_v4.py --share: the share build is wave 3 (SAFE map, VENDOR regex, leak_sweep --share, re-stamped ledger). Not built here.", file=sys.stderr); sys.exit(2)
+SHARE = "--share" in flags   # the SHARE build: demo/v4/build/safe_map.py applied to every decoded part, data file and the baked page; parts re-encoded; leak_sweep --share must end clean
+sys.path.insert(0, os.path.join(HERE, "build"))
 if not args:
     print(__doc__); sys.exit(1)
 OUT = os.path.abspath(args[0]); os.makedirs(OUT, exist_ok=True)
@@ -83,10 +83,28 @@ for name, p in manifest["parts"].items():
     assert sha256(raw) == p["sha256"], f"part {name}: decoded sha256 differs from the manifest"
     assert len(raw) == p["bytes_raw"] and len(b64) == p["bytes_b64"], f"part {name}: sizes differ from the manifest"
     decoded[name] = raw
-    shutil.copyfile(src, os.path.join(parts_out, name + ".txt"))
-shutil.copyfile(os.path.join(HERE, "parts", "manifest.json"), os.path.join(parts_out, "manifest.json"))
-shutil.copyfile(os.path.join(HERE, "parts", "manifest.json"), os.path.join(OUT, "manifest.json"))
-shutil.copyfile(os.path.join(HERE, "data", "hero.json"), os.path.join(OUT, "hero.json"))
+    if not SHARE: shutil.copyfile(src, os.path.join(parts_out, name + ".txt"))
+SM = None
+if SHARE:
+    import safe_map
+    ids = [m["id"] for m in json.load(open(os.path.join(DEMO, "data", "live.json")))["meta"]["models"]]
+    ids += list(dict.fromkeys(i["m"] for i in json.loads(decoded["replay"])))
+    if "run24" in decoded: ids += [m["id"] for m in json.loads(decoded["run24"])["meta"]["models"]]
+    SM = safe_map.SafeMap(list(dict.fromkeys(ids)))
+    for name in list(manifest["parts"]):
+        if name.startswith("xsd"): shutil.copyfile(os.path.join(HERE, "parts", name + ".txt"), os.path.join(parts_out, name + ".txt")); continue
+        text = SM.apply(decoded[name].decode("utf-8")); raw = text.encode("utf-8"); decoded[name] = raw
+        gz = gzip.compress(raw, 9, mtime=0); b64 = base64.b64encode(gz) + b"\n"
+        open(os.path.join(parts_out, name + ".txt"), "wb").write(b64)
+        manifest["parts"][name].update({"bytes_raw": len(raw), "bytes_gz": len(gz), "bytes_b64": len(b64), "sha256": sha256(raw), "share": True})
+    manifest["share"] = {"safe_map_sha": SM.sha(), "lanes": sorted(SM.lanes.values())}   # the id -> label map itself is never published
+    json.dump(manifest, open(os.path.join(parts_out, "manifest.json"), "w"), separators=(",", ":"))
+    shutil.copyfile(os.path.join(parts_out, "manifest.json"), os.path.join(OUT, "manifest.json"))
+    open(os.path.join(OUT, "hero.json"), "w", encoding="utf-8").write(SM.apply(read(os.path.join(HERE, "data", "hero.json"))))
+else:
+    shutil.copyfile(os.path.join(HERE, "parts", "manifest.json"), os.path.join(parts_out, "manifest.json"))
+    shutil.copyfile(os.path.join(HERE, "parts", "manifest.json"), os.path.join(OUT, "manifest.json"))
+    shutil.copyfile(os.path.join(HERE, "data", "hero.json"), os.path.join(OUT, "hero.json"))
 
 # DRIFTSUM: per-commit counts from the drift part (decoded; nothing retyped)
 drift = json.loads(decoded["drift"])
@@ -117,10 +135,11 @@ try:
     sha = subprocess.run(["git", "-C", REPO, "rev-parse", "--short=10", "HEAD"], capture_output=True, text=True, timeout=10).stdout.strip() or "unknown"
 except Exception:
     sha = "unknown"
-BUILD = {"sha": sha, "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "share": False,
+BUILD = {"sha": sha, "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"), "share": SHARE,
+         "safe_map_sha": SM.sha() if SM else None, "lanes": sorted(SM.lanes.values()) if SM else None,
          "validator_recorded": manifest.get("validator_recorded", ["fork@eb4b4b4", "fork@8dd0d3e"]), "port": "js-port-of-8dd0d3e", "xite": "16.5.0", "passes": ["16.5.0", "16.5.1"],
          "HAS_CYCLES": bool(manifest.get("HAS_CYCLES")), "HAS_RUN2": bool(manifest.get("HAS_RUN2")), "has_cycles": bool(manifest.get("HAS_CYCLES")), "has_run24": bool(manifest.get("HAS_RUN2")), "staged": os.path.isfile(os.path.join(HERE, "data", "staged.json")),
-         "versions": VERSIONS, "title": "Tether Firehose 4", "monolith": "--monolith" in flags, "parts": len(manifest["parts"]), "canary": manifest.get("canary")}
+         "versions": [dict(v, id=None) for v in VERSIONS] if SHARE else VERSIONS, "title": "Tether Firehose 4", "monolith": "--monolith" in flags, "parts": len(manifest["parts"]), "canary": manifest.get("canary")}
 
 # ---------- bake ----------
 PH = {"/*__CSS__*/": css, "/*__JS__*/": js, "/*__STATS__*/null": J(stats), "/*__HERO__*/null": J(hero), "/*__PROMPTS__*/null": J(prompts), "/*__SYS__*/null": J(SYS),
@@ -135,6 +154,7 @@ if "--monolith" in flags:
     inline = {n: open(os.path.join(HERE, "parts", n + ".txt"), encoding="ascii").read().strip() for n in manifest["parts"]}
     out = out.replace("<script>\n\"use strict\";", "<script>\n\"use strict\";\nvar __PARTS=" + J(inline) + ";", 1)
 assert "/*__" not in out, "a placeholder survived the bake"
+if SM: out = SM.apply(out)   # the SHARE map over the whole baked page: data, prose and the bundle's provider compares alike
 
 # ---------- eval / new Function grep (bundle, workers, jsval), comments stripped, env-probe lines allowed ----------
 def strip_comments(s):
@@ -184,17 +204,18 @@ index = os.path.join(OUT, "index.html")
 open(index, "w", encoding="utf-8").write(out)
 os.makedirs(os.path.join(OUT, "workers"), exist_ok=True)
 for name, text in worker_files.items():
-    open(os.path.join(OUT, "workers", name), "w", encoding="utf-8").write(text)
+    open(os.path.join(OUT, "workers", name), "w", encoding="utf-8").write(SM.apply(text) if SM else text)
 open(os.path.join(OUT, "workers", "probe.json"), "w").write('{"ok":true,"name":"probe.json"}\n')
 for name, path in jsval_files.items():
     dst = os.path.join(OUT, "jsval", name); os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copyfile(path, dst)
 os.makedirs(os.path.join(OUT, "data"), exist_ok=True)
 ledger = read(os.path.join(REPO, "runs", "suite-physics-2026-10-17", "physics-stress.ledger.x3d"))
 ledger = re.sub(r"<!DOCTYPE[^>]*>\s*", "", ledger, count=1)
-open(os.path.join(OUT, "data", "physics-ledger.x3d"), "w", encoding="utf-8").write(ledger)
-shutil.copyfile(os.path.join(HERE, "data", "rigok.json"), os.path.join(OUT, "data", "rigok.json"))
+open(os.path.join(OUT, "data", "physics-ledger.x3d"), "w", encoding="utf-8").write(SM.apply(ledger) if SM else ledger)
 STAGED_SRC = os.path.join(HERE, "data", "staged.json"); HAS_STAGED = os.path.isfile(STAGED_SRC)
-if HAS_STAGED: shutil.copyfile(STAGED_SRC, os.path.join(OUT, "data", "staged.json"))   # 40-sheet fetches data/staged.json when BUILD.staged (urls null until the assets are uploaded)
+for src, dst in [(os.path.join(HERE, "data", "rigok.json"), "rigok.json")] + ([(STAGED_SRC, "staged.json")] if HAS_STAGED else []):
+    if SM: open(os.path.join(OUT, "data", dst), "w", encoding="utf-8").write(SM.apply(read(src)))
+    else: shutil.copyfile(src, os.path.join(OUT, "data", dst))   # 40-sheet fetches data/staged.json when BUILD.staged (urls null until the assets are uploaded)
 if "--no-xite" not in flags:
     xsrc = os.path.join(DEMO, "build", "xite")
     if os.path.isdir(xsrc):
@@ -238,3 +259,13 @@ print(f"xite: {len(xite)} local files ({sum(s for _, s in xite):,} B){' (copied 
 if "--files-map" in flags:
     print(f"files.json: {len(fmap)} entries ({len(xrows)} xite copies + {len(fmap)-len(xrows)} local) of 511; version bytes ≈ {(size + sum(s for _, s in own) + 8482051)/1048576:.1f} MB of 256")
 print(f"css {len(css_files)} files {len(css):,} B · js {len(js_files)} files {len(js):,} B · BUILD.sha {sha} · env-probe lines {allowed} · setInterval 0 · $digit in js {dollar_hits or 0} (share sweep, wave 3)")
+
+# ---------- SHARE gate: the sweep runs on the output; anything left fails the build ----------
+if SM:
+    p = subprocess.run([sys.executable, os.path.join(DEMO, "leak_sweep.py"), "--share", "--root", OUT], capture_output=True, text=True)
+    last = (p.stdout.strip().splitlines() or [""])[-1]
+    print("share: SAFE map " + SM.sha()[:12] + " · " + str(len(SM.lanes)) + " lanes (the id map stays local: " + os.path.join(OUT + ".safe_map.json") + ") · replacements " + json.dumps(SM.counts))
+    json.dump({"safe_map_sha": SM.sha(), "lanes": SM.lanes, "providers": SM.providers, "counts": SM.counts}, open(OUT + ".safe_map.json", "w"), indent=1)   # beside the build dir, never inside it
+    print("share sweep: " + last)
+    if p.returncode != 0 or last != "RESULT: clean":
+        print(p.stdout[-6000:], file=sys.stderr); print("REFUSED: the share sweep is not clean", file=sys.stderr); sys.exit(4)
