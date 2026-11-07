@@ -1,6 +1,6 @@
 """Gemini over the Vertex proxy: streaming (the proxy cuts silent responses at 30 s), retries, spend ledger."""
 import json, os, ssl, time, urllib.request, urllib.error, threading
-PROJ = os.environ.get('GCP_PROJ', 'key-tokenizer-237718')
+PROJ = os.environ['GCP_PROJ']
 LEDGER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'spend.jsonl')
 # assumed list prices, USD per 1M tokens (in, out): ASSUMED, logged as such
 PRICE = {'gemini-3.8-flash': (0.30, 2.50), 'gemini-3.1-pro': (2.00, 12.00), 'gemini-3.1-pro-preview': (2.00, 12.00)}
