@@ -5,3 +5,4 @@ https://openlineage.io/spec/facets/1-0-1/DatasetVersionDatasetFacet.json  91f57b
 https://openlineage.io/spec/facets/1-0-1/ErrorMessageRunFacet.json  b11b4ee8b0f99f6846264f87cad48390255c7ef142ce623216660c7097be0ea6  facets/ErrorMessageRunFacet.json
 https://openlineage.io/spec/facets/2-0-4/JobTypeJobFacet.json  11c12cab95a411ca31066c80d2bb4aefd37bbcadbda5e4d343d2069853b907d5  facets/JobTypeJobFacet.json
 https://openlineage.io/spec/facets/1-2-0/ParentRunFacet.json  efdd06ef87537849f1ec7984cc2e36cbdcea40083635c20fd9af1934ba601d57  facets/ParentRunFacet.json
+https://openlineage.io/spec/facets/1-2-0/ColumnLineageDatasetFacet.json  04d96b4985ca32470c7f9d73163da76678fb160bc8d80cbbc5abf312e9537466  facets/ColumnLineageDatasetFacet.json  (fetched 2026-11-16)

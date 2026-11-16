@@ -18,3 +18,7 @@ the measured results, and `docs/LOG.md` for the running log.
 ## Standards views
 
 `src/x3dprov_provo.py` maps a chain to W3C PROV-O (Turtle, JSON-LD) with OWL-Time and back, losslessly; `src/x3dprov_openlineage.py` emits OpenLineage RunEvents for a lineage server. Shapes and schemas in `schemas/`; results in `docs/DESIGN.md` section 10. Tests need lxml, rdflib, pyshacl, jsonschema (`pip install lxml rdflib pyshacl jsonschema rfc3339-validator rfc3987 pytest`).
+
+## Value evidence
+
+`src/x3dtrace.py` checks, with no model call, that the exact words a writer quotes for a value are in the source, hold the value, and says where they sit (and, for a scene, which node and where in world space). `src/x3dprov_trace.py` stores the result as a `trace` step in the scene's own chain, and the PROV-O and OpenLineage views carry it. Guide: `docs/TRACE.md`; measured results: `docs/DESIGN.md` section 11. The method is Umair Ali Khan's and GAIK's (MIT); see `NOTICE-x3dtrace.md`.

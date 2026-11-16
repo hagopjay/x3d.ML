@@ -205,3 +205,68 @@ Every chain in the repo: 179 stamped scenes in `runs/` plus 3 `*.steps.json` = 1
 | size | 468 KB of records -> 2.5 MB Turtle, 3.2 MB JSON-LD, 2.9 MB OpenLineage; 54 triples per step; mapping plus serialisation median 14 ms per chain, SHACL median 136 ms (max 1.1 s) | C |
 
 Not done: the full W3C PROV-CONSTRAINTS. ProvToolbox 2.2.5 (`prov-validation`) was fetched from a Maven mirror and its checksum matched, but this session's policy blocked running the downloaded code, and it reads PROV-N or PROV-JSON, not Turtle, so the `prov` package would have had to convert first. It is one command where running it is allowed. No OpenLineage server (Marquez) was run: schema-valid events are Likely ingestible (L), not shown. Next for 0.2 (S, not built): an optional UTC `t` per step so records are dated, not only ordered.
+
+## 11. Sixth pass: a quote beside every value (added 2026-11-16)
+
+Code: `src/x3dtrace.py` (engine, standard library only), `src/x3dprov_trace.py` (the carrier: a `trace` step in the scene's own chain), PROV-O and OpenLineage mappers extended in `src/x3dprov_provo.py` and `src/x3dprov_openlineage.py`, `schemas/` (SHACL trace shapes, `ColumnLineageDatasetFacet.json` vendored with its source sha256), `tests/test_x3dtrace.py` (written by an independent reviewer), `tests/test_trace.py`, `tests/fixtures/trace_conformance.json`, `measure/` (the scripts behind the numbers below), `docs/TRACE.md` (user guide), `docs/TRACE-REVIEW.md` (what the review found), `NOTICE-x3dtrace.md` (credit and every deliberate difference from GAIK).
+
+The idea is the one in Umair Ali Khan's "How I Added Traceability in Structured Data Extraction with AI" and his MIT toolkit GAIK: whoever writes a value also copies the exact quote it read the value from, and plain code, with no model call, answers FIND (is the quote in the source), COMPARE (is the value in the quote) and LOCATE (where). x3dprov says what ran on a scene; this says where each number in the scene came from. The implementation here is independent; the method, the four verdict names (`verified`, `check`, `reworded`, `unchecked`) and the report field names are GAIK's.
+
+| Piece | What it does |
+|---|---|
+| engine (`x3dtrace`) | quote as an unbroken run of whole tokens; numbers keep sign, decimal point and exponent; vectors compared per component; typed conversions (deg2rad, rad2deg, percent, rgb255, hex, colour names, number words, units, broadcast, axis, zero-fill) accepted only when the quote itself carries the evidence; W3C Web Annotation selectors (TextQuote with prefix and suffix, TextPosition, XPath); for a scene also node path, DEF path and a world-space box per USE instance |
+| record | one `trace` step in the head chain: `engine`, `sources` (id, kind, sha256, bytes), `claims_sha256`, `report_sha256`, `summary`, `policy`, `items` (inline up to 64 KiB, else a sidecar named by the report hash); a `summary` step follows as the successor |
+| hashed content | text, integers and booleans only (no floats, no integers at or above 2**53), so Python and JavaScript hash alike; floats travel as their shortest text, boxes as integer micro-units, coverage as parts per million |
+| audit | `verify()`, then per trace step: unchanged scene, items hash to `report_sha256`, claims to `claims_sha256`, sources still match, no field traced twice, optional scene binding, and the whole check re-run against the sources and compared item by item (closes limit 1 of section 3 for claims) |
+| views | PROV-O: `prov:Quotation` with `prov:wasQuotedFrom`, `oa:start`/`oa:end`, `x3dp:conversion`, `x3dp:nodePath`; `prov:hadPrimarySource` is deliberately not asserted. OpenLineage: `ColumnLineageDatasetFacet` 1-2-0, DIRECT with subtype IDENTITY or TRANSFORMATION, edges only for verified and reworded values |
+
+### Measured (2026-11-16; engine sha256 dcba70d7, Python 3.13.18)
+
+Corpus: every tracked `.x3d` file of x3d.ml, x3d.loom, x3d.demo, x3d.docs, x3d-blender-io, x3d.lab, x3d.castle at the commits in `measure/results/m_corpus.json`, de-duplicated by sha256: 1,614 files, 182 duplicates dropped, 1,379 unique scenes parsed (47 failed to parse, 6 not XML), 248,929 elements, 364,127 attributes, 100,392 value-bearing attributes.
+
+| Check | Result | Grade |
+|---|---|---|
+| quote written as the value only, repeats inside its own scene | 57.6% | C |
+| quote written as `attr="value"`, repeats | 43.7% (43,903 of 100,392) | C |
+| same plus 3 neighbouring tokens each side | 22.4% | C |
+| whole start tag; start tag plus 3 tokens | 23.7%; 15.9% | C |
+| repeated `attr="value"` quotes where the first hit is the wrong node | 37,797 of 43,903 (86.1%) | C |
+| same, choosing the hit inside the node the claim's `field` names | 1 of 43,903 (the one miss is a test probe with a namespaced duplicate attribute on the same node) | C |
+| shapes with a world box | 28,465 of 32,608 (87.3%); Text, Extrusion, NURBS have none | C |
+| scenes whose shapes are all boxed | 878 of 1,142 | C |
+| prompt phrases that could be quoted for a model-written value (lexical upper bound, 201 runs) | 394 of 8,250 value attributes (4.78%) | L |
+| cost per claim: check, check plus record, re-audit | 0.35, 0.72, 0.59 ms (656 claims, 40 scenes) | C |
+| tests | 1,240 passed, 2 skipped, 10 expected failures and 15 unexpected passes across `tests/` (Python 3.13; the failures and the passes belong to the open items in `docs/TRACE-REVIEW.md`) | C |
+| independent review (tests written from the intent, without the code) | 43 defects found in the first build of the engine by 1,204 tests (39 fixed here, 4 left open on purpose); six more found later (2 fixed, 4 open); 8 open in all (`docs/TRACE-REVIEW.md`) | C |
+| GAIK conformance rows where x3dtrace differs on purpose | 55 of 135 rows, each with a stated reason (`tests/fixtures/trace_conformance.json`) | C |
+
+Tampering (40 scenes, up to 25 claims each, seed 20261116; `measure/m_tamper.py`):
+
+| Edit | Attempts | Caught | Rate | Grade |
+|---|---|---|---|---|
+| item edited in the sidecar | 1,120 | 1,120 | 100.0% | C |
+| same, trace step patched to match | 1,120 | 1,120 | 100.0% | C |
+| item edited inline | 320 | 320 | 100.0% | C |
+| claim edited | 155 | 155 | 100.0% | C |
+| claim edited and re-hashed | 155 | 155 | 100.0% | C |
+| E1 consistent forgery, last step, unsealed | 80 | 0 | 0.0% | C |
+| E2 forged trace step, seal untouched | 80 | 80 | 100.0% | C |
+| E3 trace and later steps re-chained | 80 | 0 | 0.0% | C |
+| scene edited | 319 | 319 | 100.0% | C |
+
+The two zero rows are the stated limit, not a bug: rewriting the claims, the report and every later step consistently yields a different but honest-looking trace, and a hash-only record cannot tell. Only an external anchor (a signature, a commit, a C2PA manifest) binds a trace to a time and an author. Sealing (the default) puts a summary step after the trace so the trace is not the last link; an unsealed trace whose last step is rewritten consistently falls in the same E1 row.
+
+### Limits (C)
+
+- `verified` means the quote exists and holds the value. It does not mean the quote is the right place, or that the value is true.
+- A paraphrase is `check`: the writer must copy exactly.
+- A vector read from prose is matched on consecutive numbers with any text between them, so scattered numbers can verify it (BUG-45, open): treat a `verified` vector from prose as weaker than one copied from a scene attribute.
+- Coverage counts a claim only when its `field` is the inventory XPath; a claim written as `//*[@DEF=..]/@attr` is checked but not counted (BUG-50, open).
+- The record is unsigned (above). Claims are about one scene version.
+- No box for Text, Extrusion or NURBS; a shape under an unselected Switch child has none.
+- x3dprov needs a `<head>` element to carry a record; a scene without one cannot be stamped (found while measuring tampering; 7 of the 60 scenes the sampler reached).
+- Dates are read as year, month and day parts, one part per number; the ISO year/day swap and set-membership reading that GAIK allows are kept (a decision recorded in `docs/TRACE-REVIEW.md`).
+
+### Next
+
+1. Claims about world extents ("6 m tall") checked against the recorded box. 2. A class for every unquoted value: specified, chosen, derived, default (only 4.78% of model-written values have a prompt phrase). 3. An anchor: signature, commit or C2PA assertion. 4. Evidence overlay in a viewer, using the recorded box and XPath. 5. The claims prompt inside the generation loop, then measure how often models copy exactly (needs model calls). 6. An optional CI lane that compares verdicts with `gaik` on the shared vectors.

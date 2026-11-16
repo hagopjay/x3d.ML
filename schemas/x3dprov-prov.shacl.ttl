@@ -6,6 +6,7 @@
 @prefix x3dp: <https://x3dprov.example/0.1#> .
 @prefix x3df: <https://x3dprov.example/0.1/field#> .
 @prefix s:    <https://x3dprov.example/0.1/shapes#> .
+@prefix oa:   <http://www.w3.org/ns/oa#> .
 
 # Shapes for the x3dprov -> PROV-O mapping (src/x3dprov_provo.py). Two shapes carry the tamper evidence:
 # s:RecordShape (a record must derive from a record that is in the chain) and s:SceneDerivationShape
@@ -45,7 +46,7 @@ s:StepShape a sh:NodeShape ; sh:targetClass x3dp:Step ;
   sh:property [ sh:path x3df:op ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
   sh:property [ sh:path prov:used ; sh:qualifiedValueShape [ sh:class x3dp:SceneVersion ] ;
                 sh:qualifiedMinCount 1 ; sh:qualifiedMaxCount 1 ] ;
-  sh:property [ sh:path prov:used ; sh:or ( [ sh:class x3dp:SceneVersion ] [ sh:class x3dp:Prompt ] ) ] ;
+  sh:property [ sh:path prov:used ; sh:or ( [ sh:class x3dp:SceneVersion ] [ sh:class x3dp:Prompt ] [ sh:class x3dp:SourceDocument ] ) ] ;
   sh:property [ sh:path prov:generated ; sh:minCount 1 ; sh:maxCount 1 ; sh:class x3dp:SceneVersion ] ;
   sh:property [ sh:path prov:wasAssociatedWith ; sh:class prov:Agent ] ;
   sh:property [ sh:path time:hasTime ; sh:maxCount 1 ; sh:class time:ProperInterval ] .
@@ -90,3 +91,50 @@ s:InstantShape a sh:NodeShape ; sh:targetClass time:Instant ;
   sh:property [ sh:path time:inXSDDateTimeStamp ; sh:maxCount 1 ; sh:datatype xsd:dateTimeStamp ] ;
   sh:property [ sh:path time:inXSDDateTime ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
   sh:property [ sh:path time:before ; sh:maxCount 1 ; sh:class time:Instant ] .
+
+# ---- op "trace" (x3dtrace/0.1): value-level evidence. The graph can not run FIND (it has no source text); it can refuse a trace
+# that is not shaped like evidence, and src/x3dprov_trace.py audit_trace() recomputes the verdicts from the sources.
+
+s:TraceShape a sh:NodeShape ; sh:targetClass x3dp:Trace ;
+  sh:property [ sh:path x3df:engine ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path x3df:report_sha256 ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[0-9a-f]{64}$" ] ;
+  sh:property [ sh:path x3df:summary ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:JSON ] ;
+  sh:property [ sh:path x3df:sources ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype rdf:JSON ] ;
+  sh:property [ sh:path prov:used ; sh:qualifiedValueShape [ sh:class x3dp:SourceDocument ] ; sh:qualifiedMinCount 1 ] ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "trace step changed the scene: a trace only reads (input and output content hash must be equal)" ;
+    sh:select """SELECT $this WHERE { $this prov:used ?a ; prov:generated ?b . ?a a x3dp:SceneVersion ; x3dp:contentSha256 ?h1 .
+                 ?b a x3dp:SceneVersion ; x3dp:contentSha256 ?h2 . FILTER(?h1 != ?h2) }""" ] .
+
+s:TraceReportShape a sh:NodeShape ; sh:targetClass x3dp:TraceReport ;
+  sh:class prov:Collection ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class x3dp:Trace ] ;
+  sh:sparql [ a sh:SPARQLConstraint ; sh:prefixes s:prefixes ;
+    sh:message "trace summary: the record says a different number of values (summary.total) than the report holds" ;
+    sh:select """SELECT $this WHERE { $this x3dp:total ?t ; prov:hadMember ?m } GROUP BY $this ?t HAVING (COUNT(?m) != ?t)""" ] .
+
+s:TracedValueShape a sh:NodeShape ; sh:targetClass x3dp:TracedValue ;
+  sh:class prov:Entity ;
+  sh:property [ sh:path x3dp:fieldPath ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path x3dp:verdict ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "verified" "check" "reworded" "unchecked" ) ] ;
+  sh:property [ sh:path x3dp:aboutScene ; sh:minCount 1 ; sh:maxCount 1 ; sh:class x3dp:SceneVersion ] ;
+  sh:property [ sh:path prov:wasGeneratedBy ; sh:minCount 1 ; sh:maxCount 1 ; sh:class x3dp:Trace ] ;
+  # core-only form of the evidence-gap rule (the SPARQL form is quadratic in pyshacl): not "verified", or derived from a quote that was quoted from a source
+  sh:or ( [ sh:property [ sh:path x3dp:verdict ; sh:in ( "check" "reworded" "unchecked" ) ] ]
+          [ sh:property [ sh:path prov:wasDerivedFrom ; sh:qualifiedMinCount 1 ;
+                          sh:qualifiedValueShape [ sh:class x3dp:Quote ;
+                            sh:property [ sh:path prov:wasQuotedFrom ; sh:minCount 1 ; sh:class x3dp:SourceDocument ] ] ] ] ) ;
+  sh:message "evidence gap: a verified value must derive from a quote that was quoted from a source document" .
+
+s:QuoteShape a sh:NodeShape ; sh:targetClass x3dp:Quote ;
+  sh:class prov:Entity ;
+  sh:property [ sh:path x3dp:quoteSha256 ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[0-9a-f]{64}$" ] ;
+  sh:property [ sh:path prov:wasQuotedFrom ; sh:maxCount 1 ; sh:class x3dp:SourceDocument ] ;
+  sh:property [ sh:path prov:atLocation ; sh:maxCount 1 ; sh:class prov:Location ] .
+
+s:SpanShape a sh:NodeShape ; sh:targetClass oa:TextPositionSelector ;
+  sh:property [ sh:path oa:start ; sh:minCount 1 ; sh:maxCount 1 ; sh:lessThanOrEquals oa:end ; sh:message "quote span: oa:end is before oa:start" ] ;
+  sh:property [ sh:path oa:end ; sh:minCount 1 ; sh:maxCount 1 ] .
+
+s:SourceDocumentShape a sh:NodeShape ; sh:targetClass x3dp:SourceDocument ;
+  sh:class prov:Entity .

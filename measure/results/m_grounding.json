@@ -1,0 +1,88 @@
+{
+ "items": 201,
+ "parsed_final_bodies": 190,
+ "values": 8250,
+ "supported": 394,
+ "supported_share": 0.0478,
+ "agg": {
+  "verdict_reworded": 260,
+  "verdict_verified": 134,
+  "values": 8250,
+  "supported": 394,
+  "unsupported": 7856,
+  "items_all_supported": 0,
+  "unparsed": 11
+ },
+ "derivations": {
+  "colorname-class": 240,
+  "colorname": 51,
+  "broadcast": 11,
+  "zero-fill": 20,
+  "numword": 41
+ },
+ "by_model": {
+  "gpt-6.1-sol": {
+   "values": 2256,
+   "supported": 83,
+   "share": 0.0368
+  },
+  "z-ai/glm-5.3": {
+   "values": 501,
+   "supported": 39,
+   "share": 0.0778
+  },
+  "gemini-3.8-flash": {
+   "values": 3323,
+   "supported": 147,
+   "share": 0.0442
+  },
+  "gemini-3.1-pro-preview": {
+   "values": 1390,
+   "supported": 74,
+   "share": 0.0532
+  },
+  "nvidia/nemotron-3-super-120b-a12b": {
+   "values": 780,
+   "supported": 51,
+   "share": 0.0654
+  }
+ },
+ "by_category": {
+  "animation": {
+   "values": 371,
+   "supported": 33,
+   "share": 0.0889
+  },
+  "object": {
+   "values": 252,
+   "supported": 29,
+   "share": 0.1151
+  },
+  "geospatial": {
+   "values": 201,
+   "supported": 11,
+   "share": 0.0547
+  },
+  "showpiece": {
+   "values": 5053,
+   "supported": 311,
+   "share": 0.0615
+  },
+  "assembly": {
+   "values": 1118,
+   "supported": 3,
+   "share": 0.0027
+  },
+  "interaction": {
+   "values": 387,
+   "supported": 5,
+   "share": 0.0129
+  },
+  "hanim": {
+   "values": 868,
+   "supported": 2,
+   "share": 0.0023
+  }
+ },
+ "seconds": 41.5
+}

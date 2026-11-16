@@ -1,0 +1,455 @@
+{
+ "engine_sha256": "dcba70d739007c0d",
+ "python": "3.13.18",
+ "seed": 20261116,
+ "scenes_used": 40,
+ "scenes_skipped_few_claims": 13,
+ "scenes_skipped_stale_on_stamp": 7,
+ "baseline_failures": 0,
+ "baseline_failure_reasons": [],
+ "scenes": [
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/grounded/geo-05.x3d",
+  "x3d-blender-io:demo/investor_poc/xite_gltf_multi_inline_poc.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/oneshot/hanim-02.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gpt-6.1-sol/sp-02_a1.x3d",
+  "x3d.demo:docs/demos/stem/v1/chirp/scenes/chirp.x3d",
+  "x3d.loom:x3d.physics/physx-bridge/scenes/pieces/halfpipe.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/nvidia_nemotron-3-super-120b-a12b/sp-04_a3.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/nvidia_nemotron-3-super-120b-a12b/asm-02_a2.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/nvidia_nemotron-3-super-120b-a12b/hanim-04_a2.x3d",
+  "x3d.demo:docs/demos/blender-x3d-io/v1/scenes/nurbs-weights.x3d",
+  "x3d.ml:runs/gpu-phase/qwen2.5-coder-14b-awq/oneshot/geo-01.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gemini-3.8-flash/anim-01_a1.x3d",
+  "x3d.loom:x3d.webgpu/bridge/fixtures/PointLight.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gemini-3.8-flash/geo-03_a1.x3d",
+  "x3d.loom:x3d.physics/physx-bridge/scenes/experiments/marble-minimal-friction2-zero.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/grounded/hanim-01.x3d",
+  "x3d.ml:runs/gpu-phase/qwen3-8b/grounded/int-03.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gemini-3.8-flash/hanim-04_a3.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/grounded/anim-01.x3d",
+  "x3d.ml:runs/gpu-phase/qwen3-8b/oneshot/asm-02.x3d",
+  "x3d.loom:x3d.threejs/bridge/fixtures/ViewportMany.x3d",
+  "x3d.loom:x3d.webgpu/bridge/fixtures/CollisionCollection.x3d",
+  "x3d-blender-io:docs/brag/poc1/stars-view.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/oneshot/hanim-04.x3d",
+  "x3d.ml:runs/gpu-phase/qwen2.5-coder-14b-awq/grounded/hanim-03.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gemini-3.1-pro-preview/asm-02_a1.x3d",
+  "x3d.ml:runs/gpu-phase/qwen3-8b/oneshot/anim-03.x3d",
+  "x3d.ml:runs/gpu-phase/qwen2.5-coder-14b-awq/oneshot/geo-04.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/oneshot/asm-05.x3d",
+  "x3d.loom:x3d.physics/physx-bridge/scenes/pieces/funnel.x3d",
+  "x3d.docs:docs/x3d_mcp/scenes/fork-timeline.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gemini-3.8-flash/obj-05_a2.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/grounded/hanim-05.x3d",
+  "x3d.ml:runs/gpu-phase/qwen3-8b/grounded/anim-03.x3d",
+  "x3d.loom:x3d.physics/physx-bridge/scenes/pieces/bell.x3d",
+  "x3d.loom:x3d.webgpu/bridge/fixtures/EspduTransform.x3d",
+  "x3d.ml:runs/live-2026-10-17/x3d/gemini-3.8-flash/sp-10_a2.x3d",
+  "x3d.loom:x3d.threejs/bridge/fixtures/HAnimMotion.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/grounded/geo-01.x3d",
+  "x3d.ml:runs/gpu-phase/gpt-oss-20b/grounded/asm-01.x3d"
+ ],
+ "by_family": {
+  "A:sidecar_items_edited": {
+   "n": 1120,
+   "detected": 1120,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match": {
+   "n": 1120,
+   "detected": 1120,
+   "rate": 1.0
+  },
+  "C:inline_item_edited": {
+   "n": 320,
+   "detected": 320,
+   "rate": 1.0
+  },
+  "D:claim_edited": {
+   "n": 155,
+   "detected": 155,
+   "rate": 1.0
+  },
+  "D:claim_edited_and_rehashed": {
+   "n": 155,
+   "detected": 155,
+   "rate": 1.0
+  },
+  "E1:consistent_forgery_last_step_unsealed": {
+   "n": 80,
+   "detected": 0,
+   "rate": 0.0
+  },
+  "E2:forged_trace_step_later_step_untouched": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "E3:trace_and_later_steps_rechained": {
+   "n": 80,
+   "detected": 0,
+   "rate": 0.0
+  },
+  "F:scene_edited": {
+   "n": 319,
+   "detected": 319,
+   "rate": 1.0
+  }
+ },
+ "by_class": {
+  "A:sidecar_items_edited[drop_item,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[drop_item,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[dup_item,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[dup_item,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[edit_locus,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[edit_locus,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[edit_occurrences,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[edit_occurrences,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[flip_value_status,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[flip_value_status,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[flip_verdict,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[flip_verdict,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[shift_span,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "A:sidecar_items_edited[shift_span,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[drop_item,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[drop_item,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[dup_item,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[dup_item,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[edit_locus,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[edit_locus,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[edit_occurrences,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[edit_occurrences,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[flip_value_status,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[flip_value_status,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[flip_verdict,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[flip_verdict,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[shift_span,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "B:step_patched_to_match[shift_span,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "C:inline_item_edited[flip_verdict,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "C:inline_item_edited[flip_verdict,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "C:inline_item_edited[shift_span,sealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "C:inline_item_edited[shift_span,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "D:claim_edited[quote]": {
+   "n": 75,
+   "detected": 75,
+   "rate": 1.0
+  },
+  "D:claim_edited[value]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "D:claim_edited_and_rehashed[quote,unsealed]": {
+   "n": 75,
+   "detected": 75,
+   "rate": 1.0
+  },
+  "D:claim_edited_and_rehashed[value,unsealed]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "E1:consistent_forgery_last_step_unsealed": {
+   "n": 80,
+   "detected": 0,
+   "rate": 0.0
+  },
+  "E2:forged_trace_step_later_step_untouched": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "E3:trace_and_later_steps_rechained": {
+   "n": 80,
+   "detected": 0,
+   "rate": 0.0
+  },
+  "F:scene_edited[claimed_value_digit_edit]": {
+   "n": 79,
+   "detected": 79,
+   "rate": 1.0
+  },
+  "F:scene_edited[comment_inserted]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "F:scene_edited[formatting_only_space_before_slash_gt]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  },
+  "F:scene_edited[unclaimed_head_meta_added]": {
+   "n": 80,
+   "detected": 80,
+   "rate": 1.0
+  }
+ },
+ "status_histogram": {
+  "A:sidecar_items_edited[drop_item,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[drop_item,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[dup_item,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[dup_item,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[edit_locus,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[edit_locus,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[edit_occurrences,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[edit_occurrences,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[flip_value_status,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[flip_value_status,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[flip_verdict,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[flip_verdict,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[shift_span,sealed]": {
+   "evidence-mismatch": 80
+  },
+  "A:sidecar_items_edited[shift_span,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[drop_item,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[drop_item,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[dup_item,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[dup_item,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[edit_locus,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[edit_locus,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[edit_occurrences,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[edit_occurrences,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[flip_value_status,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[flip_value_status,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[flip_verdict,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[flip_verdict,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "B:step_patched_to_match[shift_span,sealed]": {
+   "broken-chain": 80
+  },
+  "B:step_patched_to_match[shift_span,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "C:inline_item_edited[flip_verdict,sealed]": {
+   "broken-chain": 80
+  },
+  "C:inline_item_edited[flip_verdict,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "C:inline_item_edited[shift_span,sealed]": {
+   "broken-chain": 80
+  },
+  "C:inline_item_edited[shift_span,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "D:claim_edited[quote]": {
+   "evidence-mismatch": 75
+  },
+  "D:claim_edited[value]": {
+   "evidence-mismatch": 80
+  },
+  "D:claim_edited_and_rehashed[quote,unsealed]": {
+   "evidence-mismatch": 75
+  },
+  "D:claim_edited_and_rehashed[value,unsealed]": {
+   "evidence-mismatch": 80
+  },
+  "E1:consistent_forgery_last_step_unsealed": {
+   "verified": 80
+  },
+  "E2:forged_trace_step_later_step_untouched": {
+   "broken-chain": 80
+  },
+  "E3:trace_and_later_steps_rechained": {
+   "verified": 80
+  },
+  "F:scene_edited[claimed_value_digit_edit]": {
+   "stale": 79
+  },
+  "F:scene_edited[comment_inserted]": {
+   "evidence-mismatch": 80
+  },
+  "F:scene_edited[formatting_only_space_before_slash_gt]": {
+   "evidence-mismatch": 80
+  },
+  "F:scene_edited[unclaimed_head_meta_added]": {
+   "stale": 80
+  }
+ },
+ "timing": {
+  "scenes": 40,
+  "claims": 656,
+  "scene_bytes": 150622,
+  "ms_per_claim_engine_check": 0.346,
+  "ms_per_claim_trace_claims": 0.719,
+  "ms_per_claim_audit": 0.591
+ }
+}
