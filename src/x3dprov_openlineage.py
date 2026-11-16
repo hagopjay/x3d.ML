@@ -28,7 +28,8 @@ FACETS = "https://x3dprov.example/0.1/openlineage-facets.json#/$defs/"
 STD = {"parent": "https://openlineage.io/spec/facets/1-2-0/ParentRunFacet.json#/$defs/ParentRunFacet",
        "errorMessage": "https://openlineage.io/spec/facets/1-0-1/ErrorMessageRunFacet.json#/$defs/ErrorMessageRunFacet",
        "version": "https://openlineage.io/spec/facets/1-0-1/DatasetVersionDatasetFacet.json#/$defs/DatasetVersionDatasetFacet",
-       "jobType": "https://openlineage.io/spec/facets/2-0-4/JobTypeJobFacet.json#/$defs/JobTypeJobFacet"}
+       "jobType": "https://openlineage.io/spec/facets/2-0-4/JobTypeJobFacet.json#/$defs/JobTypeJobFacet",
+       "columnLineage": "https://openlineage.io/spec/facets/1-2-0/ColumnLineageDatasetFacet.json#/$defs/ColumnLineageDatasetFacet"}
 NS_RUN = uuid.UUID("6d1f7e2a-2c4b-5b8e-9a51-7c3d0e4f8a10")      # fixed namespace for deterministic runIds
 
 
@@ -52,7 +53,32 @@ def _tool_failed(rec):
     return None
 
 
-def to_events(src, name, namespace="x3dprov", pipeline="x3d-loop", base_time="1970-01-01T00:00:00Z", scene_ns="x3d"):
+def column_lineage(items, src_ds):
+    """x3dprov trace items -> ColumnLineageDatasetFacet 1-2-0: output field = the scene node field, inputField = the source document and
+    the selector the quote sits at; transformations DIRECT/IDENTITY (value is the quote's text), DIRECT/TRANSFORMATION (reformatted,
+    converted, reworded: the description says which). An edge is drawn only for a value the code found in its quote (verified, reworded):
+    no quote, `unchecked` and `check` give inputFields [] so the lineage graph shows the evidence gap, never an unproven edge."""
+    fields = {}
+    for it in items:
+        ins = []
+        if (it.get("quote") is not None or it.get("quote_sha256")) and it.get("verdict") in ("verified", "reworded"):
+            ns, nm = src_ds.get(it.get("source"), next(iter(src_ds.values())))
+            span, page = it.get("span"), (it.get("page") if it.get("rects") else None)      # a page only means something with PDF boxes
+            sel = ("chars:%d-%d" % tuple(span)) if span else ("page:%s" % page if page is not None else "quote:" + str(it.get("quote_sha256") or P._sha(it["quote"].encode("utf-8")))[:16])
+            if span and page is not None:
+                sel = "page:%s;%s" % (page, sel)
+            der = [(d.get("kind") if isinstance(d, dict) else str(d)) for d in it.get("derivation", [])]
+            ident = it.get("verdict") == "verified" and not der
+            tr = {"type": "DIRECT", "subtype": "IDENTITY" if ident else "TRANSFORMATION", "masking": False}
+            if not ident:
+                tr["description"] = ("; ".join(der) if der else "value is not verbatim in the quote (%s)" % it.get("verdict"))
+            ins.append({"namespace": ns, "name": nm, "field": sel, "transformations": [tr],
+                        "x3dtrace": {"verdict": it.get("verdict"), "occurrences": it.get("occurrences")}})
+        fields[it["field"]] = {"inputFields": ins}
+    return {"fields": fields}
+
+
+def to_events(src, name, namespace="x3dprov", pipeline="x3d-loop", base_time="1970-01-01T00:00:00Z", scene_ns="x3d", sidecars=None):
     """-> list of RunEvent dicts in emission order. src: a stamped scene (str) or a list of step dicts."""
     ch = chain_of(src)
     v = P.verify(src) if isinstance(src, str) else None
@@ -91,6 +117,17 @@ def to_events(src, name, namespace="x3dprov", pipeline="x3d-loop", base_time="19
         ins = [ds(r.get("input_sha256"))]
         if isinstance(r.get("prompt_sha256"), str):
             ins.append(ds(r["prompt_sha256"], ns="x3d-prompt", nm=str(r.get("prompt_id") or r["prompt_sha256"])))
+        outs = [ds(r.get("output_sha256"))]
+        trace_items = r.get("items") if r.get("op") == "trace" else None
+        if r.get("op") == "trace" and trace_items is None and sidecars:
+            trace_items = sidecars.get(r.get("report_sha256"))
+        src_ds = {}
+        if r.get("op") == "trace":
+            for sdoc in r.get("sources", []):
+                d = ds(sdoc.get("sha256"), ns="x3d-source", nm=str(sdoc.get("name") or sdoc.get("id")))
+                src_ds[sdoc.get("id")] = (d["namespace"], d["name"]); ins.append(d)
+            if trace_items is not None and src_ds:
+                outs[0]["facets"]["columnLineage"] = _f("columnLineage", "", **column_lineage(trace_items, src_ds))
         facets = {"parent": parent,
                   "x3dprov_step": _f(None, "X3dprovStepRunFacet", step=n, op=r.get("op"), recordSha256=P._sha(text.encode("utf-8")),
                                      record=text, eventTimeSource=tsrc)}
@@ -102,13 +139,16 @@ def to_events(src, name, namespace="x3dprov", pipeline="x3d-loop", base_time="19
         if r.get("op") == "repair":
             facets["x3dprov_repair"] = _f(None, "X3dprovRepairRunFacet", kind=r.get("kind"), round=r.get("round"),
                                           reportShown=r.get("report_shown"), fixes=r.get("fixes"))
+        if r.get("op") == "trace":
+            facets["x3dprov_trace"] = _f(None, "X3dprovTraceRunFacet", engine=r.get("engine"), reportSha256=r.get("report_sha256"),
+                                         sources=len(r.get("sources", [])), summary=r.get("summary"))
         start = {"eventType": "START", "eventTime": _iso(ts), "producer": PRODUCER, "schemaURL": SCHEMA_URL,
                  "run": {"runId": rid, "facets": {"parent": parent}}, "job": job, "inputs": ins, "outputs": []}
         why = step_problems.get(n) or ([_tool_failed(r)] if _tool_failed(r) else [])
         if why:
             facets["errorMessage"] = _f("errorMessage", "", message="; ".join(why), programmingLanguage="python")
         end = {"eventType": "FAIL" if why else "COMPLETE", "eventTime": _iso(te), "producer": PRODUCER, "schemaURL": SCHEMA_URL,
-               "run": {"runId": rid, "facets": facets}, "job": job, "inputs": ins, "outputs": [ds(r.get("output_sha256"))]}
+               "run": {"runId": rid, "facets": facets}, "job": job, "inputs": ins, "outputs": outs}
         out += [start, end]
     why = []
     if v is not None and v["status"] != "verified":

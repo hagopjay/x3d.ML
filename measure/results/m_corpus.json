@@ -1,0 +1,499 @@
+{
+ "engine_sha256": "dcba70d739007c0d",
+ "python": "3.13.18",
+ "commits": {
+  "x3d.ml": "8e2e8da",
+  "x3d.loom": "7a7d657",
+  "x3d.demo": "2e5e3f5",
+  "x3d.docs": "4d394d7",
+  "x3d-blender-io": "54aba0c",
+  "x3d.lab": "a7af249",
+  "x3d.castle": "0a1073f"
+ },
+ "tracked_x3d_files": 1614,
+ "unreadable": 0,
+ "duplicates_dropped": 182,
+ "not_xml_text": 6,
+ "unique_scenes_parsed_ok": 1379,
+ "parse_failures": 47,
+ "per_repo_unique_parsed": {
+  "x3d.ml": 817,
+  "x3d.loom": 395,
+  "x3d.demo": 116,
+  "x3d.docs": 25,
+  "x3d-blender-io": 12,
+  "x3d.castle": 14
+ },
+ "totals": {
+  "scenes": 1379,
+  "bytes": 169710479,
+  "elements": 248929,
+  "attributes": 364127,
+  "DEF": 27011,
+  "USE": 45472,
+  "with_head": 1134,
+  "with_meta": 926,
+  "with_unit": 8,
+  "with_Inline": 25,
+  "with_Proto": 23,
+  "with_Script": 27,
+  "with_x3dprov": 188,
+  "attr_ambiguous": 43903,
+  "attr_first_hit_wrong": 37797,
+  "attr_field_locator_wrong": 1
+ },
+ "inventory_attributes": 100392,
+ "ambiguity_by_snippet_kind": {
+  "value": {
+   "n": 100392,
+   "ambiguous": 57851,
+   "share_ambiguous": 0.5763,
+   "max_occurrences": 109437,
+   "median": 2.0,
+   "p99": 956
+  },
+  "attr": {
+   "n": 100392,
+   "ambiguous": 43903,
+   "share_ambiguous": 0.4373,
+   "max_occurrences": 348,
+   "median": 1.0,
+   "p99": 304
+  },
+  "tag": {
+   "n": 100392,
+   "ambiguous": 23748,
+   "share_ambiguous": 0.2366,
+   "max_occurrences": 305,
+   "median": 1.0,
+   "p99": 276
+  },
+  "attr+ctx3": {
+   "n": 100392,
+   "ambiguous": 22439,
+   "share_ambiguous": 0.2235,
+   "max_occurrences": 305,
+   "median": 1.0,
+   "p99": 248
+  },
+  "tag+ctx3": {
+   "n": 100392,
+   "ambiguous": 16004,
+   "share_ambiguous": 0.1594,
+   "max_occurrences": 304,
+   "median": 1.0,
+   "p99": 247
+  }
+ },
+ "ambiguity_by_semantic_class": {
+  "other": {
+   "value": {
+    "ambiguous": 16316,
+    "n": 26076,
+    "share": 0.6257
+   },
+   "attr": {
+    "ambiguous": 13226,
+    "n": 26076,
+    "share": 0.5072
+   },
+   "tag": {
+    "ambiguous": 1060,
+    "n": 26076,
+    "share": 0.0407
+   },
+   "attr+ctx3": {
+    "ambiguous": 925,
+    "n": 26076,
+    "share": 0.0355
+   },
+   "tag+ctx3": {
+    "ambiguous": 472,
+    "n": 26076,
+    "share": 0.0181
+   }
+  },
+  "color": {
+   "value": {
+    "ambiguous": 12142,
+    "n": 17299,
+    "share": 0.7019
+   },
+   "attr": {
+    "ambiguous": 11585,
+    "n": 17299,
+    "share": 0.6697
+   },
+   "tag": {
+    "ambiguous": 9435,
+    "n": 17299,
+    "share": 0.5454
+   },
+   "attr+ctx3": {
+    "ambiguous": 9442,
+    "n": 17299,
+    "share": 0.5458
+   },
+   "tag+ctx3": {
+    "ambiguous": 7934,
+    "n": 17299,
+    "share": 0.4586
+   }
+  },
+  "rotation": {
+   "value": {
+    "ambiguous": 5398,
+    "n": 9027,
+    "share": 0.598
+   },
+   "attr": {
+    "ambiguous": 4672,
+    "n": 9027,
+    "share": 0.5176
+   },
+   "tag": {
+    "ambiguous": 1891,
+    "n": 9027,
+    "share": 0.2095
+   },
+   "attr+ctx3": {
+    "ambiguous": 1364,
+    "n": 9027,
+    "share": 0.1511
+   },
+   "tag+ctx3": {
+    "ambiguous": 827,
+    "n": 9027,
+    "share": 0.0916
+   }
+  },
+  "length": {
+   "value": {
+    "ambiguous": 20415,
+    "n": 43804,
+    "share": 0.4661
+   },
+   "attr": {
+    "ambiguous": 12312,
+    "n": 43804,
+    "share": 0.2811
+   },
+   "tag": {
+    "ambiguous": 10567,
+    "n": 43804,
+    "share": 0.2412
+   },
+   "attr+ctx3": {
+    "ambiguous": 9152,
+    "n": 43804,
+    "share": 0.2089
+   },
+   "tag+ctx3": {
+    "ambiguous": 6374,
+    "n": 43804,
+    "share": 0.1455
+   }
+  },
+  "time": {
+   "value": {
+    "ambiguous": 457,
+    "n": 692,
+    "share": 0.6604
+   },
+   "attr": {
+    "ambiguous": 96,
+    "n": 692,
+    "share": 0.1387
+   },
+   "tag": {
+    "ambiguous": 0,
+    "n": 692,
+    "share": 0.0
+   },
+   "attr+ctx3": {
+    "ambiguous": 0,
+    "n": 692,
+    "share": 0.0
+   },
+   "tag+ctx3": {
+    "ambiguous": 0,
+    "n": 692,
+    "share": 0.0
+   }
+  },
+  "fraction": {
+   "value": {
+    "ambiguous": 3123,
+    "n": 3494,
+    "share": 0.8938
+   },
+   "attr": {
+    "ambiguous": 2012,
+    "n": 3494,
+    "share": 0.5758
+   },
+   "tag": {
+    "ambiguous": 795,
+    "n": 3494,
+    "share": 0.2275
+   },
+   "attr+ctx3": {
+    "ambiguous": 1556,
+    "n": 3494,
+    "share": 0.4453
+   },
+   "tag+ctx3": {
+    "ambiguous": 397,
+    "n": 3494,
+    "share": 0.1136
+   }
+  }
+ },
+ "shape_box_reach": {
+  "USE-geometry": {
+   "shapes": 12301,
+   "with_box": 12283,
+   "share": 0.9985
+  },
+  "IndexedFaceSet": {
+   "shapes": 5261,
+   "with_box": 5194,
+   "share": 0.9873
+  },
+  "Box": {
+   "shapes": 3940,
+   "with_box": 3689,
+   "share": 0.9363
+  },
+  "Text": {
+   "shapes": 2811,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "IndexedLineSet": {
+   "shapes": 2725,
+   "with_box": 2224,
+   "share": 0.8161
+  },
+  "Cylinder": {
+   "shapes": 1997,
+   "with_box": 1979,
+   "share": 0.991
+  },
+  "Sphere": {
+   "shapes": 1799,
+   "with_box": 1762,
+   "share": 0.9794
+  },
+  "IndexedTriangleSet": {
+   "shapes": 498,
+   "with_box": 479,
+   "share": 0.9618
+  },
+  "Cone": {
+   "shapes": 306,
+   "with_box": 278,
+   "share": 0.9085
+  },
+  "Rectangle2D": {
+   "shapes": 262,
+   "with_box": 262,
+   "share": 1.0
+  },
+  "PointSet": {
+   "shapes": 205,
+   "with_box": 194,
+   "share": 0.9463
+  },
+  "Extrusion": {
+   "shapes": 177,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "(none)": {
+   "shapes": 44,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "LineSet": {
+   "shapes": 39,
+   "with_box": 16,
+   "share": 0.4103
+  },
+  "NurbsPatchSurface": {
+   "shapes": 29,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "TriangleStripSet": {
+   "shapes": 26,
+   "with_box": 26,
+   "share": 1.0
+  },
+  "GeoElevationGrid": {
+   "shapes": 21,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "USE": {
+   "shapes": 18,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "ElevationGrid": {
+   "shapes": 16,
+   "with_box": 16,
+   "share": 1.0
+  },
+  "NurbsCurve": {
+   "shapes": 12,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Disk2D": {
+   "shapes": 10,
+   "with_box": 10,
+   "share": 1.0
+  },
+  "IndexedQuadSet": {
+   "shapes": 8,
+   "with_box": 7,
+   "share": 0.875
+  },
+  "NurbsTrimmedSurface": {
+   "shapes": 8,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Torus": {
+   "shapes": 7,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "QuadSet": {
+   "shapes": 7,
+   "with_box": 7,
+   "share": 1.0
+  },
+  "TriangleFanSet": {
+   "shapes": 7,
+   "with_box": 7,
+   "share": 1.0
+  },
+  "NurbsSweptSurface": {
+   "shapes": 7,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Arc2D": {
+   "shapes": 6,
+   "with_box": 6,
+   "share": 1.0
+  },
+  "IndexedTriangleFanSet": {
+   "shapes": 6,
+   "with_box": 6,
+   "share": 1.0
+  },
+  "IndexedTriangleStripSet": {
+   "shapes": 6,
+   "with_box": 6,
+   "share": 1.0
+  },
+  "NurbsSwungSurface": {
+   "shapes": 6,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Geometry": {
+   "shapes": 5,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "TriangleSet": {
+   "shapes": 5,
+   "with_box": 5,
+   "share": 1.0
+  },
+  "ArcClose2D": {
+   "shapes": 4,
+   "with_box": 4,
+   "share": 1.0
+  },
+  "Circle2D": {
+   "shapes": 4,
+   "with_box": 4,
+   "share": 1.0
+  },
+  "GaussianSplats": {
+   "shapes": 3,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "ParticleSystem": {
+   "shapes": 3,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Polyline2D": {
+   "shapes": 3,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Plane": {
+   "shapes": 3,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "ProtoInstance": {
+   "shapes": 2,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "PlaneGeometry": {
+   "shapes": 2,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "Polypoint2D": {
+   "shapes": 2,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "TriangleSet2D": {
+   "shapes": 2,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "x:Box": {
+   "shapes": 1,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "x:Appearance": {
+   "shapes": 1,
+   "with_box": 1,
+   "share": 1.0
+  },
+  "q:Box": {
+   "shapes": 1,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "IsoSurfaceVolumeData": {
+   "shapes": 1,
+   "with_box": 0,
+   "share": 0.0
+  },
+  "VolumeData": {
+   "shapes": 1,
+   "with_box": 0,
+   "share": 0.0
+  }
+ },
+ "shapes_total": 32608,
+ "shapes_with_box": 28465,
+ "scenes_with_shapes": 1142,
+ "scenes_all_shapes_boxed": 878,
+ "seconds": 263.7
+}

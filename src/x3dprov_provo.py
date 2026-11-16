@@ -36,11 +36,12 @@ import x3dprov as P
 BASE = "https://x3dprov.example/"                      # placeholder (RFC 2606 .example); a registered namespace is the Consortium's call
 X3DP = Namespace(BASE + "0.1#")                        # mapping vocabulary
 X3DF = Namespace(BASE + "0.1/field#")                  # one property per x3dprov record field
+OA = Namespace("http://www.w3.org/ns/oa#")             # W3C Web Annotation: selectors for where a quote sits
 SHAPES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "schemas", "x3dprov-prov.shacl.ttl")
-CONTEXT = {"prov": str(PROV), "time": str(TIME), "xsd": str(XSD), "rdfs": str(RDFS), "x3dp": str(X3DP), "x3df": str(X3DF)}
+CONTEXT = {"prov": str(PROV), "time": str(TIME), "xsd": str(XSD), "rdfs": str(RDFS), "x3dp": str(X3DP), "x3df": str(X3DF), "oa": str(OA)}
 STRUCT = ("prev", "input_sha256", "output_sha256")
 OPS = {"ingest": "Ingest", "generate": "Generate", "validate": "Validate", "repair": "Repair", "render": "Render",
-       "transform": "Transform", "judge": "Judge", "measure": "Measure", "summary": "Summary"}
+       "transform": "Transform", "judge": "Judge", "measure": "Measure", "summary": "Summary", "trace": "Trace"}
 ROLES = (("agent", "agent_ref", "ToolRole"), ("tool", None, "ToolRole"), ("validator", "validator_ref", "ValidatorRole"),
          ("model", None, "ModelRole"), ("renderer", None, "RendererRole"), ("human", None, "HumanRole"))
 _HEX = re.compile(r"^[0-9a-f]{64}$")
@@ -137,8 +138,9 @@ def _instant(g, node, s):
 
 # ---- chain -> graph -----------------------------------------------------------------------------------------------
 
-def to_graph(chain, chain_id=None, current_hash=None):
-    """PROV-O graph of a chain. chain_id names the chain (default: hash of record 1); current_hash adds the file as found."""
+def to_graph(chain, chain_id=None, current_hash=None, sidecars=None):
+    """PROV-O graph of a chain. chain_id names the chain (default: hash of record 1); current_hash adds the file as found.
+    sidecars: {report_sha256: [items]} for trace steps whose items are not inline (see trace_triples)."""
     steps = chain["steps"]
     chain_id = chain_id or (P._sha(steps[0][1].encode("utf-8"))[:16] if steps else "empty")
     C = Namespace(BASE + "chain/" + _q(chain_id) + "/")
@@ -219,6 +221,8 @@ def to_graph(chain, chain_id=None, current_hash=None):
         if isinstance(rec.get("prompt_sha256"), str) and _HEX.match(rec["prompt_sha256"]):
             pr = ni(rec["prompt_sha256"])                                 # the prompt is what a generate step really used
             g.add((pr, RDF.type, X3DP.Prompt)); g.add((pr, RDF.type, PROV.Entity)); g.add((act, PROV.used, pr))
+        if rec.get("op") == "trace":
+            trace_triples(g, C, act, rec, vin, n, sidecars)
         # agents
         for key, refkey, role in ROLES:
             name = rec.get(key)
@@ -259,6 +263,84 @@ def to_graph(chain, chain_id=None, current_hash=None):
         g.add((found, RDF.type, X3DP.FileAsFound))
         derive(found, prev_v)
     return g
+
+
+def trace_triples(g, C, act, rec, vin, n, sidecars=None):
+    """op "trace" (x3dtrace/0.1, DESIGN.md section 11): each traced value as evidence in PROV-O. Adds triples only; from_graph() still
+    reads the record from the x3df: literals, so the round trip is unchanged. Rules that keep it so: the source documents are prov:used
+    (StepShape allows x3dp:SourceDocument), but the report and the values are tied to the step by prov:wasGeneratedBy ONLY: a second
+    prov:generated on the step would break the one-scene-version output that from_graph and StepShape rely on.
+      source document          x3dp:SourceDocument, prov:Entity <ni:source sha-256>; the step prov:used it
+      trace report             x3dp:TraceReport, prov:Collection <ni:report_sha256>; prov:wasGeneratedBy the step; prov:hadMember each value
+      traced value             x3dp:TracedValue, prov:Entity: x3dp:fieldPath (scene node field), x3dp:verdict, prov:value (the scene's text);
+                               x3dp:aboutScene the scene version it is a claim about; prov:wasDerivedFrom its quote
+      quote                    x3dp:Quote, prov:Entity: prov:value (the text) or x3dp:quoteSha256; prov:wasQuotedFrom (+ wasDerivedFrom, and a
+                               qualified prov:Quotation with the step as activity) the source; prov:atLocation a prov:Location carrying
+                               x3dp:page, x3dp:rects (rdf:JSON), oa:start / oa:end (character span), x3dp:occurrences"""
+    items = rec.get("items")
+    if items is None and sidecars:
+        items = sidecars.get(rec.get("report_sha256"))
+    src = {}
+    for s in rec.get("sources", []):
+        sid = s.get("id")
+        iri = ni(s["sha256"]) if isinstance(s.get("sha256"), str) and _HEX.match(s["sha256"]) else C["source/" + _q(sid)]
+        for t in (X3DP.SourceDocument, PROV.Entity):
+            g.add((iri, RDF.type, t))
+        if s.get("kind"):
+            g.add((iri, X3DP.sourceKind, Literal(s["kind"])))
+        if s.get("name"):
+            g.add((iri, X3DP.name, Literal(s["name"])))
+        g.add((act, PROV.used, iri))
+        src[sid] = iri
+    if not (isinstance(rec.get("report_sha256"), str) and _HEX.match(rec["report_sha256"])):
+        return
+    rep = ni(rec["report_sha256"])
+    for t in (X3DP.TraceReport, PROV.Collection, PROV.Entity):
+        g.add((rep, RDF.type, t))
+    g.add((rep, PROV.wasGeneratedBy, act))
+    if items is not None and isinstance((rec.get("summary") or {}).get("total"), int):
+        g.add((rep, X3DP.total, Literal(rec["summary"]["total"])))         # what the record claims; the SHACL shape counts the members
+    for i, it in enumerate(items or []):
+        tv = C["value/%d/%d" % (n, i)]
+        for t in (X3DP.TracedValue, PROV.Entity):
+            g.add((tv, RDF.type, t))
+        g.add((rep, PROV.hadMember, tv)); g.add((tv, PROV.wasGeneratedBy, act)); g.add((tv, X3DP.aboutScene, vin))
+        g.add((tv, X3DP.fieldPath, Literal(it["field"])))
+        g.add((tv, X3DP.verdict, Literal(it["verdict"])))
+        if it.get("value") is not None:
+            g.add((tv, PROV.value, _lit(it["value"])))
+        if not (it.get("quote") is not None or it.get("quote_sha256")):
+            continue
+        q = C["quote/%d/%d" % (n, i)]
+        for t in (X3DP.Quote, PROV.Entity):
+            g.add((q, RDF.type, t))
+        if it.get("quote") is not None:
+            g.add((q, PROV.value, Literal(it["quote"])))
+        g.add((q, X3DP.quoteSha256, Literal(it.get("quote_sha256") or P._sha(it["quote"].encode("utf-8")))))
+        g.add((tv, PROV.wasDerivedFrom, q))
+        s_iri = src.get(it.get("source"), next(iter(src.values()), None)) if src else None
+        if s_iri is not None:
+            g.add((q, PROV.wasQuotedFrom, s_iri)); g.add((q, PROV.wasDerivedFrom, s_iri))
+            qq = BNode()
+            g.add((q, PROV.qualifiedQuotation, qq)); g.add((qq, RDF.type, PROV.Quotation))
+            g.add((qq, PROV.entity, s_iri)); g.add((qq, PROV.hadActivity, act))
+        for d in it.get("derivation") or []:                               # typed conversions the quote licensed (deg2rad, colorname:red, ...)
+            g.add((tv, X3DP.conversion, Literal(d.get("kind") if isinstance(d, dict) else str(d))))
+        if it.get("span") or it.get("rects"):
+            loc = C["quote/%d/%d/at" % (n, i)]
+            g.add((q, PROV.atLocation, loc)); g.add((loc, RDF.type, PROV.Location))
+            if it.get("rects") and it.get("page") is not None:
+                g.add((loc, X3DP.page, Literal(it["page"])))
+            if (it.get("locus") or {}).get("xpath"):
+                g.add((loc, X3DP.nodePath, Literal(it["locus"]["xpath"])))
+            if it.get("rects"):
+                g.add((loc, X3DP.rects, _lit(it["rects"])))
+            if it.get("span"):
+                g.add((loc, RDF.type, OA.TextPositionSelector))
+                g.add((loc, OA.start, Literal(it["span"][0], datatype=XSD.nonNegativeInteger)))
+                g.add((loc, OA.end, Literal(it["span"][1], datatype=XSD.nonNegativeInteger)))
+            if it.get("occurrences") is not None:
+                g.add((loc, X3DP.occurrences, Literal(it["occurrences"])))
 
 
 # ---- graph -> chain -----------------------------------------------------------------------------------------------

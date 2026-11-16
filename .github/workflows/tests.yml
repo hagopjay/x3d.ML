@@ -1,0 +1,28 @@
+name: Tests
+# pytest over tests/: the x3dprov chain and its PROV-O and OpenLineage views, the run ingest, and (new) the x3dtrace engine and
+# its trace step. The engine itself is standard library only; the views need lxml, rdflib, pyshacl and jsonschema.
+# The corpus measurements in measure/ are by hand (they need checkouts of other repositories); their JSON output is committed.
+on:
+  push:
+    paths: ["src/**", "tests/**", "schemas/**", "js/**", ".github/workflows/tests.yml"]
+  pull_request:
+    paths: ["src/**", "tests/**", "schemas/**", "js/**", ".github/workflows/tests.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install "lxml>=6.0" rdflib pyshacl jsonschema rfc3339-validator rfc3987 prov pytest
+      - run: python -I -m pytest tests -q -p no:cacheprovider
+      - run: node js/test_vectors.js js/vectors.json "$RUNNER_TEMP/disagreements.json"
