@@ -1,0 +1,259 @@
+{
+  "schema": "scivis.bridge-alignment/1",
+  "scope": "Method overlap, not historical bridge confirmation or completion.",
+  "bridges": [
+    {
+      "bridge": "B01",
+      "inventory_node": "urn:x3d-scivis:bridge:B01",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:native53-probe"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B02",
+      "inventory_node": "urn:x3d-scivis:bridge:B02",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B03",
+      "inventory_node": "urn:x3d-scivis:bridge:B03",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B04",
+      "inventory_node": "urn:x3d-scivis:bridge:B04",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B05",
+      "inventory_node": "urn:x3d-scivis:bridge:B05",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B06",
+      "inventory_node": "urn:x3d-scivis:bridge:B06",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B07",
+      "inventory_node": "urn:x3d-scivis:bridge:B07",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B08",
+      "inventory_node": "urn:x3d-scivis:bridge:B08",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B09",
+      "inventory_node": "urn:x3d-scivis:bridge:B09",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:x3d-frames"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B10",
+      "inventory_node": "urn:x3d-scivis:bridge:B10",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:readback-flow-balanced",
+        "urn:x3d-scivis:evidencerecord:readback-flow-integrable",
+        "urn:x3d-scivis:evidencerecord:readback-flow-anisotropic",
+        "urn:x3d-scivis:evidencerecord:readback-tensor-correlated",
+        "urn:x3d-scivis:evidencerecord:readback-tensor-spherical",
+        "urn:x3d-scivis:evidencerecord:readback-tensor-mixture",
+        "urn:x3d-scivis:evidencerecord:readback-modes-fundamental",
+        "urn:x3d-scivis:evidencerecord:readback-modes-degenerate",
+        "urn:x3d-scivis:evidencerecord:readback-modes-beats",
+        "urn:x3d-scivis:evidencerecord:x3d-frames",
+        "urn:x3d-scivis:evidencerecord:transfer-flow",
+        "urn:x3d-scivis:evidencerecord:render-flow",
+        "urn:x3d-scivis:evidencerecord:glb-flow",
+        "urn:x3d-scivis:evidencerecord:transfer-tensor",
+        "urn:x3d-scivis:evidencerecord:render-tensor",
+        "urn:x3d-scivis:evidencerecord:glb-tensor",
+        "urn:x3d-scivis:evidencerecord:transfer-modes",
+        "urn:x3d-scivis:evidencerecord:render-modes",
+        "urn:x3d-scivis:evidencerecord:glb-modes",
+        "urn:x3d-scivis:evidencerecord:local-origin-probe",
+        "urn:x3d-scivis:evidencerecord:native53-probe"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B11",
+      "inventory_node": "urn:x3d-scivis:bridge:B11",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B12",
+      "inventory_node": "urn:x3d-scivis:bridge:B12",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:readback-flow-balanced",
+        "urn:x3d-scivis:evidencerecord:readback-flow-integrable",
+        "urn:x3d-scivis:evidencerecord:readback-flow-anisotropic",
+        "urn:x3d-scivis:evidencerecord:readback-tensor-correlated",
+        "urn:x3d-scivis:evidencerecord:readback-tensor-spherical",
+        "urn:x3d-scivis:evidencerecord:readback-tensor-mixture",
+        "urn:x3d-scivis:evidencerecord:readback-modes-fundamental",
+        "urn:x3d-scivis:evidencerecord:readback-modes-degenerate",
+        "urn:x3d-scivis:evidencerecord:readback-modes-beats",
+        "urn:x3d-scivis:evidencerecord:transfer-flow",
+        "urn:x3d-scivis:evidencerecord:render-flow",
+        "urn:x3d-scivis:evidencerecord:glb-flow",
+        "urn:x3d-scivis:evidencerecord:transfer-tensor",
+        "urn:x3d-scivis:evidencerecord:render-tensor",
+        "urn:x3d-scivis:evidencerecord:glb-tensor",
+        "urn:x3d-scivis:evidencerecord:transfer-modes",
+        "urn:x3d-scivis:evidencerecord:render-modes",
+        "urn:x3d-scivis:evidencerecord:glb-modes",
+        "urn:x3d-scivis:evidencerecord:local-origin-probe",
+        "urn:x3d-scivis:evidencerecord:figure-link-flow",
+        "urn:x3d-scivis:evidencerecord:figure-link-tensor",
+        "urn:x3d-scivis:evidencerecord:figure-link-modes"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B13",
+      "inventory_node": "urn:x3d-scivis:bridge:B13",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:native53-probe"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B14",
+      "inventory_node": "urn:x3d-scivis:bridge:B14",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B15",
+      "inventory_node": "urn:x3d-scivis:bridge:B15",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B16",
+      "inventory_node": "urn:x3d-scivis:bridge:B16",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B17",
+      "inventory_node": "urn:x3d-scivis:bridge:B17",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B18",
+      "inventory_node": "urn:x3d-scivis:bridge:B18",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B19",
+      "inventory_node": "urn:x3d-scivis:bridge:B19",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B20",
+      "inventory_node": "urn:x3d-scivis:bridge:B20",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B21",
+      "inventory_node": "urn:x3d-scivis:bridge:B21",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:local-origin-probe"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B22",
+      "inventory_node": "urn:x3d-scivis:bridge:B22",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B23",
+      "inventory_node": "urn:x3d-scivis:bridge:B23",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B24",
+      "inventory_node": "urn:x3d-scivis:bridge:B24",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B25",
+      "inventory_node": "urn:x3d-scivis:bridge:B25",
+      "related_current_evidence": [],
+      "relationship": "awaits-scoped-evidence",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B26",
+      "inventory_node": "urn:x3d-scivis:bridge:B26",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:glb-flow",
+        "urn:x3d-scivis:evidencerecord:glb-tensor",
+        "urn:x3d-scivis:evidencerecord:glb-modes"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    },
+    {
+      "bridge": "B27",
+      "inventory_node": "urn:x3d-scivis:bridge:B27",
+      "related_current_evidence": [
+        "urn:x3d-scivis:evidencerecord:transfer-flow",
+        "urn:x3d-scivis:evidencerecord:render-flow",
+        "urn:x3d-scivis:evidencerecord:transfer-tensor",
+        "urn:x3d-scivis:evidencerecord:render-tensor",
+        "urn:x3d-scivis:evidencerecord:transfer-modes",
+        "urn:x3d-scivis:evidencerecord:render-modes"
+      ],
+      "relationship": "method-overlap",
+      "historical_grade_changed": false
+    }
+  ]
+}

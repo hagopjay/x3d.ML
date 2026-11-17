@@ -1,0 +1,936 @@
+{
+  "schema": "scivis.current-evidence-map/1",
+  "visibility": "private",
+  "as_of": "2026-11-17",
+  "source_root": "/workspace/scratch/aee90170662d/x3d.STEM",
+  "historical_source": "upload/FLYWHEEL-SYNERGY-v1 (2).md",
+  "status_semantics": {
+    "implemented": "Original bridge acceptance contract is fully exercised; no bridge is assigned this status merely by analogy.",
+    "partially_closes": "Current source/receipts implement a directly reusable subset; remaining original acceptance gaps are explicit.",
+    "not_addressed": "Original bridge-specific behavior is absent; adjacent reusable infrastructure may exist."
+  },
+  "summary": {
+    "cases": 9,
+    "saved_frames": 78,
+    "declared_scientific_witnesses": 63,
+    "release_status": "pass",
+    "source_drift": "none",
+    "recorded_python_test_counts": [
+      59,
+      59,
+      14,
+      14
+    ],
+    "recorded_blender_gate_count": 9,
+    "native_xite_browser_status": "not_run",
+    "validator": {
+      "commit": "b5c9956917714747fe1d034c729612e99b0f09c9",
+      "xsd": "4.0",
+      "semantic_vocabulary": "4.1"
+    },
+    "owned_adapter_coordinate_map": "(x,y,z) -> (x,-z,y); determinant +1",
+    "fresh_audit_scope": "Read source and existing executed receipts; recomputed only artifact/source SHA identities. Did not rerun Blender, scientific models, native browser, or original private kits."
+  },
+  "fresh_artifact_identity_audit": {
+    "status": "pass",
+    "checks": [
+      {
+        "scope": "packet",
+        "id": "flow-balanced",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "flow-integrable",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "flow-anisotropic",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "tensor-correlated",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "tensor-spherical",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "tensor-mixture",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "modes-fundamental",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "modes-degenerate",
+        "pass": true
+      },
+      {
+        "scope": "packet",
+        "id": "modes-beats",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "../../lib/stemkit/core.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/__init__.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/blender_io.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/core.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/exchange.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/flow.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/modes.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "stemloom/tensor.py",
+        "pass": true
+      },
+      {
+        "scope": "bank_producer",
+        "id": "tools/build.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "serve.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/__init__.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/blender_io.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/core.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/exchange.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/flow.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/modes.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "stemloom/tensor.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/scene.test.cjs",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_blender_contract.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_exchange.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_flow.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_modes.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_pipeline.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_server.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tests/test_tensor.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/blender_bridge.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/build.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/check.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/export_glb.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/hub.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/render_blender.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/validate_x3d.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "tools/verify.py",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "web/app.js",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "web/index.html",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "web/scene.js",
+        "pass": true
+      },
+      {
+        "scope": "release_source",
+        "id": "web/style.css",
+        "pass": true
+      },
+      {
+        "scope": "render_png",
+        "id": "flow",
+        "pass": true
+      },
+      {
+        "scope": "glb",
+        "id": "flow",
+        "pass": true
+      },
+      {
+        "scope": "scientific_blend",
+        "id": "flow",
+        "pass": true
+      },
+      {
+        "scope": "render_png",
+        "id": "tensor",
+        "pass": true
+      },
+      {
+        "scope": "glb",
+        "id": "tensor",
+        "pass": true
+      },
+      {
+        "scope": "scientific_blend",
+        "id": "tensor",
+        "pass": true
+      },
+      {
+        "scope": "render_png",
+        "id": "modes",
+        "pass": true
+      },
+      {
+        "scope": "glb",
+        "id": "modes",
+        "pass": true
+      },
+      {
+        "scope": "scientific_blend",
+        "id": "modes",
+        "pass": true
+      }
+    ]
+  },
+  "evidence": {
+    "E01": {
+      "path": "studies/research-loom/CONTRACT.md",
+      "sha256": "2142eea9350092069c76afd7c2f727e2d0488f6a563b9d60ca77c4ef533d46a0",
+      "bytes": 3045
+    },
+    "E02": {
+      "path": "studies/research-loom/README.md",
+      "sha256": "b88de6d6074d1e9df1c2f4a60903b655ef6e3fb5d4ccf9c47575be27abe1c716",
+      "bytes": 6311
+    },
+    "E03": {
+      "path": "studies/research-loom/docs/BLENDER-HUB.md",
+      "sha256": "bb151456ceb54361ebd8024d2df806bd02d087fff7231b374ce5ed950cdde306",
+      "bytes": 11684
+    },
+    "E04": {
+      "path": "studies/research-loom/docs/EXCHANGE-CONTRACT.md",
+      "sha256": "0e4cd48736820237a460b1120f37b078ecd5fd8e77d0d8c72fa41d0f9b0395cb",
+      "bytes": 6856
+    },
+    "E05": {
+      "path": "studies/research-loom/docs/FOLDBACK.md",
+      "sha256": "49bc158e5e2fb2b2c5f4d7d6d3203d061ab6e0aeafabc08f59af29862f5f5f2e",
+      "bytes": 5070
+    },
+    "E06": {
+      "path": "studies/research-loom/docs/VALIDATION.md",
+      "sha256": "5e6f78dcd094af57bb4057207c241cf4c8e1208b0c2a1e0daffda07fcb5ed86b",
+      "bytes": 3462
+    },
+    "E07": {
+      "path": "studies/research-loom/evidence/build.json",
+      "sha256": "ab80fb09a065df16b7aff6989f594df0c8a426d937f30f67273dcf121894e295",
+      "bytes": 30473
+    },
+    "E08": {
+      "path": "studies/research-loom/evidence/release.json",
+      "sha256": "6bf42df7e92eb5659f7c2265af5bced8776c40db69a835f8cc52ec5e0beb8fd4",
+      "bytes": 10514
+    },
+    "E09": {
+      "path": "studies/research-loom/evidence/verification.json",
+      "sha256": "31777810c213a2e7acf83788b46c5733a561fef4e05bad8a6eecec0888a89826",
+      "bytes": 9967
+    },
+    "E10": {
+      "path": "studies/research-loom/evidence/x3d-validation.json",
+      "sha256": "f4add82ae99fbfe58336c82219ce5702285a27478d17428e15942cc48390b940",
+      "bytes": 1370048
+    },
+    "E11": {
+      "path": "studies/research-loom/web/bank/index.json",
+      "sha256": "fa65b2fa81b2894fe17cf18702ce35ab0a70f3b3b92dadc57041e8e9e4ea7402",
+      "bytes": 30463
+    },
+    "E12": {
+      "path": "studies/research-loom/evidence/blender-stock-extension.json",
+      "sha256": "51e102a5f74b28d055397f4a5050c1d608ad80da375a640093082ad350d567d8",
+      "bytes": 2915
+    },
+    "E13": {
+      "path": "studies/research-loom/evidence/blender-ecosystem-fork.json",
+      "sha256": "541115038469205ce8e9ebaf72e6f809513448043a4c70c91213b4f40db5e3c2",
+      "bytes": 3311
+    },
+    "E14": {
+      "path": "studies/research-loom/evidence/blender-runtime.json",
+      "sha256": "47abdccd688c351d5b43cc78e26998a90875ef522181045ea824a2715d29087c",
+      "bytes": 590
+    },
+    "E15": {
+      "path": "studies/research-loom/stemloom/core.py",
+      "sha256": "1c16714879ee140876e3a3c8b8b637476ff8bb07d5849f01706165bb0109c56b",
+      "bytes": 3588
+    },
+    "E16": {
+      "path": "studies/research-loom/stemloom/exchange.py",
+      "sha256": "c1a836cd903801ec8550ebaf34faac8b29f581076cc7a4dd7864e0be7d10906c",
+      "bytes": 33377
+    },
+    "E17": {
+      "path": "studies/research-loom/stemloom/blender_io.py",
+      "sha256": "ba9e0d4dbcd4ddd4d3d851e5737bc7c0944ec4b1d9adb3b9f15c2d0167b5631e",
+      "bytes": 16499
+    },
+    "E18": {
+      "path": "studies/research-loom/tools/build.py",
+      "sha256": "dd6e182d603ac3e72944e3ae5ee2b4a22b63e77a19e75f3cc5c500b2ee339c02",
+      "bytes": 4971
+    },
+    "E19": {
+      "path": "studies/research-loom/tools/check.py",
+      "sha256": "a05e7bc6d82a3ecaea372c9017aab7348f0baf47e298bc4f23f25f02997e857c",
+      "bytes": 13021
+    },
+    "E20": {
+      "path": "studies/research-loom/tools/validate_x3d.py",
+      "sha256": "2bdd9ff403931e701a30061cd4d53fa909698245b8128a5c93c4facf290a8a12",
+      "bytes": 12538
+    },
+    "E21": {
+      "path": "studies/research-loom/tools/verify.py",
+      "sha256": "89477b8bb21a29136d0ae95fdbb02fad97e5dca766a3cbfcbf1b13941c772b8a",
+      "bytes": 22320
+    },
+    "E22": {
+      "path": "studies/research-loom/tools/export_glb.py",
+      "sha256": "2750f3c1d491620ab85ed8d38e90dd69552f8cc0b8b5747bad2a4deddb7fab20",
+      "bytes": 12168
+    },
+    "E23": {
+      "path": "studies/research-loom/serve.py",
+      "sha256": "32c413ec15d244a33995f9f465134b8b4ef380fe1e64be138375698683efcaee",
+      "bytes": 10069
+    },
+    "E24": {
+      "path": "studies/research-loom/tests/test_server.py",
+      "sha256": "c59ea38d9b6e653207a9197d317520f19daf54eaa90424a06da20a822fe11149",
+      "bytes": 4373
+    },
+    "E25": {
+      "path": "studies/research-loom/tests/test_pipeline.py",
+      "sha256": "2865ee2ac8ea0305ccc10a81ffb4b8e7684b5d174cd81047061fa837bc69d0f7",
+      "bytes": 3084
+    },
+    "E26": {
+      "path": "studies/research-loom/tests/test_exchange.py",
+      "sha256": "52f767d4c577c434a496b15128f964f2506053bb68a1f41d242917bab6631949",
+      "bytes": 10901
+    },
+    "E27": {
+      "path": "studies/research-loom/tests/test_blender_contract.py",
+      "sha256": "07ed160eecfb5658acbf4906c17d1171d0ef3d4c0e4556e1bf428ae930bde970",
+      "bytes": 3970
+    },
+    "E28": {
+      "path": "studies/research-loom/tests/scene.test.cjs",
+      "sha256": "b0b72d1d2bde6880d5af41c87a0936156b7947fac4ceb78e7e0ae38c937f79c4",
+      "bytes": 3664
+    },
+    "E29": {
+      "path": "studies/research-loom/evidence/blender-transfer-flow.json",
+      "sha256": "db6eabc1a89e842e1cc8e0de347a7db92c7c1f30d9802fe8d9d79c0177034862",
+      "bytes": 1696
+    },
+    "E30": {
+      "path": "studies/research-loom/evidence/blender-render-flow.json",
+      "sha256": "9edd096efb9c0bd2dcdb4f0effca98515240b7a091ecaa8144e03b804bbab757",
+      "bytes": 1612
+    },
+    "E31": {
+      "path": "studies/research-loom/evidence/blender-glb-flow.json",
+      "sha256": "7bb71e8551a9f3e37d6ce2b08f4df6276014f3dba8ce2a50181775d6292e32f4",
+      "bytes": 1676
+    },
+    "E32": {
+      "path": "studies/research-loom/evidence/blender-transfer-tensor.json",
+      "sha256": "354f084b821f810651e2ad3af2a8043376902020b7eb88f6df512625c608c3ff",
+      "bytes": 1701
+    },
+    "E33": {
+      "path": "studies/research-loom/evidence/blender-render-tensor.json",
+      "sha256": "c48b65593a3c00854492baa3922880e2908dd650684e86635b781dc9412e347e",
+      "bytes": 1613
+    },
+    "E34": {
+      "path": "studies/research-loom/evidence/blender-glb-tensor.json",
+      "sha256": "f821fedccd0dff11f4f8ae7b6b4197a166a9759b4de21364185a79a9cf5f83c1",
+      "bytes": 1676
+    },
+    "E35": {
+      "path": "studies/research-loom/evidence/blender-transfer-modes.json",
+      "sha256": "48e3de7caa09b7ae3cde71929cc7ec0f6a6fd36d844da732eb980ddb5f8e336c",
+      "bytes": 1715
+    },
+    "E36": {
+      "path": "studies/research-loom/evidence/blender-render-modes.json",
+      "sha256": "246a796326e4a126461da499bfc9ad95e4fda3a016ae0760618a507609de41b1",
+      "bytes": 1630
+    },
+    "E37": {
+      "path": "studies/research-loom/evidence/blender-glb-modes.json",
+      "sha256": "a4d94a8c529215f55505e87f825ff3ae60e394489441a8a59a062d1ff94ed778",
+      "bytes": 1670
+    }
+  },
+  "bridges": [
+    {
+      "id": "B01",
+      "title": "Splat round-trip ladder",
+      "original_scope_status": "not_addressed",
+      "priority": "P1",
+      "current_implemented_elements": "Research Loom has durable deterministic case packets, manifest hashes, explicit geometric tolerances and negative controls for meshes/lines/points.",
+      "remaining_acceptance_gap": "No GaussianSplats, SH0–SH3 fields, opacity/logit clamp fixtures, real splat datasets or X_ITE-vs-splat-oracle PSNR are in this study.",
+      "integration_action": "Reuse manifest, source binding and expected-loss patterns for a separate splat fixture suite; preserve historical splat numbers as reported until their exact bytes and pins are recovered.",
+      "evidence_refs": [
+        "E11",
+        "E18",
+        "E08"
+      ],
+      "ontology_hooks": [
+        "Fixture",
+        "FieldEncoding",
+        "ExpectedLoss",
+        "RoundTripObservation"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B02",
+      "title": "Validator large-attribute verdict",
+      "original_scope_status": "partially_closes",
+      "priority": "P0",
+      "current_implemented_elements": "The pinned adapter has an explicit 2 MiB input cap and records an input refusal separately from pass/fail of XSD/semantic checks.",
+      "remaining_acceptance_gap": "No large-attribute ladder, huge_tree patch or XSD engine ceiling was executed by Research Loom. Bounded small scenes cannot substantiate a large-splat fix.",
+      "integration_action": "Adopt its honest scoped refusal vocabulary, then recover or rebuild the historical large-attribute fixtures under the selected validator pin and explicit parser budgets.",
+      "evidence_refs": [
+        "E20",
+        "E10"
+      ],
+      "ontology_hooks": [
+        "Instrument",
+        "InputBudget",
+        "Refusal",
+        "ValidationObservation"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B03",
+      "title": "Splat export slabs",
+      "original_scope_status": "not_addressed",
+      "priority": "P2",
+      "current_implemented_elements": "The Blender source text block is compressed and line-chunked to avoid a real long-line performance pathology.",
+      "remaining_acceptance_gap": "That source-text envelope is not GaussianSplats spatial/depth slabbing, and no render-order or per-attribute size claims follow from it.",
+      "integration_action": "Keep the text-envelope performance fix separate; specify slabbing against measured attribute bytes, scientific field retention and compositing order.",
+      "evidence_refs": [
+        "E17",
+        "E03"
+      ],
+      "ontology_hooks": [
+        "RepresentationEncoding",
+        "PartitionStrategy",
+        "OrderingConstraint",
+        "PerformanceObservation"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B04",
+      "title": "Importer value correctness",
+      "original_scope_status": "partially_closes",
+      "priority": "P0",
+      "current_implemented_elements": "An owned adapter uses proper Y-up/Z-up rotation, explicit sRGB/linear conversion, actual vertex/glyph/tube readback and scalar-appearance comparisons. External stock and fork routes have separate executed mixed-fixture loss receipts.",
+      "remaining_acceptance_gap": "No broad fork material/default/Unlit/light-energy regression pack is delivered; the owned adapter is not a repair of the external fork.",
+      "integration_action": "Promote the asymmetric fixture and actual-coordinate mutation control into a handoff pack for x3d-blender-io; add field-specific tolerances and material/default controls without broadening current success claims.",
+      "evidence_refs": [
+        "E17",
+        "E12",
+        "E13",
+        "E29",
+        "E32",
+        "E35"
+      ],
+      "ontology_hooks": [
+        "CoordinateConvention",
+        "ColorEncoding",
+        "AdapterVersion",
+        "RetentionObservation",
+        "MutationControl"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B05",
+      "title": "Blender agent guard",
+      "original_scope_status": "partially_closes",
+      "priority": "P0",
+      "current_implemented_elements": "Study publication is gated before index replacement; canonical packet/frame bytes, producer hashes and declared witness inequalities are checked. Imports are bound to exact canonical packet bytes and stale producer processes refuse requests.",
+      "remaining_acceptance_gap": "This is not a sandbox for arbitrary bpy scripts, a Blender MCP preflight, an agent repair loop or a complete feature-loss audit.",
+      "integration_action": "Wrap existing deterministic gates with a thin script-lane runner whose contracts distinguish eligibility, unsupported data and execution failure. Add pre-export loss rules rather than inferring completeness from XSD success.",
+      "evidence_refs": [
+        "E15",
+        "E18",
+        "E23",
+        "E24",
+        "E25",
+        "E08"
+      ],
+      "ontology_hooks": [
+        "Candidate",
+        "EligibilityDecision",
+        "ProducerSnapshot",
+        "ExecutionAttempt",
+        "LossFinding"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B06",
+      "title": "Look parity chart",
+      "original_scope_status": "partially_closes",
+      "priority": "P1",
+      "current_implemented_elements": "Data colors are declared sRGB; explicit piecewise conversion is measured, studio Blender renders use Standard display transform, and GLB serialization is compared separately from BYTE_COLOR reimport.",
+      "remaining_acceptance_gap": "No cross-renderer numeric chart, ΔE/PSNR gate, alpha sorting chart or native X_ITE pixels were executed here. A beautiful Blender render is not a look-parity result.",
+      "integration_action": "Reuse color fixtures but run paired unlit/value-preserving chart measurements with common camera/exposure/background before judging scene appearance.",
+      "evidence_refs": [
+        "E03",
+        "E33",
+        "E34",
+        "E08"
+      ],
+      "ontology_hooks": [
+        "ColorEncoding",
+        "ViewTransform",
+        "RenderConfiguration",
+        "ImageMetric",
+        "ComparisonProtocol"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B07",
+      "title": "Importer must-not-raise corpus suite",
+      "original_scope_status": "partially_closes",
+      "priority": "P1",
+      "current_implemented_elements": "The owned bounded X3D reader rejects unsupported/static-subset violations and unsafe/malformed inputs; unit tests exercise actual coordinate edits and invalid topology. Actual Blender-coordinate tampering is caught.",
+      "remaining_acceptance_gap": "No 585-scene corpus or 3,649 mutant set was inspected or executed in this map, and no general external-importer crash result is established.",
+      "integration_action": "Use source-hashed failure fixtures and expected refusals in a corpus manifest; retain crashes, unsupported features and preflight-invalid inputs as distinct outcomes.",
+      "evidence_refs": [
+        "E16",
+        "E26",
+        "E25",
+        "E27"
+      ],
+      "ontology_hooks": [
+        "CorpusMember",
+        "MutantOf",
+        "UnsupportedFeature",
+        "Crash",
+        "ExpectedRefusal"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B08",
+      "title": "Splat oracle ordering",
+      "original_scope_status": "not_addressed",
+      "priority": "P2",
+      "current_implemented_elements": "Saved frame identity and temporal selection are explicit; no frontend interpolation invents model states.",
+      "remaining_acceptance_gap": "No splat software oracle, overlapping-splat ordering ladder, camera-view PSNR or transparency ordering experiment exists in this study.",
+      "integration_action": "Implement with the splat ladder after the coordinate/SH/color contracts are fixed; retain known-answer images and renderer identity per pose.",
+      "evidence_refs": [
+        "E04",
+        "E08"
+      ],
+      "ontology_hooks": [
+        "RenderPose",
+        "CompositingOrder",
+        "KnownAnswerImage",
+        "ImageMetric"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B09",
+      "title": "Scientific semantic checks",
+      "original_scope_status": "partially_closes",
+      "priority": "P0",
+      "current_implemented_elements": "63 application-level witnesses separately check ABC field identities/integration, covariance/eigenbasis/quadratic forms and membrane boundaries/energy/spectrum. Generic XSD and implemented semantic checks are recorded separately.",
+      "remaining_acceptance_gap": "The historical 12-id sci-semantic patch was not recovered or adopted, and new local model tests are not generic units/legend/pLDDT validator rules.",
+      "integration_action": "Map recurring scientific failures to a namespaced finding catalog with machine-readable variable, units, model assumption, evidence and remediation; keep advisory generic lints distinct from mathematical acceptance gates.",
+      "evidence_refs": [
+        "E01",
+        "E15",
+        "E09",
+        "E10"
+      ],
+      "ontology_hooks": [
+        "ScientificClaim",
+        "Assumption",
+        "Witness",
+        "ComparisonRule",
+        "Finding",
+        "Remediation"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B10",
+      "title": "Scientific fixture factory",
+      "original_scope_status": "partially_closes",
+      "priority": "P0",
+      "current_implemented_elements": "Nine reproducible Python-authored research cases generate 78 static frames, raw datasets and metadata-bearing exports; all candidates must pass before publication. VTP carries named scientific arrays, units and explicit validity masks; VTI checks actual lattice ordering.",
+      "remaining_acceptance_gap": "The factory is not Blender-first and does not cover molecular pLDDT/PAE, volumes, splats or arbitrary Blender attributes. X3D raw-array reconstruction is explicitly outside its subset.",
+      "integration_action": "Adopt one canonical fixture schema with analytic/raw arrays distinct from geometry and appearance. Expand by data topology only after preserving current measured contracts.",
+      "evidence_refs": [
+        "E18",
+        "E11",
+        "E04",
+        "E09"
+      ],
+      "ontology_hooks": [
+        "ScientificCase",
+        "Dataset",
+        "DataTopology",
+        "Variable",
+        "UnitLabel",
+        "ValidityMask",
+        "VisualEncoding"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B11",
+      "title": "Corpus tiers and loss ledger",
+      "original_scope_status": "partially_closes",
+      "priority": "P1",
+      "current_implemented_elements": "Current case inventory and per-route expected/observed losses are durable. External route status=pass means executed; retention_status=lossy records omission separately.",
+      "remaining_acceptance_gap": "No PolyXandria spine A–D reclassification, 585-scene rerun or generalized per-object loss ledger was executed here.",
+      "integration_action": "Generalize the case/route evidence into per-feature ledger rows; do not count an object as retained merely because the exporter completed.",
+      "evidence_refs": [
+        "E04",
+        "E12",
+        "E13",
+        "E11"
+      ],
+      "ontology_hooks": [
+        "CorpusTier",
+        "FeatureRequirement",
+        "ExpectedLoss",
+        "ObservedLoss",
+        "ExecutionStatus",
+        "RetentionStatus"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B12",
+      "title": "Figure provenance chain",
+      "original_scope_status": "partially_closes",
+      "priority": "P0",
+      "current_implemented_elements": "Packets, producers, selected frames, adapters, tools, native scientific blends, GLBs and PNGs have cross-bound hashes. Current release runner checks actual retained artifacts and frame/tool binding; server imports prevent stale source/packet labeling.",
+      "remaining_acceptance_gap": "These unsigned local receipts do not implement the historical x3dprov chain, renderer-stamped chain heads, authentication, signatures or Library lineage ingestion.",
+      "integration_action": "Adopt existing exact-byte identities as entities and existing transformations as activities, then define canonical payload/chain hash rules before integrating x3dprov. Preserve source claim vs edited geometry history.",
+      "evidence_refs": [
+        "E19",
+        "E08",
+        "E23",
+        "E30",
+        "E31"
+      ],
+      "ontology_hooks": [
+        "Artifact",
+        "ContentDigest",
+        "TransformActivity",
+        "GeneratedFrom",
+        "HistoricalClaim",
+        "AuthenticationBoundary"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B13",
+      "title": "Blender 5.3 native readiness",
+      "original_scope_status": "not_addressed",
+      "priority": "P1",
+      "current_implemented_elements": "Actual executed runtime is Blender5.2.4 LTS with recorded official archive identity.",
+      "remaining_acceptance_gap": "No Blender5.3/native GaussianSplats execution or current capability refresh is supplied by Research Loom. Old daily-build/PyPI statements from October must not be carried forward as current facts.",
+      "integration_action": "Treat 5.2.4 as a proven baseline; establish a separate 5.3 feature probe and CI dimension from newly verified primary sources and an actual runtime.",
+      "evidence_refs": [
+        "E14",
+        "E03"
+      ],
+      "ontology_hooks": [
+        "RuntimeBuild",
+        "CapabilityProbe",
+        "CompatibilityMatrix",
+        "ObservedAt"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B14",
+      "title": "Flywheel orchestration graph",
+      "original_scope_status": "not_addressed",
+      "priority": "P1",
+      "current_implemented_elements": "tools/check.py provides a deterministic release sequence and source-drift checks; it is a useful node boundary.",
+      "remaining_acceptance_gap": "No LangGraph checkpointed graph, writer/repair loop, human-gate node or automated rule promotion is present in Research Loom.",
+      "integration_action": "Begin with a dependency-light state machine wrapping current tools and typed outcomes; add orchestration framework bindings only after resume/idempotency/identity semantics are exercised.",
+      "evidence_refs": [
+        "E19",
+        "E18",
+        "E08"
+      ],
+      "ontology_hooks": [
+        "Run",
+        "Activity",
+        "Attempt",
+        "Checkpoint",
+        "Transition",
+        "RetryPolicy"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B15",
+      "title": "Three-way/data-fidelity attacker metric",
+      "original_scope_status": "partially_closes",
+      "priority": "P1",
+      "current_implemented_elements": "Separate scientific, structural, geometry-transfer and offline-render evidence exists, with known-bad controls; actual VTK readers and Blender save/reopen provide independent representation checks.",
+      "remaining_acceptance_gap": "There is no native X_ITE visibility arm, DSPy metric, red-team search, calibrated judge panel or agent-generated held-out set in this study.",
+      "integration_action": "Expose an evidence vector rather than a multiplied binary score. Preserve not_run/unsupported/refused separately; promote minimal failures to fixtures before any learned judge optimization.",
+      "evidence_refs": [
+        "E09",
+        "E08",
+        "E05",
+        "E19"
+      ],
+      "ontology_hooks": [
+        "EvidenceVector",
+        "OracleObservation",
+        "Coverage",
+        "Abstention",
+        "FailureClass",
+        "HeldOutFixture"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B16",
+      "title": "SPZ compact sidecar",
+      "original_scope_status": "not_addressed",
+      "priority": "P2",
+      "current_implemented_elements": "A lossless compressed source-packet envelope exists inside Blender Text.",
+      "remaining_acceptance_gap": "This is neither SPZ decode/encode nor a scientific compressed-geometry sidecar, and conveys no SPZ/SOG compatibility.",
+      "integration_action": "Keep container/source compression and splat field compression separate in the taxonomy; recover the historical decoder and define axis/SH/quantization tests before integrating.",
+      "evidence_refs": [
+        "E17",
+        "E03"
+      ],
+      "ontology_hooks": [
+        "ContainerEncoding",
+        "FieldQuantization",
+        "CodecVersion",
+        "CoordinateConvention",
+        "DecoderObservation"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B17",
+      "title": "Licence passport",
+      "original_scope_status": "partially_closes",
+      "priority": "P1",
+      "current_implemented_elements": "Vendored X_ITE and validator source include license and origin manifests, with hashes checked by the release tooling. Case sources are preserved as source references.",
+      "remaining_acceptance_gap": "Source citations and vendor licenses are not a per-input/per-derived-artifact licence passport or redistribution decision; no spine classifier was audited here.",
+      "integration_action": "Add explicit license assertions with source artifact, actor, assertion date, scope and unknown status; keep legal constraints out of the scientific validity predicate.",
+      "evidence_refs": [
+        "E19",
+        "E20",
+        "E11"
+      ],
+      "ontology_hooks": [
+        "LicenseAssertion",
+        "SourceArtifact",
+        "Derivation",
+        "PermissionScope",
+        "UnknownLicense"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    },
+    {
+      "id": "B18",
+      "title": "Agent lane A/B benchmark",
+      "original_scope_status": "not_addressed",
+      "priority": "P2",
+      "current_implemented_elements": "The three analytic families and measured counterexamples can supply a small deterministic benchmark seed.",
+      "remaining_acceptance_gap": "No 115-prompt benchmark, Blender agent arm, x3d_mcp writer arm, API spend, randomization or judge calibration was run by Research Loom.",
+      "integration_action": "Design matched prompts and equal tool budgets only after guard, data-fidelity oracles and held-out fixtures are stable; use cached/manual baselines before paid runs.",
+      "evidence_refs": [
+        "E05",
+        "E11",
+        "E08"
+      ],
+      "ontology_hooks": [
+        "BenchmarkTask",
+        "WriterLane",
+        "Budget",
+        "Randomization",
+        "OutcomeVector",
+        "CalibrationSet"
+      ],
+      "evidence_level": "inspected_current_source_and_executed_receipts; artifact_identity_rechecked; no application rerun"
+    }
+  ],
+  "candidate_bridge_updates": [
+    {
+      "id": "B26",
+      "status": "partially_closes",
+      "current": "Three science-only GLBs actually export/reimport in Blender5.2.4; actual expanded geometry and identity extras are measured. Serialized FLOAT colors are exact in selected fixtures; reimport BYTE_COLOR is quantized within recorded bound.",
+      "gap": "No USD arm, external second glTF runtime, Khronos Neutral cross-renderer comparison or material-transmission/IOR/volume suite.",
+      "evidence_refs": [
+        "E22",
+        "E31",
+        "E34",
+        "E37"
+      ]
+    },
+    {
+      "id": "B27",
+      "status": "partially_closes",
+      "current": "The owned subset preserves points/lines/colors and actual geometry readback. The ordinary PointSet omission in the modern fork is now directly recorded for its mixed fixture.",
+      "gap": "No broad PointCloud exporter repair, PointSet ColorRGBA alpha chart, pixel point-size calibration or native X_ITE/Cycles equivalence.",
+      "evidence_refs": [
+        "E16",
+        "E13",
+        "E26"
+      ]
+    }
+  ]
+}

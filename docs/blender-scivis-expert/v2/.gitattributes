@@ -1,0 +1,2 @@
+# Keep generated scientific SVG bytes as emitted by the plotting backend.
+docs/assets/*.svg -whitespace

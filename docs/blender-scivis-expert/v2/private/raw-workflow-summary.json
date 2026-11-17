@@ -1,0 +1,412 @@
+{
+  "schema": "scivis.raw-workflow-audit/1",
+  "confidentiality": "private",
+  "source_commit": "c1634f5c4f29c4220a092510807a430ce4cbfd2e",
+  "source_path": "docs/blender-scivis-expert/workflow-result-wf_6a9e68d8.json",
+  "source_sha256": "e5d917ab44ef7467c6770f37d3823ae23a958f79702556787a3b68fc45635707",
+  "source_bytes": 651632,
+  "structure": {
+    "digests": 14,
+    "catalog_bridges": 18,
+    "verified_bridge_rows": 18,
+    "verifier_verdicts": 36,
+    "critic_missing": 11,
+    "critic_overclaims": 19,
+    "critic_suggested_entries": 10,
+    "additional_bridge_ids": [
+      "B19",
+      "B20",
+      "B21",
+      "B22",
+      "B23",
+      "B24",
+      "B25",
+      "B26",
+      "B27"
+    ]
+  },
+  "agent_count_interpretation": {
+    "reported": 52,
+    "arithmetic": "14 readers + 1 synthesizer + 36 verifier verdicts + 1 critic = 52",
+    "qualification": "JSON stores reports, not provider execution receipts or independent agent identities."
+  },
+  "digest_slices": [
+    "spine-corpus",
+    "hall-build + Blender/Cycles calibration",
+    "splat-trailer: Cycles -> gsplat MCMC -> X3D 4.1 GaussianSplats -> X_ITE path (Anamnesis trailer v1..v3.1, Marble/Pantheon, Splat Park) plus hands-on round-trip, validator-wall, ordering and oracle tests on bpy 5.2.3 LTS",
+    "demos, heritage, glossary (polyxandria demos/, exhibits/, marble/, giza/, gulf-*, doha-site/, landing-v2/, planet-scale/, notes glossary + Blender.SciVIZ.md; shroud/ and earth-twin/ at index level)",
+    "x3d-blender-io fork (hagopjay/x3d-blender-io, main 482741b, 18 Oct 2026, ext 2.6.4) on bpy 5.2.3 LTS / Python 3.13.17",
+    "x3d_mcp fork (hagopjay/x3d_mcp main 8dd0d3e) + Accountability Playground + ontology: science-visualisation checks, skills, gauntlet rungs, Blender-script guard",
+    "x3d.ML (private) + traceability (x3dprov) + compact encodings + ecosystem watch, as a provenance/size/version backbone for a Blender sci-vis expert",
+    "future vision + priorities (label: vision)",
+    "ontology",
+    "compression",
+    "DSPy + red-teaming (research/dspy-2026-10-17, stronger-tuning, memory dspy-agent / agent-loop-lessons / schema-ab-results / evolve-generator-results)",
+    "AI vision / picture judges",
+    "X3D agentics + tether (agent architecture, A/B and tether evidence, Scene Lab / x3d-coopilot state, Blender-lane agent design, Hall as agent memory)",
+    "x3d.flywheel + LangGraph/orchestration"
+  ],
+  "grade_rows": [
+    {
+      "bridge_id": "B01-RT-SPLAT-LADDER",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        8,
+        8
+      ]
+    },
+    {
+      "bridge_id": "B02-VALIDATOR-HUGE-TREE",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Confirmed",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        5,
+        6
+      ]
+    },
+    {
+      "bridge_id": "B03-EXPORTER-SPLAT-SLABS",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        8,
+        6
+      ]
+    },
+    {
+      "bridge_id": "B04-IMPORTER-VALUE-CORRECTNESS",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        5,
+        3
+      ]
+    },
+    {
+      "bridge_id": "B05-BLENDER-AGENT-GUARD",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        7,
+        7
+      ]
+    },
+    {
+      "bridge_id": "B06-LOOK-PARITY-CHART",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        7,
+        4
+      ]
+    },
+    {
+      "bridge_id": "B07-IMPORTER-MUST-NOT-RAISE",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        6,
+        6
+      ]
+    },
+    {
+      "bridge_id": "B08-SPLAT-ORACLE-ORDERING",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        6,
+        5
+      ]
+    },
+    {
+      "bridge_id": "B09-SCI-CHECKS-PATCH",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Confirmed",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        5,
+        6
+      ]
+    },
+    {
+      "bridge_id": "B10-SCIVIS-FIXTURE-FACTORY",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        6,
+        7
+      ]
+    },
+    {
+      "bridge_id": "B11-CORPUS-TIERS-LEDGER",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        7,
+        5
+      ]
+    },
+    {
+      "bridge_id": "B12-X3DPROV-FIGURE-CHAIN",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        7,
+        7
+      ]
+    },
+    {
+      "bridge_id": "B13-UPDATE-WATCH-53",
+      "synthesizer_grade": "Suspected",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Suspected"
+      ],
+      "lower_grade": "Suspected",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        5,
+        6
+      ]
+    },
+    {
+      "bridge_id": "B14-LANGGRAPH-FLYWHEEL",
+      "synthesizer_grade": "Suspected",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Suspected",
+        "Suspected"
+      ],
+      "lower_grade": "Suspected",
+      "ok_flags": [
+        false,
+        true
+      ],
+      "problem_counts": [
+        5,
+        6
+      ]
+    },
+    {
+      "bridge_id": "B15-THREEWAY-ORACLE-ATTACKER",
+      "synthesizer_grade": "Likely",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Likely",
+        "Likely"
+      ],
+      "lower_grade": "Likely",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        6,
+        7
+      ]
+    },
+    {
+      "bridge_id": "B16-SPZ-IMPORT-SIDECAR",
+      "synthesizer_grade": "Likely",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Suspected",
+        "Likely"
+      ],
+      "lower_grade": "Suspected",
+      "ok_flags": [
+        false,
+        true
+      ],
+      "problem_counts": [
+        9,
+        7
+      ]
+    },
+    {
+      "bridge_id": "B17-LICENCE-PASSPORT",
+      "synthesizer_grade": "Confirmed",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Confirmed",
+        "Confirmed"
+      ],
+      "lower_grade": "Confirmed",
+      "ok_flags": [
+        true,
+        true
+      ],
+      "problem_counts": [
+        5,
+        5
+      ]
+    },
+    {
+      "bridge_id": "B18-AGENT-AB-BENCH",
+      "synthesizer_grade": "Suspected",
+      "verifier_count": 2,
+      "corrected_grades": [
+        "Suspected",
+        "Suspected"
+      ],
+      "lower_grade": "Suspected",
+      "ok_flags": [
+        false,
+        true
+      ],
+      "problem_counts": [
+        6,
+        7
+      ]
+    }
+  ],
+  "lower_grade_counts": {
+    "Likely": 13,
+    "Suspected": 4,
+    "Confirmed": 1
+  },
+  "attachment_comparisons": [
+    {
+      "branch_path": "docs/blender-scivis-expert/KNOWLEDGE-BASE-v1.md",
+      "attachment": "KNOWLEDGE-BASE-v1 (2).md",
+      "branch_bytes": 14644,
+      "attachment_bytes": 14644,
+      "branch_sha256": "21c344fa82e78328d5785205c28eb100d9abcc151019b3495f641b3ab120c1e3",
+      "attachment_sha256": "21c344fa82e78328d5785205c28eb100d9abcc151019b3495f641b3ab120c1e3",
+      "byte_identical": true
+    },
+    {
+      "branch_path": "docs/blender-scivis-expert/KNOWLEDGE-BASE-v1.1-addendum.md",
+      "attachment": "KNOWLEDGE-BASE-v1.1-addendum (2).md",
+      "branch_bytes": 2489,
+      "attachment_bytes": 2489,
+      "branch_sha256": "4a0ac553afaf6ee9b4f0f2c98e5a1859c5c6b612ab93b569e7d7eca5c9615177",
+      "attachment_sha256": "4a0ac553afaf6ee9b4f0f2c98e5a1859c5c6b612ab93b569e7d7eca5c9615177",
+      "byte_identical": true
+    },
+    {
+      "branch_path": "docs/blender-scivis-expert/FLYWHEEL-SYNERGY-v1.md",
+      "attachment": "FLYWHEEL-SYNERGY-v1 (2).md",
+      "branch_bytes": 131303,
+      "attachment_bytes": 131303,
+      "branch_sha256": "29e1d289b0e8331b9ef4e2bf146cce99a35b603796c8c06319b988a187188aa5",
+      "attachment_sha256": "29e1d289b0e8331b9ef4e2bf146cce99a35b603796c8c06319b988a187188aa5",
+      "byte_identical": true
+    }
+  ],
+  "embedded_evidence_boundary": "The workflow embeds narrative digests, bridge proposals, verifier reports and critic text. It does not embed all cited files, images, external corpus rows, tool executables or run receipts. Reported numbers do not become newly reproduced by parsing this JSON.",
+  "three_documents_unchanged": true,
+  "grade_interpretation": "These are historical grades reported by the archived workflow. This audit inspects the report; it does not promote its claims to fresh executed or reproduced evidence."
+}

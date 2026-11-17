@@ -1,0 +1,181 @@
+{
+  "schema": "scivis.integration-release/1",
+  "started_utc": "2026-11-17T20:38:18.739662+00:00",
+  "status": "pass",
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "integration/tests",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 13 tests in 0.009s\n\nOK\n",
+      "tests_run": 13
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "integration/tests",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 13 tests in 0.008s\n\nOK\n",
+      "tests_run": 13
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "adapters/tests",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 8 tests in 0.020s\n\nOK\n",
+      "tests_run": 8
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "adapters/tests",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 8 tests in 0.048s\n\nOK\n",
+      "tests_run": 8
+    },
+    {
+      "command": [
+        "node",
+        "docs/check_atlas.cjs"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS actual atlas script: 27 bridges,21 corrections,439 files,filters,tabs,unique IDs; native pixels not tested\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_x3dprov_escapes.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 5 tests in 0.005s\n\nOK\n",
+      "tests_run": 5
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_x3dprov_escapes.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 5 tests in 0.015s\n\nOK\n",
+      "tests_run": 5
+    },
+    {
+      "command": [
+        "/workspace/scratch/aee90170662d/blender-scivis-integration/private/native53/blender-5.3.0-linux-x64/5.3/python/bin/python3.13",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "integration/tests",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 13 tests in 0.011s\n\nOK\n",
+      "tests_run": 13
+    },
+    {
+      "command": [
+        "/workspace/scratch/aee90170662d/blender-scivis-integration/private/native53/blender-5.3.0-linux-x64/5.3/python/bin/python3.13",
+        "-O",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "integration/tests",
+        "-q"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "----------------------------------------------------------------------\nRan 13 tests in 0.010s\n\nOK\n",
+      "tests_run": 13
+    }
+  ],
+  "scope": "Software, shape, current-file and scoped-support checks. Blender execution remains in its own receipts.",
+  "bindings": {
+    "status": "pass",
+    "artifacts": 238
+  },
+  "claim_queries": {
+    "supported_within_declared_scope": 16,
+    "unsupported": 7
+  },
+  "source_sha256": {
+    "integration/inventory.py": "e829222ac3bb84f26545e8b84e71005373de40a4fd5fd1f7c6c97a441ed3e5c7",
+    "integration/tests/test_inventory.py": "479681b07482ee61107d1f6f6d5b29a52f0af61521ff2b373ad4a5b9721017b1",
+    "adapters/x3dprov_link.py": "b9bb0576c597398d4469b123ca46c5cf25e41f3a0a96bee323906ced9752d7b9",
+    "adapters/tests/test_x3dprov_link.py": "2b20febb24457dce3114f84395e15a6065765a04bba227c85bcf2b12c526f146",
+    "adapters/vendor/x3dprov.py": "dbc54523ac6bcd10a9005379b1d723f2b033a60ed093c125b942e90bd1dee40e",
+    "ontology/check_graph.py": "ed365c540b10f879cbc565c6c787f22dddc2b31061159803df156ce45092ca3a",
+    "docs/plot_precision.py": "d5c105ce4096156dbecc5b7448f364dbe2de453c9a7f899908415702997e21b6",
+    "docs/check_atlas.cjs": "373e8cca70f676c9577b61c63f26a2e242b33f608545c3039b9215990c04e465",
+    "docs/build_atlas.py": "98e2efae4b81df4899e1cb32223d575401c769e006dfa968b838b96f96592ef7"
+  },
+  "core_regression_before_fix": {
+    "source_sha256": "74746444c0093a72636686fa325da5950802d860861e61a859ed1c0ba78cedae",
+    "observed_tests": 5,
+    "observed_errors": 4,
+    "state": "recorded earlier in this pass; not rerun by this check"
+  },
+  "preexisting_ingest_suite": {
+    "passed": 15,
+    "skipped": 2,
+    "skip_reason": "Original external real-data directories absent",
+    "state": "Executed earlier in this pass with pytest9.2.0; not rerun by this check"
+  },
+  "native_browser": {
+    "status": "not_run",
+    "scope": "Atlas logic checked in Node; no native X_ITE or atlas browser pixels claimed."
+  },
+  "finished_utc": "2026-11-17T20:38:21.159456+00:00"
+}

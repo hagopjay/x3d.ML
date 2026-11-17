@@ -1,0 +1,53 @@
+{
+  "schema": "scivis.figure-link/1",
+  "status": "pass",
+  "confidentiality": "private",
+  "created_utc": "2026-11-17T20:19:13.007678+00:00",
+  "case_id": "flow-balanced",
+  "frame_index": 4,
+  "operation": "link_existing_render",
+  "render_reexecuted": false,
+  "packet_sha256": "0dbbece3b7c4be62725290ae55283739c75d90541c035a5bf873d17a9db36865",
+  "frame_sha256": "867e04822dbcdff0057b6802201e7ab81983bc06caa8cf8d9d431ad78f87302c",
+  "export_normalized_frame_sha256": "867e04822dbcdff0057b6802201e7ab81983bc06caa8cf8d9d431ad78f87302c",
+  "frame_hash_methods": {
+    "frame_sha256": "sha256-canonical-original-packet-frame",
+    "export_normalized_frame_sha256": "sha256-canonical-exchange.validate_frame"
+  },
+  "input_scene_byte_sha256": "d4124bcf7371bcdfc434bd43fe59d6dbdaa1cc792f7505d08b51f7ec288692ea",
+  "linked_scene_byte_sha256": "202de8819b66b8cefd4582f1896c80accd4324a0d3fb8fbb50febfdc05c5a38d",
+  "scene_content_sha256": "a031c0391402a5e7afb04c5dfe9c0a22eb99b226e754bf520fa697e4276a957e",
+  "content_hash_method": "x3dprov/0.1:strip-comments-provenance-whitespace-only-then-c14n",
+  "hash_branch": "well-formed-xml-c14n",
+  "protocol_sha256": "dbc54523ac6bcd10a9005379b1d723f2b033a60ed093c125b942e90bd1dee40e",
+  "protocol_source": {
+    "repository": "hagopjay/x3d.ml",
+    "base_commit": "c1634f5c4f29c4220a092510807a430ce4cbfd2e",
+    "path": "src/x3dprov.py",
+    "local_patch": "literal replacement callback in _inject_meta; regression-tested"
+  },
+  "adapter_sha256": "b9bb0576c597398d4469b123ca46c5cf25e41f3a0a96bee323906ced9752d7b9",
+  "assets": [
+    {
+      "role": "render-receipt",
+      "locator": "study://evidence/blender-render-flow.json",
+      "sha256": "9edd096efb9c0bd2dcdb4f0effca98515240b7a091ecaa8144e03b804bbab757",
+      "bytes": 1612,
+      "hash_method": "sha256-file-bytes"
+    },
+    {
+      "role": "existing-render",
+      "locator": "study://docs/assets/flow.png",
+      "sha256": "ff2ca909e89c1dc5966c6df57cb3e8a026645889a001a3a9ffd0e01cde260dd1",
+      "bytes": 1446977,
+      "hash_method": "sha256-file-bytes"
+    }
+  ],
+  "chain_verdict": {
+    "ok": true,
+    "status": "verified",
+    "steps": 2,
+    "problems": []
+  },
+  "meaning": "Hash continuity and current referenced bytes; no signature, publisher authentication or new science certification."
+}

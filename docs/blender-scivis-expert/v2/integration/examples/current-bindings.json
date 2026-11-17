@@ -1,0 +1,1421 @@
+{
+  "schema": "scivis.binding-inspection/1",
+  "checked_at": "2026-11-17T20:38:21.046900+00:00",
+  "inventory_digest": {
+    "hash_method": "sha256-json-sortkeys-utf8-compact-no-nonfinite",
+    "value": "c3bce3b836f4989ab17e7070483f2b843e17e29049ccbc762b288384cb9ec91e"
+  },
+  "status": "pass",
+  "scope": "Exact local bytes and separately labelled producer bindings. No producer, renderer or validator was rerun.",
+  "artifact_count": 238,
+  "artifacts": [
+    {
+      "artifact": "urn:x3d-scivis:artifact:b52f92bb8742120c9405",
+      "role": "inventory",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:771bffbd5e0aabea78f1",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:274e9784040425d0de06",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:454feeb36b553fe10b89",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f6ca5df56aee17b4e98d",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:af22edc650484b80eb88",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:805001076089cb15064e",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:077398c11bc7d3220f24",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6d37efafacd1fd17b662",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f9a380575a3dd87cc741",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:eb85792caf6920334231",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8d05e06d958c69c18644",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:66a8b9ac546dfab4eac3",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:042d5eec949e311817d6",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:fe25bbbae5ca2dcf925f",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:577e87c239a552a380cf",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6af70fa73b34cc62aed2",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2dd4c735e3e54bd8dd35",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4dd4bbd45b357eae6332",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5d6fe35ee3389ddf29c4",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3f12831a1279dc1c4cf0",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:7a962ac08509f0b28193",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a6f2bf3f6cd064f8fad4",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f9b1f40795787586fb06",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:902a1aef7b28e66f966f",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:40446545f155cdab2727",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2443b73bf984b846b0ee",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:00b6f5fccfc7535c21a5",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:d47c4631aad8d984fb09",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:13bdb5eec6e71e3ba406",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:96a7820d7b05b1df23be",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c6bc6e40d316e93817ee",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:0b0a465913c8255bfb89",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4933cbe75789b2a523a1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:cb3428b475033a8bdf6d",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:65de3f55176978a83f9c",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e1ecba30631f9747bc3e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:559b07e585f9e62b0d57",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:9cf120a7d207373b3d66",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a2915e7b4c2760b34c32",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2b382a7fea1733529db1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:d9a270dfb3ca00387c95",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ad4e0d8263e4fe47a743",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:820e5e5ba3c301e2cb99",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b680ae2494c7a26c397a",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:add27bf1412f550230df",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:916521ae06aacf5eeab4",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:08f16c69e01ba05be293",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a4f6797c4cf8b5c5d7fa",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:52c848648824ea71dd3d",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:dd1962322facf7cec92b",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b69d54e71526c2352dea",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:43318eca491f6d39532e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:fccf0bd1de2aef1d0603",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:97614129319e4138ce52",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:403bd1c4df08c173f725",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ba08e80827f9c18a18f2",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:7dd931b9c4d8855d0bc8",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3d971ee29df21071149f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4b5de14f85933c524288",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f3a7652bf180e57f9afa",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a16839a75acde6a98de1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2bc83859aad0699ae8e1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4066a9d09777b751db5c",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5e6884a81d57b4894b52",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6c7e087af4e21d23b463",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b7b9b56450ae0fd3ad5e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:cc625bff63df0bd2970a",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:50357c26d3e80d3ed99d",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e054d5cc405b65ac9425",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:fea3ddba9e510ff36fce",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8a3ec8cc2e9154b728f4",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a311cb893fe8178be93e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:7c82a972e98cb9890966",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b8f926044cb316c96ff5",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:19f6214c7aab12647ac3",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:1fae930b1b6edc90267a",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:64551c395e47f7ea609f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:320f1784c53c89ea96d3",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8d1d895a2d9c28d181ce",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6a597557ced1ab6a4d77",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ef99b8d09c352ad1bab6",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6e1e4cc3dce6070fb3ca",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c3991ffef437cc27cfd4",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:44eeb90ea0e1ce187ba0",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5d507b17aa9967553208",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:bb8f3a6938b1b3ca46be",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b06c943cac64c7035077",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:480c7fee9897bf721a4b",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e2a78644e688e339e146",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8aca00b850acfcf62c00",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:955e27b322ae7c7e211f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f7b39df44216940614b1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:bee65af891b05b2110df",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:923ac77263a8aaa00b98",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5cdaca6cdc4f06f0aece",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:63599151120734f9e67a",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:88974ebf0449e55c8a7a",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:0a728f3bbb277075146e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5bf3adb68a3b89ed4d06",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6adea4a08262e83b8cf8",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:44c290af35311906f4ec",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3100e4eac62244455540",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4e99872afee30bf5f576",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4b960cdb721261242a9f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3c0ecb15389cb803fd84",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ac55d961154525995867",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:182f15cf58e2f398e11a",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c44a75fc9673eb6e74c2",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:1f1eac8a6d928ec5f332",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3d8095362ed55d2a4cfe",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a4df83e14f12a7a2d6e0",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:83fe9138a3489627bbee",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:313dfff30630d5c50146",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ea3f9e61cf19f27592d7",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e8c19f65315fd06cbefe",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3546a089720bf2bf0515",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:626d86525e072ce4408d",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:4d8243204265a9e8dbd1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:31c9d586368ce3280a81",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:bd764d777f86d3eb0475",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a0ca91ed83252dc44608",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b2c451f944ca628dc4df",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3d92477e677b05b7600b",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:791c38b7f6cee06157e9",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:68978b0a416b9bea23c3",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c9bc7bf9c6c1ef5bee85",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:57da2b7058529757f17e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:05f2d6d1dfe58aeaf0c9",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:12d7fa6327898816e8d8",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:329052c09a372a4b7d16",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5bee7f822772d2cd0ecf",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:148dbf11a6a7b3efe492",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:eb55626dbc081343b41f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f9eb36f21ebc6199a627",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8ba66ebbb5af78a69399",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:be0fa61ea02513265634",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f5903471f363be42a855",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b8e57f63f3e391945848",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:158883f4cd960ba3a4cf",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c702768a08dc5fc1b79a",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2be3627df75b8eab9ec2",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:833c186ba4da5d0fcaca",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:48346193841a9890a2ff",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:9f3fcfc39c663caba067",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e65c552993a521e1c336",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f0b40682763457caf868",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:01ec8fea04a07b42accd",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:82284d120c47cb8ab6b9",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:d859f01e10afa118583f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:87b19505a1d741cf3043",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:579e4376c100469df52d",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2fe4e6613349c947eb2e",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8aac0d8125cd236c24c3",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ccb116d4891731c31d78",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:cd5d2cf8beebb2740961",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e1c7bf05a1732f0079b7",
+      "role": "scientific-packet",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:107a70a78b427c754c29",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:8fabcf554c790c3e4dbd",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:bbfbe648a4da53783920",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:624a8f2970f51248d3cd",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:85df0507a395cc9a6e05",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:52ef76599c272922d8fe",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c297e3e03b6040b7f957",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:004f4b726e8a76f19637",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:52b0fcc00bf2af533e8f",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:95ba281e87a056231193",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:52a30a5d5b27df350e05",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:115b9cd2a4df1f3eab49",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c4fb0f889690f52da2e5",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e2045d53cdf2c98ed908",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f7c7ff4bd221359483e4",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:dbd1e08dc3acf4ee6735",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:670cb015608d0cc28009",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:cc5beb305ab2c84bf9b4",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:d5201461e8b05e326c54",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:701c3fc713087004d755",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3d93fb62445d3b3dcf27",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f6b4738a0ee8d2f839a0",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:39d4d246b22fc397304d",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:fa6fb594a05379c565ec",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:d486befbe23ba2f91c26",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:fdc95c023007e33b03f9",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:07f50c105e6d30115d9a",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:c060de1e8cba46d22476",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6a3791f84d03b4f045b8",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ebb637b8a487ad95ff60",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a13927925a694bcf5eb5",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:337dee5ffbd866a2cd0c",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:20f7e99530bb2fa9972f",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f11e1bcf6c5b01461db0",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f6975f3dd8adcbaa40bb",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:162afe33961bdbdb1cfa",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3fd1f0ad96ef6bff9238",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:d492f797b30088b8b878",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:a2446861e02d8ea193b5",
+      "role": "validator-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:247da21c8fc236c400b6",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:25e8f9bbf5ffb8285d65",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:49b62cd6a12136114647",
+      "role": "roundtrip",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:40e8a5311d5e50297650",
+      "role": "native-scientific-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:2fbf4acd77771412d66c",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:7eca2b6489d97ed98770",
+      "role": "render",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5d5fec5d60e8e63a8964",
+      "role": "authored-studio-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:de5e84fac436594b8251",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:14a5da3c801baeda352c",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f00ee384c3bd7060e91c",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:069e798e0d16375741db",
+      "role": "roundtrip",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ee4553b26ba30fea1eeb",
+      "role": "native-scientific-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:055368e381c549e04c83",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:76eb224abd136fccc1e5",
+      "role": "render",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5ea8d239529668c31cb3",
+      "role": "authored-studio-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ff4f6367325864c56d9c",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b093b86c022fbc1a37f1",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:25dfc3cfcced80866067",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:35541526d44af33d7b48",
+      "role": "roundtrip",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:5e5e1fa792c118f5c1ad",
+      "role": "native-scientific-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:38b8c05bb77deefa8dd9",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:faa3d151ec3fb588569e",
+      "role": "render",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:40cc817a4caa8ea92bce",
+      "role": "authored-studio-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:f70916071cdaa9628bfb",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:0ca73ca2a133d0e5b07d",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b2569be8e125cb1feb86",
+      "role": "historical-source",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:afe612016dd7cd69329d",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:82f9aa98687e64d56595",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:ab5419d07a4cfa5179fc",
+      "role": "native-scientific-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:b6e9899c75a9948cae65",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:0aa026a5d2a25777160a",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:1cfba1dc525f4b2cacc2",
+      "role": "native-scientific-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:77c6875636022c36c07e",
+      "role": "fixture",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:9d2edd77ac687a493f9b",
+      "role": "export",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:0c03d2e7392f053c6445",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e8d404617f2e9e82e00b",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:93ac4e8674157500e2cd",
+      "role": "producer",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:7489fab7c4d01b30a719",
+      "role": "linked-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:3166de4c2d0ab2c72022",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6a34ceaeaf10e1dbce10",
+      "role": "linked-scene",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:e0fad7701bf243a35fbd",
+      "role": "receipt",
+      "status": "pass"
+    },
+    {
+      "artifact": "urn:x3d-scivis:artifact:6894465bf57756c76e1f",
+      "role": "linked-scene",
+      "status": "pass"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:research-loom-release",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-flow-balanced",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-flow-integrable",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-flow-anisotropic",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-tensor-correlated",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-tensor-spherical",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-tensor-mixture",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-modes-fundamental",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-modes-degenerate",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:readback-modes-beats",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:x3d-frames",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:transfer-flow",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:render-flow",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:glb-flow",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:transfer-tensor",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:render-tensor",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:glb-tensor",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:transfer-modes",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:render-modes",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:glb-modes",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:native-browser",
+      "recorded_state": "inspected",
+      "outcome": "unknown",
+      "artifact_bindings": "pass",
+      "producer_bindings": "unverified",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:historical-corpus-counts",
+      "recorded_state": "reported",
+      "outcome": "unknown",
+      "artifact_bindings": "pass",
+      "producer_bindings": "unverified",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:local-origin-probe",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:native53-probe",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:figure-link-flow",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:figure-link-tensor",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    },
+    {
+      "evidence": "urn:x3d-scivis:evidencerecord:figure-link-modes",
+      "recorded_state": "executed",
+      "outcome": "pass",
+      "artifact_bindings": "pass",
+      "producer_bindings": "pass",
+      "fresh_execution": false
+    }
+  ]
+}

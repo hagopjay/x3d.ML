@@ -1,0 +1,169 @@
+{
+  "schema": "scivis.pass-updates/1",
+  "visibility": "private",
+  "scope": "Current pass overlay; original proposals and grades remain unchanged.",
+  "bridges": [
+    {
+      "id": "B01",
+      "status": "Executed part",
+      "current_pass": "Four native SH3 splats now test field mapping and fork transfer. The SH0–SH3 scale and image ladder remains open.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B02",
+      "status": "Planned",
+      "current_pass": "Reuse the archived parser-limit reproducer and existing issue/patch. No new large-attribute limit has been measured here.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B03",
+      "status": "Planned",
+      "current_pass": "Partitioning remains a camera/order/resource design task. Do not equate parseable slabs with view-independent image fidelity.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B04",
+      "status": "Evidence reused",
+      "current_pass": "The current stock/fork fixture has measured value and retention differences. No general importer repair is claimed.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B05",
+      "status": "Executed part",
+      "current_pass": "Strict provenance append guards and source-binding checks are supplied. A full Blender-script sandbox/source-loss guard is still separate.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B06",
+      "status": "Planned",
+      "current_pass": "Old calibration images are absent. No new Standard/AgX or native X_ITE pixel parity is claimed.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B07",
+      "status": "Planned",
+      "current_pass": "Archived Python parses and mutant entrypoints are inventoried; importer fuzz acceptance has not been rerun.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B08",
+      "status": "Planned",
+      "current_pass": "No new multi-pose renderer-independent splat-ordering result is established.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B09",
+      "status": "Planned",
+      "current_pass": "Scientific rule proposals are cataloged; the historical 11-versus-12 rule-ID discrepancy remains an adoption task.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B10",
+      "status": "Evidence reused",
+      "current_pass": "Reuse nine numerical Loom cases and two new known-answer Blender probes; keep scientific and display mappings explicit.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B11",
+      "status": "Executed part",
+      "current_pass": "238 artifact bindings and scope-aware queries are available. This is not a recensus of the historical scene corpus.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B12",
+      "status": "Executed part",
+      "current_pass": "Three existing figures are linked through x3dprov; escaped JSON is repaired and stale/hidden-record append cases are refused.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B13",
+      "status": "Executed part",
+      "current_pass": "Seven native-layout questions were tested on official Blender 5.3.0. The four-splat canary is ready for owning CI integration.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B14",
+      "status": "Planned",
+      "current_pass": "No workflow engine or model caller is added. Use the read-only adapter and pure command contracts before durable orchestration.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B15",
+      "status": "Executed part",
+      "current_pass": "Scoped support queries preserve 16 supported and 7 unsupported claims. This is an evidence-model precursor, not an attacker benchmark.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B16",
+      "status": "Planned",
+      "current_pass": "No SPZ codec/import fidelity experiment was run; native PLY evidence does not cover SPZ, SOG, USD or glTF imports.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B17",
+      "status": "Planned",
+      "current_pass": "Rights remain structured source assertions and policy hooks. No license eligibility has been inferred or changed.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B18",
+      "status": "Planned",
+      "current_pass": "No paid/model experiment was run. Rebuild the feasible prompt selector and held-out protocol before quoting a benchmark.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B19",
+      "status": "Planned",
+      "current_pass": "Analytic anisotropic volume phantom remains a future fixture, including spacing, orientation and transfer-function checks.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B20",
+      "status": "Planned",
+      "current_pass": "Tiny molecular identities/confidence fixture remains future work; reuse Web3D CML examples and source-specific field semantics.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B21",
+      "status": "Executed part",
+      "current_pass": "Two actual Blender 5.2.4 save/reopen controls compare global storage with local origins and binary64 restoration.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B22",
+      "status": "Planned",
+      "current_pass": "Compare animation values at fixed fractions and individual ROUTE endpoints; tag counts cannot establish dynamic fidelity.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B23",
+      "status": "Planned",
+      "current_pass": "HAnim/armature hierarchy, joint centers and skin weights require their own fixtures and ontology acceptance rules.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B24",
+      "status": "Executed part",
+      "current_pass": "439 archived files are hashed and Git-checked. Missing images, native scenes and external corpus/toolchains are explicitly inventoried.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B25",
+      "status": "Planned",
+      "current_pass": "Small deterministic bindings are supplied; no 10k/100k/1M face/point performance ladder is claimed.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B26",
+      "status": "Evidence reused",
+      "current_pass": "The three retained GLB export/reimport receipts are linked. USD and material parity remain separate tests.",
+      "whole_original_bridge_completed": false
+    },
+    {
+      "id": "B27",
+      "status": "Evidence reused",
+      "current_pass": "The current point/line/glyph fixtures and omission evidence are reusable. Native PointCloud→PointSet exporter repair remains open.",
+      "whole_original_bridge_completed": false
+    }
+  ]
+}

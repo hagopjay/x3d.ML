@@ -101,7 +101,7 @@ def _attr(s):
 def _inject_meta(xml, metas):
     # insert before </head>; create head after <X3D ...> if missing; textual to keep the file byte-stable elsewhere
     if re.search(r"</head>", xml):
-        return re.sub(r"</head>", metas + "</head>", xml, count=1)
+        return re.sub(r"</head>", lambda match: metas + "</head>", xml, count=1)
     m = re.search(r"<head\b[^>]*/>", xml)
     if m:
         return xml[:m.start()] + "<head>" + metas + "</head>" + xml[m.end():]

@@ -1,0 +1,14 @@
+{
+  "schema": "scivis.ontology-check/1",
+  "status": "pass",
+  "created_utc": "2026-11-17T20:38:20.559217+00:00",
+  "graph_sha256": "b5fd437d3ab6394c2debdd496e76eded448e3c82792f28760a53c01bfd5ecd55",
+  "graph_triples": 7812,
+  "vocabulary_triples": 88,
+  "shape_triples": 68,
+  "query_rows": 286,
+  "bad_digest_control_caught": true,
+  "rdflib": "7.6.0",
+  "pyshacl": "0.40.2",
+  "scope": "Metadata shapes and a trace query; live artifact bytes and scientific support are checked separately."
+}

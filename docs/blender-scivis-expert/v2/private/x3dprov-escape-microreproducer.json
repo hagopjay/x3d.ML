@@ -1,0 +1,14 @@
+{
+  "scope": "Standalone stdlib reproduction of the replacement-expression semantics read in pinned src/x3dprov.py; no archived module imported.",
+  "input_json": "{\"detail\":\"line one\\nline two\",\"op\":\"render\",\"path\":\"C:\\\\temp\\\\scene.x3d\"}",
+  "replacement_string": {
+    "preserves_json_semantics": false,
+    "message": "Invalid control character at: line 1 column 20 (char 19)",
+    "raw_content": "{\"detail\":\"line one\nline two\",\"op\":\"render\",\"path\":\"C:\\temp\\scene.x3d\"}"
+  },
+  "callback_replacement": {
+    "preserves_json_semantics": true,
+    "message": "JSON decode succeeds",
+    "raw_content": "{\"detail\":\"line one\\nline two\",\"op\":\"render\",\"path\":\"C:\\\\temp\\\\scene.x3d\"}"
+  }
+}

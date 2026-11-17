@@ -1,0 +1,57 @@
+diff --git a/src/x3dprov.py b/src/x3dprov.py
+index 2d5ebfa290b20b941352aa88a5c7bac112a4d353..4282298f1478424bf770a5efecc197b0d49353e6 100644
+--- a/src/x3dprov.py
++++ b/src/x3dprov.py
+@@ -101,7 +101,7 @@ def _attr(s):
+ def _inject_meta(xml, metas):
+     # insert before </head>; create head after <X3D ...> if missing; textual to keep the file byte-stable elsewhere
+     if re.search(r"</head>", xml):
+-        return re.sub(r"</head>", metas + "</head>", xml, count=1)
++        return re.sub(r"</head>", lambda match: metas + "</head>", xml, count=1)
+     m = re.search(r"<head\b[^>]*/>", xml)
+     if m:
+         return xml[:m.start()] + "<head>" + metas + "</head>" + xml[m.end():]
+diff --git a/tests/test_x3dprov_escapes.py b/tests/test_x3dprov_escapes.py
+new file mode 100644
+index 0000000000000000000000000000000000000000..bf2565638eadea309917247eaeac5b5d41bdaba3
+--- /dev/null
++++ b/tests/test_x3dprov_escapes.py
+@@ -0,0 +1,38 @@
++"""Provenance JSON is data, including backslashes and embedded newlines."""
++import sys
++from pathlib import Path
++import unittest
++
++sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'src'))
++import x3dprov
++
++
++class LiteralMetadata(unittest.TestCase):
++    XML = '<X3D profile="Interchange" version="4.0"><head></head><Scene><WorldInfo title="fixture"/></Scene></X3D>'
++
++    def check_note(self, note):
++        stamped = x3dprov.add_step(self.XML, {'op': 'generate', 'note': note})
++        self.assertEqual(x3dprov.summary(stamped)[0]['note'], note)
++        linked = x3dprov.add_step(stamped, {'op': 'validate', 'note': note})
++        self.assertEqual(x3dprov.summary(linked)[1]['note'], note)
++        self.assertEqual(x3dprov.verify(linked)['status'], 'verified')
++        self.assertEqual(x3dprov.content_hash(self.XML), x3dprov.content_hash(linked))
++
++    def test_newline(self):
++        self.check_note('first line\nsecond line')
++
++    def test_windows_path(self):
++        self.check_note(r'C:\research\new\unit')
++
++    def test_literal_replacement_syntax(self):
++        self.check_note(r'\g<0> and \1 remain literal')
++
++    def test_quotes_markup_and_unicode(self):
++        self.check_note('α / 科学 / "quoted" / <value> & more')
++
++    def test_tab_and_control_escape(self):
++        self.check_note('one\ttwo\u0001three')
++
++
++if __name__ == '__main__':
++    unittest.main()
