@@ -145,3 +145,14 @@ def test_metadata_children_are_x_ite_clean():
     for m in root.iter("{*}MetadataString"):
         assert m.get("value").startswith('"') and m.get("value").endswith('"')
     assert B.read_boxes(xml)[0]["label"] == 'say "hi"'
+
+
+def test_extra_lenses_share_the_coordinate_and_are_listed():
+    P = RNG.uniform(0, 3, (300, 3)); L = RNG.integers(0, 2, 300)
+    xml, _ = B.segmentation_to_x3d(P, L, {0: "a", 1: "b"}, rgb=RNG.uniform(0, 1, (300, 3)), scores=RNG.uniform(0, 1, 300),
+                                   extra_lenses={"correct": RNG.uniform(0, 1, (300, 3))})
+    from lxml import etree
+    root = etree.fromstring(xml.encode())
+    sw = [s for s in root.iter("{*}Switch") if (s.get("DEF") or "").startswith("lens_")]
+    assert sw and all(len(s.findall("{*}Shape")) == 4 for s in sw)  # class, rgb, confidence, correct
+    assert 'name="x3do3d.lenses" content="class,rgb,confidence,correct"' in xml

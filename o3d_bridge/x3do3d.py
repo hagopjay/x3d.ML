@@ -116,7 +116,7 @@ def _look_at(pos, target):
 
 def _stage(P):
     """Viewpoint + Background + NavigationInfo framing the points (X3D, Y up)."""
-    lo, hi = P.min(0), P.max(0)
+    lo, hi = np.percentile(P, 2, axis=0), np.percentile(P, 98, axis=0)  # robust to stray outlier points
     c, d = (lo + hi) / 2, float(np.linalg.norm(hi - lo))
     pos = c + np.array([0.55, 0.35, 1.15]) * d * 0.9
     return ('<NavigationInfo type="&quot;EXAMINE&quot; &quot;ANY&quot;" headlight="false"/>'
@@ -329,7 +329,7 @@ def confidence_color(s):
 
 def segmentation_to_x3d(points_x3d, labels, class_names, class_colors=None, rgb=None, scores=None,
                         title="Open3D-ML semantic segmentation", metas=(), boxes=True, max_points=None, seed=0,
-                        ignore=(), point_size=2.5):
+                        ignore=(), point_size=2.5, extra_lenses=None):
     """points_x3d (N,3) already in X3D (Y up) coordinates; labels (N,) ints keyed by class_names {id: name};
     class_colors {id: '#rrggbb' or rgb 0..1}; rgb (N,3) 0..1 source colours; scores (N,) 0..1.
     Returns (xml, stats) where stats is per-class {count, share, mean_score, box_extent}."""
@@ -340,6 +340,7 @@ def segmentation_to_x3d(points_x3d, labels, class_names, class_colors=None, rgb=
         P, L = P[sel], L[sel]
         rgb = None if rgb is None else np.asarray(rgb)[sel]
         scores = None if scores is None else np.asarray(scores)[sel]
+        extra_lenses = {k: np.asarray(v)[sel] for k, v in (extra_lenses or {}).items()}
     n = len(P)
     cc = {}
     for k in class_names:
@@ -366,6 +367,8 @@ def segmentation_to_x3d(points_x3d, labels, class_names, class_colors=None, rgb=
             lens.append('<Shape>%s<PointSet><Coordinate USE="c_%s"/><Color color="%s"/></PointSet></Shape>' % (apu, nm, _vec(np.asarray(rgb)[m])))
         if conf is not None:
             lens.append('<Shape>%s<PointSet><Coordinate USE="c_%s"/><Color color="%s"/></PointSet></Shape>' % (apu, nm, _vec(conf[m])))
+        for _nm, _col in (extra_lenses or {}).items():  # extra lenses (e.g. correctness against ground truth), same Coordinate
+            lens.append('<Shape>%s<PointSet><Coordinate USE="c_%s"/><Color color="%s"/></PointSet></Shape>' % (apu, nm, _vec(np.asarray(_col)[m])))
         meta = [("classId", "integer", k), ("className", "string", class_names[k]), ("pointCount", "integer", cnt),
                 ("share", "float", stats[class_names[k]]["share"]), ("colorHex", "string", "#%02x%02x%02x" % tuple(int(round(c * 255)) for c in cc[k]))]
         if scores is not None:
@@ -381,7 +384,7 @@ def segmentation_to_x3d(points_x3d, labels, class_names, class_colors=None, rgb=
                       % (nm, nm, _metadata_set("o3dml.class", REFERENCE, meta), nm, "".join(lens), boxxml))
     body = _stage(P) + "<Group DEF=\"segmentation\">%s</Group>" % "".join(groups)
     mt = [("x3do3d.points", n), ("x3do3d.classes", len([s for s in stats.values() if s["count"]])),
-          ("x3do3d.lenses", "class" + (",rgb" if rgb is not None else "") + (",confidence" if conf is not None else ""))]
+          ("x3do3d.lenses", "class" + (",rgb" if rgb is not None else "") + (",confidence" if conf is not None else "") + "".join("," + k for k in (extra_lenses or {})))]
     return _wrap(body, title, mt + list(metas)), stats
 
 
