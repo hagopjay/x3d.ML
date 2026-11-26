@@ -4,8 +4,9 @@ import os
 import sys
 from pathlib import Path
 
-import numpy as np
 import pytest
+
+np = pytest.importorskip("numpy")  # CI installs only lxml and friends; these tests need numpy and open3d
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "o3d_bridge"))
 import x3do3d as B  # noqa: E402
